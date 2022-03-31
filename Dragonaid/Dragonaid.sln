@@ -5,11 +5,11 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dragonaid", "Dragonaid\Dragonaid.csproj", "{6800FD53-CD7E-4241-9D15-F613445AD29B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextToHex", "DWIIITextToHex\TextToHex.csproj", "{2B419AD1-631F-423B-A4A2-CB6ED97CD391}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextToHex", "TextToHext\TextToHex.csproj", "{2B419AD1-631F-423B-A4A2-CB6ED97CD391}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonsterEditor", "DWIIIMonsterEditor\MonsterEditor.csproj", "{C4F437E6-DA89-4300-A5FF-6B4B249958C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonsterEditor", "MonsterEditor\MonsterEditor.csproj", "{C4F437E6-DA89-4300-A5FF-6B4B249958C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemEditor", "DWIIIItemEditor\ItemEditor.csproj", "{7FDD9A75-708A-4F18-A4C7-146DED230CA0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemEditor", "ItemEditor\ItemEditor.csproj", "{7FDD9A75-708A-4F18-A4C7-146DED230CA0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonaidLibrary", "DragonaidLibrary\DragonaidLibrary.csproj", "{7435BED1-2E2B-4997-AD36-AE8EE1CE7F36}"
 EndProject
