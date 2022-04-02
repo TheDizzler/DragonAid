@@ -94,6 +94,16 @@ namespace PointerAid
 			return true;
 		}
 
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			if (keyData == (Keys.Control | Keys.S))
+			{
+				Save(null, null);
+				return true;
+			}
+
+			return base.ProcessCmdKey(ref msg, keyData);
+		}
 
 		public void Defocus(object sender, EventArgs e)
 		{
@@ -118,7 +128,18 @@ namespace PointerAid
 				pointer17_listBox.DataSource = source;
 				pointer17_listBox.SelectedIndex = index;
 			}
+
+			SaveNeeded(true);
 		}
+
+
+		private void SaveNeeded(bool needed)
+		{
+			saveStatus_label.Visible = true;
+			saveStatus_label.Text = (needed ? "Not " : "") + "Saved";
+			this.Text = "PointerAid" + (needed ? "*" : "");
+		}
+
 
 		/// <summary>
 		/// Used to extract data from ROM.
@@ -228,8 +249,12 @@ namespace PointerAid
 		private void RestoreFromROM_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			ExtractDynamicPointers(gameData);
-			//dgdfg
+			Initialize();
+
+			this.Text = "PointerAid*";
+			SaveNeeded(true);
 		}
+
 
 		private void SaveAs_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -260,6 +285,8 @@ namespace PointerAid
 
 			File.WriteAllText(pointerAidFormUserSettings,
 				JsonConvert.SerializeObject(pointerAid, Formatting.Indented));
+
+			SaveNeeded(false);
 		}
 
 		private bool ChooseSaveFile()
@@ -295,6 +322,8 @@ namespace PointerAid
 				pointerData = JsonConvert.DeserializeObject<DynamicPointerData>(
 						File.ReadAllText(pointerAid.dynamicPointersJsonFile));
 				Initialize();
+
+				SaveNeeded(false);
 			}
 		}
 	}

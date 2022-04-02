@@ -34,19 +34,21 @@
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.pointer17_listBox = new System.Windows.Forms.ListBox();
-			this.addressView = new AtomosZ.Dragonaid.Libraries.AddressView();
-			this.save_button = new System.Windows.Forms.Button();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.save_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.load_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.restoreFromROM_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.info_panel = new System.Windows.Forms.Panel();
+			this.saveStatus_label = new System.Windows.Forms.Label();
+			this.addressView = new AtomosZ.Dragonaid.Libraries.AddressView();
 			this.pointerAndAddress_flowLayoutPanel.SuspendLayout();
 			this.subroutine_tabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
+			this.info_panel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pointer07_listBox
@@ -117,26 +119,6 @@
 			this.pointer17_listBox.TabIndex = 3;
 			this.pointer17_listBox.SelectedIndexChanged += new System.EventHandler(this.Pointer17_listBox_SelectedIndexChanged);
 			// 
-			// addressView
-			// 
-			this.addressView.AutoSize = true;
-			this.addressView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.addressView.Location = new System.Drawing.Point(410, 3);
-			this.addressView.Name = "addressView";
-			this.addressView.Size = new System.Drawing.Size(490, 376);
-			this.addressView.TabIndex = 1;
-			// 
-			// save_button
-			// 
-			this.save_button.AutoSize = true;
-			this.save_button.Location = new System.Drawing.Point(0, 424);
-			this.save_button.Name = "save_button";
-			this.save_button.Size = new System.Drawing.Size(120, 30);
-			this.save_button.TabIndex = 4;
-			this.save_button.Text = "Save";
-			this.save_button.UseVisualStyleBackColor = true;
-			this.save_button.Click += new System.EventHandler(this.Save);
-			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -162,39 +144,68 @@
 			// save_ToolStripMenuItem
 			// 
 			this.save_ToolStripMenuItem.Name = "save_ToolStripMenuItem";
-			this.save_ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+			this.save_ToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
 			this.save_ToolStripMenuItem.Text = "Save";
 			this.save_ToolStripMenuItem.Click += new System.EventHandler(this.Save);
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
 			this.saveAsToolStripMenuItem.Text = "Save As";
 			this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAs_ToolStripMenuItem_Click);
 			// 
 			// load_ToolStripMenuItem
 			// 
 			this.load_ToolStripMenuItem.Name = "load_ToolStripMenuItem";
-			this.load_ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+			this.load_ToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
 			this.load_ToolStripMenuItem.Text = "Load";
 			this.load_ToolStripMenuItem.Click += new System.EventHandler(this.Load_ToolStripMenuItem_Click);
 			// 
 			// restoreFromROM_ToolStripMenuItem
 			// 
 			this.restoreFromROM_ToolStripMenuItem.Name = "restoreFromROM_ToolStripMenuItem";
-			this.restoreFromROM_ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+			this.restoreFromROM_ToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
 			this.restoreFromROM_ToolStripMenuItem.Text = "Restore From ROM";
 			this.restoreFromROM_ToolStripMenuItem.Click += new System.EventHandler(this.RestoreFromROM_ToolStripMenuItem_Click);
+			// 
+			// info_panel
+			// 
+			this.info_panel.Controls.Add(this.saveStatus_label);
+			this.info_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.info_panel.Location = new System.Drawing.Point(0, 429);
+			this.info_panel.Name = "info_panel";
+			this.info_panel.Size = new System.Drawing.Size(914, 27);
+			this.info_panel.TabIndex = 6;
+			// 
+			// saveStatus_label
+			// 
+			this.saveStatus_label.AutoSize = true;
+			this.saveStatus_label.Dock = System.Windows.Forms.DockStyle.Right;
+			this.saveStatus_label.Location = new System.Drawing.Point(818, 0);
+			this.saveStatus_label.Name = "saveStatus_label";
+			this.saveStatus_label.Size = new System.Drawing.Size(96, 20);
+			this.saveStatus_label.TabIndex = 0;
+			this.saveStatus_label.Text = "Save Status";
+			this.saveStatus_label.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+			this.saveStatus_label.Visible = false;
+			// 
+			// addressView
+			// 
+			this.addressView.AutoSize = true;
+			this.addressView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.addressView.Location = new System.Drawing.Point(410, 3);
+			this.addressView.Name = "addressView";
+			this.addressView.Size = new System.Drawing.Size(490, 376);
+			this.addressView.TabIndex = 1;
 			// 
 			// PointerAidForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ClientSize = new System.Drawing.Size(914, 738);
-			this.Controls.Add(this.save_button);
+			this.ClientSize = new System.Drawing.Size(914, 456);
+			this.Controls.Add(this.info_panel);
 			this.Controls.Add(this.pointerAndAddress_flowLayoutPanel);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
@@ -208,6 +219,8 @@
 			this.tabPage2.ResumeLayout(false);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			this.info_panel.ResumeLayout(false);
+			this.info_panel.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -218,7 +231,6 @@
 		private AtomosZ.Dragonaid.Libraries.AddressView addressView;
 		private System.Windows.Forms.ListBox pointer07_listBox;
 		private System.Windows.Forms.FlowLayoutPanel pointerAndAddress_flowLayoutPanel;
-		private System.Windows.Forms.Button save_button;
 		private System.Windows.Forms.TabControl subroutine_tabControl;
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.TabPage tabPage2;
@@ -229,6 +241,8 @@
 		private System.Windows.Forms.ToolStripMenuItem load_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem restoreFromROM_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+		private System.Windows.Forms.Panel info_panel;
+		private System.Windows.Forms.Label saveStatus_label;
 	}
 }
 
