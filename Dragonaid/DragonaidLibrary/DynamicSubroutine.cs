@@ -35,7 +35,7 @@ namespace AtomosZ.Dragonaid.Libraries
 			new Address("DynamicSubroutine_Addresses_3C000", 0x3C000),
 		};
 
-		public int code {get; set;}
+		public int code { get; set; }
 		public DynamicLoader loader;
 		public int bankId;
 		public int dsIndex;
@@ -49,7 +49,8 @@ namespace AtomosZ.Dragonaid.Libraries
 
 		public override string ToString()
 		{
-			return $"{code.ToString("X2")} - {name} (${prgAddress.pointer.ToString("X5")})" ;
+			var hasNotes = !string.IsNullOrEmpty(prgAddress.notes) && prgAddress.notes.Length > 0;
+			return $"{code.ToString("X2")} - {name} " + (hasNotes ? "*" : "") + $" (${prgAddress.pointer.ToString("X5")})";
 		}
 	}
 }

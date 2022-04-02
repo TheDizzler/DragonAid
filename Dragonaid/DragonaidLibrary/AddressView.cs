@@ -46,8 +46,11 @@ namespace AtomosZ.Dragonaid.Libraries
 				switch (tb.Name)
 				{
 					case "name_textBox":
-						selected.name = name_textBox.Text;
-						((UserControlParent)ParentForm).UpdateView();
+						if (selected.name != name_textBox.Text)
+						{
+							selected.name = name_textBox.Text;
+							((UserControlParent)ParentForm).UpdateView();				
+						}
 						break;
 
 					case "address_textBox":
@@ -67,7 +70,11 @@ namespace AtomosZ.Dragonaid.Libraries
 			else if (sender is RichTextBox)
 			{
 				var rtb = (RichTextBox)sender;
-				selected.prgAddress.notes = rtb.Text;
+				if (selected.prgAddress.notes != rtb.Text)
+				{
+					selected.prgAddress.notes = rtb.Text;
+					((UserControlParent)ParentForm).UpdateView();
+				}
 			}
 		}
 
