@@ -23,8 +23,8 @@ R:0026::Menu_GetPPUPosition\n------------------------------------\n$C76C - init 
 R:0027::Menu_GetPPUPosition\n-----------------------\n$C77F - STA line length to copy to staging area
 R:0028:PPU_RenderStart_Variable:PPU_Render\n--------------------------------\nbeginning of function\n$CA6E - if not zero, do something else
 R:0029:PPU_Render_Check1
-R:002A:Direction_VariableB_Horizontal:DEC on Left\nINC on Right
-R:002B:Direction_VariableB_Vertical:INC on Down\nDEC on Up
+R:002A:Map_WorldPosition_X:DEC on Left\nINC on Right
+R:002B:Map_WorldPosition_Y:INC on Down\nDEC on Up
 R:002C:DynamicSubroutine_38000_A_Variable_C
 R:002F:DynamicSubroutine_38000_A_Variable_B:DynamicSubroutine_38000_A\n---------------------------\n$B2F5 - LDA, AND #$02\n\nDynamicSubroutine_00000_A\n---------------------------\n$A149 - LDA, AND #$01
 R:0030:DirectionToWalk_Horizontal
@@ -63,14 +63,14 @@ R:0078:DialogYVariableStore:DialogJumpStation\n---------------------\nFirst line
 R:0079::$A108 - Menu_Instruction[9] AND $70, >> 4, ADD $02
 R:007C:DialogBankId_and_BlockPointer_Pointer_Index:BankId\nand DialogBlockPointer_Pointers[(Subtract 10) * 2]
 R:007D::$8DAC - monster group count\n\nMenu_GetHeight\n---------------------\n$8D47 - STA menu (height / 2) - 1
-R:007E:Menu_PointerIndex:[$05]:$910E   Status 2 Characters\n[$13]:\n[$1B]:$94DB  FIGHT.PARRY.ITEM\n[$39]:$96A9   EnemyDisplay\n[$3D]:$96DD Combat Text\n[$3F]:
+R:007E:Menu_PointerIndex:[$01]:$9074 Menu_Status_2Characters\n[$05]:$910E   Status 2 Characters\n[$13]:$93C7 \n[$1B]:$94DB  FIGHT.PARRY.ITEM\n[$39]:$96A9   EnemyDisplay\n[$3D]:$96DD Combat Text\n[$3F]:$96ED -> Enemy Display, Non-Interactive
 R:007F::Dialog_GetDimensions\n---------------------------\n$8D05 - init with $FF\n\nBattle_Finalize_EnemyDisplay\n-------------------------\nA0DC - LDA, CMP $FF
 R:0080:CharsCopied
 R:0081:LinesWrittenToStagingArea:$AA1E INC\n\nafter finishing writing text to WriteLocation\n\n$AB8D - LDX, != 0
 R:0082:IsGetNextChar:if < $80 read next char from dialog block\n\nDialogJumpStop2\n----------------------\n$AB51 - init with $00\n\nSetBit7_82\n------------------------------\n$A992 - LDA, ORA #$80, STA\n\nClearBit7_82\n------------------------------------\n$A787 - clear 7th bit\n\n\nNextChar_F2\n---------------------\n$A87B - LDA, AND #$7F, TAX, DEX, used as X in \nLDA NextChar_F2_Variable[X]
 R:0083:Temp_TextStorage_NextCharIndex:TempTextStorage_WriteEC\n-------------------------\n$A969 - init with $00\n\nGetNextCharFrom_TempTextStorage\n----------------------\n$A95A - get next char and INC
-R:0086::BA68 - Checks if zero (usually isn't)
-R:0087::$BD19 - Gets checked if Zero. Normally is zero.\n\n$BA6F - Check if not zero
+R:0086::Map_Scroll_Check\n-----------------------\nBA69 - if zero, scroll map
+R:0087::$BD19 - Gets checked if Zero. Normally is zero.\n\nMap_Scroll_Check\n-----------------------\n$BA6D - If not 0, scroll map\nfollowed by\nDynamicSubroutine_34000_B\n--------------------------\n$9DC6 - if not 0 do some stuff
 R:008B::SetOrClearCarryFlag\n------------------------\n$A14F - LDA and CMP to $38, $C3, $C6, $CF, $D0
 R:008E::Dialog_GetDimensions\n-------------------------\n$8D03 - init with $FF
 R:009A:DirectionRelatedVariable
@@ -125,7 +125,7 @@ R:056D::index of monster in monster list? (Raven #01)\nStart Of Battle\n$82CB - 
 R:0571::Start of Battle\n$82D8 - LDA,X ($02 Raven x2)
 R:0580-062F:Menu_Vector:*Never really seen this used. What is it for?\n\nBattle_Init_580_to_62F\n----------------------------\n$ABFC - init block with $00\n\nWrite dialog text\n$A9A7
 R:063F-0641:NextChar_TextReplace_NUM_Vector:damage done saved in [0]
-R:0643:Monster_GetStats_Vector_F:Monster_GetStats\n-----------------------------------------------\n$8229 - [4]->[B] zeroed
+R:0643::Monster_GetStats\n-----------------------------------------------\n$8229 - [4]->[B] zeroed
 R:0644:WalkDirection:0 - Up\n1 - Right\n2 - Down\n3 - Left
 R:064B:Monster_GetStats_Vector_G:Monster_GetStats\n-----------------------------------------------\n$822C - [4]->[B] zeroed
 R:0653:Monster_GetStats_Vector_D:Monster_GetStats\n-----------------------------------------------\n$8223 - [4]->[B] zeroed
@@ -170,7 +170,7 @@ R:075C-0763:Character_Name_0
 R:0764-076B:Character_Name_1
 R:076C-0773:Character_Name_2
 R:0774-077B:Character_Name_3
-R:077C-0783:Character0_Inventory:DynamicSubroutine_00000_A_Sub_Loop\n------------------------------------\n$986E - [X] AND #$7F, CMP $CF (#$4B)\n\nDynamicSubroutine_00000_B_Sub_Loop\n----------------------------\n$9676 - LDA,X, BPL, CMP #$FF, AND  #$7F, CMP $13
+R:077C-0783:Character0_Inventory
 R:0784-078B:Character1_Inventory
 R:078C-0793:Character2_Inventory
 R:0794-079B:Character3_Inventory
@@ -187,29 +187,31 @@ P:01C0:L01C0
 P:01D8:L01D8
 P:01DE:L01DE
 P:01E8:F01E8
-P:0222:L0222
-P:023F:L023F
-P:0240:L0240
+P:0222:CheckForEncounter
+P:0226::....ok?
+P:023F:_DynamicSubroutine_00000_C_RTS
+P:0240:DynamicSubroutine_00000_C_Sub
 P:0255:L0255
 P:0261:F0261
 P:028E:L028E
-P:02C3:L02C3
-P:02DC:L02DC
+P:02C3:Map_GetEncounterTile
+P:02DC:L02DC:encounter tile code
 P:02E7:L02E7
 P:02FA:L02FA
 P:0307:L0307
 P:0310:L0310
-P:035A:L035A
+P:035A:L035A:final encounter code
 P:0376:L0376
 P:038D:L038D
-P:03AE:L03AE
-P:03C1:L03C1
-P:03C6:L03C6
-P:03C9:L03C9
+P:03AE:Map_GetEncounterRate
+P:03C1:L03C1:day time rates?
+P:03C6:L03C6:night time rates?
+P:03C9:GetEncounterRate_GoldenClaw_IsEquipped
+P:03CE::golden claw
 P:03DD:L03DD
 P:03E7:L03E7
-P:03EB:L03EB
-P:03F3:L03F3
+P:03EB:RollForEncounter
+P:03F3:EncounterRolled
 P:0424:L0424
 P:0429:L0429
 P:042E:L042E
@@ -297,7 +299,7 @@ P:140F:Character_StatusVectorBit3_1
 P:1413:Character_StatusBit4_1
 P:1436:Character_GetStatuses:\nResults stored in QuickStorage 0 and 1
 P:1445:TransferCharacterNameTo_QuickStorage:this is pointless :\
-P:1450:L1450
+P:1450:_TransferName_Loop
 P:1457::max name length
 P:147E:Character_GetStrength:store in $04[0]
 P:1486:Character_MeteoriteArmband_IsEquipped
@@ -343,9 +345,9 @@ P:1690:AddItemToQuickStorage
 P:1693:L1693
 P:1698::character index inventory offset
 P:169F::repeat loop
-P:183A:L183A
-P:1845:L1845
-P:185B:L185B
+P:183A:Character_ItemAt_CE_IsEquipped:Checks if item save at $CE is equipped\n\nResults:\nif equipped\n    QuickStorage04[0]: character index?\n    QuickStorage04[1]: item slot index
+P:1845:Is_CE_Equipped_Loop
+P:185B:_NotItem_At_CE
 P:1862:Character_Item_IsEquipped:\nItem code to check if equipped stored in $CF
 P:186E:Character_Item_IsEquipped_Loop
 P:1871::ignore if item is equipped\nbit 8 indicates equipped status
@@ -1303,7 +1305,8 @@ P:13FD2:DynamicSubroutine_10000_E_JMP:Why no just JMP $A969??
 P:13FD5:L13FD5
 P:13FD8-13FFF:EndOfBank10000to13FFFF
 P:14000-14001:Bank14000to17FFF
-P:14018-14217:Map_LightWorld:unconfirmed
+P:14018-14117:Map_LightWorld_Data_A:unconfirmed
+P:14118-141F0:Map_LightWorld_Data_B:Addresses to something?
 P:1421A-15A94:Tiles:map tiles?\n\nunconfirmed
 P:15A95-15B94:Map_DarkWorld:unconfirmed\nlength unknown
 P:165A1-165A3:Tile_BatchInstructions_WaterTiles:10 - batch: 4 tiles (1 * 3 +1)\n1B - pointer code -> $241B0\n84 - ??
@@ -1328,22 +1331,26 @@ P:17438-1743E:PPUAddress_Vector:[$00]:$18D0 -> STA $2006\n[$02]:$72\n[$03]:$00\n
 P:17456-17492:TileBatch_Vector_B
 P:174CC-174D0:TileBatch_Vector_C
 P:17A69:Map_Scroll_Check
+P:17A72-17A75:Map_Scroll_Vector:[$02]: (right) $BAEC
 P:17A7A:Map_Scroll
-P:17A92:L17A92
-P:17A99:L17A99
+P:17A92:_Map_Scroll_Loop
+P:17A99:_Map_Scroll_Loop_continue
 P:17AAB:L17AAB
-P:17AAC:L17AAC
-P:17ADE:L17ADE
-P:17AE2:L17AE2
+P:17AAC:PPU_SpriteDMA_NOT_F8
+P:17ADE:Map_Scroll_Loop_continue
+P:17AE2:Map_Scroll_JMP_DialogSegmentPointer
+P:17AEC:Map_Scroll_Right
 P:17B13:L17B13
 P:17B25:L17B25
 P:17B2E:L17B2E
 P:17B42:L17B42
 P:17B44:L17B44
-P:17B50:L17B50
+P:17B50:_RTS_
 P:17B51:F17B51
+P:17B6B:Map_Scroll_WalkDirection_Right
+P:17B76:Map_Scroll_WalkDirection_Down
 P:17B80:L17B80
-P:17B81:L17B81
+P:17B81:Map_Scroll_WalkDirection_Up
 P:17CB0:L17CB0
 P:17CD7:L17CD7
 P:17CF8:L17CF8
@@ -1372,11 +1379,12 @@ P:186EC-1878E:Map_x46_AliahanCastle_F1:#$46\nRoof_type: town\ntileset: 05
 P:1878F-187C2:Map_x47_AliahanCastle_F2:#$47\nRoof_type: town\ntileset: 05
 P:187FA-1891F:Map_x01_Romaly:#01\nroof_type:"town",\ntileset:"dw3_tileset_05",
 P:195A1-1963D:Map_x09_Reeve:#09
-P:1B6BB:L1B6BB
-P:1B6C8:L1B6C8
+P:1B6BB:DynamicSubroutine_18000_A
+P:1B6C8:_DynamicSubroutine_18000_A_Loop_
 P:1B6D6:L1B6D6
 P:1B6E3:L1B6E3
 P:1B736:L1B736
+P:1B7B0:DynamicSubroutine_18000_A_Vector
 P:1BFD8-1BFFF:EndOfBank18000to1BFFF
 P:1C000-1C001:Bank1C000to1FFFF
 P:1C115-1C117:Map_Pointers:[0]: lobyte\n[1]: hibyte\n[2]: ??\n\nAliahanCastle_F2
@@ -1540,7 +1548,7 @@ P:30D94-30D95:BRKInstructions_1733_D
 P:30D96:_DynamicSubroutine_30000_A_RTS_
 P:32891:L32891
 P:32895:L32895
-P:32F95:L32F95
+P:32F95:DynamicSubroutine_30000_B
 P:32FA9:L32FA9
 P:32FB3:L32FB3
 P:32FC6:L32FC6
@@ -1550,13 +1558,13 @@ P:33041:F33041
 P:33080:F33080
 P:3308A:L3308A
 P:3309D:L3309D
-P:330A6:F330A6
+P:330A6:GetCharacterStatus
 P:330AF:L330AF
 P:330B0:F330B0
 P:330C4:L330C4
 P:330DB:L330DB
 P:330EA:L330EA
-P:330EB:F330EB
+P:330EB:_Init_Variables__
 P:330FA:F330FA
 P:330FF:L330FF
 P:33123:L33123
@@ -1575,7 +1583,7 @@ P:340ED:F340ED
 P:340F3:L340F3
 P:340F6:L340F6
 P:3411C:L3411C
-P:34192:F34192
+P:34192:DynamicSubroutine_34000_A_Sub
 P:355A0:DynamicJumpDestination_34000_A
 P:355A4:L355A4
 P:355B1:L355B1
@@ -1626,8 +1634,8 @@ P:35E21:L35E21
 P:35E22:F35E22
 P:35E5B:L35E5B
 P:35E76:L35E76
-P:35E84:L35E84
-P:35E85:L35E85
+P:35E84:_34000_RTS
+P:35E85:DynamicSubroutine_34000_E
 P:35EB3:F35EB3
 P:35EBA:F35EBA
 P:375A8:Weird:Initiated dialog\nwith an NPC
@@ -1667,6 +1675,7 @@ P:38706:L38706
 P:38719:L38719
 P:38723:L38723
 P:38731:L38731
+P:38744-38745:BRKInstructions_1733:17 - \n33 - DynamicSubroutine_34000_A
 P:3874F:L3874F
 P:38759:L38759
 P:38766:L38766
@@ -1868,7 +1877,7 @@ P:38F43-38F54:Dialog_SingularEndings
 P:38F55:Menu_GetCharacterInfo_IsCheckStatus:== #2D $93D0 Character_CheckStatus 
 P:38F59::result of $93D0 Character_CheckStatus
 P:38F79:_Menu_GetCharacterInfo_IsA0_RTS_
-P:38F84-3905B:Menu_Pointers:[$0A]:$910E -> Status 2 Characters\n[$26]:$93C7 -> \n[$34]:$94BB -> \n[$36]:$94DB -> FIGHT.PARRY.ITEM.\n[$72]:$96A9 -> Enemy Display, Interactive\n[$7A]:$96DD -> Combat Text\n[$7E]:$96ED -> Enemy Display, Non-Interactive
+P:38F84-3905B:Menu_Pointers:[$02]:$9074\n[$0A]:$910E -> Status 2 Characters\n[$26]:$93C7 -> \n[$34]:$94BB -> \n[$36]:$94DB -> FIGHT.PARRY.ITEM.\n[$72]:$96A9 -> Enemy Display, Interactive\n[$7A]:$96DD -> Combat Text\n[$7E]:$96ED -> Enemy Display, Non-Interactive
 P:39074-39098:Menu_Status_2Characters:This is used when menu #05 is loaded\n\n[00]: width\n[01]: half height\n\n[04]: character name titles\n\n[$0B]: 2C letter H\n[$0C]:$80 Get HP from 1st character\n[$0D]:$03 max number length\n[$0E]: 2C letter H\n[$0F]:$81 Get HP from 2nd character\n[$10]:$03 max number length\n[$11]:$FF row done\n[$12]:$31 letter M\n[$13]:$81 Get MP from 1st character\n[$14]:$03 max number length\n[$15]:$31 letter M\n[$16]:$A1 Get MP from 1st character\n[$17]:$03 max number length\n[$18]:$FF row done\n[$19]:$92 Get Class from 1st character
 P:39099:Menu_Status_3Characters
 P:390CB:Menu_Status_4Characters
@@ -1903,7 +1912,7 @@ P:39929-39A2A:Menu_AdventureLogSelect_Text
 P:39C14:Menu_FirstMenu
 P:39D2B-39D85:Menu_Titles:Actually, might start from index 1....\n[0]:COMMAND\n[1]:STATUS\n[2]:ITEM\n[3]:WHOM\n[4]:SPELL\n[5]:EQUIP\n[6]:WEAPON\n[7]:ARMOR\n[8]:SHIELD\n[9]:HELMET\n[A]:CLASS\n[B]:SEX\n[C]:NAME\n[D]:->\n[E]:FIGHT\n[F]:TO
 P:39D86:F39D86
-P:39E55:F39E55
+P:39E55:Menu_Subroutine
 P:39E63:F39E63
 P:39E7F:F39E7F
 P:39EA1:L39EA1
@@ -1912,8 +1921,8 @@ P:39EB5:L39EB5
 P:39EBB:L39EBB
 P:39ECB:L39ECB
 P:39ED3:L39ED3
-P:39EE1:L39EE1
-P:39EE5:L39EE5
+P:39EE1:Clear_0647to0664
+P:39EE5:_Clear_647to664_Loop
 P:39EEC:DynamicSubroutine_38000_B
 P:39EFC:L39EFC
 P:39EFF:DynamicSubroutine_38000_B_Loop
@@ -1959,21 +1968,21 @@ P:3A198:Caret_GetStateAndUpdate:if $76 >= $80\n   caret off\nelse\n   caret on (
 P:3A1A1:F3A1A1:caret char
 P:3A1A5:L3A1A5:caret off
 P:3A1A7:L3A1A7
-P:3A2C5:L3A2C5
+P:3A2C5:DynamicSubroutine_38000_C
 P:3A2DA:F3A2DA
 P:3A2F0:L3A2F0
 P:3A317:L3A317
 P:3A31C:L3A31C
 P:3A31E:L3A31E
 P:3A322:L3A322
-P:3A325:F3A325
+P:3A325:DynamicSubroutine_38000_C_Sub
 P:3A36E:L3A36E
 P:3A38D:F3A38D
 P:3A3A9:L3A3A9
 P:3A3B1:L3A3B1
 P:3A3D4:L3A3D4
 P:3A472:L3A472
-P:3A476:L3A476
+P:3A476:_WriteNullToMenuWriteBlock_Loop
 P:3A4AA:L3A4AA
 P:3A4BE:F3A4BE
 P:3A4F8:L3A4F8
@@ -2209,13 +2218,14 @@ P:3AF1E:SECandRTS
 P:3AF20:LDA60_DoneReadingFromBank:Text Done Writing to temp writing block
 P:3AF43:DynamicJumpDestination_C
 P:3B117:L3B117
-P:3B118:L3B118
+P:3B118:DynamicSubroutine_38000_D
 P:3B169:L3B169
-P:3B16A:F3B16A
+P:3B16A:AnyCharacterStatus1_Bit6_Set
 P:3B1B7:L3B1B7
 P:3B1BD:F3B1BD
-P:3B1CA:L3B1CA
+P:3B1CA:_CheckParty_Statuses_Loop_
 P:3B1D9:L3B1D9
+P:3B1DD::num characters in party
 P:3B1EE:L3B1EE
 P:3B200:L3B200
 P:3B217:L3B217
@@ -2286,6 +2296,7 @@ P:3C274:L3C274
 P:3C28C:L3C28C
 P:3C28F:L3C28F
 P:3C29B:L3C29B
+P:3C2AB:Map_Scroll_Vector_B:at least I think it's map scroll related
 P:3C2B0-3C2B9:LoopUntil_1B_Not_04:But why?
 P:3C2BA-3C2BF:Battle_CheckIfWaitForNMINeeded_b
 P:3C2C7:SetNextPPUAddress
@@ -2568,7 +2579,7 @@ P:3CDC0:F3CDC0
 P:3CDC8:L3CDC8
 P:3CDCF:F3CDCF
 P:3CDDA:L3CDDA
-P:3CDE1-3CDE2:BRKInstructions_0788
+P:3CDE1-3CDE2:BRKInstructions_0788:07 -\n88 - DynamicSubroutine_18000_A
 P:3CDF1:L3CDF1
 P:3CE10:F3CE10
 P:3CE1A:F3CE1A
@@ -2578,14 +2589,18 @@ P:3CE51:L3CE51
 P:3CE52:F3CE52
 P:3CE77:L3CE77
 P:3CE78:L3CE78
+P:3CE80-3CE81:BRKInstructions_07C8:07\nC8 - DynamicSubroutine_30000_B
+P:3CE90-3CE91:BRKInstructions_CheckForEncounter:07\n67 - 
 P:3CE92:L3CE92
 P:3CE95:L3CE95
 P:3CE99:L3CE99
-P:3CED8:L3CED8
+P:3CED8:ReadContollerInput
 P:3CF04:L3CF04
 P:3CF53:L3CF53
 P:3CFA2:L3CFA2
 P:3CFBB:L3CFBB
+P:3CFE5-3CFE6:BRKInstructions_Clear_0647to0664:07\n21 - Clear_0647to0664
+P:3CFEF-3CFF0:BRKInstructions_0720:07\n20 - 
 P:3CFF1:L3CFF1
 P:3D016-3D021:Controller_DPad_JumpStation
 P:3D022:L3D022
@@ -2607,6 +2622,7 @@ P:3D5CA:Controller_LeftPushed
 P:3D601:Controller_UpPushed
 P:3D624:L3D624
 P:3D638:L3D638
+P:3D63B:BRKInstructions_07A9_B:07 -\nA9 - DynamicSubroutine_34000_E
 P:3D64B:Controller_RightPushed
 P:3D682:Controller_DownPushed
 P:3D6BC:L3D6BC
@@ -2802,8 +2818,8 @@ P:3ECFA:L3ECFA
 P:3ED12:L3ED12
 P:3ED3A:F3ED3A
 P:3ED3F:L3ED3F
-P:3ED7D:F3ED7D
-P:3ED93:L3ED93
+P:3ED7D:Map_GetData
+P:3ED93:_GetMapData_AddrAtX
 P:3ED9E:L3ED9E
 P:3EDB9:F3EDB9
 P:3EDC4:L3EDC4
@@ -2815,7 +2831,7 @@ P:3EE37:L3EE37
 P:3EE3B:L3EE3B
 P:3EE48:L3EE48
 P:3EE5C:L3EE5C
-P:3EE6A:L3EE6A
+P:3EE6A:Map_GetTileAt_6C_Loop
 P:3EE78:L3EE78
 P:3EE84:L3EE84
 P:3EE8A:L3EE8A
@@ -3250,6 +3266,7 @@ S:0AEB:Menu_NextCharPosition
 S:0AEC-0AF7:Temp_TextStorage:Character and monster names
 S:0B0A:DialogWriteLocation:Where dialog text is stored, char by char, before displaying to screen.
 S:0B1F:DialogNextCharTempStorage
+S:0B6B:LoadDynamicSubroutine_From_InstructionByte_JMP
 S:0B70:LoadSubroutine_TransferCharacterNameTo_QuickStorage:\n$30 - $9445 TransferCharacterNameTo_QuickStorage
 S:0B73:TransferCharacterNameTo_QuickStorage_InstructionByte:$30 -> $00000 TransferCharacterNameTo_QuickStorage
 S:0B7F:Special_BS_DynamicSub_RBS_A
@@ -3267,6 +3284,7 @@ S:0BB4:InstructionByte_GainGold:3D - Battle_AddGoldToPurse
 S:0BBB:LoadSubroutine_GetEquippedItems:Results stored in 04[0-4]
 S:0BBE:InstructionByte_3F:$3F - $9668 Character_GetEquippedItems
 S:0BED:Menu_Index3B_Instruction03
+S:0BFC:Check_GoldenClaw_IsEquipped
 S:0C01:LoadSubroutine_GetCharacterClass:returns A with character class id:\n    0 = Hero\n    1 = Wizard\n    2 = Pilgrim\n    3 = Sage\n    4 = Soldier\n    5 = Merchant\n    6 = Fighter\n    7 = Goof-off
 S:0C04:InstructionByte_GetCharacterClass:$4D - $993A GetCharacterClass
 S:0C1A:LoadInstructionByte_GetCharacterCountAndNameIndices:Character count stored in QuickStorage[0]\nIndices stored in QuickStorage[1-4]
