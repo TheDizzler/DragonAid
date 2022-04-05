@@ -520,7 +520,7 @@
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": "[Menu_PointerIndex]:  Menu_Pointers[] ($38F84)\n[$01]:$9074   Menu_Status_2Characters\n[$05]:$910E   Status 2 Characters (points to $9074)\n[$13]:$93C7 \n[$1B]:$94DB  FIGHT.PARRY.ITEM\n[$39]:$96A9   EnemyDisplay\n[$3D]:$96DD Combat Text\n[$3F]:$96ED -> Enemy Display, Non-Interactive\n\n",
+        "notes": "[Menu_PointerIndex]:  Menu_Pointers[] ($38F84)\n[$01]:$9074 -> Menu_Status_2Characters\n[$05]:$910E -> Status 2 Characters (points to $9074)\n[$13]:$93C7 ->\n[$14]:$93F1 -> Menu_MainCommand\n[$1B]:$94DB -> FIGHT.PARRY.ITEM\n[$2C]:$9612 -> Menu_ItemCommand\n[$39]:$96A9 -> EnemyDisplay\n[$3D]:$96DD -> Combat Text\n[$3F]:$96ED -> Enemy Display, Non-Interactive\n\n",
         "name": "Full address",
         "pointer": 231342,
         "offset": 231358
@@ -1256,7 +1256,7 @@
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": "",
+        "notes": "Same 4D but with an extra JMP",
         "name": "Full address",
         "pointer": 6468,
         "offset": 6484
@@ -3780,11 +3780,11 @@
       "loader": 0,
       "bankId": 0,
       "dsIndex": 93,
-      "name": null,
+      "name": "DynamicSubroutine_00000_C",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "MainMenu Item Command selected\n\nLaunches BRKInstruction_D7_Destination\nwhich launches 0720",
         "name": "Full address",
         "pointer": 10994,
         "offset": 11010
@@ -3848,7 +3848,7 @@
       "notes": "DynamicSubroutine_Addresses_04000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 16476,
         "offset": 16492
@@ -5270,11 +5270,11 @@
       "loader": 1,
       "bankId": 0,
       "dsIndex": 80,
-      "name": null,
+      "name": "Character_CheckIfSpecial_IsEquipped",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 7689,
         "offset": 7705
@@ -5542,7 +5542,7 @@
       "loader": 1,
       "bankId": 12,
       "dsIndex": 53,
-      "name": null,
+      "name": "DynamicSubroutine_30000_A",
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
@@ -6246,7 +6246,7 @@
       "loader": 1,
       "bankId": 2,
       "dsIndex": 13,
-      "name": null,
+      "name": "Character_IsGoofOff",
       "notes": "DynamicSubroutine_Addresses_08000",
       "prgAddress": {
         "length": 2,
@@ -6614,7 +6614,7 @@
       "loader": 1,
       "bankId": 4,
       "dsIndex": 39,
-      "name": null,
+      "name": "Monster_ParseStat_OC",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
@@ -6630,7 +6630,7 @@
       "loader": 1,
       "bankId": 4,
       "dsIndex": 40,
-      "name": null,
+      "name": "Monster_ParseStat_0A_Extra",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
@@ -6646,7 +6646,7 @@
       "loader": 1,
       "bankId": 4,
       "dsIndex": 41,
-      "name": null,
+      "name": "(GetStat_0A)",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
@@ -6662,7 +6662,7 @@
       "loader": 1,
       "bankId": 4,
       "dsIndex": 42,
-      "name": null,
+      "name": "(GetStat_0E)",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
