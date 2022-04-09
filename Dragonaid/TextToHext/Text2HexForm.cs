@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using Dragonaid.TextToHex;
+using AtomosZ.Dragonaid.TextToHex;
 
-namespace DragonAid.TextToHex
+namespace AtomosZ.DragonAid.TextToHex
 {
 	public partial class Text2HexForm : Form
 	{

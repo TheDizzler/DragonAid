@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace DragonAid.TextToHex
+namespace AtomosZ.DragonAid.TextToHex
 {
 	static class Program
 	{

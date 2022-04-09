@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using Dragonaid.TextToHex;
+using AtomosZ.Dragonaid.TextToHex;
 
 namespace AtomosZ.Dragonaid
 {
