@@ -53,6 +53,7 @@
     <Compile Include="AddressView.Designer.cs">
       <DependentUpon>AddressView.cs</DependentUpon>
     </Compile>
+    <Compile Include="ASMHelper.cs" />
     <Compile Include="DynamicPointerData.cs" />
     <Compile Include="DynamicSubroutine.cs" />
     <Compile Include="UserControlParent.cs" />
