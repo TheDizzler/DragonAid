@@ -56,6 +56,7 @@
     <Compile Include="ASMHelper.cs" />
     <Compile Include="DynamicPointerData.cs" />
     <Compile Include="DynamicSubroutine.cs" />
+    <Compile Include="MenuInstructions.cs" />
     <Compile Include="UserControlParent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
