@@ -4,7 +4,7 @@ namespace AtomosZ.DragonAid.TextToHex
 {
 	public static class Tables
 	{
-		public static Dictionary<int, string> textTable = new Dictionary<int, string>()
+		public static Dictionary<byte, string> textTable = new Dictionary<byte, string>()
 		{
 			{ 0x00, "§" }, // Empty Text at end of names. Dialog text disregards.
 			{ 0x01, "0" }, { 0x02, "1" }, { 0x03, "2" }, { 0x04, "3" }, { 0x05, "4" },
@@ -125,15 +125,15 @@ namespace AtomosZ.DragonAid.TextToHex
 			{ 0x5F, "║E" },	// Border with E (small) to indicate equiped item
 		};
 
-		private static Dictionary<string, int> reverseDict;
+		private static Dictionary<string, byte> reverseDict;
 
-		public static Dictionary<string, int> textToHexDict
+		public static Dictionary<string, byte> textToHexDict
 		{
 			get
 			{
 				if (reverseDict == null)
 				{
-					reverseDict = new Dictionary<string, int>();
+					reverseDict = new Dictionary<string, byte>();
 					foreach (var val in textTable)
 					{
 						if (!reverseDict.ContainsKey(val.Value))
