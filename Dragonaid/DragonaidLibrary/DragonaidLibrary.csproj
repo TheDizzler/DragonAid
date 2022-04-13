@@ -59,14 +59,21 @@
     <Compile Include="ASMHelper.cs" />
     <Compile Include="DynamicPointerData.cs" />
     <Compile Include="DynamicSubroutine.cs" />
-    <Compile Include="MenuInstructions.cs" />
+    <Compile Include="Names.cs" />
+    <Compile Include="PointerList.cs" />
+    <Compile Include="Tables.cs" />
+    <Compile Include="UniversalConsts.cs" />
     <Compile Include="UserControlParent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AidUserSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AddressView.resx">
       <DependentUpon>AddressView.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
