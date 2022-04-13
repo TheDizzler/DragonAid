@@ -119,6 +119,15 @@
 			this.pointer17_listBox.TabIndex = 3;
 			this.pointer17_listBox.SelectedIndexChanged += new System.EventHandler(this.Pointer17_listBox_SelectedIndexChanged);
 			// 
+			// addressView
+			// 
+			this.addressView.AutoSize = true;
+			this.addressView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.addressView.Location = new System.Drawing.Point(410, 3);
+			this.addressView.Name = "addressView";
+			this.addressView.Size = new System.Drawing.Size(490, 376);
+			this.addressView.TabIndex = 1;
+			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -144,28 +153,28 @@
 			// save_ToolStripMenuItem
 			// 
 			this.save_ToolStripMenuItem.Name = "save_ToolStripMenuItem";
-			this.save_ToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
+			this.save_ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
 			this.save_ToolStripMenuItem.Text = "Save";
 			this.save_ToolStripMenuItem.Click += new System.EventHandler(this.Save);
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
 			this.saveAsToolStripMenuItem.Text = "Save As";
 			this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAs_ToolStripMenuItem_Click);
 			// 
 			// load_ToolStripMenuItem
 			// 
 			this.load_ToolStripMenuItem.Name = "load_ToolStripMenuItem";
-			this.load_ToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
+			this.load_ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
 			this.load_ToolStripMenuItem.Text = "Load";
 			this.load_ToolStripMenuItem.Click += new System.EventHandler(this.Load_ToolStripMenuItem_Click);
 			// 
 			// restoreFromROM_ToolStripMenuItem
 			// 
 			this.restoreFromROM_ToolStripMenuItem.Name = "restoreFromROM_ToolStripMenuItem";
-			this.restoreFromROM_ToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
+			this.restoreFromROM_ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
 			this.restoreFromROM_ToolStripMenuItem.Text = "Restore From ROM";
 			this.restoreFromROM_ToolStripMenuItem.Click += new System.EventHandler(this.RestoreFromROM_ToolStripMenuItem_Click);
 			// 
@@ -190,15 +199,6 @@
 			this.saveStatus_label.TextAlign = System.Drawing.ContentAlignment.BottomRight;
 			this.saveStatus_label.Visible = false;
 			// 
-			// addressView
-			// 
-			this.addressView.AutoSize = true;
-			this.addressView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.addressView.Location = new System.Drawing.Point(410, 3);
-			this.addressView.Name = "addressView";
-			this.addressView.Size = new System.Drawing.Size(490, 376);
-			this.addressView.TabIndex = 1;
-			// 
 			// PointerAidForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -210,7 +210,7 @@
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "PointerAidForm";
-			this.Text = "PointerAid";
+			this.Text = "PointerAid - DragonAid";
 			this.Click += new System.EventHandler(this.Defocus);
 			this.pointerAndAddress_flowLayoutPanel.ResumeLayout(false);
 			this.pointerAndAddress_flowLayoutPanel.PerformLayout();
