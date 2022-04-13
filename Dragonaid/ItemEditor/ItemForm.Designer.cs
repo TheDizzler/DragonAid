@@ -36,7 +36,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
 			this.Name = "ItemForm";
-			this.Text = "Item Editor";
+			this.Text = "Item Editor - DragonAid";
 			this.ResumeLayout(false);
 
 		}

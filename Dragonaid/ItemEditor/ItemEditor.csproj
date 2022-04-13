@@ -81,5 +81,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DragonaidLibrary\DragonaidLibrary.csproj">
+      <Project>{7435BED1-2E2B-4997-AD36-AE8EE1CE7F36}</Project>
+      <Name>DragonaidLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

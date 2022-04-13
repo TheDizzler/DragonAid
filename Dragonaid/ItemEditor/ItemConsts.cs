@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
+
+using AtomosZ.DragonAid.Libraries;
+using AtomosZ.DragonAid.TextToHex;
 
 namespace AtomosZ.DragonAid.ItemEditor
 {
 	public static class ItemConsts
 	{
-		public static int WeaponPowers = 0x027990;
-		public static int ArmorPowers = 0x0279B0;
-		public static int ShieldPowers = 0x0279C8;
-		public static int HelmetPowers = 0x0279CF;
 
-
-		public static List<string> itemBasicList = new List<string>()
+		public static List<string> itemBasicListDeprecated = new List<string>()
 		{
 			"00 - Cypress stick",
 			"01 - Club",
@@ -154,6 +154,8 @@ namespace AtomosZ.DragonAid.ItemEditor
 			"7D - Stick Slime",
 			"7E - Black Raven",
 			"7F - Sword Horned",
+
+
 			"FF - Nothing",
 		};
 	}
