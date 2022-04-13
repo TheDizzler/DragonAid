@@ -84,11 +84,11 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 5,
-      "name": "Battle_Init_580_to_62F",
+      "name": "Menu_Clear_580_to_62F",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Clears memory 0x0580 to 0x062F",
         "name": "Full address",
         "pointer": 240633,
         "offset": 240649
@@ -1172,11 +1172,11 @@
       "loader": 0,
       "bankId": 0,
       "dsIndex": 40,
-      "name": null,
+      "name": "Character_GetAllHeldItems",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Saves held items in\nQuickStorage[0] to [7]",
         "name": "Full address",
         "pointer": 6079,
         "offset": 6095
@@ -2632,7 +2632,7 @@
       "notes": "DynamicSubroutine_Addresses_08000",
       "prgAddress": {
         "length": 2,
-        "notes": "",
+        "notes": "X == 0\n   get 1st part of item name\nX == 1\n   get 2nd part of item name\nX == 2\n  get monster name\nX == 3\n  End of MonsterName_List\nX == 5, \n  Get class name\n  A: index of name in classname_list",
         "name": "Full address",
         "pointer": 43405,
         "offset": 43421
@@ -6758,11 +6758,11 @@
       "loader": 1,
       "bankId": 10,
       "dsIndex": 14,
-      "name": null,
+      "name": "DynamicSubroutine_28000_C",
       "notes": "DynamicSubroutine_Addresses_28000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 167057,
         "offset": 167073
