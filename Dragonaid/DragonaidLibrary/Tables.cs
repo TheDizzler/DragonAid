@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AtomosZ.Dragonaid.TextToHex
+namespace AtomosZ.DragonAid.TextToHex
 {
 	public static class Tables
 	{

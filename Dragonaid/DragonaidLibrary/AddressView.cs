@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AtomosZ.Dragonaid.Libraries
+namespace AtomosZ.DragonAid.Libraries
 {
 	public partial class AddressView : UserControl
 	{

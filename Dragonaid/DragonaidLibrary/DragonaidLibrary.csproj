@@ -7,7 +7,7 @@
     <ProjectGuid>{7435BED1-2E2B-4997-AD36-AE8EE1CE7F36}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AtomosZ.Dragonaid.Libraries</RootNamespace>
+    <RootNamespace>AtomosZ.DragonAid.Libraries</RootNamespace>
     <AssemblyName>DragonaidLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

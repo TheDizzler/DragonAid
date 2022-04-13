@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CCCA2D16-7F44-4163-A94A-937E47A53311}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>AtomosZ.Dragonaid.PointerAid</RootNamespace>
+    <RootNamespace>AtomosZ.DragonAid.PointerAid</RootNamespace>
     <AssemblyName>PointerAid</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

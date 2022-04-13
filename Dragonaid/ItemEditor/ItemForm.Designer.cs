@@ -1,4 +1,4 @@
-﻿namespace AtomosZ.Dragonaid.ItemEditor
+﻿namespace AtomosZ.DragonAid.ItemEditor
 {
 	partial class ItemForm
 	{

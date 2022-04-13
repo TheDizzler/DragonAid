@@ -1,4 +1,4 @@
-﻿namespace AtomosZ.Dragonaid.MonsterEditor
+﻿namespace AtomosZ.DragonAid.MonsterEditor
 {
 	partial class MonsterEditorView
 	{

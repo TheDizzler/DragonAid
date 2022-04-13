@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace AtomosZ.Dragonaid
+namespace AtomosZ.DragonAid
 {
 	static class Program
 	{

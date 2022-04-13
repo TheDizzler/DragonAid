@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace AtomosZ.Dragonaid.MonsterEditor
+namespace AtomosZ.DragonAid.MonsterEditor
 {
 	static class Program
 	{

@@ -1,6 +1,6 @@
-﻿using AtomosZ.Dragonaid.Libraries;
+﻿using AtomosZ.DragonAid.Libraries;
 
-namespace AtomosZ.Dragonaid
+namespace AtomosZ.DragonAid
 {
 	public static class PointerTables
 	{

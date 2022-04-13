@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AtomosZ.Dragonaid.ItemEditor.Properties {
+namespace AtomosZ.DragonAid.ItemEditor.Properties {
     using System;
     
     

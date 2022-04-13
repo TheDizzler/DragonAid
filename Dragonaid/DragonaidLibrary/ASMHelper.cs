@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
-
-namespace AtomosZ.Dragonaid.Libraries
+namespace AtomosZ.DragonAid.Libraries
 {
 	public static class ASMHelper
 	{

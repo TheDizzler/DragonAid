@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AtomosZ.Dragonaid.Libraries
+namespace AtomosZ.DragonAid.Libraries
 {
 	public class DynamicPointerData
 	{

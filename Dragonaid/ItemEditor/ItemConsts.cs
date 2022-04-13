@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AtomosZ.Dragonaid.ItemEditor
+namespace AtomosZ.DragonAid.ItemEditor
 {
 	public static class ItemConsts
 	{

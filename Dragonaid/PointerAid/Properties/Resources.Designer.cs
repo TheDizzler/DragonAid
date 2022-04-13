@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AtomosZ.Dragonaid.PointerAid.Properties {
+namespace AtomosZ.DragonAid.PointerAid.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace AtomosZ.Dragonaid.PointerAid.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AtomosZ.Dragonaid.PointerAid.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AtomosZ.DragonAid.PointerAid.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

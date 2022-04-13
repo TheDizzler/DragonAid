@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AtomosZ.Dragonaid.PointerAid.Properties {
+namespace AtomosZ.DragonAid.PointerAid.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

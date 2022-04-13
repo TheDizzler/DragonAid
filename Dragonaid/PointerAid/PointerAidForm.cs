@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-
-using AtomosZ.Dragonaid.Libraries;
-using AtomosZ.Dragonaid.PointerAid;
-
+using AtomosZ.DragonAid.Libraries;
+using AtomosZ.DragonAid.PointerAid;
 using Newtonsoft.Json;
 
-using static AtomosZ.Dragonaid.Libraries.DynamicSubroutine;
 using static AtomosZ.Dragonaid.PointerAid.PointerAidSettingsData;
+using static AtomosZ.DragonAid.Libraries.DynamicSubroutine;
 
-namespace PointerAid
+namespace AtomosZ.DragonAid.PointerAid
 {
 	public partial class PointerAidForm : Form, UserControlParent
 	{

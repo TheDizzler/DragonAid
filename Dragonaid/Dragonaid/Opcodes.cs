@@ -1,4 +1,4 @@
-﻿namespace AtomosZ.Dragonaid
+﻿namespace AtomosZ.DragonAid
 {
 	public static class Opcodes
 	{

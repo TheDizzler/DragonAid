@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AtomosZ.Dragonaid.ItemEditor
+namespace AtomosZ.DragonAid.ItemEditor
 {
 	public partial class ItemForm : Form
 	{

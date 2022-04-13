@@ -1,8 +1,8 @@
 ﻿using System;
 
-using static AtomosZ.Dragonaid.MonsterEditor.MonsterConsts;
+using static AtomosZ.DragonAid.MonsterEditor.MonsterConsts;
 
-namespace AtomosZ.Dragonaid.MonsterEditor
+namespace AtomosZ.DragonAid.MonsterEditor
 {
 	public class MonsterStatBlock
 	{

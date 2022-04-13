@@ -1,4 +1,4 @@
-﻿namespace PointerAid
+﻿namespace AtomosZ.DragonAid.PointerAid
 {
 	partial class PointerAidForm
 	{
@@ -34,6 +34,7 @@
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.pointer17_listBox = new System.Windows.Forms.ListBox();
+			this.addressView = new AtomosZ.DragonAid.Libraries.AddressView();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.save_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,7 +43,6 @@
 			this.restoreFromROM_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.info_panel = new System.Windows.Forms.Panel();
 			this.saveStatus_label = new System.Windows.Forms.Label();
-			this.addressView = new AtomosZ.Dragonaid.Libraries.AddressView();
 			this.pointerAndAddress_flowLayoutPanel.SuspendLayout();
 			this.subroutine_tabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
@@ -228,7 +228,7 @@
 
 		#endregion
 
-		private AtomosZ.Dragonaid.Libraries.AddressView addressView;
+		private AtomosZ.DragonAid.Libraries.AddressView addressView;
 		private System.Windows.Forms.ListBox pointer07_listBox;
 		private System.Windows.Forms.FlowLayoutPanel pointerAndAddress_flowLayoutPanel;
 		private System.Windows.Forms.TabControl subroutine_tabControl;

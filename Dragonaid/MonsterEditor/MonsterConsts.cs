@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using AtomosZ.Dragonaid.Libraries;
+using AtomosZ.DragonAid.Libraries;
 
-namespace AtomosZ.Dragonaid.MonsterEditor
+namespace AtomosZ.DragonAid.MonsterEditor
 {
 	public static class MonsterConsts
 	{

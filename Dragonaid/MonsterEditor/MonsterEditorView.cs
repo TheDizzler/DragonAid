@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using AtomosZ.Dragonaid.ItemEditor;
-using static AtomosZ.Dragonaid.MonsterEditor.MonsterConsts;
+using static AtomosZ.DragonAid.MonsterEditor.MonsterConsts;
 
-namespace AtomosZ.Dragonaid.MonsterEditor
+namespace AtomosZ.DragonAid.MonsterEditor
 {
 	public partial class MonsterEditorView : UserControl
 	{

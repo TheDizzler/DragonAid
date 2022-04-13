@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using AtomosZ.Dragonaid.TextToHex;
+using AtomosZ.DragonAid.TextToHex;
 
-namespace AtomosZ.Dragonaid
+namespace AtomosZ.DragonAid
 {
 	/// <summary>
 	/// PRG ROM 32 x 16KB = 512KB

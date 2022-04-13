@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AtomosZ.Dragonaid.Properties {
+namespace AtomosZ.DragonAid.Properties {
     using System;
     
     

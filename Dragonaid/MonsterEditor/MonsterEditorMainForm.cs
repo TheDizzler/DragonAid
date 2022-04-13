@@ -3,7 +3,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 
-namespace AtomosZ.Dragonaid.MonsterEditor
+namespace AtomosZ.DragonAid.MonsterEditor
 {
 	public partial class MonsterEditorMainForm : Form
 	{

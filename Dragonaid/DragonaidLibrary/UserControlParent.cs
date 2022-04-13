@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AtomosZ.Dragonaid.Libraries
+namespace AtomosZ.DragonAid.Libraries
 {
 	public interface UserControlParent
 	{

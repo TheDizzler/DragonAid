@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AtomosZ.Dragonaid.PointerAid
+using AtomosZ.DragonAid.Libraries;
+
+namespace AtomosZ.DragonAid.PointerAid
 {
 	internal class PointerAidSettingsData
 	{

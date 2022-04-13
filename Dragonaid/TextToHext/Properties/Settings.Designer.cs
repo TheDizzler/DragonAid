@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AtomosZ.Dragonaid.TextToHex.Properties {
+namespace AtomosZ.DragonAid.TextToHex.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

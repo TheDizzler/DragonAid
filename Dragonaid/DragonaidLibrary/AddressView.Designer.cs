@@ -1,4 +1,4 @@
-﻿namespace AtomosZ.Dragonaid.Libraries
+﻿namespace AtomosZ.DragonAid.Libraries
 {
 	partial class AddressView
 	{
