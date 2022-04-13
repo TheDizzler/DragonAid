@@ -3,6 +3,9 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 
+using AtomosZ.DragonAid.Libraries;
+
+
 namespace AtomosZ.DragonAid.MonsterEditor
 {
 	public partial class MonsterEditorMainForm : Form
@@ -32,18 +35,92 @@ namespace AtomosZ.DragonAid.MonsterEditor
 			public SpriteAnimation[] animations;
 		}
 
+		private MonsterAidSettingsData monsterAidUserSettings;
+		private byte monsterIndex = 0;
+		private byte[] romData;
 
 		public MonsterEditorMainForm()
 		{
 			InitializeComponent();
 
-			byte[] byteData = File.ReadAllBytes(@"D:\github\RomHacking\Working ROMs\Dragon Warrior 3 (U).nes");
-			monsterEditorView.LoadMonsterStats(byteData, 0);
 
+			if (!File.Exists(MonsterAidSettingsData.monsterAidFormUserSettingsFile))
+			{
+				while (!AidUserSettings.InitializeUserSettings(out monsterAidUserSettings))
+				{ }
 
+				//ExtractDynamicPointers(romData);
+			}
+			else
+			{
+				//monsterAidUserSettings = JsonConvert.DeserializeObject<MonsterAidSettingsData>(
+				//	File.ReadAllText(monsterAidFormUserSettingsFile));
+				//romData = File.ReadAllBytes(monsterAidUserSettings.romFile);
+				//if (string.IsNullOrEmpty(pointerAid.dynamicPointersJsonFile))
+				//{
+				//	ExtractDynamicPointers(romData);
+				//}
+				//else
+				//{
+				//	pointerData = JsonConvert.DeserializeObject<DynamicPointerData>(
+				//		File.ReadAllText(pointerAid.dynamicPointersJsonFile));
+				//}
+			}
+
+			//romData = File.ReadAllBytes(@"D:\github\RomHacking\Working ROMs\Dragon Warrior 3 (U).nes");
+			//monsterEditorView.LoadMonsterStats(romData, monsterIndex);
+
+			//Initialize();
 
 			//GetTile(byteData, 0x20010);
 		}
+
+
+		//private bool InitializeUserSettings()
+		//{
+		//	FileDialog fileDialog = new OpenFileDialog();
+		//	fileDialog.Filter = "iNES files (*.nes)|*.nes";
+		//	fileDialog.CheckFileExists = true;
+
+		//	var result = fileDialog.ShowDialog();
+		//	if (result == DialogResult.Cancel)
+		//	{
+		//		Environment.Exit(0);
+		//	}
+		//	else if (result == DialogResult.OK)
+		//	{
+		//		var file = fileDialog.FileName;
+		//		romData = File.ReadAllBytes(file);
+		//		if (romData[0] != 0x4E && romData[1] != 0x45 && romData[2] != 0x53 && romData[3] != 0x1A)
+		//		{
+		//			MessageBox.Show("Invalid iNES file");
+		//			return false;
+		//		}
+
+		//		monsterAidUserSettings = new MonsterAidSettingsData();
+		//		monsterAidUserSettings.romFile = file;
+
+		//		File.WriteAllText(monsterAidFormUserSettingsFile,
+		//			JsonConvert.SerializeObject(monsterAidUserSettings, Formatting.Indented));
+		//	}
+
+		//	return true;
+		//}
+
+		private void NextMonster_button_Click(object sender, System.EventArgs e)
+		{
+			if (++monsterIndex > UniversalConsts.monsterCount)
+				monsterIndex = 0;
+			monsterEditorView.LoadMonsterStats(romData, monsterIndex);
+		}
+
+		private void PrevMonster_button_Click(object sender, System.EventArgs e)
+		{
+			if (--monsterIndex > UniversalConsts.monsterCount)
+				monsterIndex = UniversalConsts.monsterCount;
+			monsterEditorView.LoadMonsterStats(romData, monsterIndex);
+		}
+
 
 		/// <summary>
 		/// Un-encrypted tiles only.
@@ -76,6 +153,30 @@ namespace AtomosZ.DragonAid.MonsterEditor
 
 				//tile_pictureBox.Image = bmp;
 			}
+		}
+
+		private void LoadROMToolStripMenuItem_Click(object sender, System.EventArgs e)
+		{
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.AddExtension = true;
+			dialog.DefaultExt = "*" + AidUserSettings.monsterAidExtension;
+			dialog.Filter = $"DragonAid Monster file ({dialog.DefaultExt})|{dialog.DefaultExt}";
+
+			var result = dialog.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				//monsterAidUserSettings.dynamicPointersJsonFile = dialog.FileName;
+				//pointerData = JsonConvert.DeserializeObject<DynamicPointerData>(
+				//	File.ReadAllText(pointerAid.dynamicPointersJsonFile));
+				//Initialize();
+
+				//SaveNeeded(false);
+			}
+		}
+
+		private void ExitToolStripMenuItem_Click(object sender, System.EventArgs e)
+		{
+			Application.Exit();
 		}
 	}
 }

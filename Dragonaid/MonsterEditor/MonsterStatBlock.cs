@@ -1,5 +1,7 @@
 ﻿using System;
 
+using AtomosZ.DragonAid.Libraries;
+
 using static AtomosZ.DragonAid.MonsterEditor.MonsterConsts;
 
 namespace AtomosZ.DragonAid.MonsterEditor
@@ -126,51 +128,52 @@ namespace AtomosZ.DragonAid.MonsterEditor
 		public int itemDropChance;
 
 
-		public MonsterStatBlock(byte[] data, int monsterIndex)
+		public MonsterStatBlock(byte[] romData, byte monsterIndex)
 		{
 			index = monsterIndex;
 			int monsterStart = MonsterConsts.MonsterStatBlockAddress.offset + index * MonsterConsts.MonsterStatBlockAddress.length;
 
-			level = data[monsterStart + MonsterConsts.Level] & 0x3F;
-			evade = data[monsterStart + MonsterConsts.Evade1] & 0xB0;
+			name = Names.GetMonsterName(romData, monsterIndex);
+			level = romData[monsterStart + MonsterConsts.Level] & 0x3F;
+			evade = romData[monsterStart + MonsterConsts.Evade1] & 0xB0;
 			evade = evade >> 3;
-			int evade2 = data[monsterStart + MonsterConsts.Evade2] & 0x80;
+			int evade2 = romData[monsterStart + MonsterConsts.Evade2] & 0x80;
 			evade2 = evade2 >> 5;
 			evade = evade | evade2;
-			exp = (data[monsterStart + MonsterConsts.Exp2] << 8) | data[monsterStart + Exp1];
+			exp = (romData[monsterStart + MonsterConsts.Exp2] << 8) | romData[monsterStart + Exp1];
 
-			agility = data[monsterStart + MonsterConsts.Agility];
+			agility = romData[monsterStart + MonsterConsts.Agility];
 
-			gold = data[monsterStart + Gold1] | ((data[monsterStart + Gold2] & 0x03) << 8);
+			gold = romData[monsterStart + Gold1] | ((romData[monsterStart + Gold2] & 0x03) << 8);
 
-			attackPower = data[monsterStart + Attack1] | (data[monsterStart + Attack2] & 0x03) << 8;
-			defensePower = data[monsterStart + Defense1] | (data[monsterStart + Defense2] & 0x03) << 8;
-			hp = data[monsterStart + HP1] | (data[monsterStart + HP2] & 0x03) << 8;
+			attackPower = romData[monsterStart + Attack1] | (romData[monsterStart + Attack2] & 0x03) << 8;
+			defensePower = romData[monsterStart + Defense1] | (romData[monsterStart + Defense2] & 0x03) << 8;
+			hp = romData[monsterStart + HP1] | (romData[monsterStart + HP2] & 0x03) << 8;
 
-			mp = data[monsterStart + MP];
+			mp = romData[monsterStart + MP];
 
-			itemDrop = data[monsterStart + ItemDrop] & 0x7F;
+			itemDrop = romData[monsterStart + ItemDrop] & 0x7F;
 
-			actions[0] = (data[monsterStart + Action0] & 0x3F);
-			actions[1] = (data[monsterStart + Action1] & 0x3F);
-			actions[2] = (data[monsterStart + Action2] & 0x3F);
-			actions[3] = (data[monsterStart + Action3] & 0x3F);
-			actions[4] = (data[monsterStart + Action4] & 0x3F);
-			actions[5] = (data[monsterStart + Action5] & 0x3F);
-			actions[6] = (data[monsterStart + Action6] & 0x3F);
-			actions[7] = (data[monsterStart + Action7] & 0x3F);
+			actions[0] = (romData[monsterStart + Action0] & 0x3F);
+			actions[1] = (romData[monsterStart + Action1] & 0x3F);
+			actions[2] = (romData[monsterStart + Action2] & 0x3F);
+			actions[3] = (romData[monsterStart + Action3] & 0x3F);
+			actions[4] = (romData[monsterStart + Action4] & 0x3F);
+			actions[5] = (romData[monsterStart + Action5] & 0x3F);
+			actions[6] = (romData[monsterStart + Action6] & 0x3F);
+			actions[7] = (romData[monsterStart + Action7] & 0x3F);
 
-			aiType = ((data[monsterStart + AISelector1] & 0x80) >> 7)
-				+ ((data[monsterStart + AISelector2] & 0x80) >> 7);
+			aiType = ((romData[monsterStart + AISelector1] & 0x80) >> 7)
+				+ ((romData[monsterStart + AISelector2] & 0x80) >> 7);
 
-			actionChance = ((data[monsterStart + ActionChance1] & 0x80) >> 7)
-				| ((data[monsterStart + ActionChance2] & 0x80) >> 7);
+			actionChance = ((romData[monsterStart + ActionChance1] & 0x80) >> 7)
+				| ((romData[monsterStart + ActionChance2] & 0x80) >> 7);
 
-			actionCountType = ((data[monsterStart + ActionCount1] & 0x80)
-				| (data[monsterStart + ActionCount2] & 0x80)) >> 7;
+			actionCountType = ((romData[monsterStart + ActionCount1] & 0x80)
+				| (romData[monsterStart + ActionCount2] & 0x80)) >> 7;
 
-			regeneration = ((data[monsterStart + Regeneration1] & 0x80)
-					| (data[monsterStart + Regeneration2] & 0x80)) >> 7;
+			regeneration = ((romData[monsterStart + Regeneration1] & 0x80)
+					| (romData[monsterStart + Regeneration2] & 0x80)) >> 7;
 
 			
 			int byteOffset = -1;
@@ -180,7 +183,7 @@ namespace AtomosZ.DragonAid.MonsterEditor
 			{
 				if (i % 3 == 0)
 					++byteOffset;
-				resistances[i] = (data[monsterStart + Resistance + byteOffset] & mask) >> shift;
+				resistances[i] = (romData[monsterStart + Resistance + byteOffset] & mask) >> shift;
 				shift -= 2;
 				if (shift == 0)
 					shift = 6;
@@ -189,9 +192,9 @@ namespace AtomosZ.DragonAid.MonsterEditor
 					mask = 0xC0;
 			}
 
-			focusFire = (data[monsterStart + FocusFire] & 0x02) == 0x08;
+			focusFire = (romData[monsterStart + FocusFire] & 0x02) == 0x08;
 
-			itemDropChance = data[monsterStart + ItemDropChance] & 0x07;
+			itemDropChance = romData[monsterStart + ItemDropChance] & 0x07;
 		}
 	}
 }

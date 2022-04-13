@@ -584,12 +584,13 @@
 			// 
 			this.name_flowLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.name_flowLayoutPanel.AutoSize = true;
 			this.name_flowLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.name_flowLayoutPanel.Controls.Add(this.index_label);
 			this.name_flowLayoutPanel.Controls.Add(this.monsterName_label);
 			this.name_flowLayoutPanel.Location = new System.Drawing.Point(0, 3);
 			this.name_flowLayoutPanel.Name = "name_flowLayoutPanel";
-			this.name_flowLayoutPanel.Size = new System.Drawing.Size(868, 25);
+			this.name_flowLayoutPanel.Size = new System.Drawing.Size(872, 39);
 			this.name_flowLayoutPanel.TabIndex = 15;
 			this.name_flowLayoutPanel.WrapContents = false;
 			// 
@@ -597,27 +598,28 @@
 			// 
 			this.index_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.index_label.AutoSize = true;
-			this.index_label.Location = new System.Drawing.Point(3, 2);
+			this.index_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.index_label.Location = new System.Drawing.Point(3, 9);
 			this.index_label.Name = "index_label";
-			this.index_label.Size = new System.Drawing.Size(31, 20);
+			this.index_label.Size = new System.Drawing.Size(34, 20);
 			this.index_label.TabIndex = 5;
 			this.index_label.Text = "00:";
 			// 
 			// monsterName_label
 			// 
 			this.monsterName_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.monsterName_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.monsterName_label.Location = new System.Drawing.Point(40, 0);
+			this.monsterName_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.monsterName_label.Location = new System.Drawing.Point(43, 0);
 			this.monsterName_label.Name = "monsterName_label";
-			this.monsterName_label.Size = new System.Drawing.Size(826, 25);
+			this.monsterName_label.Size = new System.Drawing.Size(826, 39);
 			this.monsterName_label.TabIndex = 0;
-			this.monsterName_label.Text = "Monster Name";
+			this.monsterName_label.Text = "Kandar Henchm{an/en}";
 			this.monsterName_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// tile_pictureBox
 			// 
 			this.tile_pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tile_pictureBox.Location = new System.Drawing.Point(0, 31);
+			this.tile_pictureBox.Location = new System.Drawing.Point(0, 45);
 			this.tile_pictureBox.Name = "tile_pictureBox";
 			this.tile_pictureBox.Size = new System.Drawing.Size(128, 128);
 			this.tile_pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -1174,7 +1176,7 @@
 			this.bottom_flowLayoutPanel.Controls.Add(this.Resistances_groupBox);
 			this.bottom_flowLayoutPanel.Controls.Add(this.itemDrop_flowLayoutPanel);
 			this.bottom_flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.bottom_flowLayoutPanel.Location = new System.Drawing.Point(4, 245);
+			this.bottom_flowLayoutPanel.Location = new System.Drawing.Point(4, 259);
 			this.bottom_flowLayoutPanel.Name = "bottom_flowLayoutPanel";
 			this.bottom_flowLayoutPanel.Size = new System.Drawing.Size(840, 685);
 			this.bottom_flowLayoutPanel.TabIndex = 29;
@@ -1515,7 +1517,7 @@
 			this.flowLayoutPanel1.Controls.Add(this.stats_flowLayoutPanel);
 			this.flowLayoutPanel1.Controls.Add(this.regen_flowLayoutPanel);
 			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(224, 34);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(224, 48);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(450, 203);
 			this.flowLayoutPanel1.TabIndex = 31;
@@ -1532,7 +1534,7 @@
 			this.Controls.Add(this.name_flowLayoutPanel);
 			this.Controls.Add(this.tile_pictureBox);
 			this.Name = "MonsterEditorView";
-			this.Size = new System.Drawing.Size(868, 933);
+			this.Size = new System.Drawing.Size(872, 947);
 			this.gold_flowLayoutPanel.ResumeLayout(false);
 			this.gold_flowLayoutPanel.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gold_spinner)).EndInit();

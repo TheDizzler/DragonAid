@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using AtomosZ.Dragonaid.ItemEditor;
+
+using AtomosZ.DragonAid.Libraries;
+
 using static AtomosZ.DragonAid.MonsterEditor.MonsterConsts;
 
 namespace AtomosZ.DragonAid.MonsterEditor
@@ -55,14 +57,15 @@ namespace AtomosZ.DragonAid.MonsterEditor
 				combobox.DataSource = bs;
 			}
 
-			itemDrop_comboBox.DataSource = ItemConsts.itemBasicList;
 			itemDropChance_comboBox.DataSource = MonsterConsts.itemDropChances;
 		}
 
-		public void LoadMonsterStats(byte[] byteData, int monsterIndex)
+		public void LoadMonsterStats(byte[] romData, byte monsterIndex)
 		{
-			data = byteData;
-			statBlock = new MonsterStatBlock(byteData, 0);
+			data = romData;
+			statBlock = new MonsterStatBlock(romData, monsterIndex);
+
+			monsterName_label.Text = statBlock.name;
 
 			index_label.Text = statBlock.index.ToString("X2") + ":";
 			level_spinner.Value = statBlock.level;
@@ -99,13 +102,14 @@ namespace AtomosZ.DragonAid.MonsterEditor
 
 			focusFire_checkBox.Checked = statBlock.focusFire;
 
+			itemDrop_comboBox.DataSource = Names.GetItemNames(romData);
 			itemDrop_comboBox.SelectedIndex = statBlock.itemDrop;
 			itemDropChance_comboBox.SelectedIndex = statBlock.itemDropChance;
 		}
 
 		private void Regen_spinner_ValueChanged(object sender, EventArgs e)
 		{
-			statBlock.regeneration = (int) regen_spinner.Value;
+			statBlock.regeneration = (int)regen_spinner.Value;
 			switch (statBlock.regeneration)
 			{
 				case 0:
@@ -132,7 +136,7 @@ namespace AtomosZ.DragonAid.MonsterEditor
 
 		private void ActionChanceType_spinner_ValueChanged(object sender, EventArgs e)
 		{
-			int chanceType = (int) actionChanceType_spinner.Value;
+			int chanceType = (int)actionChanceType_spinner.Value;
 
 			statBlock.actionChance = chanceType;
 			if (chanceType == 3)
@@ -170,7 +174,7 @@ namespace AtomosZ.DragonAid.MonsterEditor
 
 		private void ActionCount_Spinner_ValueChanged(object sender, EventArgs e)
 		{
-			int actionCount = (int) actionCount_Spinner.Value;
+			int actionCount = (int)actionCount_Spinner.Value;
 			statBlock.actionCountType = actionCount;
 
 			switch (actionCount)
