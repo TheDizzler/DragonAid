@@ -4,17 +4,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using AtomosZ.DragonAid.Libraries;
-using AtomosZ.DragonAid.PointerAid;
 using Newtonsoft.Json;
-
-using static AtomosZ.Dragonaid.PointerAid.PointerAidSettingsData;
 using static AtomosZ.DragonAid.Libraries.DynamicSubroutine;
 
 namespace AtomosZ.DragonAid.PointerAid
 {
 	public partial class PointerAidForm : Form, UserControlParent
 	{
-		private PointerAidSettingsData pointerAid;
+		private PointerAidSettingsData pointerAidUserSettings;
 		private byte[] gameData;
 
 		private DynamicPointerData pointerData;
@@ -23,30 +20,50 @@ namespace AtomosZ.DragonAid.PointerAid
 		{
 			InitializeComponent();
 
-			if (!File.Exists(pointerAidFormUserSettings))
+			if (!File.Exists(AidUserSettings.pointerAidFormUserSettingsFile))
 			{
-				while (!InitializeUserSettings())
+				while (!AidUserSettings.InitializeUserSettings(out pointerAidUserSettings))
 				{ }
 
 				ExtractDynamicPointers(gameData);
 			}
 			else
 			{
-				pointerAid = JsonConvert.DeserializeObject<PointerAidSettingsData>(
-					File.ReadAllText(pointerAidFormUserSettings));
-				gameData = File.ReadAllBytes(pointerAid.romFile);
-				if (string.IsNullOrEmpty(pointerAid.dynamicPointersJsonFile))
-				{
+				pointerAidUserSettings = JsonConvert.DeserializeObject<PointerAidSettingsData>(
+					File.ReadAllText(AidUserSettings.pointerAidFormUserSettingsFile));
+				gameData = File.ReadAllBytes(pointerAidUserSettings.romFile);
+				if (string.IsNullOrEmpty(pointerAidUserSettings.dynamicPointersJsonFile))
 					ExtractDynamicPointers(gameData);
-				}
 				else
 				{
-					pointerData = JsonConvert.DeserializeObject<DynamicPointerData>(
-						File.ReadAllText(pointerAid.dynamicPointersJsonFile));
+					if (!File.Exists(pointerAidUserSettings.dynamicPointersJsonFile))
+						PointerFileNotFound();
+					else
+						pointerData = JsonConvert.DeserializeObject<DynamicPointerData>(
+							File.ReadAllText(pointerAidUserSettings.dynamicPointersJsonFile));
 				}
 			}
 
 			Initialize();
+		}
+
+		private void PointerFileNotFound()
+		{
+			var result = MessageBox.Show("Yes: Find Pointer file manually.\nNo: Extract pointers from ROM.\nCancel: Exit program.",
+							"Could not find dynamic pointer file", MessageBoxButtons.YesNoCancel);
+			switch (result)
+			{
+				case DialogResult.Cancel:
+					Environment.Exit(0);
+					break;
+				case DialogResult.Yes:
+					if (!FindPointerFile())
+						PointerFileNotFound();
+					break;
+				case DialogResult.No:
+					RestoreFromROM_ToolStripMenuItem_Click(null, null);
+					break;
+			}
 		}
 
 		private void Initialize()
@@ -61,36 +78,6 @@ namespace AtomosZ.DragonAid.PointerAid
 			pointer07_listBox.DataSource = source;
 		}
 
-		private bool InitializeUserSettings()
-		{
-			FileDialog fileDialog = new OpenFileDialog();
-			fileDialog.Filter = "iNES files (*.nes)|*.nes";
-			fileDialog.CheckFileExists = true;
-
-			var result = fileDialog.ShowDialog();
-			if (result == DialogResult.Cancel)
-			{
-				Environment.Exit(0);
-			}
-			else if (result == DialogResult.OK)
-			{
-				var file = fileDialog.FileName;
-				gameData = File.ReadAllBytes(file);
-				if (gameData[0] != 0x4E && gameData[1] != 0x45 && gameData[2] != 0x53 && gameData[3] != 0x1A)
-				{
-					MessageBox.Show("Invalid iNES file");
-					return false;
-				}
-
-				pointerAid = new PointerAidSettingsData();
-				pointerAid.romFile = file;
-
-				File.WriteAllText(pointerAidFormUserSettings,
-					JsonConvert.SerializeObject(pointerAid, Formatting.Indented));
-			}
-
-			return true;
-		}
 
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
@@ -264,7 +251,7 @@ namespace AtomosZ.DragonAid.PointerAid
 
 		public void Save(object sender, EventArgs e)
 		{
-			if (string.IsNullOrEmpty(pointerAid.dynamicPointersJsonFile))
+			if (string.IsNullOrEmpty(pointerAidUserSettings.dynamicPointersJsonFile))
 			{
 				if (!ChooseSaveFile())
 				{
@@ -278,11 +265,11 @@ namespace AtomosZ.DragonAid.PointerAid
 
 		private void SaveData()
 		{
-			File.WriteAllText(pointerAid.dynamicPointersJsonFile,
+			File.WriteAllText(pointerAidUserSettings.dynamicPointersJsonFile,
 					JsonConvert.SerializeObject(pointerData, Formatting.Indented));
 
-			File.WriteAllText(pointerAidFormUserSettings,
-				JsonConvert.SerializeObject(pointerAid, Formatting.Indented));
+			File.WriteAllText(AidUserSettings.pointerAidFormUserSettingsFile,
+				JsonConvert.SerializeObject(pointerAidUserSettings, Formatting.Indented));
 
 			SaveNeeded(false);
 		}
@@ -291,8 +278,8 @@ namespace AtomosZ.DragonAid.PointerAid
 		{
 			SaveFileDialog dialog = new SaveFileDialog();
 			dialog.AddExtension = true;
-			dialog.DefaultExt = "*.da";
-			dialog.Filter = "DragonAid file (*.da)|*.da";
+			dialog.DefaultExt = "*" + AidUserSettings.pointerAidExtension;
+			dialog.Filter = $"DragonAid Pointer file (dialog.DefaultExt)|{dialog.DefaultExt}";
 
 			var result = dialog.ShowDialog();
 			if (result != DialogResult.OK)
@@ -300,7 +287,7 @@ namespace AtomosZ.DragonAid.PointerAid
 				return false;
 			}
 
-			pointerAid.dynamicPointersJsonFile = dialog.FileName;
+			pointerAidUserSettings.dynamicPointersJsonFile = dialog.FileName;
 
 			return true;
 		}
@@ -308,21 +295,31 @@ namespace AtomosZ.DragonAid.PointerAid
 
 		private void Load_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			FindPointerFile();
+		}
+
+		private bool FindPointerFile()
+		{
 			OpenFileDialog dialog = new OpenFileDialog();
 			dialog.AddExtension = true;
-			dialog.DefaultExt = "*.da";
-			dialog.Filter = "DragonAid file (*.da)|*.da";
+			dialog.DefaultExt = "*" + AidUserSettings.pointerAidExtension;
+			dialog.Filter = $"DragonAid Pointer file (dialog.DefaultExt)|{dialog.DefaultExt}";
 
 			var result = dialog.ShowDialog();
 			if (result == DialogResult.OK)
 			{
-				pointerAid.dynamicPointersJsonFile = dialog.FileName;
+				pointerAidUserSettings.dynamicPointersJsonFile = dialog.FileName;
 				pointerData = JsonConvert.DeserializeObject<DynamicPointerData>(
-						File.ReadAllText(pointerAid.dynamicPointersJsonFile));
+						File.ReadAllText(pointerAidUserSettings.dynamicPointersJsonFile));
 				Initialize();
 
 				SaveNeeded(false);
+
+				AidUserSettings.SaveUserSettings(pointerAidUserSettings);
+				return true;
 			}
+
+			return false;
 		}
 	}
 }

@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using AtomosZ.DragonAid.Libraries;
+﻿using AtomosZ.DragonAid.Libraries;
 
 namespace AtomosZ.DragonAid.PointerAid
 {
-	internal class PointerAidSettingsData
+	internal class PointerAidSettingsData : AidUserSettings
 	{
-		public static readonly string pointerAidFormUserSettings = @"PointerAidSettings.da";
-
-		public string romFile = @"";
 		public string dynamicPointersJsonFile = @"";
+
+		public PointerAidSettingsData()
+		{
+			userSettingsFile = pointerAidFormUserSettingsFile;
+			appExtension = ".dap";
+		}
 	}
 }
