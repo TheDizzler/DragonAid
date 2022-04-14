@@ -105,18 +105,6 @@
       <Project>{7435bed1-2e2b-4997-ad36-ae8ee1ce7f36}</Project>
       <Name>DragonaidLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DWIIIItemEditor\ItemEditor.csproj">
-      <Project>{7fdd9a75-708a-4f18-a4c7-146ded230ca0}</Project>
-      <Name>ItemEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DWIIIMonsterEditor\MonsterEditor.csproj">
-      <Project>{c4f437e6-da89-4300-a5ff-6b4b249958c2}</Project>
-      <Name>MonsterEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DWIIITextToHex\TextToHex.csproj">
-      <Project>{2b419ad1-631f-423b-a4a2-cb6ed97cd391}</Project>
-      <Name>TextToHex</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
