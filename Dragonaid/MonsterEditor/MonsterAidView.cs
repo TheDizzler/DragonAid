@@ -4,19 +4,23 @@ using System.Windows.Forms;
 
 using AtomosZ.DragonAid.Libraries;
 
-using static AtomosZ.DragonAid.MonsterEditor.MonsterConsts;
+using static AtomosZ.DragonAid.MonsterAid.MonsterConsts;
 
-namespace AtomosZ.DragonAid.MonsterEditor
+namespace AtomosZ.DragonAid.MonsterAid
 {
-	public partial class MonsterEditorView : UserControl
+	public partial class MonsterAidView : UserControl
 	{
+		public List<MonsterStatBlock> monsters;
+
 		private List<Label> actionChanceLabels;
 		private List<ComboBox> actionComboBoxes;
-		private byte[] data;
+		private byte[] romData;
 		private MonsterStatBlock statBlock;
 		private List<ComboBox> resistanceComboBoxes;
+		
 
-		public MonsterEditorView()
+
+		public MonsterAidView()
 		{
 			InitializeComponent();
 
@@ -60,11 +64,24 @@ namespace AtomosZ.DragonAid.MonsterEditor
 			itemDropChance_comboBox.DataSource = MonsterConsts.itemDropChances;
 		}
 
-		public void LoadMonsterStats(byte[] romData, byte monsterIndex)
+		public void LoadMonsterStatsFromROM(byte[] romData, byte index)
 		{
-			data = romData;
-			statBlock = new MonsterStatBlock(romData, monsterIndex);
+			this.romData = romData;
+			for (byte i = 0; i < UniversalConsts.monsterCount; ++i)
+				monsters.Add(new MonsterStatBlock(romData, i));
 
+			LoadMonster(index);
+		}
+
+		public void LoadEditedMonsterStats(List<MonsterStatBlock> monsterStats, byte index)
+		{
+			monsters = monsterStats;
+			LoadMonster(index);
+		}
+
+		public void LoadMonster(byte index)
+		{
+			statBlock = monsters[index];
 			monsterName_label.Text = statBlock.name;
 
 			index_label.Text = statBlock.index.ToString("X2") + ":";
@@ -107,6 +124,7 @@ namespace AtomosZ.DragonAid.MonsterEditor
 			itemDropChance_comboBox.SelectedIndex = statBlock.itemDropChance;
 		}
 
+
 		private void Regen_spinner_ValueChanged(object sender, EventArgs e)
 		{
 			statBlock.regeneration = (int)regen_spinner.Value;
@@ -118,8 +136,8 @@ namespace AtomosZ.DragonAid.MonsterEditor
 				default:
 					int i = statBlock.regeneration - 1;
 					i = i << 1;
-					int baseHP = data[RegenerationAddress + 0x10 + i];
-					int range = data[RegenerationAddress + 0x10 + i + 1] - 1;
+					int baseHP = romData[PointerList.Regeneration.offset + i];
+					int range = romData[PointerList.Regeneration.offset + i + 1] - 1;
 					regen_label.Text = $"{baseHP}-{baseHP + range} HP/turn";
 					break;
 			}
@@ -155,13 +173,13 @@ namespace AtomosZ.DragonAid.MonsterEditor
 				case 1:
 					actionChanceDesc_label.Text = "Type 1";
 					for (int i = 0; i < actionChanceLabels.Count; ++i)
-						actionChanceLabels[i].Text = (data[ActionChancesType1Address + 0x10 + i] / 2.56f).ToString("0.00") + "%";
+						actionChanceLabels[i].Text = (romData[PointerList.ActionChancesType1.offset + i] / 2.56f).ToString("0.00") + "%";
 					break;
 
 				case 2:
 					actionChanceDesc_label.Text = "Type 2";
 					for (int i = 0; i < actionChanceLabels.Count; ++i)
-						actionChanceLabels[i].Text = (data[ActionChancesType2Address + 0x10 + i] / 2.56f).ToString("0.00") + "%";
+						actionChanceLabels[i].Text = (romData[PointerList.ActionChancesType2.offset + i] / 2.56f).ToString("0.00") + "%";
 					break;
 
 				case 3:

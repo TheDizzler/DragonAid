@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AtomosZ.DragonAid.MonsterEditor.Properties {
+namespace AtomosZ.DragonAid.MonsterAid.Properties {
     using System;
     
     

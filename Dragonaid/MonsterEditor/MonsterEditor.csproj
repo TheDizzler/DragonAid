@@ -52,26 +52,26 @@
   <ItemGroup>
     <Compile Include="MonsterAidSettingsData.cs" />
     <Compile Include="MonsterConsts.cs" />
-    <Compile Include="MonsterEditorMainForm.cs">
+    <Compile Include="MonsterAidMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MonsterEditorMainForm.Designer.cs">
-      <DependentUpon>MonsterEditorMainForm.cs</DependentUpon>
+    <Compile Include="MonsterAidMainForm.Designer.cs">
+      <DependentUpon>MonsterAidMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MonsterEditorView.cs">
+    <Compile Include="MonsterAidView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MonsterEditorView.Designer.cs">
-      <DependentUpon>MonsterEditorView.cs</DependentUpon>
+    <Compile Include="MonsterAidView.Designer.cs">
+      <DependentUpon>MonsterAidView.cs</DependentUpon>
     </Compile>
     <Compile Include="MonsterStatBlock.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MonsterEditorMainForm.resx">
-      <DependentUpon>MonsterEditorMainForm.cs</DependentUpon>
+    <EmbeddedResource Include="MonsterAidMainForm.resx">
+      <DependentUpon>MonsterAidMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MonsterEditorView.resx">
-      <DependentUpon>MonsterEditorView.cs</DependentUpon>
+    <EmbeddedResource Include="MonsterAidView.resx">
+      <DependentUpon>MonsterAidView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -101,10 +101,6 @@
     <ProjectReference Include="..\DragonaidLibrary\DragonaidLibrary.csproj">
       <Project>{7435bed1-2e2b-4997-ad36-ae8ee1ce7f36}</Project>
       <Name>DragonaidLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ItemEditor\ItemEditor.csproj">
-      <Project>{7fdd9a75-708a-4f18-a4c7-146ded230ca0}</Project>
-      <Name>ItemEditor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

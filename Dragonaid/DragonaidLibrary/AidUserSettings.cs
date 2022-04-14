@@ -16,7 +16,7 @@ namespace AtomosZ.DragonAid.Libraries
 		public static readonly string monsterAidFormUserSettingsFile = @"MonsterAidSettings.damus";
 
 		public string userSettingsFile { get; protected set; }
-		public string appExtension { get; protected set; }
+		public string appExtension;
 		public string romFile = @"";
 
 

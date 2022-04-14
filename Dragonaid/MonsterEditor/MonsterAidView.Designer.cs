@@ -1,6 +1,6 @@
-﻿namespace AtomosZ.DragonAid.MonsterEditor
+﻿namespace AtomosZ.DragonAid.MonsterAid
 {
-	partial class MonsterEditorView
+	partial class MonsterAidView
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -1523,7 +1523,7 @@
 			this.flowLayoutPanel1.TabIndex = 31;
 			this.flowLayoutPanel1.WrapContents = false;
 			// 
-			// MonsterEditorView
+			// MonsterAidView
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1533,7 +1533,7 @@
 			this.Controls.Add(this.bottom_flowLayoutPanel);
 			this.Controls.Add(this.name_flowLayoutPanel);
 			this.Controls.Add(this.tile_pictureBox);
-			this.Name = "MonsterEditorView";
+			this.Name = "MonsterAidView";
 			this.Size = new System.Drawing.Size(872, 947);
 			this.gold_flowLayoutPanel.ResumeLayout(false);
 			this.gold_flowLayoutPanel.PerformLayout();

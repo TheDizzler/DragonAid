@@ -61,6 +61,7 @@
     <Compile Include="DynamicSubroutine.cs" />
     <Compile Include="Names.cs" />
     <Compile Include="PointerList.cs" />
+    <Compile Include="SpriteParser.cs" />
     <Compile Include="Tables.cs" />
     <Compile Include="UniversalConsts.cs" />
     <Compile Include="UserControlParent.cs" />

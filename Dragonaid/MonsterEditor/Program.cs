@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace AtomosZ.DragonAid.MonsterEditor
+namespace AtomosZ.DragonAid.MonsterAid
 {
 	static class Program
 	{
@@ -13,7 +13,7 @@ namespace AtomosZ.DragonAid.MonsterEditor
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MonsterEditorMainForm());
+			Application.Run(new MonsterAidMainForm());
 		}
 	}
 }

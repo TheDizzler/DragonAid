@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using AtomosZ.DragonAid.Libraries;
 
-namespace AtomosZ.DragonAid.MonsterEditor
+namespace AtomosZ.DragonAid.MonsterAid
 {
 	public static class MonsterConsts
 	{
@@ -19,10 +18,6 @@ namespace AtomosZ.DragonAid.MonsterEditor
 		{
 			Equal, Type1, Type2, FixedSequence
 		};
-
-		public static int ActionChancesType1Address = 0x1342A;
-		public static int ActionChancesType2Address = 0x13432;
-		public static int RegenerationAddress = 0x047EF;
 
 
 		public static string[] resistanceDescriptions = new string[4]
@@ -115,10 +110,7 @@ namespace AtomosZ.DragonAid.MonsterEditor
 			"3F = calls for reinforcements(Voodoo Shaman)",
 		};
 
-		public static Address MonsterStatBlockAddress = new Address("Monster Data 1", 0x0032D3)
-		{
-			length = 0x17,
-		};
+		
 
 		public static int Level = 0x00;
 		public static int Evade1 = 0x00;
