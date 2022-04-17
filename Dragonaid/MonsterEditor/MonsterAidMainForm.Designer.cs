@@ -31,17 +31,17 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MonsterAidMainForm));
 			this.nextMonster_button = new System.Windows.Forms.Button();
 			this.prevMonster_button = new System.Windows.Forms.Button();
-			this.monsterAidView = new AtomosZ.DragonAid.MonsterAid.MonsterAidView();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.restoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.loadROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.insertIntoROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.info_transparentPanel = new AtomosZ.DragonAid.Libraries.TransparentPanel();
 			this.saveStatus_label = new System.Windows.Forms.Label();
+			this.monsterAidView = new AtomosZ.DragonAid.MonsterAid.MonsterAidView();
 			this.menuStrip1.SuspendLayout();
 			this.info_transparentPanel.SuspendLayout();
 			this.SuspendLayout();
@@ -70,15 +70,6 @@
 			this.prevMonster_button.UseVisualStyleBackColor = true;
 			this.prevMonster_button.Click += new System.EventHandler(this.PrevMonster_button_Click);
 			// 
-			// monsterAidView
-			// 
-			this.monsterAidView.AutoSize = true;
-			this.monsterAidView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.monsterAidView.Location = new System.Drawing.Point(0, 45);
-			this.monsterAidView.Name = "monsterAidView";
-			this.monsterAidView.Size = new System.Drawing.Size(847, 947);
-			this.monsterAidView.TabIndex = 14;
-			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -93,53 +84,55 @@
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadROMToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.restoreToolStripMenuItem,
-            this.loadROMToolStripMenuItem,
             this.insertIntoROMToolStripMenuItem,
             this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
 			this.fileToolStripMenuItem.Text = "File";
 			// 
+			// loadROMToolStripMenuItem
+			// 
+			this.loadROMToolStripMenuItem.Name = "loadROMToolStripMenuItem";
+			this.loadROMToolStripMenuItem.Size = new System.Drawing.Size(282, 34);
+			this.loadROMToolStripMenuItem.Text = "Load MonsterAid File";
+			this.loadROMToolStripMenuItem.Click += new System.EventHandler(this.LoadMonsterAidFileToolStripMenuItem_Click);
+			// 
 			// saveToolStripMenuItem
 			// 
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(241, 34);
-			this.saveToolStripMenuItem.Text = "Save";
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(282, 34);
+			this.saveToolStripMenuItem.Text = "Save MonsterAid File";
 			this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(241, 34);
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(282, 34);
 			this.saveAsToolStripMenuItem.Text = "Save As";
 			this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAs_ToolStripMenuItem_Click);
 			// 
 			// restoreToolStripMenuItem
 			// 
 			this.restoreToolStripMenuItem.Name = "restoreToolStripMenuItem";
-			this.restoreToolStripMenuItem.Size = new System.Drawing.Size(241, 34);
-			this.restoreToolStripMenuItem.Text = "Restore";
-			// 
-			// loadROMToolStripMenuItem
-			// 
-			this.loadROMToolStripMenuItem.Name = "loadROMToolStripMenuItem";
-			this.loadROMToolStripMenuItem.Size = new System.Drawing.Size(241, 34);
-			this.loadROMToolStripMenuItem.Text = "Load ROM";
-			this.loadROMToolStripMenuItem.Click += new System.EventHandler(this.LoadROMToolStripMenuItem_Click);
+			this.restoreToolStripMenuItem.Size = new System.Drawing.Size(282, 34);
+			this.restoreToolStripMenuItem.Text = "Restore from ROM";
+			this.restoreToolStripMenuItem.Click += new System.EventHandler(this.RestoreToolStripMenuItem_Click);
 			// 
 			// insertIntoROMToolStripMenuItem
 			// 
 			this.insertIntoROMToolStripMenuItem.Name = "insertIntoROMToolStripMenuItem";
-			this.insertIntoROMToolStripMenuItem.Size = new System.Drawing.Size(241, 34);
+			this.insertIntoROMToolStripMenuItem.Size = new System.Drawing.Size(282, 34);
 			this.insertIntoROMToolStripMenuItem.Text = "Insert Into ROM";
+			this.insertIntoROMToolStripMenuItem.Click += new System.EventHandler(this.InsertIntoROMToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(241, 34);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(282, 34);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
 			// 
@@ -161,8 +154,16 @@
 			this.saveStatus_label.Size = new System.Drawing.Size(96, 20);
 			this.saveStatus_label.TabIndex = 0;
 			this.saveStatus_label.Text = "Save Status";
-			this.saveStatus_label.TextAlign = System.Drawing.ContentAlignment.BottomRight;
 			this.saveStatus_label.Visible = false;
+			// 
+			// monsterAidView
+			// 
+			this.monsterAidView.AutoSize = true;
+			this.monsterAidView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.monsterAidView.Location = new System.Drawing.Point(0, 45);
+			this.monsterAidView.Name = "monsterAidView";
+			this.monsterAidView.Size = new System.Drawing.Size(847, 947);
+			this.monsterAidView.TabIndex = 14;
 			// 
 			// MonsterAidMainForm
 			// 

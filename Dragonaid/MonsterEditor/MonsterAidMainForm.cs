@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.PerformanceData;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 
@@ -20,7 +17,6 @@ namespace AtomosZ.DragonAid.MonsterAid
 		{
 			InitializeComponent();
 
-
 			if (!File.Exists(MonsterAidSettingsData.monsterAidFormUserSettingsFile))
 			{
 				while (!AidUserSettings.InitializeUserSettings(out monsterAidUserSettings))
@@ -33,16 +29,16 @@ namespace AtomosZ.DragonAid.MonsterAid
 			{
 				monsterAidUserSettings = JsonConvert.DeserializeObject<MonsterAidSettingsData>(
 					File.ReadAllText(MonsterAidSettingsData.monsterAidFormUserSettingsFile));
+				romData = File.ReadAllBytes(monsterAidUserSettings.romFile);
 
 				if (File.Exists(monsterAidUserSettings.monsterEditJsonFile))
 				{
 					var monsterStats = JsonConvert.DeserializeObject<List<MonsterStatBlock>>(
 						File.ReadAllText(monsterAidUserSettings.monsterEditJsonFile));
-					monsterAidView.LoadEditedMonsterStats(monsterStats, monsterAidUserSettings.monsterIndex);
+					monsterAidView.LoadEditedMonsterStats(romData, monsterStats, monsterAidUserSettings.monsterIndex);
 				}
 				else
 				{
-					romData = File.ReadAllBytes(monsterAidUserSettings.romFile);
 					monsterAidView.LoadMonsterStatsFromROM(romData, monsterAidUserSettings.monsterIndex);
 				}
 			}
@@ -50,7 +46,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 
 		private void NextMonster_button_Click(object sender, System.EventArgs e)
 		{
-			if (++monsterAidUserSettings.monsterIndex > UniversalConsts.monsterCount)
+			if (++monsterAidUserSettings.monsterIndex >= UniversalConsts.monsterCount)
 				monsterAidUserSettings.monsterIndex = 0;
 			monsterAidView.LoadMonster(monsterAidUserSettings.monsterIndex);
 		}
@@ -58,7 +54,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 		private void PrevMonster_button_Click(object sender, System.EventArgs e)
 		{
 			if (--monsterAidUserSettings.monsterIndex > UniversalConsts.monsterCount)
-				monsterAidUserSettings.monsterIndex = UniversalConsts.monsterCount;
+				monsterAidUserSettings.monsterIndex = (byte)(UniversalConsts.monsterCount - 1);
 			monsterAidView.LoadMonster(monsterAidUserSettings.monsterIndex);
 		}
 
@@ -86,20 +82,27 @@ namespace AtomosZ.DragonAid.MonsterAid
 			this.Text = "MonsterAid" + (needed ? "*" : "");
 		}
 
-		private void LoadROMToolStripMenuItem_Click(object sender, System.EventArgs e)
+		private void LoadMonsterAidFileToolStripMenuItem_Click(object sender, System.EventArgs e)
 		{
+			var result = MessageBox.Show("You will lose any unsaved data.",
+				"Load monster data from file?", MessageBoxButtons.YesNo);
+
+			if (result != DialogResult.Yes)
+				return;
+
+
 			OpenFileDialog dialog = new OpenFileDialog();
 			dialog.AddExtension = true;
 			dialog.DefaultExt = "*" + AidUserSettings.monsterAidExtension;
 			dialog.Filter = $"DragonAid Monster file ({dialog.DefaultExt})|{dialog.DefaultExt}";
 
-			var result = dialog.ShowDialog();
+			result = dialog.ShowDialog();
 			if (result == DialogResult.OK)
 			{
 				monsterAidUserSettings.monsterEditJsonFile = dialog.FileName;
 				var monsterStats = JsonConvert.DeserializeObject<List<MonsterStatBlock>>(
 						File.ReadAllText(monsterAidUserSettings.monsterEditJsonFile));
-				monsterAidView.LoadEditedMonsterStats(monsterStats, monsterAidUserSettings.monsterIndex);
+				monsterAidView.LoadEditedMonsterStats(romData, monsterStats, monsterAidUserSettings.monsterIndex);
 
 				SaveNeeded(false);
 			}
@@ -129,6 +132,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 
 		private void SaveData()
 		{
+			monsterAidView.SaveStatBlockValues();
 			File.WriteAllText(monsterAidUserSettings.monsterEditJsonFile,
 				JsonConvert.SerializeObject(monsterAidView.monsters, Formatting.Indented));
 
@@ -154,6 +158,17 @@ namespace AtomosZ.DragonAid.MonsterAid
 			monsterAidUserSettings.monsterEditJsonFile = dialog.FileName;
 
 			return true;
+		}
+
+		private void RestoreToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var result = MessageBox.Show("You will lose any unsaved data.",
+				"Restore monster data from ROM?", MessageBoxButtons.YesNo);
+
+			if (result == DialogResult.Yes)
+			{
+				monsterAidView.LoadMonsterStatsFromROM(romData, monsterAidUserSettings.monsterIndex);
+			}
 		}
 	}
 }

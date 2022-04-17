@@ -128,6 +128,13 @@ namespace AtomosZ.DragonAid.MonsterAid
 		public bool focusFire;
 		public int itemDropChance;
 
+		/// <summary>
+		/// Required for Json reconstruction.
+		/// </summary>
+		public MonsterStatBlock()
+		{
+
+		}
 
 		public MonsterStatBlock(byte[] romData, byte monsterIndex)
 		{
@@ -195,12 +202,90 @@ namespace AtomosZ.DragonAid.MonsterAid
 		}
 
 
+		public int[] ConvertStatBlockToBytes()
+		{
+			int[] statData = new int[0x17];
 
+			statData[Level] |= level;
 
+			statData[Evade1] |= (evade & 0x18) << 3;
+			statData[Evade2] |= (evade & 0x04) << 5;
+
+			statData[Exp1] |= exp & 0xFF;
+			statData[Exp2] |= exp >> 8;
+
+			statData[Agility] |= agility;
+
+			statData[Gold1] |= gold & 0xFF;
+			statData[Gold2] |= gold >> 8;
+
+			statData[Attack1] |= attackPower & 0xFF;
+			statData[Attack2] |= attackPower >> 8;
+
+			statData[Defense1] |= defensePower & 0xFF;
+			statData[Defense2] |= defensePower >> 8;
+
+			statData[HP1] |= hp & 0xFF;
+			statData[HP2] |= hp >> 8;
+
+			statData[MP] |= mp;
+
+			statData[ItemDrop] |= itemDrop;
+
+			statData[Action0] |= actions[0];
+			statData[Action1] |= actions[1];
+			statData[Action2] |= actions[2];
+			statData[Action3] |= actions[3];
+			statData[Action4] |= actions[4];
+			statData[Action5] |= actions[5];
+			statData[Action6] |= actions[6];
+			statData[Action7] |= actions[7];
+
+			switch (aiType)
 			{
+				case 0:
+					statData[AISelector1] |= 0x00;
+					statData[AISelector2] |= 0x00;
+					break;
+				case 1: // does this need to be reversed?
+					statData[AISelector1] |= 0x80;
+					statData[AISelector2] |= 0x00;
+					break;
+				case 2:
+					statData[AISelector1] |= 0x80;
+					statData[AISelector2] |= 0x80;
+					break;
 			}
 
+			statData[ActionChance1] |= (actionChance & 0x01) << 7; // these might be backwards
+			statData[ActionChance2] |= (actionChance & 0x02) << 6;
 
+			statData[ActionCount1] |= (actionCountType & 0x01) << 7; // these might be backwards
+			statData[ActionCount2] |= (actionCountType & 0x02) << 6;
+
+			statData[Regeneration1] |= (regeneration & 0x01) << 7;
+			statData[Regeneration2] |= (regeneration & 0x02) << 6;
+
+			statData[Resistance] |= resistances[0] << 6;
+			statData[Resistance] |= resistances[1] << 4;
+			statData[Resistance] |= resistances[2] << 2;
+			statData[Resistance + 1] |= resistances[3] << 6;
+			statData[Resistance + 1] |= resistances[4] << 4;
+			statData[Resistance + 1] |= resistances[5] << 2;
+			statData[Resistance + 2] |= resistances[6] << 6;
+			statData[Resistance + 2] |= resistances[7] << 4;
+			statData[Resistance + 2] |= resistances[8] << 2;
+			statData[Resistance + 3] |= resistances[9] << 6;
+			statData[Resistance + 3] |= resistances[10] << 4;
+			statData[Resistance + 3] |= resistances[11] << 2;
+			statData[Resistance + 4] |= resistances[12] << 6;
+			statData[Resistance + 4] |= resistances[13] << 4;
+
+			statData[FocusFire] |= focusFire ? 0x08 : 0x00;
+
+			statData[ItemDropChance] |= itemDropChance;
+
+			return statData;
 		}
 	}
 }
