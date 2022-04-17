@@ -63,6 +63,9 @@
     <Compile Include="PointerList.cs" />
     <Compile Include="SpriteParser.cs" />
     <Compile Include="Tables.cs" />
+    <Compile Include="TransparentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UniversalConsts.cs" />
     <Compile Include="UserControlParent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

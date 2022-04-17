@@ -40,10 +40,10 @@
 			this.loadROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.insertIntoROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.info_panel = new System.Windows.Forms.Panel();
+			this.info_transparentPanel = new AtomosZ.DragonAid.Libraries.TransparentPanel();
 			this.saveStatus_label = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
-			this.info_panel.SuspendLayout();
+			this.info_transparentPanel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// nextMonster_button
@@ -143,14 +143,14 @@
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
 			// 
-			// info_panel
+			// info_transparentPanel
 			// 
-			this.info_panel.Controls.Add(this.saveStatus_label);
-			this.info_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.info_panel.Location = new System.Drawing.Point(0, 1083);
-			this.info_panel.Name = "info_panel";
-			this.info_panel.Size = new System.Drawing.Size(849, 27);
-			this.info_panel.TabIndex = 18;
+			this.info_transparentPanel.Controls.Add(this.saveStatus_label);
+			this.info_transparentPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.info_transparentPanel.Location = new System.Drawing.Point(0, 1052);
+			this.info_transparentPanel.Name = "info_transparentPanel";
+			this.info_transparentPanel.Size = new System.Drawing.Size(849, 30);
+			this.info_transparentPanel.TabIndex = 19;
 			// 
 			// saveStatus_label
 			// 
@@ -170,8 +170,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ClientSize = new System.Drawing.Size(849, 1110);
-			this.Controls.Add(this.info_panel);
+			this.ClientSize = new System.Drawing.Size(849, 1082);
+			this.Controls.Add(this.info_transparentPanel);
 			this.Controls.Add(this.prevMonster_button);
 			this.Controls.Add(this.nextMonster_button);
 			this.Controls.Add(this.monsterAidView);
@@ -182,8 +182,8 @@
 			this.Text = "MonsterAid - DragonAid Monster Editor";
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
-			this.info_panel.ResumeLayout(false);
-			this.info_panel.PerformLayout();
+			this.info_transparentPanel.ResumeLayout(false);
+			this.info_transparentPanel.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -201,7 +201,7 @@
 		private System.Windows.Forms.ToolStripMenuItem loadROMToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem insertIntoROMToolStripMenuItem;
-		private System.Windows.Forms.Panel info_panel;
+		private Libraries.TransparentPanel info_transparentPanel;
 		private System.Windows.Forms.Label saveStatus_label;
 	}
 }
