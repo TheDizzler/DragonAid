@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 using AtomosZ.DragonAid.Libraries;
@@ -17,7 +18,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 		private byte[] romData;
 		private MonsterStatBlock statBlock;
 		private List<ComboBox> resistanceComboBoxes;
-		
+
 
 
 		public MonsterAidView()
@@ -67,20 +68,46 @@ namespace AtomosZ.DragonAid.MonsterAid
 		public void LoadMonsterStatsFromROM(byte[] romData, byte index)
 		{
 			this.romData = romData;
+			monsters = new List<MonsterStatBlock>();
 			for (byte i = 0; i < UniversalConsts.monsterCount; ++i)
 				monsters.Add(new MonsterStatBlock(romData, i));
 
+			statBlock = null;
 			LoadMonster(index);
 		}
 
-		public void LoadEditedMonsterStats(List<MonsterStatBlock> monsterStats, byte index)
+		public byte[] GetMonsterStats()
 		{
+			SaveStatBlockValues();
+
+			byte[] monsterStats = new byte[UniversalConsts.monsterStatLength * UniversalConsts.monsterCount];
+			int missCount = 0;
+			for (byte i = 0; i < UniversalConsts.monsterCount; ++i)
+			{
+				var monster = monsters[i];
+				int[] monsterStatBlock = monster.ConvertStatBlockToBytes();
+
+				ValidateMonsterData(i, monsterStatBlock, ref missCount);
+			}
+
+			Debug.WriteLine("missCount: " + missCount);
+			return monsterStats;
+		}
+
+
+		public void LoadEditedMonsterStats(byte[] romData, List<MonsterStatBlock> monsterStats, byte index)
+		{
+			this.romData = romData;
 			monsters = monsterStats;
+			statBlock = null;
 			LoadMonster(index);
 		}
 
 		public void LoadMonster(byte index)
 		{
+			if (statBlock != null)
+				SaveStatBlockValues();
+
 			statBlock = monsters[index];
 			monsterName_label.Text = statBlock.name;
 
@@ -125,6 +152,30 @@ namespace AtomosZ.DragonAid.MonsterAid
 		}
 
 
+		public void SaveStatBlockValues()
+		{
+			statBlock.level = (int)level_spinner.Value;
+			statBlock.evade = (int)evade_spinner.Value;
+			statBlock.exp = (int)exp_spinner.Value;
+			statBlock.agility = (int)agi_spinner.Value;
+			statBlock.gold = (int)gold_spinner.Value;
+			statBlock.attackPower = (int)atk_spinner.Value;
+			statBlock.defensePower = (int)def_spinner.Value;
+			statBlock.hp = (int)hp_spinner.Value;
+			statBlock.mp = (int)mp_spinner.Value;
+			for (int i = 0; i < actionComboBoxes.Count; ++i)
+				statBlock.actions[i] = actionComboBoxes[i].SelectedIndex;
+			statBlock.aiType = aiType_comboBox.SelectedIndex;
+			statBlock.actionChance = (int)actionChanceType_spinner.Value;
+			statBlock.actionCountType = (int)actionCount_Spinner.Value;
+			statBlock.regeneration = (int)regen_spinner.Value;
+			for (int i = 0; i < resistanceComboBoxes.Count; ++i)
+				statBlock.resistances[i] = resistanceComboBoxes[i].SelectedIndex;
+			statBlock.focusFire = focusFire_checkBox.Checked;
+			statBlock.itemDrop = itemDrop_comboBox.SelectedIndex;
+			statBlock.itemDropChance = itemDropChance_comboBox.SelectedIndex;
+		}
+
 		private void Regen_spinner_ValueChanged(object sender, EventArgs e)
 		{
 			statBlock.regeneration = (int)regen_spinner.Value;
@@ -142,6 +193,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 					break;
 			}
 		}
+
 
 		private void AiType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -218,6 +270,36 @@ namespace AtomosZ.DragonAid.MonsterAid
 					else
 						actionCount_label.Text = "1-3";
 					break;
+			}
+		}
+
+		/// <summary>
+		/// Compare with original data to make sure parse and save is correct.
+		/// </summary>
+		/// <param name="monsterIndex"></param>
+		/// <param name="monsterStatBlock"></param>
+		/// <param name="missCount"></param>
+		private void ValidateMonsterData(byte monsterIndex, int[] monsterStatBlock, ref int missCount)
+		{
+			int monsterStart = PointerList.MonsterStatBlockAddress.offset + monsterIndex * UniversalConsts.monsterStatLength;
+
+			for (int i = 0; i < UniversalConsts.monsterStatLength; ++i)
+			{
+				if (romData[monsterStart + i] != monsterStatBlock[i])
+				{
+					if (i == 10)
+					{
+						if ((romData[monsterStart + i] ^ monsterStatBlock[i]) == 0x80
+							&& (romData[monsterStart + i + 1] ^ monsterStatBlock[i + 1]) == 0x80)
+						{
+							++i;
+							continue;
+						}
+					}
+
+					Debug.WriteLine($"{monsterIndex} - {Names.GetMonsterName(romData, monsterIndex)} {i}: {romData[monsterStart + i].ToString("X2")} != {monsterStatBlock[i].ToString("X2")}");
+					++missCount;
+				}
 			}
 		}
 	}

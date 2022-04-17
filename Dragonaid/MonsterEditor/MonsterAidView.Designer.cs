@@ -206,11 +206,6 @@
 			// 
 			// gold_spinner
 			// 
-			this.gold_spinner.Increment = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
 			this.gold_spinner.Location = new System.Drawing.Point(56, 3);
 			this.gold_spinner.Maximum = new decimal(new int[] {
             1023,
@@ -250,11 +245,6 @@
 			// 
 			// exp_spinner
 			// 
-			this.exp_spinner.Increment = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
 			this.exp_spinner.Location = new System.Drawing.Point(53, 3);
 			this.exp_spinner.Maximum = new decimal(new int[] {
             65535,

@@ -93,15 +93,16 @@ namespace AtomosZ.DragonAid.MonsterAid
 		public int aiType;
 
 		/// <summary>
-		/// 2 bits.
-		/// 
-		/// [ActionChance1] AND 0x80 right shift 7 | [ActionChance2] AND 0x80 right shift 7
+		/// 2 bits = 4 selections.
+		/// Which one is the high byte?
+		/// [ActionChance1] AND 0x80 right shift 7? | [ActionChance2] AND 0x80 right shift 6?
 		/// </summary>
 		public int actionChance;
 
 		/// <summary>
-		/// 2 bits.
-		/// [ActionCount1] AND 0x80 right shift 7 | [ActionCount2] AND 0x80 right shift 7
+		/// 2 bits = 4 selections.
+		/// Which one is the high byte?
+		/// [ActionCount1] AND 0x80 right shift 7? | [ActionCount2] AND 0x80 right shift 6?
 		/// 
 		/// For	AI type 2:		1, 1-2, 1-2, 2
 		///	For other AI types:	1, 1-2, 2,   1-3
@@ -109,9 +110,9 @@ namespace AtomosZ.DragonAid.MonsterAid
 		public int actionCountType;
 
 		/// <summary>
-		/// 2 bits.
-		/// 
-		/// [Regeneration1] AND 0x80 right shift 7 | [Regeneration2] AND 0x80 right shift 7
+		/// 2 bits = 4 selections.
+		/// Which one is the high byte?
+		/// [Regeneration1] AND 0x80 right shift 7? | [Regeneration2] AND 0x80 right shift 6?
 		/// Type 0: no regeneration
 		///	Type 1: 16-23 HP/turn
 		///	Type 2: 44-55 HP/turn
@@ -134,15 +135,15 @@ namespace AtomosZ.DragonAid.MonsterAid
 			int monsterStart = PointerList.MonsterStatBlockAddress.offset + index * PointerList.MonsterStatBlockAddress.length;
 
 			name = Names.GetMonsterName(romData, monsterIndex);
-			level = romData[monsterStart + MonsterConsts.Level] & 0x3F;
-			evade = romData[monsterStart + MonsterConsts.Evade1] & 0xB0;
+			level = romData[monsterStart + Level] & 0x3F;
+			evade = romData[monsterStart + Evade1] & 0xC0;
 			evade = evade >> 3;
-			int evade2 = romData[monsterStart + MonsterConsts.Evade2] & 0x80;
+			int evade2 = romData[monsterStart + Evade2] & 0x80;
 			evade2 = evade2 >> 5;
 			evade = evade | evade2;
-			exp = (romData[monsterStart + MonsterConsts.Exp2] << 8) | romData[monsterStart + Exp1];
+			exp = (romData[monsterStart + Exp2] << 8) | romData[monsterStart + Exp1];
 
-			agility = romData[monsterStart + MonsterConsts.Agility];
+			agility = romData[monsterStart + Agility];
 
 			gold = romData[monsterStart + Gold1] | ((romData[monsterStart + Gold2] & 0x03) << 8);
 
@@ -167,34 +168,39 @@ namespace AtomosZ.DragonAid.MonsterAid
 				+ ((romData[monsterStart + AISelector2] & 0x80) >> 7);
 
 			actionChance = ((romData[monsterStart + ActionChance1] & 0x80) >> 7)
-				| ((romData[monsterStart + ActionChance2] & 0x80) >> 7);
+				| ((romData[monsterStart + ActionChance2] & 0x80) >> 6);
+			actionCountType = ((romData[monsterStart + ActionCount1] & 0x80) >> 7)
+				| ((romData[monsterStart + ActionCount2] & 0x80) >> 6);
+			regeneration = ((romData[monsterStart + Regeneration1] & 0x80) >> 7)
+				| ((romData[monsterStart + Regeneration2] & 0x80) >> 6);
 
-			actionCountType = ((romData[monsterStart + ActionCount1] & 0x80)
-				| (romData[monsterStart + ActionCount2] & 0x80)) >> 7;
+			resistances[0] = (romData[monsterStart + Resistance + 0] & 0xC0) >> 6;
+			resistances[1] = (romData[monsterStart + Resistance + 0] & 0x30) >> 4;
+			resistances[2] = (romData[monsterStart + Resistance + 0] & 0x0C) >> 2;
+			resistances[3] = (romData[monsterStart + Resistance + 1] & 0xC0) >> 6;
+			resistances[4] = (romData[monsterStart + Resistance + 1] & 0x30) >> 4;
+			resistances[5] = (romData[monsterStart + Resistance + 1] & 0x0C) >> 2;
+			resistances[6] = (romData[monsterStart + Resistance + 2] & 0xC0) >> 6;
+			resistances[7] = (romData[monsterStart + Resistance + 2] & 0x30) >> 4;
+			resistances[8] = (romData[monsterStart + Resistance + 2] & 0x0C) >> 2;
+			resistances[9] = (romData[monsterStart + Resistance + 3] & 0xC0) >> 6;
+			resistances[10] = (romData[monsterStart + Resistance + 3] & 0x30) >> 4;
+			resistances[11] = (romData[monsterStart + Resistance + 3] & 0x0C) >> 2;
+			resistances[12] = (romData[monsterStart + Resistance + 4] & 0xC0) >> 6;
+			resistances[13] = (romData[monsterStart + Resistance + 4] & 0x30) >> 4;
 
-			regeneration = ((romData[monsterStart + Regeneration1] & 0x80)
-					| (romData[monsterStart + Regeneration2] & 0x80)) >> 7;
-
-			
-			int byteOffset = -1;
-			int shift = 6;
-			int mask = 0xC0;
-			for (int i = 0; i < resistances.Length; ++i)
-			{
-				if (i % 3 == 0)
-					++byteOffset;
-				resistances[i] = (romData[monsterStart + Resistance + byteOffset] & mask) >> shift;
-				shift -= 2;
-				if (shift == 0)
-					shift = 6;
-				mask = mask >> 2;
-				if (mask == 0x03)
-					mask = 0xC0;
-			}
-
-			focusFire = (romData[monsterStart + FocusFire] & 0x02) == 0x08;
+			focusFire = (romData[monsterStart + FocusFire] & 0x08) == 0x08;
 
 			itemDropChance = romData[monsterStart + ItemDropChance] & 0x07;
+		}
+
+
+
+
+			{
+			}
+
+
 		}
 	}
 }
