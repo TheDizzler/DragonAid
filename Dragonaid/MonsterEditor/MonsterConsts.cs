@@ -145,7 +145,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 		public static int Regeneration1 = 0x10;
 		public static int Regeneration2 = 0x11;
 		public static int Resistance = 0x12;
-		public static int FocusFire = 0x17;
-		public static int ItemDropChance = 0x17;
+		public static int FocusFire = 0x16;
+		public static int ItemDropChance = 0x16;
 	}
 }
