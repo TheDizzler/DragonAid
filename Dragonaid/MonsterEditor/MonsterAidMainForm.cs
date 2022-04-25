@@ -170,5 +170,21 @@ namespace AtomosZ.DragonAid.MonsterAid
 				monsterAidView.LoadMonsterStatsFromROM(romData, monsterAidUserSettings.monsterIndex);
 			}
 		}
+
+		private void InsertIntoROMToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			SaveFileDialog saveDialog = new SaveFileDialog();
+			saveDialog.Filter = "iNES files (*.nes)|*.nes";
+			saveDialog.FileName = Path.GetFileNameWithoutExtension(monsterAidUserSettings.romFile) + "_new.nes";
+			var result = saveDialog.ShowDialog();
+
+			if (result == DialogResult.OK)
+			{
+				byte[] monsterStats = monsterAidView.GetMonsterStats();
+				for (int i = 0; i < monsterStats.Length; ++i)
+					romData[PointerList.MonsterStatBlockAddress.offset + i] = monsterStats[i];
+				File.WriteAllBytes(saveDialog.FileName, romData);
+			}
+		}
 	}
 }
