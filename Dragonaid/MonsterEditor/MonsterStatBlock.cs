@@ -143,20 +143,20 @@ namespace AtomosZ.DragonAid.MonsterAid
 
 			name = Names.GetMonsterName(romData, monsterIndex);
 			level = romData[monsterStart + Level] & 0x3F;
-			evade = romData[monsterStart + Evade1] & 0xC0;
+			evade = romData[monsterStart + Evade0] & 0xC0;
 			evade = evade >> 3;
-			int evade2 = romData[monsterStart + Evade2] & 0x80;
+			int evade2 = romData[monsterStart + Evade1] & 0x80;
 			evade2 = evade2 >> 5;
 			evade = evade | evade2;
-			exp = (romData[monsterStart + Exp2] << 8) | romData[monsterStart + Exp1];
+			exp = (romData[monsterStart + Exp1] << 8) | romData[monsterStart + Exp0];
 
 			agility = romData[monsterStart + Agility];
 
-			gold = romData[monsterStart + Gold1] | ((romData[monsterStart + Gold2] & 0x03) << 8);
+			gold = romData[monsterStart + Gold0] | ((romData[monsterStart + Gold1] & 0x03) << 8);
 
-			attackPower = romData[monsterStart + Attack1] | (romData[monsterStart + Attack2] & 0x03) << 8;
-			defensePower = romData[monsterStart + Defense1] | (romData[monsterStart + Defense2] & 0x03) << 8;
-			hp = romData[monsterStart + HP1] | (romData[monsterStart + HP2] & 0x03) << 8;
+			attackPower = romData[monsterStart + Attack0] | (romData[monsterStart + Attack1] & 0x03) << 8;
+			defensePower = romData[monsterStart + Defense0] | (romData[monsterStart + Defense1] & 0x03) << 8;
+			hp = romData[monsterStart + HP0] | (romData[monsterStart + HP1] & 0x03) << 8;
 
 			mp = romData[monsterStart + MP];
 
@@ -171,15 +171,15 @@ namespace AtomosZ.DragonAid.MonsterAid
 			actions[6] = (romData[monsterStart + Action6] & 0x3F);
 			actions[7] = (romData[monsterStart + Action7] & 0x3F);
 
-			aiType = ((romData[monsterStart + AISelector1] & 0x80) >> 7)
-				+ ((romData[monsterStart + AISelector2] & 0x80) >> 7);
+			aiType = ((romData[monsterStart + AISelector0] & 0x80) >> 7)
+				+ ((romData[monsterStart + AISelector1] & 0x80) >> 7);
 
-			actionChance = ((romData[monsterStart + ActionChance1] & 0x80) >> 7)
-				| ((romData[monsterStart + ActionChance2] & 0x80) >> 6);
-			actionCountType = ((romData[monsterStart + ActionCount1] & 0x80) >> 7)
-				| ((romData[monsterStart + ActionCount2] & 0x80) >> 6);
-			regeneration = ((romData[monsterStart + Regeneration1] & 0x80) >> 7)
-				| ((romData[monsterStart + Regeneration2] & 0x80) >> 6);
+			actionChance = ((romData[monsterStart + ActionChance0] & 0x80) >> 7)
+				| ((romData[monsterStart + ActionChance1] & 0x80) >> 6);
+			actionCountType = ((romData[monsterStart + ActionCount0] & 0x80) >> 7)
+				| ((romData[monsterStart + ActionCount1] & 0x80) >> 6);
+			regeneration = ((romData[monsterStart + Regeneration0] & 0x80) >> 7)
+				| ((romData[monsterStart + Regeneration1] & 0x80) >> 6);
 
 			resistances[0] = (romData[monsterStart + Resistance + 0] & 0xC0) >> 6;
 			resistances[1] = (romData[monsterStart + Resistance + 0] & 0x30) >> 4;
@@ -208,25 +208,25 @@ namespace AtomosZ.DragonAid.MonsterAid
 
 			statData[Level] |= level;
 
-			statData[Evade1] |= (evade & 0x18) << 3;
-			statData[Evade2] |= (evade & 0x04) << 5;
+			statData[Evade0] |= (evade & 0x18) << 3;
+			statData[Evade1] |= (evade & 0x04) << 5;
 
-			statData[Exp1] |= exp & 0xFF;
-			statData[Exp2] |= exp >> 8;
+			statData[Exp0] |= exp & 0xFF;
+			statData[Exp1] |= exp >> 8;
 
 			statData[Agility] |= agility;
 
-			statData[Gold1] |= gold & 0xFF;
-			statData[Gold2] |= gold >> 8;
+			statData[Gold0] |= gold & 0xFF;
+			statData[Gold1] |= gold >> 8;
 
-			statData[Attack1] |= attackPower & 0xFF;
-			statData[Attack2] |= attackPower >> 8;
+			statData[Attack0] |= attackPower & 0xFF;
+			statData[Attack1] |= attackPower >> 8;
 
-			statData[Defense1] |= defensePower & 0xFF;
-			statData[Defense2] |= defensePower >> 8;
+			statData[Defense0] |= defensePower & 0xFF;
+			statData[Defense1] |= defensePower >> 8;
 
-			statData[HP1] |= hp & 0xFF;
-			statData[HP2] |= hp >> 8;
+			statData[HP0] |= hp & 0xFF;
+			statData[HP1] |= hp >> 8;
 
 			statData[MP] |= mp;
 
@@ -244,27 +244,27 @@ namespace AtomosZ.DragonAid.MonsterAid
 			switch (aiType)
 			{
 				case 0:
+					statData[AISelector0] |= 0x00;
 					statData[AISelector1] |= 0x00;
-					statData[AISelector2] |= 0x00;
 					break;
 				case 1: // does this need to be reversed?
-					statData[AISelector1] |= 0x80;
-					statData[AISelector2] |= 0x00;
+					statData[AISelector0] |= 0x80;
+					statData[AISelector1] |= 0x00;
 					break;
 				case 2:
+					statData[AISelector0] |= 0x80;
 					statData[AISelector1] |= 0x80;
-					statData[AISelector2] |= 0x80;
 					break;
 			}
 
-			statData[ActionChance1] |= (actionChance & 0x01) << 7; // these might be backwards
-			statData[ActionChance2] |= (actionChance & 0x02) << 6;
+			statData[ActionChance0] |= (actionChance & 0x01) << 7; // these might be backwards
+			statData[ActionChance1] |= (actionChance & 0x02) << 6;
 
-			statData[ActionCount1] |= (actionCountType & 0x01) << 7; // these might be backwards
-			statData[ActionCount2] |= (actionCountType & 0x02) << 6;
+			statData[ActionCount0] |= (actionCountType & 0x01) << 7; // these might be backwards
+			statData[ActionCount1] |= (actionCountType & 0x02) << 6;
 
-			statData[Regeneration1] |= (regeneration & 0x01) << 7;
-			statData[Regeneration2] |= (regeneration & 0x02) << 6;
+			statData[Regeneration0] |= (regeneration & 0x01) << 7;
+			statData[Regeneration1] |= (regeneration & 0x02) << 6;
 
 			statData[Resistance] |= resistances[0] << 6;
 			statData[Resistance] |= resistances[1] << 4;

@@ -42,6 +42,10 @@ namespace AtomosZ.DragonAid.MonsterAid
 				+ "\n☼In cases where an action selector randomly allows one or two actions,\n   more often does 2 actions. (not clear about this)"
 		};
 
+		/// <summary>
+		/// Re: reinforcements ($3B+). The pre-battle PPU loader only checks for one occurance
+		/// so it will not load need sprites if multiple reinforcement types are selected.
+		/// </summary>
 		public static List<string> actions = new List<string>()
 		{
 			"00 = enemy is assessing the situation",
@@ -113,19 +117,19 @@ namespace AtomosZ.DragonAid.MonsterAid
 		
 
 		public static int Level = 0x00;
-		public static int Evade1 = 0x00;
-		public static int Evade2 = 0x09;
-		public static int Exp1 = 0x01;
-		public static int Exp2 = 0x02;
+		public static int Evade0 = 0x00;
+		public static int Evade1 = 0x09;
+		public static int Exp0 = 0x01;
+		public static int Exp1 = 0x02;
 		public static int Agility = 0x03;
-		public static int Gold1 = 0x04;
-		public static int Gold2 = 0x12;
-		public static int Attack1 = 0x05;
-		public static int Attack2 = 0x13;
-		public static int Defense1 = 0x06;
-		public static int Defense2 = 0x14;
-		public static int HP1 = 0x07;
-		public static int HP2 = 0x15;
+		public static int Gold0 = 0x04;
+		public static int Gold1 = 0x12;
+		public static int Attack0 = 0x05;
+		public static int Attack1 = 0x13;
+		public static int Defense0 = 0x06;
+		public static int Defense1 = 0x14;
+		public static int HP0 = 0x07;
+		public static int HP1 = 0x15;
 		public static int MP = 0x08;
 		public static int ItemDrop = 0x09;
 		public static int Action0 = 0x0A;
@@ -136,14 +140,14 @@ namespace AtomosZ.DragonAid.MonsterAid
 		public static int Action5 = 0x0F;
 		public static int Action6 = 0x10;
 		public static int Action7 = 0x11;
-		public static int AISelector1 = 0x0A;
-		public static int AISelector2 = 0x0B;
-		public static int ActionChance1 = 0x0C;
-		public static int ActionChance2 = 0x0D;
-		public static int ActionCount1 = 0x0E;
-		public static int ActionCount2 = 0x0F;
-		public static int Regeneration1 = 0x10;
-		public static int Regeneration2 = 0x11;
+		public static int AISelector0 = 0x0A;
+		public static int AISelector1 = 0x0B;
+		public static int ActionChance0 = 0x0C;
+		public static int ActionChance1 = 0x0D;
+		public static int ActionCount0 = 0x0E;
+		public static int ActionCount1 = 0x0F;
+		public static int Regeneration0 = 0x10;
+		public static int Regeneration1 = 0x11;
 		public static int Resistance = 0x12;
 		public static int FocusFire = 0x16;
 		public static int ItemDropChance = 0x16;

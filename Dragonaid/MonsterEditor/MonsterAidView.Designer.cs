@@ -364,6 +364,7 @@
 			this.infiniteMP_checkBox.TabIndex = 2;
 			this.infiniteMP_checkBox.Text = "Infinite";
 			this.infiniteMP_checkBox.UseVisualStyleBackColor = true;
+			this.infiniteMP_checkBox.Visible = false;
 			// 
 			// agi_flowLayoutPanel
 			// 

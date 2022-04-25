@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C4F437E6-DA89-4300-A5FF-6B4B249958C2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>AtomosZ.DragonAid.MonsterEditor</RootNamespace>
-    <AssemblyName>MonsterEditor</AssemblyName>
+    <RootNamespace>AtomosZ.DragonAid.MonsterAid</RootNamespace>
+    <AssemblyName>MonsterAid</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

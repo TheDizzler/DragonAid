@@ -20,7 +20,6 @@ namespace AtomosZ.DragonAid.MonsterAid
 		private List<ComboBox> resistanceComboBoxes;
 
 
-
 		public MonsterAidView()
 		{
 			InitializeComponent();
@@ -80,17 +79,26 @@ namespace AtomosZ.DragonAid.MonsterAid
 		{
 			SaveStatBlockValues();
 
-			byte[] monsterStats = new byte[UniversalConsts.monsterStatLength * UniversalConsts.monsterCount];
-			int missCount = 0;
-			for (byte i = 0; i < UniversalConsts.monsterCount; ++i)
+
+			List<int[]> monsterStatList = new List<int[]>();
+
+			int i;
+			for (i = 0; i < UniversalConsts.monsterCount; ++i)
 			{
 				var monster = monsters[i];
-				int[] monsterStatBlock = monster.ConvertStatBlockToBytes();
-
-				ValidateMonsterData(i, monsterStatBlock, ref missCount);
+				monsterStatList.Add(monster.ConvertStatBlockToBytes());
 			}
 
-			Debug.WriteLine("missCount: " + missCount);
+			byte[] monsterStats = new byte[UniversalConsts.monsterStatLength * UniversalConsts.monsterCount];
+			i = 0;
+			foreach (var monster in monsterStatList)
+			{
+				for (int stat = 0; stat < UniversalConsts.monsterStatLength; ++stat)
+				{
+					monsterStats[i++] = (byte)monster[stat];
+				}
+			}
+
 			return monsterStats;
 		}
 
@@ -187,8 +195,8 @@ namespace AtomosZ.DragonAid.MonsterAid
 				default:
 					int i = statBlock.regeneration - 1;
 					i = i << 1;
-					int baseHP = romData[PointerList.Regeneration.offset + i];
-					int range = romData[PointerList.Regeneration.offset + i + 1] - 1;
+					int baseHP = romData[PointerList.MonsterRegeneration.offset + i];
+					int range = romData[PointerList.MonsterRegeneration.offset + i + 1] - 1;
 					regen_label.Text = $"{baseHP}-{baseHP + range} HP/turn";
 					break;
 			}
@@ -225,19 +233,20 @@ namespace AtomosZ.DragonAid.MonsterAid
 				case 1:
 					actionChanceDesc_label.Text = "Type 1";
 					for (int i = 0; i < actionChanceLabels.Count; ++i)
-						actionChanceLabels[i].Text = (romData[PointerList.ActionChancesType1.offset + i] / 2.56f).ToString("0.00") + "%";
+						actionChanceLabels[i].Text = (romData[PointerList.MonsterActionChancesType1.offset + i] / 2.56f).ToString("0.00") + "%";
 					break;
 
 				case 2:
 					actionChanceDesc_label.Text = "Type 2";
 					for (int i = 0; i < actionChanceLabels.Count; ++i)
-						actionChanceLabels[i].Text = (romData[PointerList.ActionChancesType2.offset + i] / 2.56f).ToString("0.00") + "%";
+						actionChanceLabels[i].Text = (romData[PointerList.MonsterActionChancesType2.offset + i] / 2.56f).ToString("0.00") + "%";
 					break;
 
 				case 3:
 					actionChanceDesc_label.Text = "Fixed sequence";
-					for (int i = 0; i < actionChanceLabels.Count; ++i)
+					for (int i = 0; i < actionChanceLabels.Count - 1; ++i)
 						actionChanceLabels[i].Text = $"{i + 1}";
+						actionChanceLabels[7].Text = "?";
 					break;
 			}
 		}
