@@ -102,12 +102,12 @@ namespace AtomosZ.DragonAid.TextToHex
 			{ 0xFE, "┐" },	// special end of text (used after plural/singular endings, counters, pronouns)
 
 			{ 0xF0, "{Class}" },
-			{ 0xF2, "{-A}" },	// A letter indicator for enemies, ie Slime-B. Follows a {name}.
+			{ 0xF2, "{-A}" },		// A letter indicator for enemies, ie Slime-B. Follows a {name}.
 			{ 0xF4, "{ITEM}" },
-			{ 0xF5, "{NAME}" }, // Actor name
-
-			{ 0xF8, "{NUM}" },
-			{ 0xF9, "{HERO}" }, // Party Leader? Hero's name in "It was {Name}'s sixteenth birthday." (intro text 3b 0b 15 0f 60 1f)
+			{ 0xF5, "{NAME}" },		// Actor name
+			{ 0xF7, "{COUNT}" },	// F7 {NAME} appear!
+			{ 0xF8, "{NUM}" },		// ????
+			{ 0xF9, "{PCNAME}" },		// F9 + character index = character's name
 
 			{ 0xFD, "▼" },	// Wait for input.
 

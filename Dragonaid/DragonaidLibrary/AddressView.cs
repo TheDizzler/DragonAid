@@ -135,7 +135,7 @@ namespace AtomosZ.DragonAid.Libraries
 			e.Handled = true;
 		}
 
-		private void Defocus_Click(object sender, EventArgs e)
+		public void Defocus_Click(object sender, EventArgs e)
 		{
 			this.ActiveControl = null;
 			((UserControlParent)ParentForm).Defocus(sender, e);

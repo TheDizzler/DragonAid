@@ -51,5 +51,10 @@ namespace AtomosZ.DragonAid.Libraries
 		{
 			return false;
 		}
+
+		public void Add(byte operand)
+		{
+			pointer += operand;
+		}
 	}
 }
