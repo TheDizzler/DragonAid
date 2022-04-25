@@ -100,11 +100,11 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 6,
-      "name": null,
+      "name": "GetDialogSegment",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "A: index of segment in Dialog Block",
         "name": "Full address",
         "pointer": 239245,
         "offset": 239261
@@ -168,7 +168,7 @@
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": "Map Screen",
+        "notes": "Map Screen\nafter DynamicSubroutine_34000_E before movement",
         "name": "Full address",
         "pointer": 218716,
         "offset": 218732
@@ -196,11 +196,11 @@
       "loader": 0,
       "bankId": 13,
       "dsIndex": 4,
-      "name": null,
+      "name": "DynamicSubroutine_34000_E",
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "On map, after input before movement",
         "name": "Full address",
         "pointer": 220805,
         "offset": 220821
@@ -500,11 +500,11 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 11,
-      "name": "DynamicSubroutine_38000_C",
+      "name": "Menu_CloseAllMenus",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": "Map Screen on right input with status screen open",
+        "notes": "This refreshes BG (map) layer after menu close",
         "name": "Full address",
         "pointer": 238277,
         "offset": 238293
@@ -612,11 +612,11 @@
       "loader": 0,
       "bankId": 0,
       "dsIndex": 5,
-      "name": null,
+      "name": "Character_TakeDamage",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 4866,
         "offset": 4882
@@ -916,11 +916,11 @@
       "loader": 0,
       "bankId": 0,
       "dsIndex": 24,
-      "name": null,
+      "name": "Character_CheckEquipment_ForSomething",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 5440,
         "offset": 5456
@@ -1240,7 +1240,7 @@
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": "",
+        "notes": "results returned in quickStorage[04]?",
         "name": "Full address",
         "pointer": 6458,
         "offset": 6474
@@ -1300,11 +1300,11 @@
       "loader": 0,
       "bankId": 0,
       "dsIndex": 48,
-      "name": null,
+      "name": "Character_GetSex",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "results stored in 0x04\n(0 = male 1 = female)",
         "name": "Full address",
         "pointer": 6500,
         "offset": 6516
@@ -1524,11 +1524,11 @@
       "loader": 0,
       "bankId": 2,
       "dsIndex": 0,
-      "name": null,
+      "name": "DynamicSubroutine_00000_D",
       "notes": "DynamicSubroutine_Addresses_08000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Right after screen wipe\nLoad monster sprites in here somewhere",
         "name": "Full address",
         "pointer": 41274,
         "offset": 41290
@@ -1556,11 +1556,11 @@
       "loader": 0,
       "bankId": 2,
       "dsIndex": 2,
-      "name": null,
+      "name": "DynamicSubroutine_08000_D",
       "notes": "DynamicSubroutine_Addresses_08000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "loading monster palettes quite likely",
         "name": "Full address",
         "pointer": 39305,
         "offset": 39321
@@ -1620,11 +1620,11 @@
       "loader": 0,
       "bankId": 2,
       "dsIndex": 6,
-      "name": null,
+      "name": "CameraShake",
       "notes": "DynamicSubroutine_Addresses_08000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "camera shake when taking damage",
         "name": "Full address",
         "pointer": 38960,
         "offset": 38976
@@ -1656,7 +1656,7 @@
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": "After map scroll\nDefinitely encounter related",
+        "notes": "After map scroll",
         "name": "Full address",
         "pointer": 546,
         "offset": 562
@@ -1716,11 +1716,11 @@
       "loader": 0,
       "bankId": 4,
       "dsIndex": 0,
-      "name": null,
+      "name": "DynamicSubroutine_10000_A",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Pre-battle, after monster initial stats setup\ncalls Menu_SetColor (172F)",
         "name": "Full address",
         "pointer": 65625,
         "offset": 65641
@@ -1812,11 +1812,11 @@
       "loader": 0,
       "bankId": 4,
       "dsIndex": 6,
-      "name": null,
+      "name": "Menu_CreateBattleStatus",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "character count + 3 == menuPointerIndex",
         "name": "Full address",
         "pointer": 76038,
         "offset": 76054
@@ -1844,11 +1844,11 @@
       "loader": 0,
       "bankId": 4,
       "dsIndex": 8,
-      "name": null,
+      "name": "WriteDialogSegmentAt_0013",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "while trying to run $13 = 8\nafter failing to run $13 = 17",
         "name": "Full address",
         "pointer": 76077,
         "offset": 76093
@@ -1940,11 +1940,11 @@
       "loader": 0,
       "bankId": 2,
       "dsIndex": 11,
-      "name": null,
+      "name": "DynamicSubroutine_08000_C",
       "notes": "DynamicSubroutine_Addresses_08000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "if $6A63 == 0\n   BRK 0771",
         "name": "Full address",
         "pointer": 41807,
         "offset": 41823
@@ -2660,11 +2660,11 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 16,
-      "name": null,
+      "name": "",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "dupe\nLoadCharacterSprites_00",
         "name": "Full address",
         "pointer": 243998,
         "offset": 244014
@@ -2724,7 +2724,7 @@
       "loader": 0,
       "bankId": 0,
       "dsIndex": 71,
-      "name": "Character_CheckForLevelUp_maybe",
+      "name": "Character_GetXPForLevelUp",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
@@ -3204,7 +3204,7 @@
       "loader": 0,
       "bankId": 12,
       "dsIndex": 20,
-      "name": "DynamicSubroutine_30000_B",
+      "name": "Map_Scroll_Finish",
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
@@ -3444,11 +3444,11 @@
       "loader": 0,
       "bankId": 4,
       "dsIndex": 29,
-      "name": null,
+      "name": "DynamicSubroutine_10000_B",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "something to do with trying to run",
         "name": "Full address",
         "pointer": 78868,
         "offset": 78884
@@ -3460,11 +3460,11 @@
       "loader": 0,
       "bankId": 1,
       "dsIndex": 9,
-      "name": null,
+      "name": "DynamicSubroutine_04000_A",
       "notes": "DynamicSubroutine_Addresses_04000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "called early in battle, after fade in, before message box appears\ncalls LoadSubroutine_CreateMenu (0772)",
         "name": "Full address",
         "pointer": 18519,
         "offset": 18535
@@ -3492,11 +3492,11 @@
       "loader": 0,
       "bankId": 1,
       "dsIndex": 11,
-      "name": null,
+      "name": "DynamicSubroutine_04000_B",
       "notes": "DynamicSubroutine_Addresses_04000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 18421,
         "offset": 18437
@@ -3732,11 +3732,11 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 49,
-      "name": null,
+      "name": "DynamicSubroutine_38000_A",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "if $60C5 < $80\n    check map coordinates",
         "name": "Full address",
         "pointer": 242395,
         "offset": 242411
@@ -3784,7 +3784,7 @@
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": "MainMenu Item Command selected\n\nLaunches BRKInstruction_D7_Destination\nwhich launches 0720",
+        "notes": "MainMenu Item Command selected\n\nLaunches BRKInstruction_D7_Destination\nwhich launches 20 Menu_Subroutine_Extended",
         "name": "Full address",
         "pointer": 10994,
         "offset": 11010
@@ -4294,11 +4294,11 @@
       "loader": 1,
       "bankId": 7,
       "dsIndex": 28,
-      "name": "DynamicSubroutine_34000_E",
+      "name": "",
       "notes": "DynamicSubroutine_Addresses_1C000",
       "prgAddress": {
         "length": 2,
-        "notes": "Map screen after closing status menu",
+        "notes": "",
         "name": "Full address",
         "pointer": 127811,
         "offset": 127827
@@ -4678,11 +4678,11 @@
       "loader": 1,
       "bankId": 14,
       "dsIndex": 16,
-      "name": null,
+      "name": "",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "LoadCharacterSprites_00\n*dupe",
         "name": "Full address",
         "pointer": 243998,
         "offset": 244014
@@ -4710,11 +4710,11 @@
       "loader": 1,
       "bankId": 12,
       "dsIndex": 51,
-      "name": null,
+      "name": "",
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 206111,
         "offset": 206127
@@ -4822,11 +4822,11 @@
       "loader": 1,
       "bankId": 13,
       "dsIndex": 38,
-      "name": null,
+      "name": "DynamicSubroutine_34000_G",
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Trying to run\nchecks character status",
         "name": "Full address",
         "pointer": 220878,
         "offset": 220894
@@ -4854,11 +4854,11 @@
       "loader": 1,
       "bankId": 13,
       "dsIndex": 40,
-      "name": null,
+      "name": "Menu_SetColor",
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "called from DynamicSubroutine_10000_A (076B)",
         "name": "Full address",
         "pointer": 218528,
         "offset": 218544
@@ -4886,11 +4886,11 @@
       "loader": 1,
       "bankId": 4,
       "dsIndex": 33,
-      "name": null,
+      "name": "WaitForFrames_Index03",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 76246,
         "offset": 76262
@@ -5398,11 +5398,11 @@
       "loader": 1,
       "bankId": 14,
       "dsIndex": 24,
-      "name": null,
+      "name": "LoadSprites",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "After map tiles loaded",
         "name": "Full address",
         "pointer": 244246,
         "offset": 244262
@@ -5910,11 +5910,11 @@
       "loader": 1,
       "bankId": 12,
       "dsIndex": 32,
-      "name": null,
+      "name": "DynamicSubroutine_30000_C",
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "BRK to 071F (DynamicSubroutine_38000_C)\nThis seems redundant.\nDynamicSubroutine_38000_C -> This refreshes BG (map) layer after menu close\n",
         "name": "Full address",
         "pointer": 209306,
         "offset": 209322
@@ -5942,11 +5942,11 @@
       "loader": 1,
       "bankId": 0,
       "dsIndex": 85,
-      "name": null,
+      "name": "SetOrClearCarryFlag",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "if $2F AND #$01 == 0\n  SEC\nelse if $8B == #$38 \n   CLC\nelse if $8B < #$C3\n  SEC\nelse if $8B < #C6 (#$C3 <= $8B < #$C6)\n  CLC\nelse if $8B == #$CF\n  CLC\nelse if $8B != #$D0\n  SEC\nelse\n  CLC",
         "name": "Full address",
         "pointer": 8521,
         "offset": 8537
@@ -6054,11 +6054,11 @@
       "loader": 1,
       "bankId": 13,
       "dsIndex": 41,
-      "name": null,
+      "name": "DynamicSubroutine_34000_F",
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "called very early in battle, multiple times\nafter enemy fade in, before dialog boxes appear",
         "name": "Full address",
         "pointer": 218658,
         "offset": 218674
@@ -6422,7 +6422,7 @@
       "loader": 1,
       "bankId": 6,
       "dsIndex": 22,
-      "name": null,
+      "name": "",
       "notes": "DynamicSubroutine_Addresses_18000",
       "prgAddress": {
         "length": 2,
@@ -6454,11 +6454,11 @@
       "loader": 1,
       "bankId": 14,
       "dsIndex": 17,
-      "name": null,
+      "name": "LoadCharacterSprites_FF",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 243994,
         "offset": 244010
@@ -6582,7 +6582,7 @@
       "loader": 1,
       "bankId": 10,
       "dsIndex": 2,
-      "name": null,
+      "name": "Monster_GetStats",
       "notes": "DynamicSubroutine_Addresses_28000",
       "prgAddress": {
         "length": 2,
@@ -6614,7 +6614,7 @@
       "loader": 1,
       "bankId": 4,
       "dsIndex": 39,
-      "name": "Monster_ParseStat_OC",
+      "name": "Monster_ParseStat_ActionChance_Pre",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
@@ -6630,11 +6630,11 @@
       "loader": 1,
       "bankId": 4,
       "dsIndex": 40,
-      "name": "Monster_ParseStat_0A_Extra",
+      "name": "Monster_ParseStat_GetAIType_Pre",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 66675,
         "offset": 66691
@@ -6646,11 +6646,11 @@
       "loader": 1,
       "bankId": 4,
       "dsIndex": 41,
-      "name": "(GetStat_0A)",
+      "name": "Monster_GetAIType",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 80229,
         "offset": 80245
@@ -6662,11 +6662,11 @@
       "loader": 1,
       "bankId": 4,
       "dsIndex": 42,
-      "name": "(GetStat_0E)",
+      "name": "Monster_GetActionCount",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 80234,
         "offset": 80250
