@@ -68,7 +68,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 		{
 			this.romData = romData;
 			monsters = new List<MonsterStatBlock>();
-			for (byte i = 0; i < UniversalConsts.monsterCount; ++i)
+			for (byte i = 0; i < UniversalConsts.MonsterCount; ++i)
 				monsters.Add(new MonsterStatBlock(romData, i));
 
 			statBlock = null;
@@ -83,17 +83,17 @@ namespace AtomosZ.DragonAid.MonsterAid
 			List<int[]> monsterStatList = new List<int[]>();
 
 			int i;
-			for (i = 0; i < UniversalConsts.monsterCount; ++i)
+			for (i = 0; i < UniversalConsts.MonsterCount; ++i)
 			{
 				var monster = monsters[i];
 				monsterStatList.Add(monster.ConvertStatBlockToBytes());
 			}
 
-			byte[] monsterStats = new byte[UniversalConsts.monsterStatLength * UniversalConsts.monsterCount];
+			byte[] monsterStats = new byte[UniversalConsts.MonsterStatLength * UniversalConsts.MonsterCount];
 			i = 0;
 			foreach (var monster in monsterStatList)
 			{
-				for (int stat = 0; stat < UniversalConsts.monsterStatLength; ++stat)
+				for (int stat = 0; stat < UniversalConsts.MonsterStatLength; ++stat)
 				{
 					monsterStats[i++] = (byte)monster[stat];
 				}
@@ -290,9 +290,9 @@ namespace AtomosZ.DragonAid.MonsterAid
 		/// <param name="missCount"></param>
 		private void ValidateMonsterData(byte monsterIndex, int[] monsterStatBlock, ref int missCount)
 		{
-			int monsterStart = PointerList.MonsterStatBlockAddress.offset + monsterIndex * UniversalConsts.monsterStatLength;
+			int monsterStart = PointerList.MonsterStatBlockAddress.offset + monsterIndex * UniversalConsts.MonsterStatLength;
 
-			for (int i = 0; i < UniversalConsts.monsterStatLength; ++i)
+			for (int i = 0; i < UniversalConsts.MonsterStatLength; ++i)
 			{
 				if (romData[monsterStart + i] != monsterStatBlock[i])
 				{

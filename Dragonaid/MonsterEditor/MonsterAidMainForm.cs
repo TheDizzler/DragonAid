@@ -46,15 +46,15 @@ namespace AtomosZ.DragonAid.MonsterAid
 
 		private void NextMonster_button_Click(object sender, System.EventArgs e)
 		{
-			if (++monsterAidUserSettings.monsterIndex >= UniversalConsts.monsterCount)
+			if (++monsterAidUserSettings.monsterIndex >= UniversalConsts.MonsterCount)
 				monsterAidUserSettings.monsterIndex = 0;
 			monsterAidView.LoadMonster(monsterAidUserSettings.monsterIndex);
 		}
 
 		private void PrevMonster_button_Click(object sender, System.EventArgs e)
 		{
-			if (--monsterAidUserSettings.monsterIndex > UniversalConsts.monsterCount)
-				monsterAidUserSettings.monsterIndex = (byte)(UniversalConsts.monsterCount - 1);
+			if (--monsterAidUserSettings.monsterIndex > UniversalConsts.MonsterCount)
+				monsterAidUserSettings.monsterIndex = (byte)(UniversalConsts.MonsterCount - 1);
 			monsterAidView.LoadMonster(monsterAidUserSettings.monsterIndex);
 		}
 
