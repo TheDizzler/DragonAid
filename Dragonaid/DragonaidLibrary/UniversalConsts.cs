@@ -8,8 +8,13 @@ namespace AtomosZ.DragonAid.Libraries
 {
 	public static class UniversalConsts
 	{
-		public static byte monsterCount = 0x8B;
-		public static byte monsterStatLength = 0x17;
+		/// <summary>
+		/// Timer wraps at 204 (0xCC).
+		/// </summary>
+		public static byte NightBattleStartTime = 0x78;
+
+		public static byte MonsterCount = 0x8B;
+		public static byte MonsterStatLength = 0x17;
 
 		public static byte WeaponCount = 32;
 		public static byte ArmorCount = 24;
