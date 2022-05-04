@@ -1284,11 +1284,11 @@
       "loader": 0,
       "bankId": 0,
       "dsIndex": 47,
-      "name": null,
+      "name": "Character_GetSex",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "results stored in 0x04\n(0 = male 1 = female)\n",
         "name": "Full address",
         "pointer": 6487,
         "offset": 6503
@@ -1300,11 +1300,11 @@
       "loader": 0,
       "bankId": 0,
       "dsIndex": 48,
-      "name": "Character_GetSex",
+      "name": "",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": "results stored in 0x04\n(0 = male 1 = female)",
+        "notes": "",
         "name": "Full address",
         "pointer": 6500,
         "offset": 6516
@@ -2184,7 +2184,7 @@
       "notes": "DynamicSubroutine_Addresses_18000",
       "prgAddress": {
         "length": 2,
-        "notes": "Map scroll related, most likely\nLDA $AA\nAND $10",
+        "notes": "Map scroll related, most likely\nLDA $AA\nAND $10\n\nsearches vector at 0x1B7B0 (7 bytes)  for same value at Pre_BRK_CMP_78 (0x06DF)",
         "name": "Full address",
         "pointer": 112315,
         "offset": 112331
@@ -3860,11 +3860,11 @@
       "loader": 0,
       "bankId": 5,
       "dsIndex": 9,
-      "name": null,
+      "name": "WriteMapTilesToPPU",
       "notes": "DynamicSubroutine_Addresses_14000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Writes map tiles to PPU\nand some other stuff?\ncalls DynamicSubroutine_34000_H (1735) at very end",
         "name": "Full address",
         "pointer": 97456,
         "offset": 97472
@@ -4694,11 +4694,11 @@
       "loader": 1,
       "bankId": 14,
       "dsIndex": 52,
-      "name": null,
+      "name": "DynamicSubroutine_38000_C",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "after some world map coordinate stuff\ncalls DynamicSubroutine_38000_B directly (no BRK)\n\n",
         "name": "Full address",
         "pointer": 231148,
         "offset": 231164
@@ -4950,11 +4950,11 @@
       "loader": 1,
       "bankId": 13,
       "dsIndex": 27,
-      "name": null,
+      "name": "DynamicSubroutine_34000_H",
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "called at the end of WriteMapTilesToPPU (07F1)",
         "name": "Full address",
         "pointer": 213140,
         "offset": 213156
@@ -5446,7 +5446,7 @@
       "loader": 1,
       "bankId": 4,
       "dsIndex": 35,
-      "name": null,
+      "name": "DynamicSubroutine_30000_A",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
@@ -5546,7 +5546,7 @@
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Calls 1733 up to x4",
         "name": "Full address",
         "pointer": 200024,
         "offset": 200040
@@ -5558,11 +5558,11 @@
       "loader": 1,
       "bankId": 12,
       "dsIndex": 26,
-      "name": null,
+      "name": "FillPPUSpriteDMAWithF8",
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "fills 0x0200 to 0x02FF with F8",
         "name": "Full address",
         "pointer": 206993,
         "offset": 207009
