@@ -34,7 +34,6 @@
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.pointer17_listBox = new System.Windows.Forms.ListBox();
-			this.addressView = new AtomosZ.DragonAid.Libraries.AddressView();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.save_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,12 +42,19 @@
 			this.restoreFromROM_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.info_panel = new System.Windows.Forms.Panel();
 			this.saveStatus_label = new System.Windows.Forms.Label();
+			this.searchAddress_spinner = new System.Windows.Forms.NumericUpDown();
+			this.label1 = new System.Windows.Forms.Label();
+			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.searchAddr_button = new System.Windows.Forms.Button();
+			this.addressView = new AtomosZ.DragonAid.Libraries.AddressView();
 			this.pointerAndAddress_flowLayoutPanel.SuspendLayout();
 			this.subroutine_tabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.info_panel.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.searchAddress_spinner)).BeginInit();
+			this.flowLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pointer07_listBox
@@ -119,15 +125,6 @@
 			this.pointer17_listBox.TabIndex = 3;
 			this.pointer17_listBox.SelectedIndexChanged += new System.EventHandler(this.Pointer17_listBox_SelectedIndexChanged);
 			// 
-			// addressView
-			// 
-			this.addressView.AutoSize = true;
-			this.addressView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.addressView.Location = new System.Drawing.Point(410, 3);
-			this.addressView.Name = "addressView";
-			this.addressView.Size = new System.Drawing.Size(490, 376);
-			this.addressView.TabIndex = 1;
-			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -153,51 +150,112 @@
 			// save_ToolStripMenuItem
 			// 
 			this.save_ToolStripMenuItem.Name = "save_ToolStripMenuItem";
-			this.save_ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+			this.save_ToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
 			this.save_ToolStripMenuItem.Text = "Save";
 			this.save_ToolStripMenuItem.Click += new System.EventHandler(this.Save);
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+			this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
 			this.saveAsToolStripMenuItem.Text = "Save As";
 			this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAs_ToolStripMenuItem_Click);
 			// 
 			// load_ToolStripMenuItem
 			// 
 			this.load_ToolStripMenuItem.Name = "load_ToolStripMenuItem";
-			this.load_ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+			this.load_ToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
 			this.load_ToolStripMenuItem.Text = "Load";
 			this.load_ToolStripMenuItem.Click += new System.EventHandler(this.Load_ToolStripMenuItem_Click);
 			// 
 			// restoreFromROM_ToolStripMenuItem
 			// 
 			this.restoreFromROM_ToolStripMenuItem.Name = "restoreFromROM_ToolStripMenuItem";
-			this.restoreFromROM_ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+			this.restoreFromROM_ToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
 			this.restoreFromROM_ToolStripMenuItem.Text = "Restore From ROM";
 			this.restoreFromROM_ToolStripMenuItem.Click += new System.EventHandler(this.RestoreFromROM_ToolStripMenuItem_Click);
 			// 
 			// info_panel
 			// 
+			this.info_panel.Controls.Add(this.flowLayoutPanel1);
 			this.info_panel.Controls.Add(this.saveStatus_label);
 			this.info_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.info_panel.Location = new System.Drawing.Point(0, 429);
+			this.info_panel.Location = new System.Drawing.Point(0, 414);
 			this.info_panel.Name = "info_panel";
-			this.info_panel.Size = new System.Drawing.Size(914, 27);
+			this.info_panel.Size = new System.Drawing.Size(914, 42);
 			this.info_panel.TabIndex = 6;
 			// 
 			// saveStatus_label
 			// 
+			this.saveStatus_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.saveStatus_label.AutoSize = true;
-			this.saveStatus_label.Dock = System.Windows.Forms.DockStyle.Right;
-			this.saveStatus_label.Location = new System.Drawing.Point(818, 0);
+			this.saveStatus_label.Location = new System.Drawing.Point(818, 4);
 			this.saveStatus_label.Name = "saveStatus_label";
 			this.saveStatus_label.Size = new System.Drawing.Size(96, 20);
 			this.saveStatus_label.TabIndex = 0;
 			this.saveStatus_label.Text = "Save Status";
 			this.saveStatus_label.TextAlign = System.Drawing.ContentAlignment.BottomRight;
 			this.saveStatus_label.Visible = false;
+			// 
+			// searchAddress_spinner
+			// 
+			this.searchAddress_spinner.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.searchAddress_spinner.Hexadecimal = true;
+			this.searchAddress_spinner.Location = new System.Drawing.Point(132, 5);
+			this.searchAddress_spinner.Maximum = new decimal(new int[] {
+            262143,
+            0,
+            0,
+            0});
+			this.searchAddress_spinner.Name = "searchAddress_spinner";
+			this.searchAddress_spinner.Size = new System.Drawing.Size(91, 26);
+			this.searchAddress_spinner.TabIndex = 3;
+			this.searchAddress_spinner.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SearchAddress_spinner_KeyDown);
+			// 
+			// label1
+			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(3, 8);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(123, 20);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "Search Address";
+			// 
+			// flowLayoutPanel1
+			// 
+			this.flowLayoutPanel1.AutoSize = true;
+			this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.flowLayoutPanel1.Controls.Add(this.label1);
+			this.flowLayoutPanel1.Controls.Add(this.searchAddress_spinner);
+			this.flowLayoutPanel1.Controls.Add(this.searchAddr_button);
+			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(302, 42);
+			this.flowLayoutPanel1.TabIndex = 4;
+			this.flowLayoutPanel1.WrapContents = false;
+			// 
+			// searchAddr_button
+			// 
+			this.searchAddr_button.AutoSize = true;
+			this.searchAddr_button.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.searchAddr_button.Location = new System.Drawing.Point(229, 3);
+			this.searchAddr_button.Name = "searchAddr_button";
+			this.searchAddr_button.Size = new System.Drawing.Size(70, 30);
+			this.searchAddr_button.TabIndex = 4;
+			this.searchAddr_button.Text = "Search";
+			this.searchAddr_button.UseVisualStyleBackColor = true;
+			this.searchAddr_button.Click += new System.EventHandler(this.SearchAddr_button_Click);
+			// 
+			// addressView
+			// 
+			this.addressView.AutoSize = true;
+			this.addressView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.addressView.Location = new System.Drawing.Point(410, 3);
+			this.addressView.Name = "addressView";
+			this.addressView.Size = new System.Drawing.Size(490, 376);
+			this.addressView.TabIndex = 1;
 			// 
 			// PointerAidForm
 			// 
@@ -221,6 +279,9 @@
 			this.menuStrip1.PerformLayout();
 			this.info_panel.ResumeLayout(false);
 			this.info_panel.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.searchAddress_spinner)).EndInit();
+			this.flowLayoutPanel1.ResumeLayout(false);
+			this.flowLayoutPanel1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -243,6 +304,10 @@
 		private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
 		private System.Windows.Forms.Panel info_panel;
 		private System.Windows.Forms.Label saveStatus_label;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.NumericUpDown searchAddress_spinner;
+		private System.Windows.Forms.Button searchAddr_button;
 	}
 }
 

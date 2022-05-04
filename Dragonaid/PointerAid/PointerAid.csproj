@@ -58,6 +58,12 @@
     <Compile Include="PointerAidSettingsData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchMessageBox.Designer.cs">
+      <DependentUpon>SearchMessageBox.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="PointerAidForm.resx">
       <DependentUpon>PointerAidForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -71,6 +77,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SearchMessageBox.resx">
+      <DependentUpon>SearchMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

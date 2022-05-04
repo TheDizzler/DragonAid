@@ -321,5 +321,50 @@ namespace AtomosZ.DragonAid.PointerAid
 
 			return false;
 		}
+
+		private void SearchAddress_spinner_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				SearchAddr_button_Click(null, null);
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				addressView.Defocus_Click(null, null);
+			}
+		}
+
+		private void SearchAddr_button_Click(object sender, EventArgs e)
+		{
+			var find = (int)searchAddress_spinner.Value;
+			var results = pointerData.FindAddress(find);
+			if (results.Count == 1)
+			{
+				ShowSearchResult(results[0]);
+			}
+			else if (results.Count > 1)
+			{
+				var searchBox = new SearchMessageBox();
+				searchBox.AddResults(results);
+				var result = searchBox.ShowDialog();
+				if (result == DialogResult.OK)
+				{
+					ShowSearchResult(searchBox.selectedSubroutine);
+				}
+			}
+		}
+
+		private void ShowSearchResult(DynamicSubroutine dynamicSubroutine)
+		{
+			if (dynamicSubroutine.loader == DynamicLoader.Load07)
+			{
+				subroutine_tabControl.SelectedIndex = 0;
+				pointer07_listBox.SelectedItem = dynamicSubroutine;
+			}
+			else
+			{
+				subroutine_tabControl.SelectedIndex = 1;
+				pointer17_listBox.SelectedItem = dynamicSubroutine;
+			}
+		}
 	}
 }
