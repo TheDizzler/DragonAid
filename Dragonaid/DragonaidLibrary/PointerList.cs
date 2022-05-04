@@ -145,6 +145,11 @@ namespace AtomosZ.DragonAid.Libraries
 			notes = "Used in character sprite parser so...what is this?",
 		};
 
+		public static Address Load07BankIds = new Address("DynamicSubroutine_BankIds_07", 0x3E917);
+		public static Address Load17BankIds = new Address("DynamicSubroutine_BankIds_17", 0x3E997);
+		public static Address Load07PointerIndices = new Address("DynamicSubroutine_PointerIndex_07", 0x3E9ED, 256);
+		public static Address Load17PointerIndices = new Address("DynamicSubroutine_PointerIndex_17", 0x3EAED, 256);
+		
 
 		/* Bank 16 $58000 */
 		/// <summary>

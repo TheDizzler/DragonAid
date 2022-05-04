@@ -4,11 +4,6 @@
 
 	public class DynamicSubroutine
 	{
-		public static Address Load07PointerIndices = new Address("DynamicSubroutine_PointerIndex_07", 0x3E9ED, 256);
-		public static Address Load17PointerIndices = new Address("DynamicSubroutine_PointerIndex_17", 0x3EAED, 256);
-		public static Address Load07BankIds = new Address("DynamicSubroutine_BankIds_07", 0x3E917);
-		public static Address Load17BankIds = new Address("DynamicSubroutine_BankIds_17", 0x3E997);
-
 		public readonly static Address[] DynamicSubroutineBankPointers = new Address[]
 		{
 			new Address("DynamicSubroutine_Addresses_00000", 0x00000),
