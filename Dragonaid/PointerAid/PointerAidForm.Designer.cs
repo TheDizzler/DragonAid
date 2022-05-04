@@ -41,11 +41,13 @@
 			this.load_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.restoreFromROM_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.info_panel = new System.Windows.Forms.Panel();
-			this.saveStatus_label = new System.Windows.Forms.Label();
-			this.searchAddress_spinner = new System.Windows.Forms.NumericUpDown();
-			this.label1 = new System.Windows.Forms.Label();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.label1 = new System.Windows.Forms.Label();
+			this.searchAddress_spinner = new System.Windows.Forms.NumericUpDown();
 			this.searchAddr_button = new System.Windows.Forms.Button();
+			this.saveStatus_label = new System.Windows.Forms.Label();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.localPointers_listBox = new System.Windows.Forms.ListBox();
 			this.addressView = new AtomosZ.DragonAid.Libraries.AddressView();
 			this.pointerAndAddress_flowLayoutPanel.SuspendLayout();
 			this.subroutine_tabControl.SuspendLayout();
@@ -53,8 +55,9 @@
 			this.tabPage2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.info_panel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.searchAddress_spinner)).BeginInit();
 			this.flowLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.searchAddress_spinner)).BeginInit();
+			this.tabPage3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pointer07_listBox
@@ -76,7 +79,7 @@
 			this.pointerAndAddress_flowLayoutPanel.Controls.Add(this.addressView);
 			this.pointerAndAddress_flowLayoutPanel.Location = new System.Drawing.Point(0, 36);
 			this.pointerAndAddress_flowLayoutPanel.Name = "pointerAndAddress_flowLayoutPanel";
-			this.pointerAndAddress_flowLayoutPanel.Size = new System.Drawing.Size(903, 382);
+			this.pointerAndAddress_flowLayoutPanel.Size = new System.Drawing.Size(931, 382);
 			this.pointerAndAddress_flowLayoutPanel.TabIndex = 3;
 			this.pointerAndAddress_flowLayoutPanel.WrapContents = false;
 			// 
@@ -84,11 +87,12 @@
 			// 
 			this.subroutine_tabControl.Controls.Add(this.tabPage1);
 			this.subroutine_tabControl.Controls.Add(this.tabPage2);
+			this.subroutine_tabControl.Controls.Add(this.tabPage3);
 			this.subroutine_tabControl.HotTrack = true;
 			this.subroutine_tabControl.Location = new System.Drawing.Point(3, 3);
 			this.subroutine_tabControl.Name = "subroutine_tabControl";
 			this.subroutine_tabControl.SelectedIndex = 0;
-			this.subroutine_tabControl.Size = new System.Drawing.Size(401, 376);
+			this.subroutine_tabControl.Size = new System.Drawing.Size(429, 376);
 			this.subroutine_tabControl.TabIndex = 3;
 			this.subroutine_tabControl.SelectedIndexChanged += new System.EventHandler(this.Subroutine_tabControl_SelectedIndexChanged);
 			// 
@@ -132,7 +136,7 @@
             this.fileToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(914, 33);
+			this.menuStrip1.Size = new System.Drawing.Size(940, 33);
 			this.menuStrip1.TabIndex = 5;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -182,20 +186,32 @@
 			this.info_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.info_panel.Location = new System.Drawing.Point(0, 414);
 			this.info_panel.Name = "info_panel";
-			this.info_panel.Size = new System.Drawing.Size(914, 42);
+			this.info_panel.Size = new System.Drawing.Size(940, 42);
 			this.info_panel.TabIndex = 6;
 			// 
-			// saveStatus_label
+			// flowLayoutPanel1
 			// 
-			this.saveStatus_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.saveStatus_label.AutoSize = true;
-			this.saveStatus_label.Location = new System.Drawing.Point(818, 4);
-			this.saveStatus_label.Name = "saveStatus_label";
-			this.saveStatus_label.Size = new System.Drawing.Size(96, 20);
-			this.saveStatus_label.TabIndex = 0;
-			this.saveStatus_label.Text = "Save Status";
-			this.saveStatus_label.TextAlign = System.Drawing.ContentAlignment.BottomRight;
-			this.saveStatus_label.Visible = false;
+			this.flowLayoutPanel1.AutoSize = true;
+			this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.flowLayoutPanel1.Controls.Add(this.label1);
+			this.flowLayoutPanel1.Controls.Add(this.searchAddress_spinner);
+			this.flowLayoutPanel1.Controls.Add(this.searchAddr_button);
+			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(302, 42);
+			this.flowLayoutPanel1.TabIndex = 4;
+			this.flowLayoutPanel1.WrapContents = false;
+			// 
+			// label1
+			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(3, 8);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(123, 20);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "Search Address";
 			// 
 			// searchAddress_spinner
 			// 
@@ -212,30 +228,6 @@
 			this.searchAddress_spinner.TabIndex = 3;
 			this.searchAddress_spinner.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SearchAddress_spinner_KeyDown);
 			// 
-			// label1
-			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 8);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(123, 20);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "Search Address";
-			// 
-			// flowLayoutPanel1
-			// 
-			this.flowLayoutPanel1.AutoSize = true;
-			this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.flowLayoutPanel1.Controls.Add(this.label1);
-			this.flowLayoutPanel1.Controls.Add(this.searchAddress_spinner);
-			this.flowLayoutPanel1.Controls.Add(this.searchAddr_button);
-			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(302, 42);
-			this.flowLayoutPanel1.TabIndex = 4;
-			this.flowLayoutPanel1.WrapContents = false;
-			// 
 			// searchAddr_button
 			// 
 			this.searchAddr_button.AutoSize = true;
@@ -248,11 +240,45 @@
 			this.searchAddr_button.UseVisualStyleBackColor = true;
 			this.searchAddr_button.Click += new System.EventHandler(this.SearchAddr_button_Click);
 			// 
+			// saveStatus_label
+			// 
+			this.saveStatus_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.saveStatus_label.AutoSize = true;
+			this.saveStatus_label.Location = new System.Drawing.Point(818, 4);
+			this.saveStatus_label.Name = "saveStatus_label";
+			this.saveStatus_label.Size = new System.Drawing.Size(96, 20);
+			this.saveStatus_label.TabIndex = 0;
+			this.saveStatus_label.Text = "Save Status";
+			this.saveStatus_label.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+			this.saveStatus_label.Visible = false;
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.Controls.Add(this.localPointers_listBox);
+			this.tabPage3.Location = new System.Drawing.Point(4, 29);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage3.Size = new System.Drawing.Size(421, 343);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "Local Pointers";
+			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// localPointers_listBox
+			// 
+			this.localPointers_listBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.localPointers_listBox.FormattingEnabled = true;
+			this.localPointers_listBox.ItemHeight = 20;
+			this.localPointers_listBox.Location = new System.Drawing.Point(3, 3);
+			this.localPointers_listBox.Name = "localPointers_listBox";
+			this.localPointers_listBox.Size = new System.Drawing.Size(415, 337);
+			this.localPointers_listBox.TabIndex = 4;
+			this.localPointers_listBox.SelectedIndexChanged += new System.EventHandler(this.LocalPointers_listBox_SelectedIndexChanged);
+			// 
 			// addressView
 			// 
 			this.addressView.AutoSize = true;
 			this.addressView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.addressView.Location = new System.Drawing.Point(410, 3);
+			this.addressView.Location = new System.Drawing.Point(438, 3);
 			this.addressView.Name = "addressView";
 			this.addressView.Size = new System.Drawing.Size(490, 376);
 			this.addressView.TabIndex = 1;
@@ -262,7 +288,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ClientSize = new System.Drawing.Size(914, 456);
+			this.ClientSize = new System.Drawing.Size(940, 456);
 			this.Controls.Add(this.info_panel);
 			this.Controls.Add(this.pointerAndAddress_flowLayoutPanel);
 			this.Controls.Add(this.menuStrip1);
@@ -279,9 +305,10 @@
 			this.menuStrip1.PerformLayout();
 			this.info_panel.ResumeLayout(false);
 			this.info_panel.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.searchAddress_spinner)).EndInit();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			this.flowLayoutPanel1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.searchAddress_spinner)).EndInit();
+			this.tabPage3.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -308,6 +335,8 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.NumericUpDown searchAddress_spinner;
 		private System.Windows.Forms.Button searchAddr_button;
+		private System.Windows.Forms.TabPage tabPage3;
+		private System.Windows.Forms.ListBox localPointers_listBox;
 	}
 }
 

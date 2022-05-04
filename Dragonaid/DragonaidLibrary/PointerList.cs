@@ -163,18 +163,25 @@ namespace AtomosZ.DragonAid.Libraries
 
 
 		/* Bank 1F $7C000 (high default) */
-		public static Address LocalPointerIndices = new Address("Indices to LocalPointer", 0x7E9ED, 140)
+		/// <summary>
+		/// Assuming 128 entries. 70 known to exist.
+		/// </summary>
+		public static Address LocalPointerBanks = new Address("Compressed bank indices", 0x7E917, 128)
+		{
+			notes = "Index used is half index used for LocalPointerIndices.\n"
+				+ "Data is compressed: high nibble & low nibbles are two different bank Ids",
+		};
+		/// <summary>
+		/// Assuming 256 entries. 140 known to exist.
+		/// </summary>
+		public static Address LocalPointerIndices = new Address("Indices to LocalPointer", 0x7E9ED, 256)
 		{
 			notes = "The index of the pointer in the LocalPointers in the bank to be loaded.\n"
 				+ "The index used in this vector determines which nibble to use from LocalPointerBanks: "
 				+ "Even: use high nibble. Odd: use low nibble.\n"
 				+ "[$8B]: (Day/Night Palettes) 0B",
 		};
-		public static Address LocalPointerBanks = new Address("Compressed bank indices", 0x7E917, 70)
-		{
-			notes = "Index used is half index used for LocalPointerIndices.\n"
-				+ "Data is compressed: high nibble & low nibbles are two different bank Ids",
-		};
+		
 
 		public static Address GetBankAddressFromId(byte bankId)
 		{

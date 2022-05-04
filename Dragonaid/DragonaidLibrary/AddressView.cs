@@ -30,11 +30,31 @@ namespace AtomosZ.DragonAid.Libraries
 			length_label.Visible = false;
 			length_spinner.Visible = false;
 
-			name_textBox.Text = selectedItem.name;
-			address_textBox.Text = "0x" + selectedItem.prgAddress.pointer.ToString("X5");
-			offset_textBox.Text = "0x" + selectedItem.prgAddress.offset.ToString("X5");
-			//length_spinner.Value = selectedItem.prgAddress.length;
-			notes_richTextBox.Text = selectedItem.prgAddress.notes;
+			if (selected == null)
+			{
+				name_textBox.Text = "Null Pointer";
+				address_textBox.Text = null;
+				offset_textBox.Text = null;
+				notes_richTextBox.Text = null;
+
+				name_textBox.Enabled = false;
+				address_textBox.Enabled = false;
+				offset_textBox.Enabled = false;
+				notes_richTextBox.Enabled = false;
+			}
+			else
+			{
+				name_textBox.Text = selectedItem.name;
+				address_textBox.Text = "0x" + selectedItem.prgAddress.pointer.ToString("X5");
+				offset_textBox.Text = "0x" + selectedItem.prgAddress.offset.ToString("X5");
+				//length_spinner.Value = selectedItem.prgAddress.length;
+				notes_richTextBox.Text = selectedItem.prgAddress.notes;
+
+				name_textBox.Enabled = true;
+				address_textBox.Enabled = false;
+				offset_textBox.Enabled = false;
+				notes_richTextBox.Enabled = true;
+			}
 		}
 
 
@@ -49,7 +69,7 @@ namespace AtomosZ.DragonAid.Libraries
 						if (selected.name != name_textBox.Text)
 						{
 							selected.name = name_textBox.Text;
-							((UserControlParent)ParentForm).UpdateView();				
+							((UserControlParent)ParentForm).UpdateView();
 						}
 						break;
 

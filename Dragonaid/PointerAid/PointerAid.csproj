@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MultipleChoiceMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultipleChoiceMessageBox.Designer.cs">
+      <DependentUpon>MultipleChoiceMessageBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="PointerAidForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +70,9 @@
     <Compile Include="SearchMessageBox.Designer.cs">
       <DependentUpon>SearchMessageBox.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="MultipleChoiceMessageBox.resx">
+      <DependentUpon>MultipleChoiceMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PointerAidForm.resx">
       <DependentUpon>PointerAidForm.cs</DependentUpon>
     </EmbeddedResource>

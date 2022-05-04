@@ -10,6 +10,7 @@ namespace AtomosZ.DragonAid.Libraries
 	{
 		public List<DynamicSubroutine> subroutines07;
 		public List<DynamicSubroutine> subroutines17;
+		public List<DynamicSubroutine> localPointers;
 
 		public List<DynamicSubroutine> FindAddress(int address)
 		{
@@ -18,6 +19,9 @@ namespace AtomosZ.DragonAid.Libraries
 				if (addr.prgAddress.pointer == address)
 					finds.Add(addr);
 			foreach (var addr in subroutines17)
+				if (addr.prgAddress.pointer == address)
+					finds.Add(addr);
+			foreach (var addr in localPointers)
 				if (addr.prgAddress.pointer == address)
 					finds.Add(addr);
 			return finds;

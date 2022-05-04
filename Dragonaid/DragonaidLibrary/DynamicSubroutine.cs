@@ -1,6 +1,6 @@
 ﻿namespace AtomosZ.DragonAid.Libraries
 {
-	public enum DynamicLoader { Load07, Load17, NoLoader }
+	public enum DynamicLoader { Load07, Load17, LocalPointers, NoLoader }
 
 	public class DynamicSubroutine
 	{
