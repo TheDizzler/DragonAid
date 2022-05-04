@@ -73,7 +73,7 @@ namespace AtomosZ.DragonAid.Libraries
 				lowByte = (byte)i;
 			}
 		}
-		
+
 		public static void Add16Bit(byte operand, ref Address address)
 		{
 			address.Add(operand);
@@ -83,7 +83,47 @@ namespace AtomosZ.DragonAid.Libraries
 		{
 			int total = a + mem + (hasCarry ? 1 : 0);
 			hasCarry = total > byte.MaxValue;
-			return (byte) total;
+			return (byte)total;
+		}
+
+		/// <summary>
+		/// Is this correct?
+		/// </summary>
+		/// <param name="a"></param>
+		/// <param name="mem"></param>
+		/// <param name="hasCarry"></param>
+		/// <returns></returns>
+		public static byte SBC(byte a, byte mem, out bool hasCarry)
+		{
+			int aInt = a;
+			if (aInt - mem < 0)
+				hasCarry = false;
+			else
+				hasCarry = true;
+			return (byte)(a - mem);
+		}
+
+		/// <summary>
+		/// Not ASM op but a common function in ROM
+		/// </summary>
+		/// <param name="zeroPages"></param>
+		/// <param name="a"></param>
+		/// <param name="zeroPagePointer"></param>
+		/// <param name="y"></param>
+		public static void IncrementPointerXBy_AandY(byte[] zeroPages, byte a, byte zeroPagePointer, byte y)
+		{
+			ASMHelper.Add16Bit(a,
+				ref zeroPages[zeroPagePointer], ref zeroPages[zeroPagePointer + 1]);
+			zeroPages[zeroPagePointer + 1] += y;
+		}
+
+		/// <summary>
+		/// Dummy RNG. Always returns 0;
+		/// </summary>
+		/// <returns></returns>
+		public static byte RNG()
+		{
+			return 0;
 		}
 	}
 }
