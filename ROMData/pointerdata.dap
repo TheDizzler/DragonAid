@@ -1492,11 +1492,11 @@
       "loader": 0,
       "bankId": 6,
       "dsIndex": 5,
-      "name": null,
+      "name": "PostClockIncrement_Vector",
       "notes": "DynamicSubroutine_Addresses_18000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "called from BankSwitch_GetDynamicJD_3C000 (not a true DynamicSub)\n\nEvery 6th value is checked until value matches $74 or #$FF",
         "name": "Full address",
         "pointer": 111495,
         "offset": 111511
@@ -2228,11 +2228,11 @@
       "loader": 0,
       "bankId": 6,
       "dsIndex": 11,
-      "name": null,
+      "name": "Palettes_DayNight",
       "notes": "DynamicSubroutine_Addresses_18000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "[$12] - [$17]: day time (1E) palette",
         "name": "Full address",
         "pointer": 112469,
         "offset": 112485
