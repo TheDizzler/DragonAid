@@ -26,20 +26,20 @@ namespace AtomosZ.DragonAid.Libraries
 				+ "[1]: 0F - woods/desert/ice\n"
 				+ "[2]: 0A - grass\n"
 				+ "[3]: 0F - woods/desert/ice\n"
-				+ "[4]: 12 - heavy forest/swamp\n"
+				+ "[4]: 12 - heavy forest\n"
 				+ "[5]: 19 - hills\n"
 				+ "[6]: 54 - dungeon after room change\n"
-				+ "[7]: 12 - heavy forest/swamp\n"
+				+ "[7]: 12 - swamp\n"
 				+ "[8]: 0A - dungeon\n\n"
 				+ "night\n"
 				+ "[9]: 05 - water\n"
 				+ "[10]: 13 - woods/desert/ice\n"
 				+ "[11]: 0D - grass\n"
 				+ "[12]: 0F - woods/desert/ice\n"
-				+ "[13]: 16 - heavy forest/swamp\n"
+				+ "[13]: 16 - heavy forest\n"
 				+ "[14]: 1F - hills\n"
 				+ "[15]: 54 - dungeon after room change\n"
-				+ "[16]: 16 - heavy forest/swamp\n"
+				+ "[16]: 16 - swamp\n"
 				+ "[17]: 0A - dungeon\n"
 		};
 		/// <summary>
@@ -121,7 +121,8 @@ namespace AtomosZ.DragonAid.Libraries
 		/* Bank 6 $18000 */
 		public static Address LocalPointers_18000 = new Address("Pointer table for $18000 bank", 0x18000, 24)
 		{
-			notes = "[$16]: (Day/Night Palettes) $B755 ",
+			notes = "[$0A]: $B387 \n"
+				+ "[$16]: $B755 (Day/Night Palettes)\n",
 		};
 		public static Address DayNightPalettes = new Address("Only day/night palettes?", 0x1B755, 84)
 		{
@@ -149,9 +150,11 @@ namespace AtomosZ.DragonAid.Libraries
 		public static Address Load17BankIds = new Address("DynamicSubroutine_BankIds_17", 0x3E997);
 		public static Address Load07PointerIndices = new Address("DynamicSubroutine_PointerIndex_07", 0x3E9ED, 256);
 		public static Address Load17PointerIndices = new Address("DynamicSubroutine_PointerIndex_17", 0x3EAED, 256);
-		
+
 
 		/* Bank 16 $58000 */
+		public static Address PaletterStoreOffsets = new Address(
+			"Order in which palettes are written to $03E7 (PPU_BGPaletteColor_Store)", 0x58152);
 		/// <summary>
 		/// offsets to palettes for different times of day in DayNightPalettes vector (0x1B755)
 		/// </summary>
@@ -164,7 +167,7 @@ namespace AtomosZ.DragonAid.Libraries
 
 		/* Bank 1F $7C000 (high default) */
 		/// <summary>
-		/// Assuming 128 entries. 70 known to exist.
+		/// Mirror of 0x3E917 Load07BankIds
 		/// </summary>
 		public static Address LocalPointerBanks = new Address("Compressed bank indices", 0x7E917, 128)
 		{
@@ -172,7 +175,7 @@ namespace AtomosZ.DragonAid.Libraries
 				+ "Data is compressed: high nibble & low nibbles are two different bank Ids",
 		};
 		/// <summary>
-		/// Assuming 256 entries. 140 known to exist.
+		/// Mirror of 0x3E9ED Load07PointerIndices 
 		/// </summary>
 		public static Address LocalPointerIndices = new Address("Indices to LocalPointer", 0x7E9ED, 256)
 		{
@@ -181,7 +184,7 @@ namespace AtomosZ.DragonAid.Libraries
 				+ "Even: use high nibble. Odd: use low nibble.\n"
 				+ "[$8B]: (Day/Night Palettes) 0B",
 		};
-		
+
 
 		public static Address GetBankAddressFromId(byte bankId)
 		{
