@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonaidLibrary", "Dragona
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointerAid", "PointerAid\PointerAid.csproj", "{CCCA2D16-7F44-4163-A94A-937E47A53311}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriteAid", "SpriteAid\SpriteAid.csproj", "{6C4A14D7-53DC-4663-9650-A12EF4F0EF34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{CCCA2D16-7F44-4163-A94A-937E47A53311}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCCA2D16-7F44-4163-A94A-937E47A53311}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCCA2D16-7F44-4163-A94A-937E47A53311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C4A14D7-53DC-4663-9650-A12EF4F0EF34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C4A14D7-53DC-4663-9650-A12EF4F0EF34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C4A14D7-53DC-4663-9650-A12EF4F0EF34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C4A14D7-53DC-4663-9650-A12EF4F0EF34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

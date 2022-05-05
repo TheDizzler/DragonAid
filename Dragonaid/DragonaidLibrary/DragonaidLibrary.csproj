@@ -57,12 +57,29 @@
       <DependentUpon>AddressView.cs</DependentUpon>
     </Compile>
     <Compile Include="ASMHelper.cs" />
+    <Compile Include="CaptionedPictureBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CaptionedPictureBox.Designer.cs">
+      <DependentUpon>CaptionedPictureBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="DynamicPointerData.cs" />
     <Compile Include="DynamicSubroutine.cs" />
     <Compile Include="Names.cs" />
     <Compile Include="PointerList.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SpriteParser.cs" />
     <Compile Include="Tables.cs" />
+    <Compile Include="TransparentLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TransparentLabel.Designer.cs">
+      <DependentUpon>TransparentLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="TransparentPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -74,6 +91,16 @@
   <ItemGroup>
     <EmbeddedResource Include="AddressView.resx">
       <DependentUpon>AddressView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CaptionedPictureBox.resx">
+      <DependentUpon>CaptionedPictureBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TransparentLabel.resx">
+      <DependentUpon>TransparentLabel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
