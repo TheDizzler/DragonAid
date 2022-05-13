@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AtomosZ.DragonAid.ItemEditor.Properties {
+namespace AtomosZ.DragonAid.ItemAid.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7FDD9A75-708A-4F18-A4C7-146DED230CA0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>AtomosZ.DragonAid.ItemEditor</RootNamespace>
-    <AssemblyName>ItemEditor</AssemblyName>
+    <RootNamespace>AtomosZ.DragonAid.ItemAid</RootNamespace>
+    <AssemblyName>ItemAid</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
