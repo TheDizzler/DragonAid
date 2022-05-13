@@ -516,7 +516,7 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 12,
-      "name": "Menu_Subroutine_Extended",
+      "name": "Menu_Subroutine",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
@@ -760,7 +760,7 @@
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": "Results stored in QuickStorage 0 and 1",
+        "notes": "Results stored in QuickStorage 0 and 1\n\nNormal\nStatus[0]:$80 Status[1]:$80\n\nDead\nStatus[0]:$80 Status[1]:$00",
         "name": "Full address",
         "pointer": 5174,
         "offset": 5190
@@ -2660,11 +2660,11 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 16,
-      "name": "",
+      "name": "LoadCharacterSprites_00",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": "dupe\nLoadCharacterSprites_00",
+        "notes": "dupe (same as 1724)",
         "name": "Full address",
         "pointer": 243998,
         "offset": 244014
@@ -3396,11 +3396,11 @@
       "loader": 0,
       "bankId": 4,
       "dsIndex": 26,
-      "name": null,
+      "name": "Menu_SetStatusPaletteColor_AndRefresh",
       "notes": "DynamicSubroutine_Addresses_10000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "BRK to Menu_SetStatusColor (172F)\nCopies BG palette to PPU\nWaits for NMI and refreshes screen",
         "name": "Full address",
         "pointer": 78488,
         "offset": 78504
@@ -4678,11 +4678,11 @@
       "loader": 1,
       "bankId": 14,
       "dsIndex": 16,
-      "name": "",
+      "name": "LoadCharacterSprites_00",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": "LoadCharacterSprites_00\n*dupe",
+        "notes": "(same as 07A6)\n*dupe",
         "name": "Full address",
         "pointer": 243998,
         "offset": 244014
@@ -4854,11 +4854,11 @@
       "loader": 1,
       "bankId": 13,
       "dsIndex": 40,
-      "name": "Menu_SetColor",
+      "name": "Menu_SetStatusColor",
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": "called from DynamicSubroutine_10000_A (076B)",
+        "notes": "called from DynamicSubroutine_10000_A (076B) and (07D4)\n\nchecks character statuses and updates the palette data PPU_BGPaletteColor_Store[1]) to match.\nAlso stores palette color in $06E0 for unknow reason,",
         "name": "Full address",
         "pointer": 218528,
         "offset": 218544
