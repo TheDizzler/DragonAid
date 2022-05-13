@@ -8,6 +8,12 @@ namespace AtomosZ.DragonAid.Libraries
 {
 	public static class PointerList
 	{
+		/* No specific bank */
+		public static Address[] NightTimeCheckAddresses = new Address[]
+		{
+			new Address("SetMenuColor", 0x35067, 1),
+		};
+
 		/* Bank 0 $00000 */
 		/// <summary>
 		/// Index derived from EncounterMonsterLists ( >>= 5)
@@ -87,16 +93,18 @@ namespace AtomosZ.DragonAid.Libraries
 
 		public static Address PPUAddressTable = new Address("Unclear what this vector does", 0x17438, 15)
 		{
-			notes = "Entry 1: [$00] - [$01]:$18D0 -> STA $2006 PPUWrite address "
+			notes = "Entry 1 (map tiles):"
+				+ "[$00] - [$01]:$18D0 -> STA $2006 PPUWrite address "
 				+ "[$02] - [$03]: $7200 -> CHR_TileIndex_Vector are tiles are stored (for reference later?)"
-				+ "[$04]: $8D\n"
-				+ "Entry 2 (bird): [$05] - [$06]: $0800 -> STA $2006 PPUWrite address "
+				+ "[$04]: $8D -> offset to write location in PPU\n"
+				+ "Entry 2 (bird):"
+				+ "[$05] - [$06]: $0800 -> STA $2006 PPUWrite address "
 				+ "[$07] - [$08]: $6F00 -> Sprite_Index_Vector "
-				+ "[$09]: $80\n"
-				+ "Entry 3 (PC sprite): [$10]: $0000 "
-				+ "[$12]: $6E00 "
-				+ "[$13]: $00\n"
-				,
+				+ "[$09]: $80 -> offset to write location in PPU\n"
+				+ "Entry 3 (PC sprite):"
+				+ "[$10]: $0000 "
+				+ "[$12]: $6E00 -> staging area for sprites before passing to PPU"
+				+ "[$13]: $00\n",
 		};
 		public static Address OffsetsToNextSpriteInTileBatch = new Address("", 0x17456, 88)
 		{
@@ -130,14 +138,86 @@ namespace AtomosZ.DragonAid.Libraries
 				+ "Clock 78 (night start): $30-$3B; Clock 96: $3C-$47; Clock B4: $48-$53",
 		};
 
-		/* Bank D $34000 */
+		/* Bank 9 $24000 */
 		public static Address WeaponPowers = new Address("Weapon Powers", 0x027990, UniversalConsts.WeaponCount);
 		public static Address ArmorPowers = new Address("Armor Powers", 0x0279B0, UniversalConsts.ArmorCount);
 		public static Address ShieldPowers = new Address("Shield Powers", 0x0279C8, UniversalConsts.ShieldCount);
 		public static Address HelmetPowers = new Address("Helmet Powers", 0x0279CF, UniversalConsts.HelmetCount);
 
+		/* Bank A $28000 */
+		/* Bank B $2C000 */
+		/* Bank C $30000 */
+		/* Bank D $34000 */
+		public static Address MenuColorQuarterHP = new Address("Color used when character's HP below quarter max", 0x355F9, 1)
+		{
+			notes = "#$2A (green) by default",
+		};
+		public static Address MenuColorStatusNormal = new Address("Color used when status normal", 0x3560B, 1)
+		{
+			notes = "#$30 (white) by default",
+		};
+		public static Address MenuColorNightTime = new Address("Color used at night time", 0x3560E, 1)
+		{
+			notes = "#$21 (light blue) by default",
+		};
+		public static Address MenuColorQCharacterDead = new Address("Color used when character dead", 0x35613, 1)
+		{
+			notes = "#$27 (orange) by default",
+		};
+		public static Address MenuColorUnknown = new Address("Color used when value at 6A58 (Save RAM) is 0", 0x3561A, 1)
+		{
+			notes = "#$30 (white) by default",
+		};
+
 		/* Bank E $38000 */
-		public static Address MenuPointers = new Address("Menu Adresses", 0x38F84);
+		/// <summary>
+		/// Add 0x23 and you get the DynamicSubroutine07 Index
+		/// 
+		/// [$00]: Item Command ($2F + $23 => $52)
+		/// [$01]: ?	($26 + $23 => $49?)
+		/// [$02]: ?	($1D + $23 => $40?)
+		/// [$03]: ?	($1F + $23 => $42?)
+		/// [$04]: ?	($1E + $23 => $41?)
+		///	[$05]: ?	($20 + $23 => $43?)
+		///	[$06]: ?	($2F + $23 => $52)
+		///	AE EB 6A D0 04 C9 79 F0 03 9D 00 04
+		/// 
+		/// $52 -> $9976 Character_GetCountAndNameIndices
+		/// </summary>
+		public static Address AdjustableHeightInstructions = new Address("Menu adjustable height instructions", 0x38DB2)
+		{
+			length = 7, // at least
+			notes = "Add 0x23 and you get the DynamicSubroutine07 Index" +
+			"[$00]: Item Command ($2F + $23 => $52) "
+				+ "$23-> Character_GetCurrentHP"
+				+ "$27-> $932C Character_GetCurrentMP"
+				+ "$2D-> $93D0 Character_CheckStatus"
+				+ "$3A-> $9586 TransferXPToQuickStorage"
+				+ "$3C-> $95ED Character_GetTotalGold "
+				+ "$4E-> $9944 GetCharacterClass_JMP"
+				+ "$52-> $9976 Character_GetCountAndNameIndices"
+			,
+		};
+		/// <summary>
+		/// [$02]:$9074							[$0A]:$910E -> Status 2 Characters
+		/// [$18]:$9CFE -> (#69)				[$26]:$93C7 ->
+		/// [$28]:$93F1 -> Menu_MainCommand		[$2A]:$9420 -> (#15) [$34]:$94BB -> 
+		/// [$2C]: Item character select
+		/// [$36]:$94DB -> FIGHT.PARRY.ITEM.	[$69]: Item window	[$72]:$96A9 -> Enemy Display, Interactive
+		/// [$7A]:$96DD -> Dialog Text			[$7C]:$96E9 -> (Someone died) Redirects to $96DD
+		/// [$7E]:$96ED -> Enemy Display, Non-Interactive
+		/// </summary>
+		public static Address MenuPointers = new Address("Menu Adresses", 0x38F84)
+		{
+			notes = "There are at least 2 type of pointer in this list: "
+			+ "1) normal instructions and 2) redirect to normal instructions.\n"
+			+ "If byte 0 is >= $80, then it is case 2). Bytes 2 and 3 is the new menu pointer, "
+			+ "and byte 1 is menuPositionA & B.\n"
+			+ "How to read normal instructions:\n"
+			+ "[$00]: "
+			+ "[$01]: if >= 10, the height is dynamic. Otherwise, this number *2 == height of menu in 8 pixel lines.", 
+		};
+		public static Address MenuTitles = new Address("Menu titles", 0x39D2B);
 		public static Address LoadSpritesVector = new Address("Unknown", 0x3BA34);
 
 		/* Bank F $3C000 (low default) */
@@ -190,7 +270,7 @@ namespace AtomosZ.DragonAid.Libraries
 		{
 			int address = 0;
 			if ((bankId & 0x10) == 0x10)
-				address += 40000;
+				address += 0x40000;
 			address += (bankId & 0x0F) * 0x4000;
 			return new Address(address.ToString(), address);
 		}
