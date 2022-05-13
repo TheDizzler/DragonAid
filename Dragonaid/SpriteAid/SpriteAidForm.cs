@@ -48,7 +48,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 			sprite_pictureBox.Image = SpriteParser.GetTile(romData, (int)address_Spinner.Value);
 
 			SetupDayCycleTimers(romData);
-			DisplayDayNightPalette(romData);
+			PaletteTime_spinner_ValueChanged(null, null);
 		}
 
 		private void DisplayDayNightPalette(byte[] romData)
@@ -110,6 +110,13 @@ namespace AtomosZ.DragonAid.SpriteAid
 			{
 				timeSpinners[i].Maximum = dayCycleLength_spinner.Value - maxDec++;
 			}
+		}
+
+		private void PaletteTime_spinner_ValueChanged(object sender, EventArgs e)
+		{
+			DisplayDayNightPalette(romData);
+			int timeIndex = (int)paletteTime_spinner.Value;
+			time_label.Text = ((int)timeSpinners[timeIndex - 1].Value).ToString("X2");
 		}
 	}
 }

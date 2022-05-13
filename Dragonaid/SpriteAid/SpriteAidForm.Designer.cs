@@ -31,29 +31,30 @@
 			this.sprite_pictureBox = new System.Windows.Forms.PictureBox();
 			this.address_Spinner = new System.Windows.Forms.NumericUpDown();
 			this.bgPalettes_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-			this.palette00_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette01_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette02_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette03_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette04_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette05_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette06_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette07_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette08_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette09_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette0A_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette0B_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette0C_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette0D_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette0E_pictureBox = new System.Windows.Forms.PictureBox();
 			this.palette0F_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette0E_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette0D_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette0C_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette0B_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette0A_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette09_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette08_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette07_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette06_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette05_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette04_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette03_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette02_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette01_pictureBox = new System.Windows.Forms.PictureBox();
+			this.palette00_pictureBox = new System.Windows.Forms.PictureBox();
 			this.paletteTime_spinner = new System.Windows.Forms.NumericUpDown();
 			this.timeControl_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
+			this.time_label = new System.Windows.Forms.Label();
 			this.paletteChangeTimes_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+			this.morning_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.label2 = new System.Windows.Forms.Label();
 			this.morningStart_spinner = new System.Windows.Forms.NumericUpDown();
-			this.morning_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.label3 = new System.Windows.Forms.Label();
 			this.lateMorning_spinner = new System.Windows.Forms.NumericUpDown();
@@ -75,31 +76,30 @@
 			this.flowLayoutPanel7 = new System.Windows.Forms.FlowLayoutPanel();
 			this.label9 = new System.Windows.Forms.Label();
 			this.dayCycleLength_spinner = new System.Windows.Forms.NumericUpDown();
-			this.time_label = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.sprite_pictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.address_Spinner)).BeginInit();
 			this.bgPalettes_tableLayoutPanel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.palette00_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette01_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette02_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette03_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette04_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette05_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette06_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette07_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette08_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette09_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0A_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0B_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0C_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0D_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0E_pictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.palette0F_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette0E_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette0D_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette0C_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette0B_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette0A_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette09_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette08_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette07_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette06_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette05_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette04_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette03_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette02_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette01_pictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette00_pictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paletteTime_spinner)).BeginInit();
 			this.timeControl_flowLayoutPanel.SuspendLayout();
 			this.paletteChangeTimes_flowLayoutPanel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.morningStart_spinner)).BeginInit();
 			this.morning_flowLayoutPanel.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.morningStart_spinner)).BeginInit();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lateMorning_spinner)).BeginInit();
 			this.flowLayoutPanel2.SuspendLayout();
@@ -129,18 +129,18 @@
 			this.address_Spinner.Hexadecimal = true;
 			this.address_Spinner.Location = new System.Drawing.Point(13, 13);
 			this.address_Spinner.Maximum = new decimal(new int[] {
-			524287,
-			0,
-			0,
-			0});
+            524287,
+            0,
+            0,
+            0});
 			this.address_Spinner.Name = "address_Spinner";
 			this.address_Spinner.Size = new System.Drawing.Size(120, 26);
 			this.address_Spinner.TabIndex = 1;
 			this.address_Spinner.Value = new decimal(new int[] {
-			131088,
-			0,
-			0,
-			0});
+            131088,
+            0,
+            0,
+            0});
 			this.address_Spinner.ValueChanged += new System.EventHandler(this.Address_Spinner_ValueChanged);
 			// 
 			// bgPalettes_tableLayoutPanel
@@ -178,131 +178,14 @@
 			this.bgPalettes_tableLayoutPanel.Size = new System.Drawing.Size(256, 256);
 			this.bgPalettes_tableLayoutPanel.TabIndex = 2;
 			// 
-			// palette00_pictureBox
+			// palette0F_pictureBox
 			// 
-			this.palette00_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette00_pictureBox.Location = new System.Drawing.Point(3, 3);
-			this.palette00_pictureBox.Name = "palette00_pictureBox";
-			this.palette00_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette00_pictureBox.TabIndex = 0;
-			this.palette00_pictureBox.TabStop = false;
-			// 
-			// palette01_pictureBox
-			// 
-			this.palette01_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette01_pictureBox.Location = new System.Drawing.Point(67, 3);
-			this.palette01_pictureBox.Name = "palette01_pictureBox";
-			this.palette01_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette01_pictureBox.TabIndex = 1;
-			this.palette01_pictureBox.TabStop = false;
-			// 
-			// palette02_pictureBox
-			// 
-			this.palette02_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette02_pictureBox.Location = new System.Drawing.Point(131, 3);
-			this.palette02_pictureBox.Name = "palette02_pictureBox";
-			this.palette02_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette02_pictureBox.TabIndex = 2;
-			this.palette02_pictureBox.TabStop = false;
-			// 
-			// palette03_pictureBox
-			// 
-			this.palette03_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette03_pictureBox.Location = new System.Drawing.Point(195, 3);
-			this.palette03_pictureBox.Name = "palette03_pictureBox";
-			this.palette03_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette03_pictureBox.TabIndex = 3;
-			this.palette03_pictureBox.TabStop = false;
-			// 
-			// palette04_pictureBox
-			// 
-			this.palette04_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette04_pictureBox.Location = new System.Drawing.Point(3, 67);
-			this.palette04_pictureBox.Name = "palette04_pictureBox";
-			this.palette04_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette04_pictureBox.TabIndex = 4;
-			this.palette04_pictureBox.TabStop = false;
-			// 
-			// palette05_pictureBox
-			// 
-			this.palette05_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette05_pictureBox.Location = new System.Drawing.Point(67, 67);
-			this.palette05_pictureBox.Name = "palette05_pictureBox";
-			this.palette05_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette05_pictureBox.TabIndex = 5;
-			this.palette05_pictureBox.TabStop = false;
-			// 
-			// palette06_pictureBox
-			// 
-			this.palette06_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette06_pictureBox.Location = new System.Drawing.Point(131, 67);
-			this.palette06_pictureBox.Name = "palette06_pictureBox";
-			this.palette06_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette06_pictureBox.TabIndex = 6;
-			this.palette06_pictureBox.TabStop = false;
-			// 
-			// palette07_pictureBox
-			// 
-			this.palette07_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette07_pictureBox.Location = new System.Drawing.Point(195, 67);
-			this.palette07_pictureBox.Name = "palette07_pictureBox";
-			this.palette07_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette07_pictureBox.TabIndex = 7;
-			this.palette07_pictureBox.TabStop = false;
-			// 
-			// palette08_pictureBox
-			// 
-			this.palette08_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette08_pictureBox.Location = new System.Drawing.Point(3, 131);
-			this.palette08_pictureBox.Name = "palette08_pictureBox";
-			this.palette08_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette08_pictureBox.TabIndex = 8;
-			this.palette08_pictureBox.TabStop = false;
-			// 
-			// palette09_pictureBox
-			// 
-			this.palette09_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette09_pictureBox.Location = new System.Drawing.Point(67, 131);
-			this.palette09_pictureBox.Name = "palette09_pictureBox";
-			this.palette09_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette09_pictureBox.TabIndex = 9;
-			this.palette09_pictureBox.TabStop = false;
-			// 
-			// palette0A_pictureBox
-			// 
-			this.palette0A_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette0A_pictureBox.Location = new System.Drawing.Point(131, 131);
-			this.palette0A_pictureBox.Name = "palette0A_pictureBox";
-			this.palette0A_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette0A_pictureBox.TabIndex = 10;
-			this.palette0A_pictureBox.TabStop = false;
-			// 
-			// palette0B_pictureBox
-			// 
-			this.palette0B_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette0B_pictureBox.Location = new System.Drawing.Point(195, 131);
-			this.palette0B_pictureBox.Name = "palette0B_pictureBox";
-			this.palette0B_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette0B_pictureBox.TabIndex = 11;
-			this.palette0B_pictureBox.TabStop = false;
-			// 
-			// palette0C_pictureBox
-			// 
-			this.palette0C_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette0C_pictureBox.Location = new System.Drawing.Point(3, 195);
-			this.palette0C_pictureBox.Name = "palette0C_pictureBox";
-			this.palette0C_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette0C_pictureBox.TabIndex = 12;
-			this.palette0C_pictureBox.TabStop = false;
-			// 
-			// palette0D_pictureBox
-			// 
-			this.palette0D_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette0D_pictureBox.Location = new System.Drawing.Point(67, 195);
-			this.palette0D_pictureBox.Name = "palette0D_pictureBox";
-			this.palette0D_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette0D_pictureBox.TabIndex = 13;
-			this.palette0D_pictureBox.TabStop = false;
+			this.palette0F_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette0F_pictureBox.Location = new System.Drawing.Point(195, 195);
+			this.palette0F_pictureBox.Name = "palette0F_pictureBox";
+			this.palette0F_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette0F_pictureBox.TabIndex = 15;
+			this.palette0F_pictureBox.TabStop = false;
 			// 
 			// palette0E_pictureBox
 			// 
@@ -313,31 +196,154 @@
 			this.palette0E_pictureBox.TabIndex = 14;
 			this.palette0E_pictureBox.TabStop = false;
 			// 
-			// palette0F_pictureBox
+			// palette0D_pictureBox
 			// 
-			this.palette0F_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette0F_pictureBox.Location = new System.Drawing.Point(195, 195);
-			this.palette0F_pictureBox.Name = "palette0F_pictureBox";
-			this.palette0F_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette0F_pictureBox.TabIndex = 15;
-			this.palette0F_pictureBox.TabStop = false;
+			this.palette0D_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette0D_pictureBox.Location = new System.Drawing.Point(67, 195);
+			this.palette0D_pictureBox.Name = "palette0D_pictureBox";
+			this.palette0D_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette0D_pictureBox.TabIndex = 13;
+			this.palette0D_pictureBox.TabStop = false;
+			// 
+			// palette0C_pictureBox
+			// 
+			this.palette0C_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette0C_pictureBox.Location = new System.Drawing.Point(3, 195);
+			this.palette0C_pictureBox.Name = "palette0C_pictureBox";
+			this.palette0C_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette0C_pictureBox.TabIndex = 12;
+			this.palette0C_pictureBox.TabStop = false;
+			// 
+			// palette0B_pictureBox
+			// 
+			this.palette0B_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette0B_pictureBox.Location = new System.Drawing.Point(195, 131);
+			this.palette0B_pictureBox.Name = "palette0B_pictureBox";
+			this.palette0B_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette0B_pictureBox.TabIndex = 11;
+			this.palette0B_pictureBox.TabStop = false;
+			// 
+			// palette0A_pictureBox
+			// 
+			this.palette0A_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette0A_pictureBox.Location = new System.Drawing.Point(131, 131);
+			this.palette0A_pictureBox.Name = "palette0A_pictureBox";
+			this.palette0A_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette0A_pictureBox.TabIndex = 10;
+			this.palette0A_pictureBox.TabStop = false;
+			// 
+			// palette09_pictureBox
+			// 
+			this.palette09_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette09_pictureBox.Location = new System.Drawing.Point(67, 131);
+			this.palette09_pictureBox.Name = "palette09_pictureBox";
+			this.palette09_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette09_pictureBox.TabIndex = 9;
+			this.palette09_pictureBox.TabStop = false;
+			// 
+			// palette08_pictureBox
+			// 
+			this.palette08_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette08_pictureBox.Location = new System.Drawing.Point(3, 131);
+			this.palette08_pictureBox.Name = "palette08_pictureBox";
+			this.palette08_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette08_pictureBox.TabIndex = 8;
+			this.palette08_pictureBox.TabStop = false;
+			// 
+			// palette07_pictureBox
+			// 
+			this.palette07_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette07_pictureBox.Location = new System.Drawing.Point(195, 67);
+			this.palette07_pictureBox.Name = "palette07_pictureBox";
+			this.palette07_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette07_pictureBox.TabIndex = 7;
+			this.palette07_pictureBox.TabStop = false;
+			// 
+			// palette06_pictureBox
+			// 
+			this.palette06_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette06_pictureBox.Location = new System.Drawing.Point(131, 67);
+			this.palette06_pictureBox.Name = "palette06_pictureBox";
+			this.palette06_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette06_pictureBox.TabIndex = 6;
+			this.palette06_pictureBox.TabStop = false;
+			// 
+			// palette05_pictureBox
+			// 
+			this.palette05_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette05_pictureBox.Location = new System.Drawing.Point(67, 67);
+			this.palette05_pictureBox.Name = "palette05_pictureBox";
+			this.palette05_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette05_pictureBox.TabIndex = 5;
+			this.palette05_pictureBox.TabStop = false;
+			// 
+			// palette04_pictureBox
+			// 
+			this.palette04_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette04_pictureBox.Location = new System.Drawing.Point(3, 67);
+			this.palette04_pictureBox.Name = "palette04_pictureBox";
+			this.palette04_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette04_pictureBox.TabIndex = 4;
+			this.palette04_pictureBox.TabStop = false;
+			// 
+			// palette03_pictureBox
+			// 
+			this.palette03_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette03_pictureBox.Location = new System.Drawing.Point(195, 3);
+			this.palette03_pictureBox.Name = "palette03_pictureBox";
+			this.palette03_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette03_pictureBox.TabIndex = 3;
+			this.palette03_pictureBox.TabStop = false;
+			// 
+			// palette02_pictureBox
+			// 
+			this.palette02_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette02_pictureBox.Location = new System.Drawing.Point(131, 3);
+			this.palette02_pictureBox.Name = "palette02_pictureBox";
+			this.palette02_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette02_pictureBox.TabIndex = 2;
+			this.palette02_pictureBox.TabStop = false;
+			// 
+			// palette01_pictureBox
+			// 
+			this.palette01_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette01_pictureBox.Location = new System.Drawing.Point(67, 3);
+			this.palette01_pictureBox.Name = "palette01_pictureBox";
+			this.palette01_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette01_pictureBox.TabIndex = 1;
+			this.palette01_pictureBox.TabStop = false;
+			// 
+			// palette00_pictureBox
+			// 
+			this.palette00_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.palette00_pictureBox.Location = new System.Drawing.Point(3, 3);
+			this.palette00_pictureBox.Name = "palette00_pictureBox";
+			this.palette00_pictureBox.Size = new System.Drawing.Size(58, 58);
+			this.palette00_pictureBox.TabIndex = 0;
+			this.palette00_pictureBox.TabStop = false;
 			// 
 			// paletteTime_spinner
 			// 
 			this.paletteTime_spinner.Location = new System.Drawing.Point(106, 3);
 			this.paletteTime_spinner.Maximum = new decimal(new int[] {
-			7,
-			0,
-			0,
-			0});
+            7,
+            0,
+            0,
+            0});
+			this.paletteTime_spinner.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.paletteTime_spinner.Name = "paletteTime_spinner";
 			this.paletteTime_spinner.Size = new System.Drawing.Size(57, 26);
 			this.paletteTime_spinner.TabIndex = 3;
 			this.paletteTime_spinner.Value = new decimal(new int[] {
-			1,
-			0,
-			0,
-			0});
+            1,
+            0,
+            0,
+            0});
+			this.paletteTime_spinner.ValueChanged += new System.EventHandler(this.PaletteTime_spinner_ValueChanged);
 			// 
 			// timeControl_flowLayoutPanel
 			// 
@@ -362,6 +368,16 @@
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Time of Day:";
 			// 
+			// time_label
+			// 
+			this.time_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.time_label.AutoSize = true;
+			this.time_label.Location = new System.Drawing.Point(169, 6);
+			this.time_label.Name = "time_label";
+			this.time_label.Size = new System.Drawing.Size(36, 20);
+			this.time_label.TabIndex = 4;
+			this.time_label.Text = "$00";
+			// 
 			// paletteChangeTimes_flowLayoutPanel
 			// 
 			this.paletteChangeTimes_flowLayoutPanel.AutoSize = true;
@@ -380,6 +396,18 @@
 			this.paletteChangeTimes_flowLayoutPanel.TabIndex = 5;
 			this.paletteChangeTimes_flowLayoutPanel.WrapContents = false;
 			// 
+			// morning_flowLayoutPanel
+			// 
+			this.morning_flowLayoutPanel.AutoSize = true;
+			this.morning_flowLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.morning_flowLayoutPanel.Controls.Add(this.label2);
+			this.morning_flowLayoutPanel.Controls.Add(this.morningStart_spinner);
+			this.morning_flowLayoutPanel.Location = new System.Drawing.Point(3, 3);
+			this.morning_flowLayoutPanel.Name = "morning_flowLayoutPanel";
+			this.morning_flowLayoutPanel.Size = new System.Drawing.Size(192, 32);
+			this.morning_flowLayoutPanel.TabIndex = 4;
+			this.morning_flowLayoutPanel.WrapContents = false;
+			// 
 			// label2
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -396,25 +424,13 @@
 			this.morningStart_spinner.Hexadecimal = true;
 			this.morningStart_spinner.Location = new System.Drawing.Point(121, 3);
 			this.morningStart_spinner.Maximum = new decimal(new int[] {
-			203,
-			0,
-			0,
-			0});
+            203,
+            0,
+            0,
+            0});
 			this.morningStart_spinner.Name = "morningStart_spinner";
 			this.morningStart_spinner.Size = new System.Drawing.Size(68, 26);
 			this.morningStart_spinner.TabIndex = 3;
-			// 
-			// morning_flowLayoutPanel
-			// 
-			this.morning_flowLayoutPanel.AutoSize = true;
-			this.morning_flowLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.morning_flowLayoutPanel.Controls.Add(this.label2);
-			this.morning_flowLayoutPanel.Controls.Add(this.morningStart_spinner);
-			this.morning_flowLayoutPanel.Location = new System.Drawing.Point(3, 3);
-			this.morning_flowLayoutPanel.Name = "morning_flowLayoutPanel";
-			this.morning_flowLayoutPanel.Size = new System.Drawing.Size(192, 32);
-			this.morning_flowLayoutPanel.TabIndex = 4;
-			this.morning_flowLayoutPanel.WrapContents = false;
 			// 
 			// flowLayoutPanel1
 			// 
@@ -444,10 +460,10 @@
 			this.lateMorning_spinner.Hexadecimal = true;
 			this.lateMorning_spinner.Location = new System.Drawing.Point(121, 3);
 			this.lateMorning_spinner.Maximum = new decimal(new int[] {
-			203,
-			0,
-			0,
-			0});
+            203,
+            0,
+            0,
+            0});
 			this.lateMorning_spinner.Name = "lateMorning_spinner";
 			this.lateMorning_spinner.Size = new System.Drawing.Size(68, 26);
 			this.lateMorning_spinner.TabIndex = 3;
@@ -480,10 +496,10 @@
 			this.afternoon_spinner.Hexadecimal = true;
 			this.afternoon_spinner.Location = new System.Drawing.Point(121, 3);
 			this.afternoon_spinner.Maximum = new decimal(new int[] {
-			203,
-			0,
-			0,
-			0});
+            203,
+            0,
+            0,
+            0});
 			this.afternoon_spinner.Name = "afternoon_spinner";
 			this.afternoon_spinner.Size = new System.Drawing.Size(68, 26);
 			this.afternoon_spinner.TabIndex = 3;
@@ -516,10 +532,10 @@
 			this.evening_spinner.Hexadecimal = true;
 			this.evening_spinner.Location = new System.Drawing.Point(121, 3);
 			this.evening_spinner.Maximum = new decimal(new int[] {
-			203,
-			0,
-			0,
-			0});
+            203,
+            0,
+            0,
+            0});
 			this.evening_spinner.Name = "evening_spinner";
 			this.evening_spinner.Size = new System.Drawing.Size(68, 26);
 			this.evening_spinner.TabIndex = 3;
@@ -552,10 +568,10 @@
 			this.dusk_spinner.Hexadecimal = true;
 			this.dusk_spinner.Location = new System.Drawing.Point(121, 3);
 			this.dusk_spinner.Maximum = new decimal(new int[] {
-			203,
-			0,
-			0,
-			0});
+            203,
+            0,
+            0,
+            0});
 			this.dusk_spinner.Name = "dusk_spinner";
 			this.dusk_spinner.Size = new System.Drawing.Size(68, 26);
 			this.dusk_spinner.TabIndex = 3;
@@ -588,10 +604,10 @@
 			this.night_spinner.Hexadecimal = true;
 			this.night_spinner.Location = new System.Drawing.Point(121, 3);
 			this.night_spinner.Maximum = new decimal(new int[] {
-			203,
-			0,
-			0,
-			0});
+            203,
+            0,
+            0,
+            0});
 			this.night_spinner.Name = "night_spinner";
 			this.night_spinner.Size = new System.Drawing.Size(68, 26);
 			this.night_spinner.TabIndex = 3;
@@ -624,10 +640,10 @@
 			this.lateNight_spinner.Hexadecimal = true;
 			this.lateNight_spinner.Location = new System.Drawing.Point(121, 3);
 			this.lateNight_spinner.Maximum = new decimal(new int[] {
-			203,
-			0,
-			0,
-			0});
+            203,
+            0,
+            0,
+            0});
 			this.lateNight_spinner.Name = "lateNight_spinner";
 			this.lateNight_spinner.Size = new System.Drawing.Size(68, 26);
 			this.lateNight_spinner.TabIndex = 3;
@@ -659,34 +675,24 @@
 			this.dayCycleLength_spinner.Hexadecimal = true;
 			this.dayCycleLength_spinner.Location = new System.Drawing.Point(153, 3);
 			this.dayCycleLength_spinner.Maximum = new decimal(new int[] {
-			255,
-			0,
-			0,
-			0});
+            255,
+            0,
+            0,
+            0});
 			this.dayCycleLength_spinner.Minimum = new decimal(new int[] {
-			7,
-			0,
-			0,
-			0});
+            7,
+            0,
+            0,
+            0});
 			this.dayCycleLength_spinner.Name = "dayCycleLength_spinner";
 			this.dayCycleLength_spinner.Size = new System.Drawing.Size(68, 26);
 			this.dayCycleLength_spinner.TabIndex = 3;
 			this.dayCycleLength_spinner.Value = new decimal(new int[] {
-			203,
-			0,
-			0,
-			0});
+            203,
+            0,
+            0,
+            0});
 			this.dayCycleLength_spinner.ValueChanged += new System.EventHandler(this.DayCycleLength_spinner_ValueChanged);
-			// 
-			// time_label
-			// 
-			this.time_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.time_label.AutoSize = true;
-			this.time_label.Location = new System.Drawing.Point(169, 6);
-			this.time_label.Name = "time_label";
-			this.time_label.Size = new System.Drawing.Size(36, 20);
-			this.time_label.TabIndex = 4;
-			this.time_label.Text = "$00";
 			// 
 			// SpriteAidForm
 			// 
@@ -704,30 +710,30 @@
 			((System.ComponentModel.ISupportInitialize)(this.sprite_pictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.address_Spinner)).EndInit();
 			this.bgPalettes_tableLayoutPanel.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.palette00_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette01_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette02_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette03_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette04_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette05_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette06_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette07_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette08_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette09_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0A_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0B_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0C_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0D_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0E_pictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.palette0F_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette0E_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette0D_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette0C_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette0B_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette0A_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette09_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette08_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette07_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette06_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette05_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette04_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette03_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette02_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette01_pictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.palette00_pictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paletteTime_spinner)).EndInit();
 			this.timeControl_flowLayoutPanel.ResumeLayout(false);
 			this.timeControl_flowLayoutPanel.PerformLayout();
 			this.paletteChangeTimes_flowLayoutPanel.ResumeLayout(false);
 			this.paletteChangeTimes_flowLayoutPanel.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.morningStart_spinner)).EndInit();
 			this.morning_flowLayoutPanel.ResumeLayout(false);
 			this.morning_flowLayoutPanel.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.morningStart_spinner)).EndInit();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			this.flowLayoutPanel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lateMorning_spinner)).EndInit();
