@@ -125,5 +125,21 @@ namespace AtomosZ.DragonAid.Libraries
 		{
 			return 0;
 		}
+
+		/// <summary>
+		/// BIT sets the Z flag as though the value in the address tested were ANDed with the accumulator.
+		/// The N and V flags are set to match bits 7 and 6 respectively in the value stored at the tested address. 
+		/// </summary>
+		/// <param name="a"></param>
+		/// <param name="operand"></param>
+		/// <param name="n"></param>
+		/// <param name="v"></param>
+		/// <param name="z"></param>
+		public static void BIT(byte a, byte operand, out bool n, out bool v, out bool z)
+		{
+			z = (a & operand) == 0;
+			n = (operand & 0x07) == 0x07;
+			v = (operand & 0x06) == 0x06;
+		}
 	}
 }
