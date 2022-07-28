@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AtomosZ.DragonAid.Libraries
 {
@@ -104,7 +101,41 @@ namespace AtomosZ.DragonAid.Libraries
 		}
 
 		/// <summary>
-		/// Not ASM op but a common function in ROM
+		/// Not ASM but a common function in DQ ROM.
+		/// </summary>
+		/// <param name="zeroPages"></param>
+		/// <param name="a"></param>
+		/// <param name="x">zeroPages address</param>
+		public static void MultiplyValueAtXByA(byte[] zeroPages, byte a, byte x)
+		{ // C055
+			zeroPages[PointerList.dynamicSubroutineAddr + 0] = a;
+			zeroPages[PointerList.dynamicSubroutineAddr + 1] = 0;
+			zeroPages[PointerList.dynamicSubroutineAddr + 2] = 0;
+
+			do
+			{
+				zeroPages[PointerList.dynamicSubroutineAddr + 0]
+				= ASMHelper.LSR(zeroPages[PointerList.dynamicSubroutineAddr + 0], 1, out bool hasCarry);
+				if (hasCarry)
+				{
+					hasCarry = false;
+					zeroPages[PointerList.dynamicSubroutineAddr + 1]
+						= ASMHelper.ADC(zeroPages[x + 0], zeroPages[PointerList.dynamicSubroutineAddr + 1], ref hasCarry);
+					zeroPages[PointerList.dynamicSubroutineAddr + 2]
+						= ASMHelper.ADC(zeroPages[x + 1], zeroPages[PointerList.dynamicSubroutineAddr + 2], ref hasCarry);
+				}
+
+				zeroPages[x + 0] = ASMHelper.ASL(zeroPages[x + 0], 1, out hasCarry);
+				zeroPages[x + 1] = ASMHelper.ROL(zeroPages[x + 1], 1, ref hasCarry);
+			}
+			while (zeroPages[PointerList.dynamicSubroutineAddr + 0] != 0);
+
+			zeroPages[x + 0] = zeroPages[PointerList.dynamicSubroutineAddr + 1];
+			zeroPages[x + 1] = zeroPages[PointerList.dynamicSubroutineAddr + 2];
+		}
+
+		/// <summary>
+		/// Not ASM op but a common function in DQ ROM
 		/// </summary>
 		/// <param name="zeroPages"></param>
 		/// <param name="a"></param>
@@ -112,8 +143,8 @@ namespace AtomosZ.DragonAid.Libraries
 		/// <param name="y"></param>
 		public static void IncrementPointerXBy_AandY(byte[] zeroPages, byte a, byte zeroPagePointer, byte y)
 		{
-			ASMHelper.Add16Bit(a,
-				ref zeroPages[zeroPagePointer], ref zeroPages[zeroPagePointer + 1]);
+			ASMHelper.Add16Bit(
+				a, ref zeroPages[zeroPagePointer], ref zeroPages[zeroPagePointer + 1]);
 			zeroPages[zeroPagePointer + 1] += y;
 		}
 
