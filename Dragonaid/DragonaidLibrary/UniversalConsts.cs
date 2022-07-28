@@ -9,9 +9,27 @@ namespace AtomosZ.DragonAid.Libraries
 	public static class UniversalConsts
 	{
 		/// <summary>
+		/// THIS SHOULD BE FETCHED FROM ROM/EDIT SAVE DATA.
 		/// Timer wraps at 204 (0xCC).
+		/// 
+		/// Hardcoded at:
+		/// 0x003BD (GetEncounterRate)
 		/// </summary>
 		public static byte NightBattleStartTime = 0x78;
+		public static byte DayTimer = 0xCC;
+
+		/// <summary>
+		/// Hardcoded at:
+		/// 0x003E4
+		/// 0x003E8
+		/// </summary>
+		public static byte MaxEncounterRateChance = 0x64;
+
+		/// <summary>
+		/// Hardcoded at:
+		/// 0x003D8
+		/// </summary>
+		public static byte GoldClawEncounterRateChance = 0x64;
 
 		public static byte MonsterCount = 0x8B;
 		public static byte MonsterStatLength = 0x17;
