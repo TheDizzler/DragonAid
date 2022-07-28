@@ -27,7 +27,7 @@ R:0029:PPU_Render_Check1
 R:002A:Map_WorldPosition_X:DEC on Left\nINC on Right
 R:002B:Map_WorldPosition_Y:INC on Down\nDEC on Up
 R:002C:encounterVariable_A:$82DC used in encounter checks\nif > 1 || == 1, special encounter case\n\nPostIncrementClock\n-----------------------------\n$D231 if == #$02 skip this subroutine
-R:002F::IncrementClock\n-----------------------\n$D022 - if bit 1 set, do not increment clock\n\nDynamicSubroutine_38000_A\n---------------------------\n$B2F5 - LDA, AND #$02\n\nDynamicSubroutine_00000_A\n---------------------------\n$A149 - LDA, AND #$01
+R:002F::CheckForEncounter\n---------------------------\n$8298 - if bit 0 set -> special encounter subroutine\n$829E - if bit 1 set, use DarkWorld Encounter Tiles\n\n\nIncrementClock\n-----------------------\n$D022 - if bit 1 set, do not increment clock\n\nDynamicSubroutine_38000_A\n---------------------------\n$B2F5 - LDA, AND #$02\n\nDynamicSubroutine_00000_A\n---------------------------\n$A149 - LDA, AND #$01
 R:0030:DirectionToWalk_Horizontal
 R:0031:DirectionToWalk_Vertical
 R:0032:Post_NMI_store:Battle_WaitForNMI_Post\n---------------------\n$C911 - LDA, CMP #$FD
@@ -44,8 +44,8 @@ R:0045::Monster_ParseStat_0C_Pre\n---------------------------------\n$8388 - STA
 R:0046::Monster_ParseStat_0C_ResultNot03\n------------------------------\n$840E - init with $07\nLoop counter
 R:0047::Monster_ParseStat_0C_Pre\n----------------------------\n$8383 - init with $FF\n\n$838E - LSR
 R:0049:Monster_ParseStat_00_BRK_Variable:Monster_ParseStat_00\n-----------------------------\n$82CA - init with $00\n\nMonster_OC_Result_Loop_Post\n--------------------------------\n$83FF - ORA $40\nSTA
-R:004A::AFTER Monster_GetStatBlockOffset\nSlime $0000\nRaven $0017\n\n$B8B2 - finishes with address to beginning of stat block for monster Y
-R:004F::TileBatch instructionBytes[0]
+R:004A::EncounterCheck:\nencounterTile => encounter something
+R:004F::TileBatch instructionBytes[0]\n\nEncounter Check:\ncurrentTileType
 R:0050:tileBatchInstructions_1:tileBatchInstructions[1]
 R:0051:character_formationIndex:instructionBytes[2] (Tile Batch)\ncharacter_formationIndex
 R:0052:tileBatchVectorBOffset:tileBatchVectorBOffset
@@ -53,7 +53,7 @@ R:0053:writeTileCount:tiles written to PPU
 R:0055:tileBankId:bank id with tile to write to PPU\n\n$6AA TransferTo_PPUSpriteDMA
 R:0056:baseTileIndex:PPUAddress_Vector[4]
 R:0057::$E638 ReadTileAddress_Vector\n\n$6AA TransferTo_PPUSpriteDMA\nSTA -> PPU_SpriteDMA[1]
-R:0059-0060:ReadTileAddress_Vector:FocusFireBit
+R:0059-0060:ReadTileAddress_Vector:FocusFireBit\n\n\nEncounterCheck\nIf [5] != 0, automatic encounter (?)
 R:0062::Battle_InitializeVariables\n-----------------------------\n$8239 - init all with $FF
 R:0064:Monster_FormationIndex:Monster_GetSomethingFor_ParseStat\n--------------------\n$BA11 - LDA * 2 as X for $0530,X and $0531,X\n\nHYPOTHESIS - this is the monster index id (NOPE)\n OR this is the index of the monster as seen on screen (maybe)\n\nMenu_Instruction_18_GetNameAndCount\n-------------------------------------\n$8AC3 - stores value of Menu_TextRowCounter / 2 right before BRK\n\nDynamicJumpDestination_G\n--------------------------------------\n$B532 - LDY\n\nDynamicJumpDestination_28000_A\n--------------------------------------\n$824F - STA value of $0540,X ($98) AND #87 AND #7F => $00
 R:006C-006D:dynamicPointerSpace:$8BAF - WriteTo_EnemyDisplay ($96A9),Y\n\n\n$BCCE - In battle...stores address for (draw?) instructions\n  $96A9 => [0]:$10, [1]:$18, [2]:$96, [3]:$80, [4]:$4D, [5]$E1\n\n\n\nThe next byte of map to load.\n\n[00]: Aliahan\n41: Aliahan Hero's Home 2F\n42: Aliahan East House 2F\n43: Aliahan Inn 2F\n44: Aliahan Luisa's Place 2F\n45: Aliahan Castle B1\n46: Aliahan Castle\n47: Aliahan Castle B2
@@ -201,14 +201,16 @@ P:01D8:L01D8
 P:01DE:L01DE
 P:01E8:F01E8
 P:0222:Map_CheckForEncounter
-P:0226::....ok?
+P:0226::why all these NOPs?
+P:0231::if X pos == $FF, do not check for encounter
+P:0238::if Y pos == $FF, do not check for encounter
 P:023A::if this is not positive, skip encounter check
 P:023F:_CheckForEncounter_RTS
 P:0240:CheckForEncounter
 P:0255:L3CCBD_JMP
 P:0261:F0261
 P:0274-0275:BRKInstructions_0721B:07\n21 - Clear_0647to0664
-P:028E:L028E
+P:028E:Map_LightOrDarkEncounterTiles
 P:0292::lol ok
 P:02A4:Map_GetEncounterTile_DarkWorld
 P:02C3:Map_GetEncounterTile_LightWorld
@@ -217,20 +219,23 @@ P:02DC:ParseEncounterTile:encounter tile code
 P:02E7:L02E7
 P:02FA:L02FA
 P:0305:L0305
-P:0307:L0307
+P:0307:L0307:tile type currently standing on
 P:0310:L0310
 P:035A:L035A:encounter zone code
-P:0376:__L0376_RTS
+P:0376:__L035A_RTS
 P:038D:L038D
 P:0391::automatic encounter?
-P:03AE:Map_GetEncounterRate
+P:03A2::high encounter rate area?
+P:03AE:Map_GetEncounterRate:encounter rate multiplier
+P:03BD::night time encounter start time
 P:03C1:Map_GetDayEncounterRate:day time rates?
 P:03C6:Map_GetNightEncounterRate:night time rates?
 P:03C9:GetEncounterRate_GoldenClaw_IsEquipped
+P:03CB::multiply encourate rate by encounter rate multiplier
 P:03CE::golden claw
 P:03D7::what's the difference between this and 83E7?
 P:03DD:__GoldenClawNotEquipped
-P:03DF::4E could be > 0 in above GetAddressOffset\nWhen does this happen?
+P:03DF::4E could be > 0 in above MultiplyValueAtXByA\nWhen does this happen?
 P:03E3::clamp to 64 if above?
 P:03E7:L03E7:what's the difference between this and 83D7?
 P:03EB:RollForEncounter
@@ -257,9 +262,8 @@ P:05DF:L05DF
 P:05E9:L05E9
 P:061A:L061A
 P:0625:L0625
-P:0628-062B:PreEncounterRate_Vector_a
-P:0648:EncounterVariable_A
-P:0649:EncounterVariable_B
+P:0628-062B:EncounterRateMultiplier_Vector
+P:0648-0649:EncounterListAddress
 P:064A:EncounterVariable_C
 P:064B:EncounterVariable_D
 P:0650:F0650
@@ -2488,7 +2492,7 @@ P:3C040:L3C040
 P:3C041:IncrementPointerX_By_AandY
 P:3C04B:AddATo16bitINTAtX:Add A to $00,X and $01,X\nResults stored in $00,X and $01,X\n\nCombineItemAndAttributePower\nA: item power\n$04[0]: relevant attribute
 P:3C054:_AccumulatorQuickStorageADC_RTS_
-P:3C055:GetAddressOffset:Results stored in $00,X\n\nMonster stat block offset:\nSlime $0000\nRaven $0017\n\ngets the index of the monster * monster stat block size\nX:$4A - the offset from $00 where the data is to be saved
+P:3C055:MultiplyValueAtXByA:*x = (*x) * a
 P:3C05D:_GetAddressOffset_Loop_
 P:3C06E:__JMP_GetAddressOffsetLoop
 P:3C07F:Convert_INTtoSprites
@@ -3518,7 +3522,7 @@ P:7FF9F::set to high bank if required
 P:7FFD8-7FFFF:EndOfBank7C000to7FFFF
 S:00B6::$B124 after movement before encounter check\nchecks if bit 3 is set
 S:00B7:Post_NMI_Const:if AND #$20 == 0\n   JSR $C925\n\nBattle_GetMonsterName_X_05\n-------------------------\n$A9EF - LDA
-S:00C5:encounterCheckRequired_B:$B2DB - LDA\n\nwhen is this set?
+S:00C5:encounterCheckRequired_B:skip encounter check if this >= $80\n\n$B2DB - LDA when is this set?\n
 S:00C9::checked after movement before encounter check\nif == #$3F do something\n\nLoadCharacterSprites\n--------------------------\n$B94A if == $3F
 S:00CB:encounterCheckRequired_C:if this AND $90 == $80, skip encounter check
 S:0A32:IsDoneReadingFromBank:bit 5 == 1 done\nbit 5 == 0 not done\n\nEoTCharFound\n----------------------\n$ABD1 - Set bit 5\n\nAfter line written to staging area, turn off bit 0
