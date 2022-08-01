@@ -9,20 +9,28 @@ namespace AtomosZ.DragonAid.Libraries
 	public static class PointerList
 	{
 		/* No specific bank */
+		/// <summary>
+		/// Locations where hardcoded day-to-night time checked
+		/// Night starts at 0x78.
+		/// Timer Resets at 0xCC
+		/// </summary>
 		public static Address[] NightTimeCheckAddresses = new Address[]
 		{
+			new Address("GetEncounterRate", 0x003BD, 1),
 			new Address("SetMenuColor", 0x35067, 1),
 		};
+
+
 
 		/* Bank 0 $00000 */
 		/// <summary>
 		/// Index derived from EncounterMonsterLists ( >>= 5)
 		/// </summary>
-		public static Address PreEncounterRateVector = new Address("Unknown", 0x00628, 4);
+		public static Address EncounterRateMultipliers = new Address("Unknown", 0x00628, 4);
 		/// <summary>
 		/// $DB8A
 		/// </summary>
-		public static Address EncounterMonsterListPointer = new Address("Incorrect? This is pre encounter roll", 0x00648, 2);
+		public static Address EncounterMonsterListPointer = new Address("Points to EncounterMonsterLists (0x00ADB)", 0x00648, 2);
 		public static Address EncounterRates = new Address("Encounter Rates per Tile", 0x00934, 18)
 		{
 			notes = "0-8 Day encounter rates\n"
@@ -52,7 +60,8 @@ namespace AtomosZ.DragonAid.Libraries
 		/// Index is derived from position on map. 
 		/// (XXXX 0000 >> 4) + YYYY 0000 = YYYY XXXX
 		/// </summary>
-		public static Address LightWorldEncounterTiles = new Address("Encounter Tiles on the Light World Map", 0x00946, 256);
+		public static Address LightWorldEncounterZones = new Address("Encounter zones on the Light World Map", 0x00946, 256);
+		public static Address DarkWorldEncounterZones = new Address("Encounter zones on the Dark World Map", 0x00A46, 64);
 		public static Address EncounterMonsterLists = new Address("Monster lists for encounter areas", 0x00ADB, 76);
 
 		/// <summary>
@@ -124,6 +133,13 @@ namespace AtomosZ.DragonAid.Libraries
 			notes = "Order sprites are parsed from zeroPages[0x04 + x] where x is from one of the lists below:\n"
 				+ "Standard order: 00 02 04 06\n"
 				+ "Other orders not observed yet",
+		};
+		public static Address MapScrollVector = new Address("", 0x17A72, 4)
+		{
+			notes = "[$00]: (moving up) $BB13\n"
+				+ "[$02]: (moving right) $BAEC\n"
+				+ "[$04]: (moving down) $BAF8\n"
+				+ "[$06]: (moving left) $BAE5",
 		};
 
 		/* Bank 6 $18000 */
@@ -215,7 +231,7 @@ namespace AtomosZ.DragonAid.Libraries
 			+ "and byte 1 is menuPositionA & B.\n"
 			+ "How to read normal instructions:\n"
 			+ "[$00]: "
-			+ "[$01]: if >= 10, the height is dynamic. Otherwise, this number *2 == height of menu in 8 pixel lines.", 
+			+ "[$01]: if >= 10, the height is dynamic. Otherwise, this number *2 == height of menu in 8 pixel lines.",
 		};
 		public static Address MenuTitles = new Address("Menu titles", 0x39D2B);
 		public static Address LoadSpritesVector = new Address("Unknown", 0x3BA34);
