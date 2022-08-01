@@ -168,7 +168,7 @@
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": "Map Screen\nafter DynamicSubroutine_34000_E before movement",
+        "notes": "Map Screen\nafter DynamicSubroutine_34000_E before movement\n\nChecks $2F if Light or Dark world\nif Light world\n    if ($90 & $3F != 0\n        || $2F & $02) != 0\n        || $8F != 0)\n    RTS",
         "name": "Full address",
         "pointer": 218716,
         "offset": 218732
@@ -280,7 +280,7 @@
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": "Map Screen\n\n\nLDA $AC != 0\nLDA $87 != 0\nLDA $86 == 0",
+        "notes": "Map Screen, after encounter roll\n\nChecks status of character and makes adjustments to PPU_SpriteDMA depending on direction of movement.\nCould this be something for character sprite movement/direction?",
         "name": "Full address",
         "pointer": 220608,
         "offset": 220624
@@ -8192,6 +8192,4104 @@
         "offset": 156681
       },
       "address": 58361,
+      "code": 255
+    }
+  ],
+  "localPointers": [
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 0,
+      "name": "",
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": "",
+        "name": "Full address",
+        "pointer": 231353,
+        "offset": 231369
+      },
+      "address": 34745,
+      "code": 0
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 1,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 229490,
+        "offset": 229506
+      },
+      "address": 32882,
+      "code": 1
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 2,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 240603,
+        "offset": 240619
+      },
+      "address": 43995,
+      "code": 2
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 3,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 240612,
+        "offset": 240628
+      },
+      "address": 44004,
+      "code": 3
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 4,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 239227,
+        "offset": 239243
+      },
+      "address": 42619,
+      "code": 4
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 5,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 240633,
+        "offset": 240649
+      },
+      "address": 44025,
+      "code": 5
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 6,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 239245,
+        "offset": 239261
+      },
+      "address": 42637,
+      "code": 6
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 7,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 239245,
+        "offset": 239261
+      },
+      "address": 42637,
+      "code": 7
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 8,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 239227,
+        "offset": 239243
+      },
+      "address": 42619,
+      "code": 8
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 9,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 237292,
+        "offset": 237308
+      },
+      "address": 40684,
+      "code": 9
+    },
+    {
+      "loader": 2,
+      "bankId": 13,
+      "dsIndex": 2,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_34000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 218716,
+        "offset": 218732
+      },
+      "address": 38492,
+      "code": 10
+    },
+    {
+      "loader": 2,
+      "bankId": 13,
+      "dsIndex": 3,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_34000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 219260,
+        "offset": 219276
+      },
+      "address": 39036,
+      "code": 11
+    },
+    {
+      "loader": 2,
+      "bankId": 13,
+      "dsIndex": 4,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_34000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 220805,
+        "offset": 220821
+      },
+      "address": 40581,
+      "code": 12
+    },
+    {
+      "loader": 2,
+      "bankId": 13,
+      "dsIndex": 5,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_34000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 220809,
+        "offset": 220825
+      },
+      "address": 40585,
+      "code": 13
+    },
+    {
+      "loader": 2,
+      "bankId": 13,
+      "dsIndex": 6,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_34000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 219923,
+        "offset": 219939
+      },
+      "address": 39699,
+      "code": 14
+    },
+    {
+      "loader": 2,
+      "bankId": 13,
+      "dsIndex": 7,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_34000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 220627,
+        "offset": 220643
+      },
+      "address": 40403,
+      "code": 15
+    },
+    {
+      "loader": 2,
+      "bankId": 10,
+      "dsIndex": 1,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_28000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 164194,
+        "offset": 164210
+      },
+      "address": 33122,
+      "code": 16
+    },
+    {
+      "loader": 2,
+      "bankId": 13,
+      "dsIndex": 9,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_34000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 220608,
+        "offset": 220624
+      },
+      "address": 40384,
+      "code": 17
+    },
+    {
+      "loader": 2,
+      "bankId": 5,
+      "dsIndex": 7,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_14000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 96873,
+        "offset": 96889
+      },
+      "address": 47721,
+      "code": 18
+    },
+    {
+      "loader": 2,
+      "bankId": 5,
+      "dsIndex": 4,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_14000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 97426,
+        "offset": 97442
+      },
+      "address": 48274,
+      "code": 19
+    },
+    {
+      "loader": 2,
+      "bankId": 5,
+      "dsIndex": 0,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_14000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 81944,
+        "offset": 81960
+      },
+      "address": 32792,
+      "code": 20
+    },
+    {
+      "loader": 2,
+      "bankId": 5,
+      "dsIndex": 1,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_14000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 82200,
+        "offset": 82216
+      },
+      "address": 33048,
+      "code": 21
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 29,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 202268,
+        "offset": 202284
+      },
+      "address": 38428,
+      "code": 22
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 31,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 203240,
+        "offset": 203256
+      },
+      "address": 39400,
+      "code": 23
+    },
+    {
+      "loader": 2,
+      "bankId": 8,
+      "dsIndex": 0,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_20000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 131072,
+        "offset": 131088
+      },
+      "address": 9998,
+      "code": 24
+    },
+    {
+      "loader": 2,
+      "bankId": 7,
+      "dsIndex": 8,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_1C000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 127659,
+        "offset": 127675
+      },
+      "address": 45739,
+      "code": 25
+    },
+    {
+      "loader": 2,
+      "bankId": 10,
+      "dsIndex": 0,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_28000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 163840,
+        "offset": 163856
+      },
+      "address": 0,
+      "code": 26
+    },
+    {
+      "loader": 2,
+      "bankId": 10,
+      "dsIndex": 1,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_28000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 164194,
+        "offset": 164210
+      },
+      "address": 33122,
+      "code": 27
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 10,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 260391,
+        "offset": 260407
+      },
+      "address": 63783,
+      "code": 28
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 4,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 111168,
+        "offset": 111184
+      },
+      "address": 45632,
+      "code": 29
+    },
+    {
+      "loader": 2,
+      "bankId": 7,
+      "dsIndex": 0,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_1C000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 114750,
+        "offset": 114766
+      },
+      "address": 32830,
+      "code": 30
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 11,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 238277,
+        "offset": 238293
+      },
+      "address": 41669,
+      "code": 31
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 12,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 231342,
+        "offset": 231358
+      },
+      "address": 34734,
+      "code": 32
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 13,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 237281,
+        "offset": 237297
+      },
+      "address": 40673,
+      "code": 33
+    },
+    {
+      "loader": 2,
+      "bankId": 5,
+      "dsIndex": 2,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_14000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 88725,
+        "offset": 88741
+      },
+      "address": 39573,
+      "code": 34
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 2,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 4776,
+        "offset": 4792
+      },
+      "address": 37544,
+      "code": 35
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 3,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 4791,
+        "offset": 4807
+      },
+      "address": 37559,
+      "code": 36
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 4,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 4806,
+        "offset": 4822
+      },
+      "address": 37574,
+      "code": 37
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 5,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 4866,
+        "offset": 4882
+      },
+      "address": 37634,
+      "code": 38
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 6,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 4908,
+        "offset": 4924
+      },
+      "address": 37676,
+      "code": 39
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 7,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 4925,
+        "offset": 4941
+      },
+      "address": 37693,
+      "code": 40
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 8,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 4940,
+        "offset": 4956
+      },
+      "address": 37708,
+      "code": 41
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 9,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5000,
+        "offset": 5016
+      },
+      "address": 37768,
+      "code": 42
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 10,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5045,
+        "offset": 5061
+      },
+      "address": 37813,
+      "code": 43
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 11,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5062,
+        "offset": 5078
+      },
+      "address": 37830,
+      "code": 44
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 12,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5072,
+        "offset": 5088
+      },
+      "address": 37840,
+      "code": 45
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 13,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5143,
+        "offset": 5159
+      },
+      "address": 37911,
+      "code": 46
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 14,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5174,
+        "offset": 5190
+      },
+      "address": 37942,
+      "code": 47
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 15,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5189,
+        "offset": 5205
+      },
+      "address": 37957,
+      "code": 48
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 16,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5212,
+        "offset": 5228
+      },
+      "address": 37980,
+      "code": 49
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 17,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5246,
+        "offset": 5262
+      },
+      "address": 38014,
+      "code": 50
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 18,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5254,
+        "offset": 5270
+      },
+      "address": 38022,
+      "code": 51
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 19,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5284,
+        "offset": 5300
+      },
+      "address": 38052,
+      "code": 52
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 20,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5292,
+        "offset": 5308
+      },
+      "address": 38060,
+      "code": 53
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 21,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5300,
+        "offset": 5316
+      },
+      "address": 38068,
+      "code": 54
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 22,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5327,
+        "offset": 5343
+      },
+      "address": 38095,
+      "code": 55
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 23,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5415,
+        "offset": 5431
+      },
+      "address": 38183,
+      "code": 56
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 24,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5440,
+        "offset": 5456
+      },
+      "address": 38208,
+      "code": 57
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 25,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5510,
+        "offset": 5526
+      },
+      "address": 38278,
+      "code": 58
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 26,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5530,
+        "offset": 5546
+      },
+      "address": 38298,
+      "code": 59
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 27,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5613,
+        "offset": 5629
+      },
+      "address": 38381,
+      "code": 60
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 28,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5629,
+        "offset": 5645
+      },
+      "address": 38397,
+      "code": 61
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 29,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5693,
+        "offset": 5709
+      },
+      "address": 38461,
+      "code": 62
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 30,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5736,
+        "offset": 5752
+      },
+      "address": 38504,
+      "code": 63
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 31,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5794,
+        "offset": 5810
+      },
+      "address": 38562,
+      "code": 64
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 32,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5806,
+        "offset": 5822
+      },
+      "address": 38574,
+      "code": 65
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 33,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5800,
+        "offset": 5816
+      },
+      "address": 38568,
+      "code": 66
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 34,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5812,
+        "offset": 5828
+      },
+      "address": 38580,
+      "code": 67
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 35,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5876,
+        "offset": 5892
+      },
+      "address": 38644,
+      "code": 68
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 36,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5890,
+        "offset": 5906
+      },
+      "address": 38658,
+      "code": 69
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 37,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5883,
+        "offset": 5899
+      },
+      "address": 38651,
+      "code": 70
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 38,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5897,
+        "offset": 5913
+      },
+      "address": 38665,
+      "code": 71
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 39,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 5901,
+        "offset": 5917
+      },
+      "address": 38669,
+      "code": 72
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 40,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6079,
+        "offset": 6095
+      },
+      "address": 38847,
+      "code": 73
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 41,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6128,
+        "offset": 6144
+      },
+      "address": 38896,
+      "code": 74
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 42,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6153,
+        "offset": 6169
+      },
+      "address": 38921,
+      "code": 75
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 43,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6202,
+        "offset": 6218
+      },
+      "address": 38970,
+      "code": 76
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 44,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6458,
+        "offset": 6474
+      },
+      "address": 39226,
+      "code": 77
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 45,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6468,
+        "offset": 6484
+      },
+      "address": 39236,
+      "code": 78
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 46,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6471,
+        "offset": 6487
+      },
+      "address": 39239,
+      "code": 79
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 47,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6487,
+        "offset": 6503
+      },
+      "address": 39255,
+      "code": 80
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 48,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6500,
+        "offset": 6516
+      },
+      "address": 39268,
+      "code": 81
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 49,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6518,
+        "offset": 6534
+      },
+      "address": 39286,
+      "code": 82
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 50,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6400,
+        "offset": 6416
+      },
+      "address": 39168,
+      "code": 83
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 51,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6538,
+        "offset": 6554
+      },
+      "address": 39306,
+      "code": 84
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 52,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6597,
+        "offset": 6613
+      },
+      "address": 39365,
+      "code": 85
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 53,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6775,
+        "offset": 6791
+      },
+      "address": 39543,
+      "code": 86
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 54,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6787,
+        "offset": 6803
+      },
+      "address": 39555,
+      "code": 87
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 55,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6797,
+        "offset": 6813
+      },
+      "address": 39565,
+      "code": 88
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 56,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6808,
+        "offset": 6824
+      },
+      "address": 39576,
+      "code": 89
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 57,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6819,
+        "offset": 6835
+      },
+      "address": 39587,
+      "code": 90
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 58,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6911,
+        "offset": 6927
+      },
+      "address": 39679,
+      "code": 91
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 59,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 7085,
+        "offset": 7101
+      },
+      "address": 39853,
+      "code": 92
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 5,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 111495,
+        "offset": 111511
+      },
+      "address": 45959,
+      "code": 93
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 2,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 198518,
+        "offset": 198534
+      },
+      "address": 34678,
+      "code": 94
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 0,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 41274,
+        "offset": 41290
+      },
+      "address": 41274,
+      "code": 95
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 1,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 39332,
+        "offset": 39348
+      },
+      "address": 39332,
+      "code": 96
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 2,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 39305,
+        "offset": 39321
+      },
+      "address": 39305,
+      "code": 97
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 3,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 39282,
+        "offset": 39298
+      },
+      "address": 39282,
+      "code": 98
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 4,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 39254,
+        "offset": 39270
+      },
+      "address": 39254,
+      "code": 99
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 5,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 39225,
+        "offset": 39241
+      },
+      "address": 39225,
+      "code": 100
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 6,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 38960,
+        "offset": 38976
+      },
+      "address": 38960,
+      "code": 101
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 7,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 38904,
+        "offset": 38920
+      },
+      "address": 38904,
+      "code": 102
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 0,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 546,
+        "offset": 562
+      },
+      "address": 33314,
+      "code": 103
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 60,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6276,
+        "offset": 6292
+      },
+      "address": 39044,
+      "code": 104
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 10,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 41721,
+        "offset": 41737
+      },
+      "address": 41721,
+      "code": 105
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 67,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 13011,
+        "offset": 13027
+      },
+      "address": 45779,
+      "code": 106
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 0,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 65625,
+        "offset": 65641
+      },
+      "address": 32857,
+      "code": 107
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 1,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 79103,
+        "offset": 79119
+      },
+      "address": 46335,
+      "code": 108
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 2,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 79154,
+        "offset": 79170
+      },
+      "address": 46386,
+      "code": 109
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 3,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 80191,
+        "offset": 80207
+      },
+      "address": 47423,
+      "code": 110
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 4,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 79564,
+        "offset": 79580
+      },
+      "address": 46796,
+      "code": 111
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 5,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 80441,
+        "offset": 80457
+      },
+      "address": 47673,
+      "code": 112
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 6,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 76038,
+        "offset": 76054
+      },
+      "address": 43270,
+      "code": 113
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 7,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 76226,
+        "offset": 76242
+      },
+      "address": 43458,
+      "code": 114
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 8,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 76077,
+        "offset": 76093
+      },
+      "address": 43309,
+      "code": 115
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 9,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 76177,
+        "offset": 76193
+      },
+      "address": 43409,
+      "code": 116
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 10,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 76200,
+        "offset": 76216
+      },
+      "address": 43432,
+      "code": 117
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 11,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 76183,
+        "offset": 76199
+      },
+      "address": 43415,
+      "code": 118
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 12,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 76410,
+        "offset": 76426
+      },
+      "address": 43642,
+      "code": 119
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 13,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 78930,
+        "offset": 78946
+      },
+      "address": 46162,
+      "code": 120
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 11,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 41807,
+        "offset": 41823
+      },
+      "address": 41807,
+      "code": 121
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 61,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 7227,
+        "offset": 7243
+      },
+      "address": 39995,
+      "code": 122
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 62,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 7240,
+        "offset": 7256
+      },
+      "address": 40008,
+      "code": 123
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 15,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 76963,
+        "offset": 76979
+      },
+      "address": 44195,
+      "code": 124
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 0,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 98370,
+        "offset": 98386
+      },
+      "address": 32834,
+      "code": 125
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 1,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 98372,
+        "offset": 98388
+      },
+      "address": 32836,
+      "code": 126
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 2,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 98374,
+        "offset": 98390
+      },
+      "address": 32838,
+      "code": 127
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 3,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 98376,
+        "offset": 98392
+      },
+      "address": 32840,
+      "code": 128
+    },
+    {
+      "loader": 2,
+      "bankId": 10,
+      "dsIndex": 2,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_28000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 164380,
+        "offset": 164396
+      },
+      "address": 33308,
+      "code": 129
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 3,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 199860,
+        "offset": 199876
+      },
+      "address": 36020,
+      "code": 130
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 4,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 200103,
+        "offset": 200119
+      },
+      "address": 36263,
+      "code": 131
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 5,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 199775,
+        "offset": 199791
+      },
+      "address": 35935,
+      "code": 132
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 6,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 199782,
+        "offset": 199798
+      },
+      "address": 35942,
+      "code": 133
+    },
+    {
+      "loader": 2,
+      "bankId": 10,
+      "dsIndex": 3,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_28000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 164552,
+        "offset": 164568
+      },
+      "address": 33480,
+      "code": 134
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 30,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 229376,
+        "offset": 229392
+      },
+      "address": 0,
+      "code": 135
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 8,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 112315,
+        "offset": 112331
+      },
+      "address": 46779,
+      "code": 136
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 9,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 112560,
+        "offset": 112576
+      },
+      "address": 47024,
+      "code": 137
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 10,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 112553,
+        "offset": 112569
+      },
+      "address": 47017,
+      "code": 138
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 11,
+      "name": "Palettes_DayNight",
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": "[$12] - [$17]: day time (1E) palette",
+        "name": "Full address",
+        "pointer": 112469,
+        "offset": 112485
+      },
+      "address": 46933,
+      "code": 139
+    },
+    {
+      "loader": 2,
+      "bankId": 10,
+      "dsIndex": 12,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_28000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 165011,
+        "offset": 165027
+      },
+      "address": 33939,
+      "code": 140
+    },
+    {
+      "loader": 2,
+      "bankId": 10,
+      "dsIndex": 13,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_28000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 165033,
+        "offset": 165049
+      },
+      "address": 33961,
+      "code": 141
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 64,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 4407,
+        "offset": 4423
+      },
+      "address": 37175,
+      "code": 142
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 65,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 4486,
+        "offset": 4502
+      },
+      "address": 37254,
+      "code": 143
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 66,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 4526,
+        "offset": 4542
+      },
+      "address": 37294,
+      "code": 144
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 15,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 16384,
+        "offset": 16400
+      },
+      "address": 0,
+      "code": 145
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 68,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 4651,
+        "offset": 4667
+      },
+      "address": 37419,
+      "code": 146
+    },
+    {
+      "loader": 2,
+      "bankId": 7,
+      "dsIndex": 1,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_1C000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 124193,
+        "offset": 124209
+      },
+      "address": 42273,
+      "code": 147
+    },
+    {
+      "loader": 2,
+      "bankId": 7,
+      "dsIndex": 3,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_1C000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 124467,
+        "offset": 124483
+      },
+      "address": 42547,
+      "code": 148
+    },
+    {
+      "loader": 2,
+      "bankId": 7,
+      "dsIndex": 4,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_1C000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 124557,
+        "offset": 124573
+      },
+      "address": 42637,
+      "code": 149
+    },
+    {
+      "loader": 2,
+      "bankId": 7,
+      "dsIndex": 2,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_1C000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 124191,
+        "offset": 124207
+      },
+      "address": 42271,
+      "code": 150
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 0,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 197690,
+        "offset": 197706
+      },
+      "address": 33850,
+      "code": 151
+    },
+    {
+      "loader": 2,
+      "bankId": 10,
+      "dsIndex": 6,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_28000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 167040,
+        "offset": 167056
+      },
+      "address": 35968,
+      "code": 152
+    },
+    {
+      "loader": 2,
+      "bankId": 5,
+      "dsIndex": 3,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_14000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 97395,
+        "offset": 97411
+      },
+      "address": 48243,
+      "code": 153
+    },
+    {
+      "loader": 2,
+      "bankId": 7,
+      "dsIndex": 5,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_1C000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 124666,
+        "offset": 124682
+      },
+      "address": 42746,
+      "code": 154
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 9,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 197511,
+        "offset": 197527
+      },
+      "address": 33671,
+      "code": 155
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 69,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 6242,
+        "offset": 6258
+      },
+      "address": 39010,
+      "code": 156
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 10,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 198415,
+        "offset": 198431
+      },
+      "address": 34575,
+      "code": 157
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 1,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 16384,
+        "offset": 16400
+      },
+      "address": 0,
+      "code": 158
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 2,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 16432,
+        "offset": 16448
+      },
+      "address": 32816,
+      "code": 159
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 3,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 16487,
+        "offset": 16503
+      },
+      "address": 32871,
+      "code": 160
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 4,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 16454,
+        "offset": 16470
+      },
+      "address": 32838,
+      "code": 161
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 5,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 16443,
+        "offset": 16459
+      },
+      "address": 32827,
+      "code": 162
+    },
+    {
+      "loader": 2,
+      "bankId": 13,
+      "dsIndex": 39,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_34000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 225550,
+        "offset": 225566
+      },
+      "address": 45326,
+      "code": 163
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 12,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 43405,
+        "offset": 43421
+      },
+      "address": 43405,
+      "code": 164
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 7,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 16465,
+        "offset": 16481
+      },
+      "address": 32849,
+      "code": 165
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 16,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 243998,
+        "offset": 244014
+      },
+      "address": 47390,
+      "code": 166
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 14,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 80476,
+        "offset": 80492
+      },
+      "address": 47708,
+      "code": 167
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 14,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 243459,
+        "offset": 243475
+      },
+      "address": 46851,
+      "code": 168
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 70,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 9101,
+        "offset": 9117
+      },
+      "address": 41869,
+      "code": 169
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 71,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 9051,
+        "offset": 9067
+      },
+      "address": 41819,
+      "code": 170
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 29,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 241444,
+        "offset": 241460
+      },
+      "address": 44836,
+      "code": 171
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 25,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 244288,
+        "offset": 244304
+      },
+      "address": 47680,
+      "code": 172
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 26,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 244320,
+        "offset": 244336
+      },
+      "address": 47712,
+      "code": 173
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 32,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 241475,
+        "offset": 241491
+      },
+      "address": 44867,
+      "code": 174
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 33,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 241506,
+        "offset": 241522
+      },
+      "address": 44898,
+      "code": 175
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 16,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 81068,
+        "offset": 81084
+      },
+      "address": 48300,
+      "code": 176
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 18,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 79293,
+        "offset": 79309
+      },
+      "address": 46525,
+      "code": 177
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 63,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 9015,
+        "offset": 9031
+      },
+      "address": 41783,
+      "code": 178
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 19,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 67640,
+        "offset": 67656
+      },
+      "address": 34872,
+      "code": 179
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 20,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 67664,
+        "offset": 67680
+      },
+      "address": 34896,
+      "code": 180
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 21,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 79081,
+        "offset": 79097
+      },
+      "address": 46313,
+      "code": 181
+    },
+    {
+      "loader": 2,
+      "bankId": 10,
+      "dsIndex": 20,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_28000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 168343,
+        "offset": 168359
+      },
+      "address": 37271,
+      "code": 182
+    },
+    {
+      "loader": 2,
+      "bankId": 10,
+      "dsIndex": 21,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_28000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 168471,
+        "offset": 168487
+      },
+      "address": 37399,
+      "code": 183
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 13,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 201794,
+        "offset": 201810
+      },
+      "address": 37954,
+      "code": 184
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 14,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 201790,
+        "offset": 201806
+      },
+      "address": 37950,
+      "code": 185
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 15,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 201786,
+        "offset": 201802
+      },
+      "address": 37946,
+      "code": 186
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 16,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 201186,
+        "offset": 201202
+      },
+      "address": 37346,
+      "code": 187
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 17,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 201230,
+        "offset": 201246
+      },
+      "address": 37390,
+      "code": 188
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 31,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 114519,
+        "offset": 114535
+      },
+      "address": 48983,
+      "code": 189
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 19,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 204674,
+        "offset": 204690
+      },
+      "address": 40834,
+      "code": 190
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 34,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 241673,
+        "offset": 241689
+      },
+      "address": 45065,
+      "code": 191
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 35,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 241944,
+        "offset": 241960
+      },
+      "address": 45336,
+      "code": 192
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 36,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 242026,
+        "offset": 242042
+      },
+      "address": 45418,
+      "code": 193
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 37,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 241916,
+        "offset": 241932
+      },
+      "address": 45308,
+      "code": 194
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 38,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 241799,
+        "offset": 241815
+      },
+      "address": 45191,
+      "code": 195
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 12,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 111592,
+        "offset": 111608
+      },
+      "address": 46056,
+      "code": 196
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 13,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 111625,
+        "offset": 111641
+      },
+      "address": 46089,
+      "code": 197
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 14,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 111636,
+        "offset": 111652
+      },
+      "address": 46100,
+      "code": 198
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 15,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 111704,
+        "offset": 111720
+      },
+      "address": 46168,
+      "code": 199
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 20,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 208789,
+        "offset": 208805
+      },
+      "address": 44949,
+      "code": 200
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 21,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 205657,
+        "offset": 205673
+      },
+      "address": 41817,
+      "code": 201
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 22,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 205690,
+        "offset": 205706
+      },
+      "address": 41850,
+      "code": 202
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 9,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 41766,
+        "offset": 41782
+      },
+      "address": 41766,
+      "code": 203
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 76,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 0,
+        "offset": 16
+      },
+      "address": 0,
+      "code": 204
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 77,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 7498,
+        "offset": 7514
+      },
+      "address": 40266,
+      "code": 205
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 23,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 205790,
+        "offset": 205806
+      },
+      "address": 41950,
+      "code": 206
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 24,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 205652,
+        "offset": 205668
+      },
+      "address": 41812,
+      "code": 207
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 22,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 80428,
+        "offset": 80444
+      },
+      "address": 47660,
+      "code": 208
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 23,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 79933,
+        "offset": 79949
+      },
+      "address": 47165,
+      "code": 209
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 24,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 80239,
+        "offset": 80255
+      },
+      "address": 47471,
+      "code": 210
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 25,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 79444,
+        "offset": 79460
+      },
+      "address": 46676,
+      "code": 211
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 26,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 78488,
+        "offset": 78504
+      },
+      "address": 45720,
+      "code": 212
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 27,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 78652,
+        "offset": 78668
+      },
+      "address": 45884,
+      "code": 213
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 28,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 78858,
+        "offset": 78874
+      },
+      "address": 46090,
+      "code": 214
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 29,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 78868,
+        "offset": 78884
+      },
+      "address": 46100,
+      "code": 215
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 9,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 18519,
+        "offset": 18535
+      },
+      "address": 34903,
+      "code": 216
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 10,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 18312,
+        "offset": 18328
+      },
+      "address": 34696,
+      "code": 217
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 11,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 18421,
+        "offset": 18437
+      },
+      "address": 34805,
+      "code": 218
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 12,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 18883,
+        "offset": 18899
+      },
+      "address": 35267,
+      "code": 219
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 13,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 18986,
+        "offset": 19002
+      },
+      "address": 35370,
+      "code": 220
+    },
+    {
+      "loader": 2,
+      "bankId": 13,
+      "dsIndex": 13,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_34000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 220495,
+        "offset": 220511
+      },
+      "address": 40271,
+      "code": 221
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 16,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 111739,
+        "offset": 111755
+      },
+      "address": 46203,
+      "code": 222
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 88,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 8919,
+        "offset": 8935
+      },
+      "address": 41687,
+      "code": 223
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 89,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 8951,
+        "offset": 8967
+      },
+      "address": 41719,
+      "code": 224
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 90,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 8983,
+        "offset": 8999
+      },
+      "address": 41751,
+      "code": 225
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 45,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 205957,
+        "offset": 205973
+      },
+      "address": 42117,
+      "code": 226
+    },
+    {
+      "loader": 2,
+      "bankId": 6,
+      "dsIndex": 17,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_18000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 111865,
+        "offset": 111881
+      },
+      "address": 46329,
+      "code": 227
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 91,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 7792,
+        "offset": 7808
+      },
+      "address": 40560,
+      "code": 228
+    },
+    {
+      "loader": 2,
+      "bankId": 10,
+      "dsIndex": 10,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_28000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 164866,
+        "offset": 164882
+      },
+      "address": 33794,
+      "code": 229
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 46,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 242593,
+        "offset": 242609
+      },
+      "address": 45985,
+      "code": 230
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 47,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 242818,
+        "offset": 242834
+      },
+      "address": 46210,
+      "code": 231
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 48,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 243006,
+        "offset": 243022
+      },
+      "address": 46398,
+      "code": 232
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 49,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 242395,
+        "offset": 242411
+      },
+      "address": 45787,
+      "code": 233
+    },
+    {
+      "loader": 2,
+      "bankId": 2,
+      "dsIndex": 8,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_08000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 38896,
+        "offset": 38912
+      },
+      "address": 38896,
+      "code": 234
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 50,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 241746,
+        "offset": 241762
+      },
+      "address": 45138,
+      "code": 235
+    },
+    {
+      "loader": 2,
+      "bankId": 0,
+      "dsIndex": 93,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_00000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 10994,
+        "offset": 11010
+      },
+      "address": 43762,
+      "code": 236
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 30,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 81665,
+        "offset": 81681
+      },
+      "address": 48897,
+      "code": 237
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 31,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 77949,
+        "offset": 77965
+      },
+      "address": 45181,
+      "code": 238
+    },
+    {
+      "loader": 2,
+      "bankId": 4,
+      "dsIndex": 32,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_10000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 77985,
+        "offset": 78001
+      },
+      "address": 45217,
+      "code": 239
+    },
+    {
+      "loader": 2,
+      "bankId": 1,
+      "dsIndex": 16,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_04000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 16476,
+        "offset": 16492
+      },
+      "address": 32860,
+      "code": 240
+    },
+    {
+      "loader": 2,
+      "bankId": 5,
+      "dsIndex": 9,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_14000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 97456,
+        "offset": 97472
+      },
+      "address": 48304,
+      "code": 241
+    },
+    {
+      "loader": 2,
+      "bankId": 5,
+      "dsIndex": 10,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_14000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 97772,
+        "offset": 97788
+      },
+      "address": 48620,
+      "code": 242
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 28,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 205685,
+        "offset": 205701
+      },
+      "address": 41845,
+      "code": 243
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 51,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 230399,
+        "offset": 230415
+      },
+      "address": 33791,
+      "code": 244
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 30,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 203499,
+        "offset": 203515
+      },
+      "address": 39659,
+      "code": 245
+    },
+    {
+      "loader": 2,
+      "bankId": 7,
+      "dsIndex": 27,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_1C000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 124913,
+        "offset": 124929
+      },
+      "address": 42993,
+      "code": 246
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 33,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 206656,
+        "offset": 206672
+      },
+      "address": 42816,
+      "code": 247
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 34,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 203748,
+        "offset": 203764
+      },
+      "address": 39908,
+      "code": 248
+    },
+    {
+      "loader": 2,
+      "bankId": 14,
+      "dsIndex": 27,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_38000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 243427,
+        "offset": 243443
+      },
+      "address": 46819,
+      "code": 249
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 56,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 205777,
+        "offset": 205793
+      },
+      "address": 41937,
+      "code": 250
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 37,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 204611,
+        "offset": 204627
+      },
+      "address": 40771,
+      "code": 251
+    },
+    {
+      "loader": 2,
+      "bankId": 10,
+      "dsIndex": 5,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_28000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 164626,
+        "offset": 164642
+      },
+      "address": 33554,
+      "code": 252
+    },
+    {
+      "loader": 2,
+      "bankId": 13,
+      "dsIndex": 25,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_34000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 213076,
+        "offset": 213092
+      },
+      "address": 32852,
+      "code": 253
+    },
+    {
+      "loader": 2,
+      "bankId": 12,
+      "dsIndex": 44,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_30000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 205951,
+        "offset": 205967
+      },
+      "address": 42111,
+      "code": 254
+    },
+    {
+      "loader": 2,
+      "bankId": 13,
+      "dsIndex": 1,
+      "name": null,
+      "notes": "DynamicSubroutine_Addresses_34000",
+      "prgAddress": {
+        "length": 2,
+        "notes": null,
+        "name": "Full address",
+        "pointer": 213400,
+        "offset": 213416
+      },
+      "address": 33176,
       "code": 255
     }
   ]

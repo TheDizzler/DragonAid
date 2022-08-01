@@ -27,7 +27,7 @@ R:0029:PPU_Render_Check1
 R:002A:Map_WorldPosition_X:DEC on Left\nINC on Right
 R:002B:Map_WorldPosition_Y:INC on Down\nDEC on Up
 R:002C:encounterVariable_A:$82DC used in encounter checks\nif > 1 || == 1, special encounter case\n\nPostIncrementClock\n-----------------------------\n$D231 if == #$02 skip this subroutine
-R:002F::CheckForEncounter\n---------------------------\n$8298 - if bit 0 set -> special encounter subroutine\n$829E - if bit 1 set, use DarkWorld Encounter Tiles\n\n\nIncrementClock\n-----------------------\n$D022 - if bit 1 set, do not increment clock\n\nDynamicSubroutine_38000_A\n---------------------------\n$B2F5 - LDA, AND #$02\n\nDynamicSubroutine_00000_A\n---------------------------\n$A149 - LDA, AND #$01
+R:002F::Hypothesis: bit 1 - is Light World (0) or Dark world (1)\n\n\nCheckForEncounter\n---------------------------\n$8298 - if bit 0 set -> special encounter subroutine\n$829E - if bit 1 set, use DarkWorld Encounter Tiles\n$83B6 - if not 0, skip time of day check (indoors?)\n\n\nIncrementClock\n-----------------------\n$D022 - if bit 1 set, do not increment clock\n\nDynamicSubroutine_38000_A\n---------------------------\n$B2F5 - LDA, AND #$02\n\nDynamicSubroutine_00000_A\n---------------------------\n$A149 - LDA, AND #$01
 R:0030:DirectionToWalk_Horizontal
 R:0031:DirectionToWalk_Vertical
 R:0032:Post_NMI_store:Battle_WaitForNMI_Post\n---------------------\n$C911 - LDA, CMP #$FD
@@ -44,7 +44,9 @@ R:0045::Monster_ParseStat_0C_Pre\n---------------------------------\n$8388 - STA
 R:0046::Monster_ParseStat_0C_ResultNot03\n------------------------------\n$840E - init with $07\nLoop counter
 R:0047::Monster_ParseStat_0C_Pre\n----------------------------\n$8383 - init with $FF\n\n$838E - LSR
 R:0049:Monster_ParseStat_00_BRK_Variable:Monster_ParseStat_00\n-----------------------------\n$82CA - init with $00\n\nMonster_OC_Result_Loop_Post\n--------------------------------\n$83FF - ORA $40\nSTA
-R:004A::EncounterCheck:\nencounterTile => encounter something
+R:004A::EncounterCheck:\nencounterZoneCode => encounter something
+R:004C::CheckForEncounter\n--------------------------\n$8294 STA $00
+R:004E::Map_GetEncounterRate\n---------------------------------\n$83B2 STA #$00
 R:004F::TileBatch instructionBytes[0]\n\nEncounter Check:\ncurrentTileType
 R:0050:tileBatchInstructions_1:tileBatchInstructions[1]
 R:0051:character_formationIndex:instructionBytes[2] (Tile Batch)\ncharacter_formationIndex
@@ -53,17 +55,17 @@ R:0053:writeTileCount:tiles written to PPU
 R:0055:tileBankId:bank id with tile to write to PPU\n\n$6AA TransferTo_PPUSpriteDMA
 R:0056:baseTileIndex:PPUAddress_Vector[4]
 R:0057::$E638 ReadTileAddress_Vector\n\n$6AA TransferTo_PPUSpriteDMA\nSTA -> PPU_SpriteDMA[1]
-R:0059-0060:ReadTileAddress_Vector:FocusFireBit\n\n\nEncounterCheck\nIf [5] != 0, automatic encounter (?)
-R:0062::Battle_InitializeVariables\n-----------------------------\n$8239 - init all with $FF
+R:0059-0060:ReadTileAddress_Vector:FocusFireBit\n\n\nCheckForEncounter\n--------------------------\n$824B [3]: STA #$FF\n$8290 [5]: STA #$00\n$8391 [5]: if != 0, automatic encounter (?)\n$8250 [3]: if == 0, goto L3CCBD_JMP
+R:0062::CheckForEncounter\n--------------------------\n$8296 STA $00\n\n\nBattle_InitializeVariables\n-----------------------------\n$8239 - init all with $FF
 R:0064:Monster_FormationIndex:Monster_GetSomethingFor_ParseStat\n--------------------\n$BA11 - LDA * 2 as X for $0530,X and $0531,X\n\nHYPOTHESIS - this is the monster index id (NOPE)\n OR this is the index of the monster as seen on screen (maybe)\n\nMenu_Instruction_18_GetNameAndCount\n-------------------------------------\n$8AC3 - stores value of Menu_TextRowCounter / 2 right before BRK\n\nDynamicJumpDestination_G\n--------------------------------------\n$B532 - LDY\n\nDynamicJumpDestination_28000_A\n--------------------------------------\n$824F - STA value of $0540,X ($98) AND #87 AND #7F => $00
 R:006C-006D:dynamicPointerSpace:$8BAF - WriteTo_EnemyDisplay ($96A9),Y\n\n\n$BCCE - In battle...stores address for (draw?) instructions\n  $96A9 => [0]:$10, [1]:$18, [2]:$96, [3]:$80, [4]:$4D, [5]$E1\n\n\n\nThe next byte of map to load.\n\n[00]: Aliahan\n41: Aliahan Hero's Home 2F\n42: Aliahan East House 2F\n43: Aliahan Inn 2F\n44: Aliahan Luisa's Place 2F\n45: Aliahan Castle B1\n46: Aliahan Castle\n47: Aliahan Castle B2
 R:006E-006F:Multi_AddressPointer:Multiuse Address Pointer:\n\nPoints to address of map\n\nBattle_GetMonsterName\n-------------------------------------\n$A9AC Points to address of monster name list
-R:0072-0073:DialogSegmentPointer:Stores address of next char to read
+R:0072-0073:dialogSegmentPointer:Stores address of next char to read
 R:0074::(PostIncrementClock)\n$D942 compare with PostClockIncrement_Const ($ED)
 R:0076:menu_PositionHighNibble:Caret_FlashCounter\nADC $08 every frame.\n< $80, caret on\n>=$80, caret off\n\nMenu_ResetCaret\n--------------------------------------\n$A182 - init with $F8\n\nCaret_GetStateAndUpdate\n------------------------------\n$A198 - LDA ADD $08 = $08
 R:0077:Menu_PositionLowNibble
 R:0078::DialogJumpStation\n---------------------\nFirst line of function\n$A68F - STY\n\n$A9B7 - something happens if == $00
-R:0079::$A108 - Menu_Instruction[9] AND $70, >> 4, ADD $02
+R:0079::$EE6C - next map tile\n\n\n$A108 - Menu_Instruction[9] AND $70, >> 4, ADD $02
 R:007C:DialogBankId_and_BlockPointer_Pointer_Index:BankId\nand DialogBlockPointer_Pointers[(Subtract 10) * 2]
 R:007D::$8DAC - monster group count\n\nMenu_GetHeight\n---------------------\n$8D47 - STA menu (height / 2) - 1
 R:007E:Menu_PointerIndex:[$01]:$9074 Menu_Status_2Characters\n[$05]:$910E   Status 2 Characters\n[$13]:$93C7 \n[$14]:$93F1  Menu_MainCommand\n[$15]:$9420 \n[$1B]:$94DB  FIGHT.PARRY.ITEM\n[$2C]:$9612  \n[$39]:$96A9   EnemyDisplay\n[$3D]:$96DD DialogText\n[$3E]: Someone died?\n[$3F]:$96ED -> Enemy Display, Non-Interactive\n[$4E]:????\n[$69]:\n[$6B]: Menu_ItemSelect?
@@ -72,18 +74,24 @@ R:0080:CharsCopied
 R:0081:LinesWrittenToStagingArea:$AA1E INC\n\nafter finishing writing text to WriteLocation\n\n$AB8D - LDX, != 0
 R:0082:IsGetNextChar:if < $80 read next char from dialog block\n\nDialogJumpStop2\n----------------------\n$AB51 - init with $00\n\nSetBit7_82\n------------------------------\n$A992 - LDA, ORA #$80, STA\n\nClearBit7_82\n------------------------------------\n$A787 - clear 7th bit\n\n\nNextChar_F2\n---------------------\n$A87B - LDA, AND #$7F, TAX, DEX, used as X in \nLDA NextChar_F2_Variable[X]
 R:0083:Temp_TextStorage_NextCharIndex:TempTextStorage_WriteEC\n-------------------------\n$A969 - init with $00\n\nGetNextCharFrom_TempTextStorage\n----------------------\n$A95A - get next char and INC
-R:0086-0087:mapScrollCheck:Map_Scroll_Check\n-----------------------\nBA69 - [0] if zero, scroll map\n$BA6D - [1] If not 0, scroll map
+R:0086-0087:mapScrollCheck:Map_ScrollCheck\n-------------------------\n$CD89 - [1] if bit 3 || 4 == 1, scroll horizontal\n        [1] if bit 0-3 == 1, scroll vertical\n\nL3CDDA\n--------------\n$CDDA - if AND #$01 == 0 RTS\n             else DynamicSubroutine_18000_A\n\nMap_Scroll_Check\n-----------------------\nBA69 - [0] if zero, scroll map\n$BA6D - [1] If not 0, scroll map
 R:008B::SetOrClearCarryFlag\n------------------------\n$A14F - LDA and CMP to $38, $C3, $C6, $CF, $D0
 R:008E::Dialog_GetDimensions\n-------------------------\n$8D03 - init with $FF
 R:008F::PostIncrementClock\n--------------------------\n$D22D if != 0, run 07C2
+R:0090::DynamicSubroutine_34000_D_isLightWorld\n-----------------------------------------\n$993F if (bit 4 == 1 || bit 5 == 1)  RTS
 R:0092:currentTileType:the type of tile character is standing on
 R:0093::hypothesis: these are the tiles that each character is standing on
-R:009A::was directionRelatedVariable
-R:009B::DynamicSubroutine_38000_A\n------------------------\n$B2FD - CMP with $002A
+R:0094::DynamicSubroutine_34000_E\n-----------------------------\n$9EA9 STA $93
+R:0095::DynamicSubroutine_34000_E\n-----------------------------\n$9EA5 STA $94
+R:0096::DynamicSubroutine_34000_E\n-----------------------------\n$9EA1 STA $95
+R:0097::__DynamicSubroutine_34000_D_isLightWorld\n---------------------------------\n$995B if bit 4 == 0\n     RTS\n
+R:009A::was directionRelatedVariable\n\nCheckForEncounter (F0261)\n--------------------------------------\n$8261  if != 0, run Map_LightOrDarkEncounterTIles
+R:009B::DynamicSubroutine_38000_A\n------------------------\n$B2FD - CMP with $002A\n\nDynamicSubroutine_34000_D_isLightWorld\n-----------------------------------------\n$994F if != Map_WorldPosition_X\n                    && $9C != Map_WorldPosition_Y\n            RTS
 R:00A1-00A2:TheStack_AddressStore
 R:00A4::Monster_ParseStat_0C_2Deep\n--------------------------\n$C3C8 - INC ($4B)\nADD $1C ($75 => $C0)
-R:00AA::$8008 init with $00
+R:00AA::$8008 init with $00\n\nF3CDCF\n---------------\n$CDCF != 0
 R:00AC:postMovementPreEncounterCheckVariable
+R:00AD::CheckForEncounter (F0261)\n--------------------------------------\n$8265 if AND #$7F == 0, run Map_LightOrDarkEncounterTIles
 R:00B0-00B3:CharacterStatusRelated_Vector:investigation needed\nafter movement before encounter check\n\n$B094 checked if bit 1 set \n$B0CE checked if bit 2 set
 R:00B4::SetPaletterToTimeOfDay\n------------------------------\n$8024 - value at TimeOfDayPalette_Pointer\n\nDynamicSubroutine_08000_A_Sub_B\n------------------\n$A083 - STA
 R:00B8::DynamicSubroutine_08000_A\n-------------------------\n$9939 - LDX
@@ -159,7 +167,7 @@ R:06DD:IndexTo_FramesToWait
 R:06DE:timeSubValue:after each step on overworld\nADC ((seed & 31) + 223)\nif hasCarry, increment timeOfDay
 R:06DF:timeOfDay:In-game time-of-day\n$00-$CB\nNight begins at $78\nDay begins at $00
 R:06E0::$961E menu color
-R:06E1:encounterCheckRequired_A:Check for encounter if == $00
+R:06E1:encounterCheckRequired_A:Check for encounter if == $00\n\nMap_Scroll_Finish\n-----------------------\n$AF95 if 0....\n\nDynamicPointer_30000_A\n-----------------------------------\n$8078 - if < #$40 RTS\n       else....
 R:06F0:APU_SequenceID:Current sequence ID (Sequence # * 2)\n\n0th bit determines if APU updates or not\n$B389 APU_CheckUpdateNeeded - \nif bit 0 == 1 skip update
 R:06F1:APU_StoreTrackIndex:$B45C - check if equal to or greater than $08\nif it is, set duty right away
 R:06F2:APU_Const_03:$B962 StartNewSeq - init with $03\n\nNever changes??
@@ -208,25 +216,29 @@ P:023A::if this is not positive, skip encounter check
 P:023F:_CheckForEncounter_RTS
 P:0240:CheckForEncounter
 P:0255:L3CCBD_JMP
-P:0261:F0261
+P:0261:Map_GetEncounterZone
 P:0274-0275:BRKInstructions_0721B:07\n21 - Clear_0647to0664
-P:028E:Map_LightOrDarkEncounterTiles
+P:028E:Map_GetLightOrDarkEncounterZone
 P:0292::lol ok
-P:02A4:Map_GetEncounterTile_DarkWorld
-P:02C3:Map_GetEncounterTile_LightWorld
-P:02D7:__CheckValidEncounterTile
-P:02DC:ParseEncounterTile:encounter tile code
+P:02A4:Map_GetEncounterZone_DarkWorld
+P:02C3:Map_GetEncounterZone_LightWorld
+P:02D2::encounter zone
+P:02D7:__CheckValidEncounterZone
+P:02DC:ParseEncounterZone:encounter zone code
 P:02E7:L02E7
 P:02FA:L02FA
 P:0305:L0305
 P:0307:L0307:tile type currently standing on
-P:0310:L0310
-P:035A:L035A:encounter zone code
+P:0309::encounter zone code
+P:0310:_2FBit0Set
+P:035A:GetEncounterZoneMonsterList:encounter zone code
+P:0364::encounter zone code * 0x0F
 P:0376:__L035A_RTS
-P:038D:L038D
+P:038D:Map_GetEncounterRateMultiplier:Encounter rate multiplier offset pointer
 P:0391::automatic encounter?
 P:03A2::high encounter rate area?
 P:03AE:Map_GetEncounterRate:encounter rate multiplier
+P:03B4::current tile type
 P:03BD::night time encounter start time
 P:03C1:Map_GetDayEncounterRate:day time rates?
 P:03C6:Map_GetNightEncounterRate:night time rates?
@@ -236,6 +248,7 @@ P:03CE::golden claw
 P:03D7::what's the difference between this and 83E7?
 P:03DD:__GoldenClawNotEquipped
 P:03DF::4E could be > 0 in above MultiplyValueAtXByA\nWhen does this happen?
+P:03E1::encounter rate chance (out of 256)
 P:03E3::clamp to 64 if above?
 P:03E7:L03E7:what's the difference between this and 83D7?
 P:03EB:RollForEncounter
@@ -262,7 +275,7 @@ P:05DF:L05DF
 P:05E9:L05E9
 P:061A:L061A
 P:0625:L0625
-P:0628-062B:EncounterRateMultiplier_Vector
+P:0628-062B:EncounterRateMultiplier_Vector:[3]: x1\n[4]: x2\n[5]: x4\n[6]: x8
 P:0648-0649:EncounterListAddress
 P:064A:EncounterVariable_C
 P:064B:EncounterVariable_D
@@ -316,9 +329,9 @@ P:08BD:BattleStart_FlashScreen:num times to flip grayscale
 P:08BF:BattleStart_FlashScreen_Loop
 P:08C4::set grayscale
 P:0934-0945:Map_EncounterRates:0-8 Day encounter rates\n9-16 Night encounter rates\n\nday\n[0]: 04 - water\n[1]: 0F - woods/desert/ice\n[2]: 0A - grass\n[3]: 0F - woods/desert/ice\n[4]: 12 - heavy forest/swamp\n[5]: 19 - hills\n[6]: 54 - dungeon after room change\n[7]: 12 - heavy forest/swamp\n[8]: 0A - dungeon\n\nnight\n[9]: 05 - water\n[10]: 13 - woods/desert/ice\n[11]: 0D - grass\n[12]: 0F - woods/desert/ice\n[13]: 16 - heavy forest/swamp\n[14]: 1F - hills\n[15]: 54 - dungeon after room change\n[16]: 16 - heavy forest/swamp\n[17]: 0A - dungeon
-P:0946-0A45:Map_EncounterTiles_LightWorld:High nibble of player's X-position (in tiles of 2x2 sprites) = Low nibble of index\nHigh nibble of player's Y-position (in tiles of 2x2 sprites) = High nibble of index\n\nBit 7-6 = Sea list  (0-3)\nBit 5-0 = Land list (4-3F)\n\nSee dw3MonsterList.txt for more details
-P:0A46-0A85:Map_EncounterTiles_DarkWorld:unconfirmed
-P:0ADB-0B26:Monster_Lists:unconfirmed\nfor encounter tiles?
+P:0946-0A45:Map_EncounterZone_LightWorld:High nibble of player's X-position (in tiles of 2x2 sprites) = Low nibble of index\nHigh nibble of player's Y-position (in tiles of 2x2 sprites) = High nibble of index\n\nBit 7-6 = Sea list  (0-3)\nBit 5-0 = Land list (4-3F)\n\nSee dw3MonsterList.txt for more details
+P:0A46-0A85:Map_EncounterZones_DarkWorld
+P:0ADB-0B26:MonsterEncounter_Lists:15 bytes per block\n[0] bits 5-7 is index of encounter rate multiplier (0x00628)
 P:10F3-1145:EncounterWeights:               Index ($10F3-$1146)\n  ------------------------------------------\n  |     |Slot ||   0  |   1  |   2  |   3  |\n  |     |----------------------------------|\n  |     |  0  ||  28  |  20  |  18  |  10  |\n  | S   |  1  ||  28  |  20  |  32  |  10  |  \n  | l   |  2  ||  14  |  15  |  13  |  18  |\n  | o   |  3  ||  14  |  15  |  5   |  10  |\n  | t   |  4  ||  28  |  30  |  35  |  70  |\n  |     |  5  ||  20  |  20  |  10  |   0  |\n  | C   |  6  ||  14  |  20  |  19  |  10  |\n  | h   |  7  ||  14  |  10  |  25  |  10  |\n  | a   |  8  ||  14  |  15  |  19  |  18  |\n  | n   |  9  ||  14  |  10  |  15  |  10  |\n  | c   |  A  ||  28  |  40  |  30  |  70  |\n  | e   |  B  ||  11  |  11  |  5   |  10  |\n  |     |  C  ||  14  |  15  |  15  |   9  |\n  |     |  D  ||  15  |  15  |  15  |   1  |\n  |----------------------------------------|\n  | 3 Chance  ||  00  | 0x40 | 0x40 | 0x40 | (chance for a 3rd monster for Slot 0-4)\n  | 4 Chance  ||  00  | 0x80 | 0x10 |  00  | (chance for a 4th monster for Slot 0-4)\n  | 6-A Setup || 0xB6 | 0xB1 | 0xB4 | 0x93 | (4x 2-bit array indeces)\n  | 6-A Setup ||  02  |  01  |  02  |  01  | (2-bit array index)\n  ------------------------------------------
 P:12A8:Character_GetCurrentHP:Character # in Character_FormationIndex\nResults stored in QuickStorage[0-1]
 P:1302:Character_TakeDamage
@@ -1429,26 +1442,29 @@ P:17456-174AD:OffsetsToNextSpriteInTileBatch:formerly TileBatch_Vector_B
 P:174BC-174C0:Tile_DynamicOffsets:paired bytes:\n1st byte is added to dynamicSubroutine (pointer to instruction bytes)\n2nd byte is added to tileSomethingVectorCOffset
 P:174CC-174D0:TileBatchSpriteOrder_Vector
 P:17A69:Map_Scroll_Check
-P:17A72-17A75:Map_Scroll_Vector:[$02]: (right) $BAEC
+P:17A72-17A75:Map_Scroll_Vector:[$00]: (up) $BB13\n[$02]: (right) $BAEC\n[$04]: (down) $BAF8\n[$06]: (left) $BAE5
 P:17A7A:Map_Scroll
 P:17A92:_Map_Scroll_Loop
 P:17A99:_Map_Scroll_Loop_continue
-P:17AAB:L17AAB
+P:17AAB:_Map_Scroll_RTS
 P:17AAC:PPU_SpriteDMA_NOT_F8
 P:17ADE:Map_Scroll_Loop_continue
 P:17AE2:Map_Scroll_JMP_DialogSegmentPointer
+P:17AE5:Map_Scroll_Left
+P:17AE8:Map_Scroll_Down
 P:17AEC:Map_Scroll_Right
-P:17B13:L17B13
+P:17B13:Map_Scroll_Up
 P:17B25:L17B25
-P:17B2E:L17B2E
+P:17B2E:Map_Scroll_Wrap
 P:17B42:L17B42
-P:17B44:L17B44
-P:17B50:_RTS_
+P:17B44:__L17B42_Loop
+P:17B50:_L17B42_RTS_
 P:17B51:F17B51
 P:17B6B:Map_Scroll_WalkDirection_Right
 P:17B76:Map_Scroll_WalkDirection_Down
 P:17B80:L17B80
 P:17B81:Map_Scroll_WalkDirection_Up
+P:17B8B:Map_Scroll_WalkDirection_Wrap
 P:17CB0:WriteMapTilesToPPU:Writes map tiles to PPU\nand some other stuff?
 P:17CB7-17CB8:BRKInstructions_FillPPUSpriteDMAWithF8:17\n5B - FillPPUSpriteDMAWithF8
 P:17CD7:__L17CD7_Loop
@@ -1748,10 +1764,12 @@ P:35622:DynamicSubroutine_34000_F:called very early in battle, multiple times\na
 P:35624:L35624
 P:35631:L35631
 P:3565C:DynamicSubroutine_34000_D
-P:35666:L35666
+P:35665:__DynamicSubroutine_34000_D_RTS
+P:35666:DynamicSubroutine_34000_D_isDarkWorld
+P:35684:__DynamicSubroutine_34000_D_isDarkWorld_Loop
 P:3593E:_DynamicSubroutine_34000_D_Sub_RTS
-P:3593F:DynamicSubroutine_34000_D_Sub
-P:3595B:L3595B
+P:3593F:DynamicSubroutine_34000_D_isLightWorld
+P:3595B:__DynamicSubroutine_34000_D_isLightWorld
 P:3597D:__JMP_L3597D
 P:35995:L35995
 P:359B0:L359B0
@@ -1771,18 +1789,23 @@ P:35AAF:__L35AAF_RTS
 P:35AB0:L35AB0
 P:35B13:DynamicSubroutine_34000_C
 P:35B1C:L35B1C
-P:35DC0:DynamicSubroutine_34000_B
+P:35DC0:DynamicSubroutine_34000_B:Checks status of character and makes adjustments to PPU_SpriteDMA depending on direction of movement.\nCould this be something for character sprite movement/direction?
 P:35DCE:_DynamicSubroutine_34000_B_RTS
-P:35DCF:L35DCF
-P:35DFC:L35DFC
-P:35DFF:L35DFF
-P:35E13:L35E13
-P:35E16:L35E16
-P:35E21:L35E21
-P:35E22:F35E22
+P:35DCF:_DynamicSubroutine_34000_B_cont
+P:35DD7::??? this check was just made!
+P:35DFC:__JSR_L35E76
+P:35DFF:_DynamicSubroutine_34000_B_cont_cont
+P:35E13:JSR_L35E76_
+P:35E16:_DynamicSubroutine_34000_B_cont_cont_cont
+P:35E21:DynamicSubroutine_34000_B_RTS
+P:35E22:Adjust_SpriteDMA:probably caused by map scroll\n
+P:35E26::does this cancel the scroll if all characters are dead?
+P:35E3D:ScrolledLeft
+P:35E4C:L35E4C
 P:35E5B:L35E5B
+P:35E6A:L35E6A
 P:35E76:L35E76
-P:35E84:_34000_RTS
+P:35E84:_F35E22_RTS
 P:35E85:DynamicSubroutine_34000_E
 P:35EB3:DynamicSubroutine_34000_E_Sub
 P:35EBA:DynamicSubroutine_34000_E_Sub_sub
@@ -1793,7 +1816,7 @@ P:38000-3800D:DynamicSubroutine_Addresses_38000:[$00]:$87B9 -> Write to EnemyDis
 P:38072:ReadControllerInput
 P:38092:_ReadControllerInput_RTS
 P:38093:L38093
-P:3811A:L3811A
+P:3811A:__L3812C_RTS
 P:3812C:L3812C
 P:381AA-381AB:BRKInstructions_2F85:2F - \n85 - 
 P:381AD-381AE:BRKInstructions_D714:D7 - \n14 - 
@@ -2489,10 +2512,10 @@ P:3C038::add normal HP to inverse of A
 P:3C03A::final hp?
 P:3C03E::reduce 255+ hp
 P:3C040:L3C040
-P:3C041:IncrementPointerX_By_AandY
+P:3C041:IncrementValueAtX_By_AandY
 P:3C04B:AddATo16bitINTAtX:Add A to $00,X and $01,X\nResults stored in $00,X and $01,X\n\nCombineItemAndAttributePower\nA: item power\n$04[0]: relevant attribute
 P:3C054:_AccumulatorQuickStorageADC_RTS_
-P:3C055:MultiplyValueAtXByA:*x = (*x) * a
+P:3C055:MultiplyValueAtXByA:*x = (*x) * a\n\nresults stored at X (2 Bytes)
 P:3C05D:_GetAddressOffset_Loop_
 P:3C06E:__JMP_GetAddressOffsetLoop
 P:3C07F:Convert_INTtoSprites
@@ -2508,20 +2531,20 @@ P:3C1D7:F3C1D7
 P:3C1E4:F3C1E4
 P:3C1E6:L3C1E6
 P:3C1F9:F3C1F9
-P:3C1FD:F3C1FD
-P:3C1FF:__JMP_L3C1FF_
+P:3C1FD:F3C1FD:Reads and writes to PPU_SpriteDMA. My hypothesis is that this is scrolling the the BG.
+P:3C1FF:L3C1FF
 P:3C204:F3C204
 P:3C208:L3C208
 P:3C21A:__L3C21A_Loop_
 P:3C22F:__JMP_L3C22F_
 P:3C237:__JMP_L3C237_
 P:3C24A:__L3C24A_Loop_
-P:3C251:__JMP_L3C251_
+P:3C251:__L3C251_
 P:3C25A:__JMP_L3C25A
-P:3C265:__L3C265_Loop
+P:3C265:TransferPPU_SpriteDMAToQuickStorage_Loop
 P:3C274:L3C274
-P:3C28C:__L3C29B_JMP_
-P:3C28F:__L3C28F_Loop
+P:3C28C:__JMP_L3C29B_JMP_
+P:3C28F:TransferQuickStorageToPPU_SpriteDMA:Transfer until ++y is multiple of 4
 P:3C29B:L3C29B
 P:3C29D::why not just LDA #$FE?
 P:3C2AB-3C2AF:Map_Scroll_Vector_B:at least I think it's map scroll related
@@ -2562,8 +2585,8 @@ P:3C399:__JMP_3C399_
 P:3C3A4:__JMP_3C3A4_
 P:3C3B5:F3C3B5
 P:3C3B6-3C3B7:BRKInstructions_6F00:6F - \n00 - 
-P:3C3B8:RNG:say goodbye
-P:3C3B9::to these lines
+P:3C3B8:RNG:Result in A
+P:3C3B9::say goodbye to these lines
 P:3C3D2:RNG_Sub
 P:3C3D4:_RNG_Sub_Loop_
 P:3C3E1::carry set
@@ -2807,11 +2830,11 @@ P:3CD66-3CD67:BRKInstructions_1757:17\n57 - DynamicPointer_30000_A
 P:3CD6F-3CD70:BRKInstructions_0711:07\n11 - DynamicSubroutine_34000_B
 P:3CD72-3CD73:BRKInstructions_070E:07 - \n0E - DynamicSubroutine_34000_C
 P:3CD81-3CD82:BRKInstructions_0710:07 -\n10 - DynamicSubroutine_28000_B
-P:3CD89:F3CD89
-P:3CD9C:L3CD9C
-P:3CDA8:L3CDA8
-P:3CDB0:L3CDB0
-P:3CDB6:L3CDB6
+P:3CD89:Map_ScrollCheck
+P:3CD9C:Map_Scroll_Horizontal_check
+P:3CDA8:Map_Scroll_Vertical_check_maybe
+P:3CDB0:Map_Scroll_Left_check
+P:3CDB6:Map_Scroll_Right_check
 P:3CDBD:L3CDBD
 P:3CDC0:F3CDC0
 P:3CDC7:__F3CDC0_RTS
@@ -2887,8 +2910,8 @@ P:3D7A4:Controller_DirectionPushed
 P:3D7B1-3D7B2:BRKInstructions_CloseAllMenus:07\n1F - Menu_CloseAllMenus
 P:3D7B3:L3D7B3
 P:3D7C0:F3D7C0
-P:3D7D2:L3D7D2
-P:3D7E2:L3D7E2
+P:3D7D2:_encounterVariable_A_is_0
+P:3D7E2:_FF8D_is_Not_0
 P:3D7F4:L3D7F4
 P:3D818:L3D818
 P:3D92E:F3D92E
@@ -2901,12 +2924,18 @@ P:3DA63:Map_GetMap
 P:3DA6F::lobyte of map address
 P:3DA74::hibtye of map address
 P:3DAF7:F3DAF7
+P:3DAF9::why is this bank loaded?
 P:3DB00-3DB01:BRKInstructions_MapScroll:07 - \n12 - Map_Scroll_Check
 P:3DB0E:F3DB0E
-P:3DB17:F3DB17
-P:3DB27:L3DB27
-P:3DB38:__F3DB17_RTS
-P:3DB39:L3DB39
+P:3DB17:SetPPUScroll
+P:3DB27:__SetPPUScroll__
+P:3DB38:__SetPPUScroll_RTS
+P:3DB39:Set_PPU_Scroll_Up
+P:3DB49:Set_PPU_Scroll_Down
+P:3DB58:Set_PPU_Scroll_Right
+P:3DB5E:PPUScrollWrap
+P:3DB61::if bit 0 is 0 => 1\nif bit 0 is 1 => 0
+P:3DB67:Set_PPU_Scroll_Left
 P:3DB72:F3DB72
 P:3DBA7:L3DBA7
 P:3DBAD:L3DBAD
@@ -2934,9 +2963,9 @@ P:3DF39:L3DF39
 P:3DF3F:L3DF3F
 P:3DF45:L3DF45
 P:3DF4B:L3DF4B
-P:3DF51:L3DF51
-P:3DF70:L3DF70
-P:3DF8F:L3DF8F
+P:3DF51:WalkDirection_Horizontal
+P:3DF70:WalkDirection_Vertical
+P:3DF8F:__L3DF51_RTS
 P:3DF90:L3DF90
 P:3DFA0:L3DFA0
 P:3DFA8:L3DFA8
@@ -3088,14 +3117,17 @@ P:3ECB4:F3ECB4
 P:3ECB9:F3ECB9
 P:3ECCD:__L3ECCD
 P:3ECFA:L3ECFA
-P:3ED12:L3ED12
-P:3ED3A:F3ED3A
+P:3ED12:L3ED12_IsDarkWorld
+P:3ED3A:Map_ScrollAndLoadTiles:Returns currentTileType in A
 P:3ED3F:L3ED3F
+P:3ED48::x Pos
+P:3ED4A::x Pos
+P:3ED4C::y Pos
 P:3ED7D:Map_GetData
-P:3ED93:_GetMapData_AddrAtX
-P:3ED9E:L3ED9E
+P:3ED93:_GetMapBData_AddrAtX
+P:3ED9E:L3ED9E_IsDarkWorld
 P:3EDB9:F3EDB9
-P:3EDC4:L3EDC4
+P:3EDC4:L3EDC4_isLightWorld
 P:3EDC9:L3EDC9
 P:3EDE3:L3EDE3
 P:3EE01:F3EE01
@@ -3121,9 +3153,9 @@ P:3EEE3:F3EEE3
 P:3EEE9:L3EEE9
 P:3EEF9:L3EEF9
 P:3EF03:L3EF03
-P:3EF0B:F3EF0B
+P:3EF0B:GetCurrentTile
 P:3EF1A:L3EF1A
-P:3EF1C:F3EF1C
+P:3EF1C:Zero_7A_7B_7C_7D_4C
 P:3EF29:L3EF29
 P:3EF5C:DirectionHorizontalCheck:Bounds Check Maybe?
 P:3EF66:DirectionVerticalCheck:Bounds check?
@@ -3173,10 +3205,11 @@ P:3F3E4:L3F3E4
 P:3F40C:L3F40C
 P:3F7B7:STA_WorldMapCoordsTo_06_07
 P:3F7E0:L3F7E0
-P:3F7F5:__L3F7F5_CarrySet
+P:3F7F5:__L3F7E0_CarrySet
 P:3F7FC:_L3F7E0_RTS
 P:3F7FD:L3F7FD
 P:3F806:L3F806_CarryClear
+P:3F813:__L3F7FD_hasCarry
 P:3F832:F3F832
 P:3F856:L3F856
 P:3F877:L3F877
@@ -3190,7 +3223,7 @@ P:3F909:F3F909
 P:3F91A:__JMP_L3F91A_
 P:3F91C:__L3F91C_Loop
 P:3FA01:Map_Decompress_A
-P:3FF91:BankSwitchRegisters3_1_3C000_PreSTA
+P:3FF91:BankSwitchRegisters3_1_3C000_PreSTA:load bank # in A
 P:3FF94:BankSwitchRegisters3_1_3C000
 P:3FF98::clear bit 4, to make sure we have $00
 P:3FFD8-3FFFF:EndofBank3C000to3FFFF
