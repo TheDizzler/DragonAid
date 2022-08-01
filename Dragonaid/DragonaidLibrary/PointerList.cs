@@ -8,7 +8,49 @@ namespace AtomosZ.DragonAid.Libraries
 {
 	public static class PointerList
 	{
-		/* No specific bank */
+		/// <summary>
+		/// DynamicSubroutine address: 0x21 (zeroPages).
+		/// 2 bytes.
+		/// </summary>
+		public static byte dynamicSubroutineAddr = 0x21;
+
+		/// <summary>
+		///<para>zeroPages 0x2A</para>
+		/// </summary>
+		public static byte map_WorldPosition_X = 0x2A;
+		/// <summary>
+		/// <para>zeroPages 0x2B</para>
+		/// </summary>
+		public static byte map_WorldPosition_Y = 0x2B;
+		/// <summary>
+		/// <para>zeroPages 0x2C</para>
+		/// </summary>
+		public static byte encounterVariable_A = 0x2C;
+		/// <summary>
+		/// <para>zeroPages 0x2F</para>
+		/// bit 1 seems to indicate whether in light (0) or dark (1) world
+		/// </summary>
+		public static byte lightOrDarkWorld = 0x2F;
+
+		/// <summary>
+		/// <para>NES RAM 0x02A0</para>
+		/// </summary>
+		public static int PPU_SpriteDMA = 0x0200;
+		/// <summary>
+		/// <para>NES RAM 0x0644</para>
+		/// 0 - Up
+		/// 1 - Right
+		/// 2 - Down
+		/// 3 - Left
+		/// </summary>
+		public static int walkDirection = 0x0644;
+
+		/// <summary>
+		/// NesRam 0x073C.
+		/// 2 bytes per character. $8080 is normal, anything else is dead?
+		/// </summary>
+		public static int Character_Statuses = 0x073C;
+
 		/// <summary>
 		/// Locations where hardcoded day-to-night time checked
 		/// Night starts at 0x78.
