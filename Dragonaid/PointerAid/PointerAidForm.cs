@@ -4,8 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using AtomosZ.DragonAid.Libraries;
+using AtomosZ.DragonAid.Libraries.Pointers;
 using Newtonsoft.Json;
-using static AtomosZ.DragonAid.Libraries.PointerList;
+
 using static AtomosZ.DragonAid.Libraries.DynamicSubroutine;
 
 namespace AtomosZ.DragonAid.PointerAid
@@ -150,12 +151,12 @@ namespace AtomosZ.DragonAid.PointerAid
 			if (listsToExtract[0])
 			{
 				var subroutines07 = new List<DynamicSubroutine>();
-				for (int i = 0; i < Load07PointerIndices.length; ++i)
+				for (int i = 0; i < ROMPointers.Load07PointerIndices.length; ++i)
 				{
 					if (i == 145)
 						Console.WriteLine("");
-					byte index = data[Load07PointerIndices.offset + i];
-					byte bankId = data[Load07BankIds.offset + (i / 2)];
+					byte index = data[ROMPointers.Load07PointerIndices.offset + i];
+					byte bankId = data[ROMPointers.Load07BankIds.offset + (i / 2)];
 					int bank;
 					if (i % 2 == 0)
 						bank = bankId >> 4;
@@ -192,10 +193,10 @@ namespace AtomosZ.DragonAid.PointerAid
 			if (listsToExtract[1])
 			{
 				var subroutines17 = new List<DynamicSubroutine>();
-				for (int i = 0; i < Load17PointerIndices.length; ++i)
+				for (int i = 0; i < ROMPointers.Load17PointerIndices.length; ++i)
 				{
-					byte index = data[Load17PointerIndices.offset + i];
-					byte bankId = data[Load17BankIds.offset + (i / 2)];
+					byte index = data[ROMPointers.Load17PointerIndices.offset + i];
+					byte bankId = data[ROMPointers.Load17BankIds.offset + (i / 2)];
 					int bank;
 					if (i % 2 == 0)
 						bank = bankId >> 4;
@@ -232,10 +233,10 @@ namespace AtomosZ.DragonAid.PointerAid
 			if (listsToExtract[2])
 			{
 				var localPointers = new List<DynamicSubroutine>();
-				for (int i = 0; i < LocalPointerIndices.length; ++i)
+				for (int i = 0; i < ROMPointers.LocalPointerIndices.length; ++i)
 				{
-					byte index = data[LocalPointerIndices.offset + i];
-					byte bankId = data[LocalPointerBanks.offset + (i / 2)];
+					byte index = data[ROMPointers.LocalPointerIndices.offset + i];
+					byte bankId = data[ROMPointers.LocalPointerBanks.offset + (i / 2)];
 					int bank;
 					if (i % 2 == 0)
 						bank = bankId >> 4;

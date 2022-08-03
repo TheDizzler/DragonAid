@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 
-namespace AtomosZ.DragonAid.Libraries
+namespace AtomosZ.DragonAid.Libraries.Pointers
 {
-	public static class PointerList
+	/// <summary>
+	/// <para>256 bytes from 0x00 to 0xFF of NES RAM.</para>
+	/// </summary>
+	public static class ZeroPagePointers
 	{
+		/// <summary>
+		/// <para>zeroPages 0x1B
+		/// <br>NMI_VBlank_3C000 - if == 10, skip PPU_Update</br>
+		/// </para>
+		/// </summary>
+		public static byte loopTrap_flag = 0x1B;
 		/// <summary>
 		/// DynamicSubroutine address: 0x21 (zeroPages).
 		/// 2 bytes.
@@ -31,7 +39,22 @@ namespace AtomosZ.DragonAid.Libraries
 		/// bit 1 seems to indicate whether in light (0) or dark (1) world
 		/// </summary>
 		public static byte lightOrDarkWorld = 0x2F;
+		/// <summary>
+		/// <para>2 bytes from 0x86.
+		/// <br>[1] if bit 3 || 4 == 1, scroll horizontal</br>
+		/// <br>[1] if bit 0-3 == 1, scroll vertical</br></para>
+		/// </summary>
+		public static byte mapScrollCheck = 0x86;
 
+	}
+
+	/// <summary>
+	/// <para>
+	/// <br>2048 bytes from 0x00 to 0x07FF. (mirrors from 0x800 to 0x1FFF)</br>
+	/// <br>Technically includes zeroPages but for simplicity we are keeping these seperate.</br></para>
+	/// </summary>
+	public static class NESRAMPointers
+	{
 		/// <summary>
 		/// <para>NES RAM 0x02A0</para>
 		/// </summary>
@@ -44,13 +67,43 @@ namespace AtomosZ.DragonAid.Libraries
 		/// 3 - Left
 		/// </summary>
 		public static int walkDirection = 0x0644;
-
 		/// <summary>
-		/// NesRam 0x073C.
-		/// 2 bytes per character. $8080 is normal, anything else is dead?
+		/// <para>NES RAM 0x06D2</para>
+		/// INC in NMI to signify NMI completed.
+		/// </summary>
+		public static int waitForNMI_flag = 0x06D2;
+		/// <summary>
+		/// <para>NES RAM 0x06E1</para>
+		/// Check for encounter if == 0
+		/// </summary>
+		public static int encounterCheckRequired_A = 0x06E1;
+		/// <summary>
+		/// <para>NesRam 0x073C.
+		/// <br></br>2 bytes per character:
+		/// <br></br>$8080 is normal, anything else is dead?</para>
 		/// </summary>
 		public static int Character_Statuses = 0x073C;
+	}
 
+	/// <summary>
+	/// <para>
+	/// <br>0x2000 - 0x2007 PPU registers (mirrors from 0x2008 to 0x3FFF)</br>
+	/// <br>0x4000 - 0x4017 APU and I/O registers</br>
+	/// <br>0x4018 - 0x401F APU and I/O functionality that is normally disabled.</br>
+	/// </para>
+	/// </summary>
+	public static class RegisterPointers
+	{
+		public static int PPU_Status_2002 = 0x2002;
+	}
+
+	/// <summary>
+	/// <para>Pointers in raw ROM. 
+	/// <br></br>Use .offset for address to make edits to ROM (includes iNES header).
+	/// <br></br>Use .pointer for referencing address while games is RUNNING (no iNES header)</para>
+	/// </summary>
+	public static class ROMPointers
+	{
 		/// <summary>
 		/// Locations where hardcoded day-to-night time checked
 		/// Night starts at 0x78.
@@ -322,7 +375,6 @@ namespace AtomosZ.DragonAid.Libraries
 				+ "Even: use high nibble. Odd: use low nibble.\n"
 				+ "[$8B]: (Day/Night Palettes) 0B",
 		};
-
 
 		public static Address GetBankAddressFromId(byte bankId)
 		{

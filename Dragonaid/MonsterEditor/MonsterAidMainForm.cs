@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using AtomosZ.DragonAid.Libraries;
+using AtomosZ.DragonAid.Libraries.Pointers;
 using Newtonsoft.Json;
 
 namespace AtomosZ.DragonAid.MonsterAid
@@ -182,7 +183,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 			{
 				byte[] monsterStats = monsterAidView.GetMonsterStats();
 				for (int i = 0; i < monsterStats.Length; ++i)
-					romData[PointerList.MonsterStatBlockAddress.offset + i] = monsterStats[i];
+					romData[ROMPointers.MonsterStatBlockAddress.offset + i] = monsterStats[i];
 				File.WriteAllBytes(saveDialog.FileName, romData);
 			}
 		}

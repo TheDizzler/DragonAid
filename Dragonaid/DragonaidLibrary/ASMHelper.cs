@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AtomosZ.DragonAid.Libraries.Pointers;
 
 namespace AtomosZ.DragonAid.Libraries
 {
@@ -108,30 +109,30 @@ namespace AtomosZ.DragonAid.Libraries
 		/// <param name="x">zeroPages address</param>
 		public static void MultiplyValueAtXByA(byte[] zeroPages, byte a, byte x)
 		{ // C055
-			zeroPages[PointerList.dynamicSubroutineAddr + 0] = a;
-			zeroPages[PointerList.dynamicSubroutineAddr + 1] = 0;
-			zeroPages[PointerList.dynamicSubroutineAddr + 2] = 0;
+			zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 0] = a;
+			zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 1] = 0;
+			zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 2] = 0;
 
 			do
 			{
-				zeroPages[PointerList.dynamicSubroutineAddr + 0]
-				= ASMHelper.LSR(zeroPages[PointerList.dynamicSubroutineAddr + 0], 1, out bool hasCarry);
+				zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 0]
+				= ASMHelper.LSR(zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 0], 1, out bool hasCarry);
 				if (hasCarry)
 				{
 					hasCarry = false;
-					zeroPages[PointerList.dynamicSubroutineAddr + 1]
-						= ASMHelper.ADC(zeroPages[x + 0], zeroPages[PointerList.dynamicSubroutineAddr + 1], ref hasCarry);
-					zeroPages[PointerList.dynamicSubroutineAddr + 2]
-						= ASMHelper.ADC(zeroPages[x + 1], zeroPages[PointerList.dynamicSubroutineAddr + 2], ref hasCarry);
+					zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 1]
+						= ASMHelper.ADC(zeroPages[x + 0], zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 1], ref hasCarry);
+					zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 2]
+						= ASMHelper.ADC(zeroPages[x + 1], zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 2], ref hasCarry);
 				}
 
 				zeroPages[x + 0] = ASMHelper.ASL(zeroPages[x + 0], 1, out hasCarry);
 				zeroPages[x + 1] = ASMHelper.ROL(zeroPages[x + 1], 1, ref hasCarry);
 			}
-			while (zeroPages[PointerList.dynamicSubroutineAddr + 0] != 0);
+			while (zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 0] != 0);
 
-			zeroPages[x + 0] = zeroPages[PointerList.dynamicSubroutineAddr + 1];
-			zeroPages[x + 1] = zeroPages[PointerList.dynamicSubroutineAddr + 2];
+			zeroPages[x + 0] = zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 1];
+			zeroPages[x + 1] = zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 2];
 		}
 
 		/// <summary>
@@ -141,7 +142,7 @@ namespace AtomosZ.DragonAid.Libraries
 		/// <param name="a"></param>
 		/// <param name="zeroPagePointer"></param>
 		/// <param name="y"></param>
-		public static void IncrementPointerXBy_AandY(byte[] zeroPages, byte a, byte zeroPagePointer, byte y)
+		public static void IncrementValueAtXBy_AandY(byte[] zeroPages, byte a, byte zeroPagePointer, byte y)
 		{
 			ASMHelper.Add16Bit(
 				a, ref zeroPages[zeroPagePointer], ref zeroPages[zeroPagePointer + 1]);
