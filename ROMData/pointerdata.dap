@@ -168,7 +168,7 @@
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": "Map Screen\nafter DynamicSubroutine_34000_E before movement\n\nChecks $2F if Light or Dark world\nif Light world\n    if ($90 & $3F != 0\n        || $2F & $02) != 0\n        || $8F != 0)\n    RTS",
+        "notes": "early in game loop\nafter controller input\n\nChecks $2F if Light or Dark world\nif Light world\n    if ($90 & $3F != 0\n        || $2F & $02) != 0\n        || $8F != 0)\n    RTS",
         "name": "Full address",
         "pointer": 218716,
         "offset": 218732
@@ -232,7 +232,7 @@
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": "Map Screen every frame",
+        "notes": "late in game loop\n\nnever seems to get very far.\nchecks bit 1 of 0x2F (lightOrDarkWorld)\nand bit 3 of 0x9D",
         "name": "Full address",
         "pointer": 219923,
         "offset": 219939
@@ -264,7 +264,7 @@
       "notes": "DynamicSubroutine_Addresses_28000",
       "prgAddress": {
         "length": 2,
-        "notes": "Map Screen every frame",
+        "notes": "Base game loop, every frame.\n\nChecks 0th  bit of 0x2F, so could be a Dark World only thing",
         "name": "Full address",
         "pointer": 164194,
         "offset": 164210
@@ -3124,11 +3124,11 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 38,
-      "name": null,
+      "name": "",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "called in F3CE1A (early in game loop, after controller input) when 0x8F >= $02",
         "name": "Full address",
         "pointer": 241799,
         "offset": 241815
