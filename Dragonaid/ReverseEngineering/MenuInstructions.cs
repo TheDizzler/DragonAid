@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using AtomosZ.DragonAid.Libraries;
-using AtomosZ.DragonAid.Libraries.Pointers;
+using AtomosZ.DragonAid.Libraries.PointerList;
 using AtomosZ.DragonAid.TextToHex;
+using static AtomosZ.DragonAid.Libraries.PointerList.Pointers;
 
 namespace AtomosZ.DragonAid.Menu
 {
@@ -155,8 +156,8 @@ namespace AtomosZ.DragonAid.Menu
 			this.romData = romData;
 			this.menuPointerIndex = menuPointerIndex;
 			menuPointer = new Address("Pointer to menu instructions to create",
-				romData[ROMPointers.MenuPointers.offset + menuPointerIndex]
-				+ (romData[ROMPointers.MenuPointers.offset + menuPointerIndex + 1] << 8));
+				romData[ROM.MenuPointers.offset + menuPointerIndex]
+				+ (romData[ROM.MenuPointers.offset + menuPointerIndex + 1] << 8));
 
 			Menu_Initialization();
 			F385BE();
@@ -448,14 +449,14 @@ namespace AtomosZ.DragonAid.Menu
 			var y = 0;
 			while (x != 0)
 			{ // find correct title index
-				if (romData[ROMPointers.MenuTitles.offset + y++] == 0xFF)
+				if (romData[ROM.MenuTitles.offset + y++] == 0xFF)
 					--x;
 			}
 
 			WriteNextChar(0x79);// top vertical bar with space for title
 
 			byte a;
-			while ((a = romData[ROMPointers.MenuTitles.offset + y++]) != 0xFF)
+			while ((a = romData[ROM.MenuTitles.offset + y++]) != 0xFF)
 				WriteNextChar(a);
 		}
 
@@ -738,7 +739,7 @@ namespace AtomosZ.DragonAid.Menu
 
 		private void L39ECB()
 		{
-			var x = zeroPages[0x76] << 1; // menu_PositionHighNibble
+			byte x = (byte)(zeroPages[0x76] << 1); // menu_PositionHighNibble
 			L39ED0(++x);
 		}
 
@@ -812,7 +813,7 @@ namespace AtomosZ.DragonAid.Menu
 		/// <param name="heightCode"> 0 to 6, and possibly >= B</param>
 		private void AdjustHeightFromDynamicSubroutine(byte[] romData, byte heightCode)
 		{
-			var adjHeightInstruction = romData[ROMPointers.AdjustableHeightInstructions.offset + heightCode];
+			var adjHeightInstruction = romData[ROM.AdjustableHeightInstructions.offset + heightCode];
 			if (adjHeightInstruction == 0x66) // this is probably not relevant here
 			{
 				// Execute Subroutine 0x66

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AtomosZ.DragonAid.Libraries;
-using AtomosZ.DragonAid.Libraries.Pointers;
-using static AtomosZ.DragonAid.ReverseEngineering.ROM;
+using AtomosZ.DragonAid.Libraries.PointerList;
+using static AtomosZ.DragonAid.ReverseEngineering.ROMPlaceholders;
 
 namespace AtomosZ.DragonAid.ReverseEngineering
 {
@@ -17,8 +14,8 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// </summary>
 		public static void Map_Scroll_Check()
 		{
-			if (ROM.zeroPages[0x86] == 0
-				|| ROM.zeroPages[0x87] != 0)
+			if (ROMPlaceholders.zeroPages[0x86] == 0
+				|| ROMPlaceholders.zeroPages[0x87] != 0)
 				Map_Scroll();
 		}
 
@@ -28,9 +25,9 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// </summary>
 		private static void Map_Scroll()
 		{
-			byte x = walkDirection << 1; // 0x0644
-			zeroPages[0x72] = romData[ROMPointers.MapScrollVector.offset + x];
-			zeroPages[0x73] = romData[ROMPointers.MapScrollVector.offset + x + 1];
+			byte x = (byte)(nesRam[Pointers.NESRAM.walkDirection] << 1);
+			zeroPages[0x72] = romData[Pointers.ROM.MapScrollVector.offset + x];
+			zeroPages[0x73] = romData[Pointers.ROM.MapScrollVector.offset + x + 1];
 
 			x = 0x10;
 			zeroPages[0x6C] = x;
@@ -99,7 +96,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 
 		private static bool PPU_SpriteDMA_NOT_F8(byte x)
 		{
-			if (zeroPages[ZeroPagePointers.encounterVariable_A] != 0x01)
+			if (zeroPages[ZeroPage.encounterVariable_A] != 0x01)
 				return Map_Scroll_JMP_DialogSegmentPointer(x);
 			else
 			{

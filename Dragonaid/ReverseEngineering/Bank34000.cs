@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AtomosZ.DragonAid.Libraries;
-using AtomosZ.DragonAid.Libraries.Pointers;
-using static AtomosZ.DragonAid.ReverseEngineering.ROM;
+
+using static AtomosZ.DragonAid.Libraries.PointerList.Pointers;
+using static AtomosZ.DragonAid.ReverseEngineering.ROMPlaceholders;
 
 
 namespace AtomosZ.DragonAid.ReverseEngineering
@@ -24,7 +22,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 				return;
 
 			// 35DCF - _DynamicSubroutine_34000_B_cont
-			if (zeroPages[ZeroPagePointers.encounterVariable_A] != 0)
+			if (zeroPages[ZeroPage.encounterVariable_A] != 0)
 				return;
 			if (zeroPages[0xAC & 0x1F] != 0) // AGAIN for some reason
 				return;
@@ -61,41 +59,41 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		{
 			byte characterIndex = zeroPages[0x72];
 			characterIndex >>= 1;
-			byte a = nesRam[NESRAMPointers.Character_Statuses + characterIndex];
+			byte a = nesRam[NESRAM.Character_Statuses + characterIndex];
 			if (a < 80) // negative flag not set
 				return; // cancel scroll if all characters dead?
-			byte x = zeroPages[ZeroPagePointers.dynamicSubroutineAddr];
+			byte x = zeroPages[ZeroPage.dynamicSubroutineAddr];
 			byte y = 0x03;
 			int address = zeroPages[0x72] + zeroPages[0x73] << 4;
 			a = nesRam[address + y];
 			a &= 0x03;
 			if (a == 0)
 			{ // L35E5B();
-				--nesRam[NESRAMPointers.PPU_SpriteDMA + x + 0];
-				--nesRam[NESRAMPointers.PPU_SpriteDMA + x + 4];
-				--nesRam[NESRAMPointers.PPU_SpriteDMA + x + 8];
-				--nesRam[NESRAMPointers.PPU_SpriteDMA + x + 12];
+				--nesRam[NESRAM.PPU_SpriteDMA + x + 0];
+				--nesRam[NESRAM.PPU_SpriteDMA + x + 4];
+				--nesRam[NESRAM.PPU_SpriteDMA + x + 8];
+				--nesRam[NESRAM.PPU_SpriteDMA + x + 12];
 			}
 			else if (a == 0x01)
 			{ // L35E4C();
-				++nesRam[NESRAMPointers.PPU_SpriteDMA + x + 3];
-				++nesRam[NESRAMPointers.PPU_SpriteDMA + x + 7];
-				++nesRam[NESRAMPointers.PPU_SpriteDMA + x + 11];
-				++nesRam[NESRAMPointers.PPU_SpriteDMA + x + 15];
+				++nesRam[NESRAM.PPU_SpriteDMA + x + 3];
+				++nesRam[NESRAM.PPU_SpriteDMA + x + 7];
+				++nesRam[NESRAM.PPU_SpriteDMA + x + 11];
+				++nesRam[NESRAM.PPU_SpriteDMA + x + 15];
 			}
 			else if (a == 0x02)
 			{ // L35E6A()
-				++nesRam[NESRAMPointers.PPU_SpriteDMA + x + 0];
-				++nesRam[NESRAMPointers.PPU_SpriteDMA + x + 4];
-				++nesRam[NESRAMPointers.PPU_SpriteDMA + x + 8];
-				++nesRam[NESRAMPointers.PPU_SpriteDMA + x + 12];
+				++nesRam[NESRAM.PPU_SpriteDMA + x + 0];
+				++nesRam[NESRAM.PPU_SpriteDMA + x + 4];
+				++nesRam[NESRAM.PPU_SpriteDMA + x + 8];
+				++nesRam[NESRAM.PPU_SpriteDMA + x + 12];
 			}
 			else
 			{ // scrolled left
-				--nesRam[NESRAMPointers.PPU_SpriteDMA + x + 3];
-				--nesRam[NESRAMPointers.PPU_SpriteDMA + x + 7];
-				--nesRam[NESRAMPointers.PPU_SpriteDMA + x + 11];
-				--nesRam[NESRAMPointers.PPU_SpriteDMA + x + 15];
+				--nesRam[NESRAM.PPU_SpriteDMA + x + 3];
+				--nesRam[NESRAM.PPU_SpriteDMA + x + 7];
+				--nesRam[NESRAM.PPU_SpriteDMA + x + 11];
+				--nesRam[NESRAM.PPU_SpriteDMA + x + 15];
 			}
 
 			L35E76();
@@ -106,7 +104,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			bool hasCarry = false;
 			zeroPages[0x72] = ASMHelper.ADC(zeroPages[0x72], 0x04, ref hasCarry);
 			hasCarry = false;
-			zeroPages[ZeroPagePointers.dynamicSubroutineAddr] = ASMHelper.ADC(zeroPages[ZeroPagePointers.dynamicSubroutineAddr], 0x10, ref hasCarry);
+			zeroPages[ZeroPage.dynamicSubroutineAddr] = ASMHelper.ADC(zeroPages[ZeroPage.dynamicSubroutineAddr], 0x10, ref hasCarry);
 		}
 
 
@@ -122,7 +120,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			}
 
 			// L35B1C
-			if (nesRam[NESRAMPointers.encounterCheckRequired_A] == 0)
+			if (nesRam[NESRAM.encounterCheckRequired_A] == 0)
 			{
 				L35B3A();
 				return;
@@ -138,7 +136,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 
 		private static void L35AB0()
 		{
-			if ((zeroPages[ZeroPagePointers.lightOrDarkWorld] & 0x02) != 0)
+			if ((zeroPages[ZeroPage.lightOrDarkWorld] & 0x02) != 0)
 				return;
 			if ((zeroPages[0x9D] & 0x08) != 0)
 				return;
@@ -164,8 +162,8 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 
 			var x = zeroPages[0x9B];
 			var y = zeroPages[0x9C];
-			if (x != zeroPages[ZeroPagePointers.map_WorldPosition_X]
-				|| y != zeroPages[ZeroPagePointers.map_WorldPosition_Y])
+			if (x != zeroPages[ZeroPage.map_WorldPosition_X]
+				|| y != zeroPages[ZeroPage.map_WorldPosition_Y])
 				__DynamicSubroutine_34000_D_isLightWorld(x, y);
 		}
 
@@ -185,8 +183,8 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// </summary>
 		private static void STA_WorldMapCoordsTo_06_07(byte x, byte y)
 		{
-			zeroPages[0x06] = zeroPages[ZeroPagePointers.map_WorldPosition_X];
-			zeroPages[0x07] = zeroPages[ZeroPagePointers.map_WorldPosition_Y];
+			zeroPages[0x06] = zeroPages[ZeroPage.map_WorldPosition_X];
+			zeroPages[0x07] = zeroPages[ZeroPage.map_WorldPosition_Y];
 			L3F7E0(x, y);
 		}
 
