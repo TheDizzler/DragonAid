@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AtomosZ.DragonAid.Libraries
 {
@@ -14,6 +10,7 @@ namespace AtomosZ.DragonAid.Libraries
 		/// 
 		/// Hardcoded at:
 		/// 0x003BD (GetEncounterRate)
+		/// 0x35067 (SetMenuColor)
 		/// </summary>
 		public static byte NightBattleStartTime = 0x78;
 		public static byte DayTimer = 0xCC;
@@ -76,5 +73,9 @@ namespace AtomosZ.DragonAid.Libraries
 		/// Added to class index.
 		/// </summary>
 		public static byte FemaleClassSpriteOffset = 0x07;
+
+		public static int NMI_Vector = 0xFFFA;
+		public static int RESET_Vector = 0xFFFC;
+		public static int IRQBRK_Vector = 0xFFFE;
 	}
 }
