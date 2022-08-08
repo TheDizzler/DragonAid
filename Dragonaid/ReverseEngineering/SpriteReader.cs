@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AtomosZ.DragonAid.Libraries;
-using AtomosZ.DragonAid.Libraries.Pointers;
+using AtomosZ.DragonAid.Libraries.PointerList;
+using AtomosZ.DragonAid.ReverseEngineering;
 
 namespace AtomosZ.DragonAid.SpriteAid
 {
@@ -172,7 +170,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 			F3E299(0x1F);
 
 			for (int i = 0; i < 0x0C; ++i)
-				loadedSpritesVectorCopy[i] = romData[ROMPointers.LoadSpritesVector.offset];
+				loadedSpritesVectorCopy[i] = romData[Pointers.ROM.LoadSpritesVector.offset];
 		}
 
 		/// <summary>
@@ -322,12 +320,12 @@ namespace AtomosZ.DragonAid.SpriteAid
 
 		private void PPU_SetAddressForWrite_loadSomething(byte x)
 		{
-			PPUAddr_2006 = romData[ROMPointers.PPUAddressTable.offset + x + 0]; // high byte of PPUAddress to write to next
-			PPUAddr_2006 = romData[ROMPointers.PPUAddressTable.offset + x + 1]; // low byte ($0800)
+			PPUAddr_2006 = romData[Pointers.ROM.PPUAddressTable.offset + x + 0]; // high byte of PPUAddress to write to next
+			PPUAddr_2006 = romData[Pointers.ROM.PPUAddressTable.offset + x + 1]; // low byte ($0800)
 			zeroPages[readTileAddressVector + 7] = 0;
-			zeroPages[0x24] = romData[ROMPointers.PPUAddressTable.offset + x + 2];
-			zeroPages[0x23] = romData[ROMPointers.PPUAddressTable.offset + x + 3]; // ($6E00, $6F00 for sprites, $7200 for CHR)
-			baseTileIndex = romData[ROMPointers.PPUAddressTable.offset + x + 4]; // ($20,$80 for sprites, $00 for CHR)
+			zeroPages[0x24] = romData[Pointers.ROM.PPUAddressTable.offset + x + 2];
+			zeroPages[0x23] = romData[Pointers.ROM.PPUAddressTable.offset + x + 3]; // ($6E00, $6F00 for sprites, $7200 for CHR)
+			baseTileIndex = romData[Pointers.ROM.PPUAddressTable.offset + x + 4]; // ($20,$80 for sprites, $00 for CHR)
 		}
 
 		private void F3E299(byte a)
@@ -351,8 +349,8 @@ namespace AtomosZ.DragonAid.SpriteAid
 			byte a = 0x04;
 			zeroPages[0x54] = a;
 			tileBankId = (byte)(a << 1);
-			a = romData[ROMPointers.TileBatchSomethingPointerA.offset]; // $ADD4
-			byte y = romData[ROMPointers.TileBatchSomethingPointerA.offset + 1];
+			a = romData[Pointers.ROM.TileBatchSomethingPointerA.offset]; // $ADD4
+			byte y = romData[Pointers.ROM.TileBatchSomethingPointerA.offset + 1];
 			ASMHelper.IncrementValueAtXBy_AandY(zeroPages, a, 0x21, y); // incrementing the dynamic subroutine
 			a = tileDynamicOffsetsOffset;
 			zeroPages[readTileAddressVector + 6] = 0;
@@ -364,7 +362,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 			while (zeroPages[0x54] != 0)
 			{
 				y = 0;
-				a = romData[ROMPointers.TileDynamicOffsets.offset + tileDynamicOffsetsOffset];
+				a = romData[Pointers.ROM.TileDynamicOffsets.offset + tileDynamicOffsetsOffset];
 				if (a >= 0x80)
 					--y;
 				// E4B9
@@ -405,7 +403,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 
 		private void PrepAndFetchNextTileBatch()
 		{ // E4E3
-			tileBatchSpriteOrderIndex = romData[ROMPointers.TileDynamicOffsets.offset + tileDynamicOffsetsOffset];
+			tileBatchSpriteOrderIndex = romData[Pointers.ROM.TileDynamicOffsets.offset + tileDynamicOffsetsOffset];
 			GetTileBatchInstructions();
 		}
 
@@ -427,7 +425,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 					zeroPages[0x4D] = x; // low byte of spritePointer
 					zeroPages[0x04 + x + 0] = instructionBytes[1]; // part of high and low address to sprite
 					zeroPages[0x04 + x + 1] = y;
-					a = romData[ROMPointers.OffsetsToNextSpriteInTileBatch.offset + nextSpriteAddressOffset];
+					a = romData[Pointers.ROM.OffsetsToNextSpriteInTileBatch.offset + nextSpriteAddressOffset];
 					// E56E -- this is a simplified version of the jumping around in the ROM. It's right, don't worry.
 					bool hasCarry = false;
 					a = ASMHelper.ADC(a, instructionBytes[1], ref hasCarry);
@@ -449,8 +447,8 @@ namespace AtomosZ.DragonAid.SpriteAid
 				zeroPages[0x43] = ASMHelper.ROL(zeroPages[0x43], 1, ref hasCarry);
 				// basically instructionBytes[1] * 3 stored as 16 bit int
 				ASMHelper.Add16Bit(instructionBytes[1], ref zeroPages[0x42], ref zeroPages[0x43]);
-				a = romData[ROMPointers.TileBatchSomethingPointerB.offset];
-				byte y = romData[ROMPointers.TileBatchSomethingPointerB.offset + 1];
+				a = romData[Pointers.ROM.TileBatchSomethingPointerB.offset];
+				byte y = romData[Pointers.ROM.TileBatchSomethingPointerB.offset + 1];
 				ASMHelper.IncrementValueAtXBy_AandY(zeroPages, a, 0x42, y);
 
 				int romAddress = 0x14000 + zeroPages[0x42] + (zeroPages[0x43] << 8) - 0x8000 + Address.INESHeaderLength;
@@ -476,7 +474,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 			byte a = 0;
 			while (y < 0x08)
 			{
-				byte spriteAddressIndex = romData[ROMPointers.TileBatchSpriteOrder.offset + tileBatchSpriteOrderIndex];
+				byte spriteAddressIndex = romData[Pointers.ROM.TileBatchSpriteOrder.offset + tileBatchSpriteOrderIndex];
 				zeroPages[0x57 + y] = zeroPages[0x04 + spriteAddressIndex + 0]; // part of high and low address to sprite
 				zeroPages[0x58 + y] = zeroPages[0x04 + spriteAddressIndex + 1]; // part of high address to sprite
 				y >>= 1;
@@ -612,7 +610,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 
 		private void PrepAddressAndWriteSpriteToPPU()
 		{ // E6C1
-			Address bankAddress = ROMPointers.GetBankAddressFromId(tileBankId);
+			Address bankAddress = Pointers.ROM.GetBankAddressFromId(tileBankId);
 
 			for (int i = 0; i < 4; ++i)
 			{ // set spritePointer
@@ -677,31 +675,15 @@ namespace AtomosZ.DragonAid.SpriteAid
 			// PHA zeroPages[0x90] // backup old value
 			byte backup90 = zeroPages[0x90];
 			zeroPages[0x90] = 0x01;
-			F3F116();
+			Bank3C000.F3F116();
 			++zeroPages[0x90];
-			F3F116();
+			Bank3C000.F3F116();
 			// WaitForNMI
 			zeroPages[0x90] = backup90;
 			// BRK 1725
 			++_6AC0;
 		}
 
-		private void F3F116()
-		{ // F116
-			if ((zeroPages[0x2F] & 0x01) != 0)
-			{
-				SetSegmentPointerToStack();
-				return;
-			}
-			if ((zeroPages[0x90] & 0x0F) == 0 || (zeroPages[0x90] == 0x0F))
-			{
-				//L3F112();
-				return;
-			}
-
-			zeroPages[0x72] = (byte)((zeroPages[0x90] - 0x01) << 3);
-			zeroPages[0x73] = 0x01; // pointer to the stack
-		}
 
 		private void SetSegmentPointerToStack()
 		{
@@ -965,7 +947,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 					aSmallerThanMem = true;
 					break;
 				}
-			} while (a < romData[ROMPointers.MapScrollVectorB.offset + y]);
+			} while (a < romData[Pointers.ROM.MapScrollVectorB.offset + y]);
 
 			if (!aSmallerThanMem)
 			{ // C222

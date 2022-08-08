@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using AtomosZ.DragonAid.Libraries.Pointers;
+
+using static AtomosZ.DragonAid.Libraries.PointerList.Pointers;
 
 namespace AtomosZ.DragonAid.Libraries
 {
@@ -109,30 +110,30 @@ namespace AtomosZ.DragonAid.Libraries
 		/// <param name="x">zeroPages address</param>
 		public static void MultiplyValueAtXByA(byte[] zeroPages, byte a, byte x)
 		{ // C055
-			zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 0] = a;
-			zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 1] = 0;
-			zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 2] = 0;
+			zeroPages[ZeroPage.dynamicSubroutineAddr + 0] = a;
+			zeroPages[ZeroPage.dynamicSubroutineAddr + 1] = 0;
+			zeroPages[ZeroPage.dynamicSubroutineAddr + 2] = 0;
 
 			do
 			{
-				zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 0]
-				= ASMHelper.LSR(zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 0], 1, out bool hasCarry);
+				zeroPages[ZeroPage.dynamicSubroutineAddr + 0]
+				= ASMHelper.LSR(zeroPages[ZeroPage.dynamicSubroutineAddr + 0], 1, out bool hasCarry);
 				if (hasCarry)
 				{
 					hasCarry = false;
-					zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 1]
-						= ASMHelper.ADC(zeroPages[x + 0], zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 1], ref hasCarry);
-					zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 2]
-						= ASMHelper.ADC(zeroPages[x + 1], zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 2], ref hasCarry);
+					zeroPages[ZeroPage.dynamicSubroutineAddr + 1]
+						= ASMHelper.ADC(zeroPages[x + 0], zeroPages[ZeroPage.dynamicSubroutineAddr + 1], ref hasCarry);
+					zeroPages[ZeroPage.dynamicSubroutineAddr + 2]
+						= ASMHelper.ADC(zeroPages[x + 1], zeroPages[ZeroPage.dynamicSubroutineAddr + 2], ref hasCarry);
 				}
 
 				zeroPages[x + 0] = ASMHelper.ASL(zeroPages[x + 0], 1, out hasCarry);
 				zeroPages[x + 1] = ASMHelper.ROL(zeroPages[x + 1], 1, ref hasCarry);
 			}
-			while (zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 0] != 0);
+			while (zeroPages[ZeroPage.dynamicSubroutineAddr + 0] != 0);
 
-			zeroPages[x + 0] = zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 1];
-			zeroPages[x + 1] = zeroPages[ZeroPagePointers.dynamicSubroutineAddr + 2];
+			zeroPages[x + 0] = zeroPages[ZeroPage.dynamicSubroutineAddr + 1];
+			zeroPages[x + 1] = zeroPages[ZeroPage.dynamicSubroutineAddr + 2];
 		}
 
 		/// <summary>

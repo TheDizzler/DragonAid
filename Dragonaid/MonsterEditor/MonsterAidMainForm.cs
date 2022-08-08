@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
 using AtomosZ.DragonAid.Libraries;
-using AtomosZ.DragonAid.Libraries.Pointers;
 using Newtonsoft.Json;
+using static AtomosZ.DragonAid.Libraries.PointerList.Pointers;
 
 namespace AtomosZ.DragonAid.MonsterAid
 {
@@ -17,6 +18,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 		public MonsterAidMainForm()
 		{
 			InitializeComponent();
+
 
 			if (!File.Exists(MonsterAidSettingsData.monsterAidFormUserSettingsFile))
 			{
@@ -183,7 +185,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 			{
 				byte[] monsterStats = monsterAidView.GetMonsterStats();
 				for (int i = 0; i < monsterStats.Length; ++i)
-					romData[ROMPointers.MonsterStatBlockAddress.offset + i] = monsterStats[i];
+					romData[ROM.MonsterStatBlockAddress.offset + i] = monsterStats[i];
 				File.WriteAllBytes(saveDialog.FileName, romData);
 			}
 		}

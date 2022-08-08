@@ -1,7 +1,7 @@
 ﻿using System;
 
 using AtomosZ.DragonAid.Libraries;
-using AtomosZ.DragonAid.Libraries.Pointers;
+using static AtomosZ.DragonAid.Libraries.PointerList.Pointers;
 using static AtomosZ.DragonAid.MonsterAid.MonsterConsts;
 
 namespace AtomosZ.DragonAid.MonsterAid
@@ -139,7 +139,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 		public MonsterStatBlock(byte[] romData, byte monsterIndex)
 		{
 			index = monsterIndex;
-			int monsterStart = ROMPointers.MonsterStatBlockAddress.offset + index * ROMPointers.MonsterStatBlockAddress.length;
+			int monsterStart = ROM.MonsterStatBlockAddress.offset + index * ROM.MonsterStatBlockAddress.length;
 
 			name = Names.GetMonsterName(romData, monsterIndex);
 			level = romData[monsterStart + Level] & 0x3F;

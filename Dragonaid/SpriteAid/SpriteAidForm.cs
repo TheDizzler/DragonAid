@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using AtomosZ.DragonAid.Libraries;
-using AtomosZ.DragonAid.Libraries.Pointers;
+using AtomosZ.DragonAid.Libraries.PointerList;
 
 namespace AtomosZ.DragonAid.SpriteAid
 {
@@ -67,12 +67,12 @@ namespace AtomosZ.DragonAid.SpriteAid
 			paletteBoxes[12].ForeColor = Color.White;
 
 			int timeIndex = (int)paletteTime_spinner.Value;
-			byte paletteOffset = romData[ROMPointers.TimeOfDayDayNightPalettesIndices.offset + timeIndex];
+			byte paletteOffset = romData[ROM.TimeOfDayDayNightPalettesIndices.offset + timeIndex];
 
 			for (byte i = 0; i < 0x0C; ++i)
 			{
-				byte color = romData[ROMPointers.DayNightPalettes.offset + paletteOffset + i];
-				byte paletteIndex = romData[ROMPointers.PaletterStoreOffsets.offset + i];
+				byte color = romData[ROM.DayNightPalettes.offset + paletteOffset + i];
+				byte paletteIndex = romData[ROM.PaletterStoreOffsets.offset + i];
 				if (paletteIndex >= 4)
 					++paletteIndex;
 				if (paletteIndex >= 8)
@@ -94,7 +94,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 		{
 			for (int timeIndex = 0; timeIndex < 7; ++timeIndex)
 			{
-				timeSpinners[timeIndex].Value = romData[ROMPointers.TimeOfDayChangeTimes.offset + timeIndex];
+				timeSpinners[timeIndex].Value = romData[ROM.TimeOfDayChangeTimes.offset + timeIndex];
 			}
 		}
 
