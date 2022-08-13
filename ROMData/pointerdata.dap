@@ -276,7 +276,7 @@
       "loader": 0,
       "bankId": 13,
       "dsIndex": 9,
-      "name": "DynamicSubroutine_34000_B",
+      "name": "AdjustSpriteDMA",
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
@@ -2180,11 +2180,11 @@
       "loader": 0,
       "bankId": 6,
       "dsIndex": 8,
-      "name": "DynamicSubroutine_18000_A",
+      "name": "CheckDayNightTransitionTimes",
       "notes": "DynamicSubroutine_Addresses_18000",
       "prgAddress": {
         "length": 2,
-        "notes": "Map scroll related, most likely\nLDA $AA\nAND $10\n\nsearches vector at 0x1B7B0 (7 bytes)  for same value at Pre_BRK_CMP_78 (0x06DF)",
+        "notes": "does something before the check too...",
         "name": "Full address",
         "pointer": 112315,
         "offset": 112331
@@ -2708,11 +2708,11 @@
       "loader": 0,
       "bankId": 0,
       "dsIndex": 70,
-      "name": null,
+      "name": "DynamicSubroutine_00000_B",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 9101,
         "offset": 9117
@@ -3080,7 +3080,7 @@
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": "After map scroll",
+        "notes": "PostIncrementClock",
         "name": "Full address",
         "pointer": 241944,
         "offset": 241960
@@ -3108,11 +3108,11 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 37,
-      "name": null,
+      "name": "DynamicSubroutine_38000_E",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "PostIncrementClock",
         "name": "Full address",
         "pointer": 241916,
         "offset": 241932
@@ -3124,7 +3124,7 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 38,
-      "name": "",
+      "name": "DynamicSubroutine_38000_F",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
