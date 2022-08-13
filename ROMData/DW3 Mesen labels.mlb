@@ -577,7 +577,7 @@ P:32D3-32E9:MonsterStats:23 bytes per enemy\n[0]:Level\n[1-2]:Exp\n[3]:Agility\n
 P:32EA-3300:Monster_StatBlock_Raven
 P:3F50:ClearRam
 P:3FD8-3FFF:EndOfBank00000to03FFF
-P:4000-4033:DynamicSubroutine_Addresses_04000:[6]: $8067 -> APU_InitiateNewSequence\n[$14]:$8788 -> Battle_EndOfTurn_Regeneration\n[$16]:$87F5 -> \n[$1A]:$8A2A -> \n[$20]:$805C ->
+P:4036-405B:DynamicSubroutine_Addresses_04000:[6]: $8067 -> APU_InitiateNewSequence\n[$14]:$8788 -> Battle_EndOfTurn_Regeneration\n[$16]:$87F5 -> \n[$1A]:$8A2A -> \n[$20]:$805C ->\n\nthis label is defintely wrong
 P:405C:WaitForNMI_78000_BSDynamic
 P:4064-4065:BRKInstructions_WaitForNMI_78000:EF - BRKInstruction_BankSwitch\n07 - WaitForNMI_78000_Subroutine
 P:4067:APU_InitiateNewSequence_SpecialBRK:sequence index
