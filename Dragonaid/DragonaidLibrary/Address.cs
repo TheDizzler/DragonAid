@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static AtomosZ.DragonAid.Libraries.PointerList.Pointers;
 
 namespace AtomosZ.DragonAid.Libraries
 {
 	public class Address
 	{
-		public const int INESHeaderLength = 0x10;
+		public const int iNESHeaderLength = 0x10;
 		public string name { get; private set; }
 		/// <summary>
 		/// Real address of data (without iNES header).
@@ -23,7 +24,7 @@ namespace AtomosZ.DragonAid.Libraries
 			{
 				if (pointer == -1)
 					return -1;
-				return pointer + INESHeaderLength;
+				return pointer + iNESHeaderLength;
 			}
 		}
 		/// <summary>
@@ -46,7 +47,11 @@ namespace AtomosZ.DragonAid.Libraries
 			this.length = length;
 		}
 
-		
+		/// <summary>
+		/// !Always returns false!
+		/// </summary>
+		/// <param name="newAddress"></param>
+		/// <returns></returns>
 		public bool ValidateAddress(string newAddress)
 		{
 			return false;

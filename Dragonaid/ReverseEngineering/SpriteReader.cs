@@ -451,7 +451,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 				byte y = romData[Pointers.ROM.TileBatchSomethingPointerB.offset + 1];
 				ASMHelper.IncrementValueAtXBy_AandY(zeroPages, a, 0x42, y);
 
-				int romAddress = 0x14000 + zeroPages[0x42] + (zeroPages[0x43] << 8) - 0x8000 + Address.INESHeaderLength;
+				int romAddress = 0x14000 + zeroPages[0x42] + (zeroPages[0x43] << 8) - 0x8000 + Address.iNESHeaderLength;
 				nextSpriteAddressOffset = romData[romAddress];
 				byte x = 0;
 				y = 1;
