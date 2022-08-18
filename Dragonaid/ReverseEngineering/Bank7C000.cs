@@ -424,9 +424,10 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 
 					/// hypothesis: this is the next note info
 					default: // below 0xE1
-						a = ASMHelper.SBC(nextTrackByte, 0x4B, out hasCarry);
+						hasCarry = true;
+						a = ASMHelper.SBC(nextTrackByte, 0x4B, ref hasCarry);
 						while (hasCarry)
-							a = ASMHelper.SBC(nextTrackByte, 0x4B, out hasCarry);
+							a = ASMHelper.SBC(nextTrackByte, 0x4B, ref hasCarry);
 						a = ASMHelper.ADC(a, 0x4B, ref hasCarry);
 						if (a == 0x49)
 						{

@@ -197,7 +197,8 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			zeroPages[0x09] = 0x07;
 			zeroPages[0x04] = x;
 			zeroPages[0x05] = y;
-			byte a = ASMHelper.SBC(zeroPages[0x06], zeroPages[0x08], out bool hasCarry);
+			bool hasCarry = true;
+			byte a = ASMHelper.SBC(zeroPages[0x06], zeroPages[0x08], ref  hasCarry);
 			if (!hasCarry)
 				a = 0x0;
 			if (a > zeroPages[0x04])
@@ -210,8 +211,8 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 					return;
 				// have not seen from here run
 				a = zeroPages[0x07];
-				hasCarry = false;
-				a = ASMHelper.SBC(a, zeroPages[0x09], out hasCarry);
+				hasCarry = false; // is this really supposed to be false?
+				a = ASMHelper.SBC(a, zeroPages[0x09], ref hasCarry);
 				if (!hasCarry)
 					a = 0;
 				if (a <= zeroPages[0x05])

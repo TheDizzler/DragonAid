@@ -85,22 +85,12 @@ namespace AtomosZ.DragonAid.Libraries
 			return (byte)total;
 		}
 
-		/// <summary>
-		/// Is this correct?
-		/// </summary>
-		/// <param name="a"></param>
-		/// <param name="mem"></param>
-		/// <param name="hasCarry"></param>
-		/// <returns></returns>
-		public static byte SBC(byte a, byte mem, out bool hasCarry)
+		public static byte SBC(byte a, byte mem, ref bool hasCarry)
 		{
-			int aInt = a;
-			if (aInt - mem < 0)
-				hasCarry = false;
-			else
-				hasCarry = true;
-			return (byte)(a - mem);
+			byte memInv = (byte)(-mem);
+			return ADC(a, memInv, ref hasCarry);
 		}
+
 
 		/// <summary>
 		/// Not ASM but a common function in DQ ROM.

@@ -784,8 +784,8 @@ namespace AtomosZ.DragonAid.SpriteAid
 			zeroPages[0x04] = x;
 			zeroPages[0x05] = y;
 
-			hasCarry = false;
-			byte a = ASMHelper.SBC(zeroPages[0x06], zeroPages[0x08], out hasCarry);
+			hasCarry = false; // really?
+			byte a = ASMHelper.SBC(zeroPages[0x06], zeroPages[0x08], ref hasCarry);
 			if (!hasCarry)
 				a = 0;
 			if (a <= zeroPages[0x04])
@@ -798,7 +798,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 				if (a < zeroPages[0x04])
 					return;
 				hasCarry = true;
-				a = ASMHelper.SBC(zeroPages[0x07], zeroPages[0x09], out hasCarry);
+				a = ASMHelper.SBC(zeroPages[0x07], zeroPages[0x09], ref hasCarry);
 				if (!hasCarry)
 					a = 0;
 				if (a <= zeroPages[0x05])
@@ -980,7 +980,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 				a -= 0x04;
 				do
 				{
-					a = ASMHelper.SBC(a, 0x0C, out carrySet);
+					a = ASMHelper.SBC(a, 0x0C, ref carrySet);
 				} while (carrySet);
 			}
 			// C251
