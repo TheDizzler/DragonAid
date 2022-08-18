@@ -171,8 +171,8 @@ namespace AtomosZ.DragonAid.Libraries
 		public static void BIT(byte a, byte operand, out bool n, out bool v, out bool z)
 		{
 			z = (a & operand) == 0;
-			n = (operand & 0x07) == 0x07;
-			v = (operand & 0x06) == 0x06;
+			n = (operand & 0x80) == 0x80;
+			v = (operand & 0x40) == 0x40;
 		}
 	}
 }
