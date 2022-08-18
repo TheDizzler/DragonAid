@@ -120,9 +120,11 @@ namespace AtomosZ.MiNesEmulator
 				addr += pcc.bankId * 0x4000;
 
 				/* @TODO: make sure only writing to unwritten addresses? */
-				machineCode[addr] = instr.opcode.opc;
+				CheckAndWriteByte(machineCode, romAddress, instr.opcode.opc);
 				for (int i = 0; i < instr.operands.Length; ++i)
-					machineCode[addr + i + 1] = instr.operands[i];
+				{
+					CheckAndWriteByte(machineCode, romAddress + i + 1, instr.operands[i]);
+				}
 			}
 
 			foreach (var pcd in pcData)
