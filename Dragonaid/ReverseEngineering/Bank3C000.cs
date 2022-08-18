@@ -47,7 +47,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			byte a = (byte)(zeroPages[0x90] & 0x0F);
 			if (a != 0)
 				return;
-			a = zeroPages[ZeroPage.mapScrollCheck + 1];
+			a = zeroPages[ZeroPages.mapScrollCheck + 1];
 			if (a != 0)
 				return;
 

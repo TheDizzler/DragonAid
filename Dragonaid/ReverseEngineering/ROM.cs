@@ -30,11 +30,11 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		public static Dictionary<int, byte> registers = new Dictionary<int, byte>()
 		{
 			// 0x2000
-			[Register.PPU_Control] = 0x0,
-			[Register.PPU_Status] = 0x0,
+			[Registers.PPU_Control] = 0x0,
+			[Registers.PPU_Status] = 0x0,
 
 			// 0x4000
-			[Register.SpriteDMA] = 0x0,
+			[Registers.SpriteDMA] = 0x0,
 		};
 
 

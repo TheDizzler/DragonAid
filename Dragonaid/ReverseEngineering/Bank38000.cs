@@ -12,13 +12,13 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// </summary>
 		public static void ReadControllerInput()
 		{
-			if (zeroPages[ZeroPage.mapScrollCheck + 1] == 0
-				&& zeroPages[ZeroPage.mapScrollCheck + 0] != 0)
+			if (zeroPages[ZeroPages.mapScrollCheck + 1] == 0
+				&& zeroPages[ZeroPages.mapScrollCheck + 0] != 0)
 			{
 				if (zeroPages[0x8F] != 0)
 					return;
 				Controller_1_ReadAndSet();
-				nesRam[0x06BD] |= zeroPages[ZeroPage.controller_SingleButton_store];
+				nesRam[0x06BD] |= zeroPages[ZeroPages.controller1_ButtonStore];
 				if ((zeroPages[0x90] & 0x0F) == 0)
 					ReadControllerInput_Sub_A();
 			}

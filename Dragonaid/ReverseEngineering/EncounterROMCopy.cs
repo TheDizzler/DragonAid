@@ -139,7 +139,7 @@ namespace AtomosZ.DragonAid.EncounterAid
 
 			int encounterMonstersPointer = zeroPages[zeroPageAddress] + (zeroPages[zeroPageAddress + 1] << 8);
 			byte encounterMonsters =
-				romData[encounterMonstersPointer - 8000 + Address.INESHeaderLength];
+				romData[encounterMonstersPointer - 8000 + Address.iNESHeaderLength];
 			if (encounterMonsters != 0)
 				GetEncounterRateMultiplier(encounterMonsters);
 		}

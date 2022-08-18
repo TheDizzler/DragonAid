@@ -8,18 +8,30 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 		/// <summary>
 		/// <para>256 bytes from 0x00 to 0xFF of NES RAM.</para>
 		/// </summary>
-		public static class ZeroPage
+		public static class ZeroPages
 		{
 			/// <summary>
 			/// 0x14
+			/// <para>
+			/// <br>$01 A</br><br>$02 B</br><br>$04 Select</br><br>$08 Start</br>
+			/// <br>$10 Up</br><br>$20 Down</br><br>$40 Left</br><br>$80 Right</br>
+			/// </para>
 			/// </summary>
-			public static int controller_SingleButton_store = 0x14;
+			public static byte controller1_ButtonStore = 0x14;
+			/// <summary>
+			/// 0x15
+			/// </summary>
+			public static byte controller2_ButtonStore = 0x15;
 			/// <summary>
 			/// <para>zeroPages 0x1B
 			/// <br>NMI_VBlank_3C000 - if == 10, skip PPU_Update</br>
 			/// </para>
 			/// </summary>
 			public static byte loopTrap_flag = 0x1B;
+			/// <summary>
+			/// 0x1C
+			/// </summary>
+			public static byte currentRNGSeed = 0x1C;
 			/// <summary>
 			/// DynamicSubroutine address: 0x21 (zeroPages).
 			/// 2 bytes.
@@ -51,7 +63,11 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </summary>
 			public static byte lightOrDarkWorld = 0x2F;
 			/// <summary>
-			/// <para>2 bytes from 0x86.
+			/// 0x7E
+			/// </summary>
+			public static byte menu_PointerIndex = 0x7E;
+			/// <summary>
+			/// <para>2 bytes starting at 0x86.
 			/// <br>[1] if bit 3 || 4 == 1, scroll horizontal</br>
 			/// <br>[1] if bit 0-3 == 1, scroll vertical</br></para>
 			/// </summary>
@@ -61,6 +77,23 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </summary>
 			public static byte currentTileType = 0x92;
 			/// <summary>
+			/// 0xB0
+			/// <para>investigation needed</para>
+			/// </summary>
+			public static byte characterStatusRelated_Vector = 0xB0;
+			/// <summary>
+			/// 0xCA
+			/// </summary>
+			public static int controllerInputStore = 0xCA;
+			/// <summary>
+			/// 0xCE
+			/// </summary>
+			public static byte character_FormationIndex = 0xCE;
+			/// <summary>
+			/// 0xCF
+			/// </summary>
+			public static byte Item_Check_IsEquipped = 0xCF;
+			/// <summary>
 			/// 0xD6
 			/// <para>
 			/// Array of addresses (2 bytes) to next byte data of a track.
@@ -68,6 +101,10 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </para>
 			/// </summary>
 			public static byte APU_TrackPosition = 0xD6;
+			/// <summary>
+			/// 0xDE
+			/// </summary>
+			public static int SFXPointer = 0xDE;
 			/// <summary>
 			/// 0xE0
 			/// <para>An array of instructions per track.
@@ -86,7 +123,6 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// <br>[0]: offset to APU_DutySetup_Addresses where duty settings (?) are stored.</br></para>
 			/// </summary>
 			public static byte APU_TempDutySettings = 0xF6;
-
 		}
 
 		/// <summary>
@@ -105,6 +141,19 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// <para>NES RAM 0x300</para>
 			/// </summary>
 			public static int PPU_StagingArea = 0x0300;
+			/// <summary>
+			/// 0x0400
+			/// <para>96 byte length array</para>
+			/// </summary>
+			public static int menu_WriteBlock = 0x0400;
+			/// <summary>
+			/// 0x0470
+			/// </summary>
+			public static int menu_PositionA = 0x0470;
+			/// <summary>
+			/// 0x0471
+			/// </summary>
+			public static int menu_WriteDimensions = 0x0471;
 			/// <summary>
 			/// 0x047C
 			/// <para>it this is  >= 6A, run track updates</para>
@@ -147,12 +196,25 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </summary>
 			public static int PPU_DrawBackgrounLineCount = 0x06D9;
 			/// <summary>
+			/// 0x06DE
+			/// </summary>
+			public static int timeSubValue = 0x06DE;
+			/// <summary>
+			/// <para>0x06DF
+			/// <br>In-game day/night counter</br></para>
+			/// </summary>
+			public static int timeOfDay = 0x06DF;
+			/// <summary>
 			/// <para>NES RAM 0x06E1</para>
 			/// Check for encounter if == 0
 			/// </summary>
 			public static int encounterCheckRequired_A = 0x06E1;
 			/// <summary>
-			/// The current sequence playing.
+			/// 0x06F0
+			/// <para>
+			/// <br>The current sequence playing.</br>
+			/// <br>if bit 0 == 1, skip APU updates.</br>
+			/// </para>
 			/// </summary>
 			public static int APU_SequenceID = 0x6F0;
 			/// <summary>
@@ -171,7 +233,7 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 		/// <br>0x4018 - 0x401F APU and I/O functionality that is normally disabled.</br>
 		/// </para>
 		/// </summary>
-		public static class Register
+		public static class Registers
 		{
 			/// <summary>
 			/// <para>0x2000
@@ -188,7 +250,7 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// <br>color emphasis (BGR), sprite enable (s), background enable (b), sprite left column enable (M), background left column enable (m), greyscale (G) </br>
 			/// </para>
 			/// </summary>
-			public static int PPUMask = 0x2001;
+			public static int PPU_Mask = 0x2001;
 			/// <summary>
 			/// <para><br>0x2002</br>
 			/// <br>Reading this register will clear bit 7 and the address latches PPU_Scroll and PPU_Addr.</br>
@@ -204,7 +266,7 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// <br></br>
 			/// </para>
 			/// </summary>
-			public static int PPUScroll = 0x2005;
+			public static int PPU_Scroll = 0x2005;
 
 			/// <summary>
 			/// <para> 0x4000
@@ -333,6 +395,22 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </para>
 			/// </summary>
 			public static int APUStatus = 0x4015;
+			/// <summary>
+			/// 0x4016
+			/// <para>
+			/// <br>WRITE</br>
+			/// <br>---- ---A</br>
+			/// <br>Output data (strobe) to both controllers.</br>
+			/// </para>
+			/// </summary>
+			public static int Ctrl1 = 0x4016;
+			/// <summary>
+			/// 0x4017
+			/// <para>
+			/// <br></br>
+			/// </para>
+			/// </summary>
+			public static int Ctrl2_FrameCounter = 0x4017;
 		}
 
 		/// <summary>
@@ -341,9 +419,27 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 		public static class SRAM
 		{
 			/// <summary>
-			/// This seems to never change from 0. I suspect it may be for DMC.
+			/// 0x60C5
 			/// </summary>
-			public static int APUConst = 0x6A3D;
+			public static int encounterCheckRequired_b = 0x60C5;
+			/// <summary>
+			/// 0x60CB
+			/// </summary>
+			public static int encounterCheckRequired_c = 0x60CB;
+			/// <summary>
+			/// 0x67C1
+			/// </summary>
+			public static int Character_NameIndices = 0x67C1;
+			/// <summary>
+			/// 0x6A3D
+			/// <para>when not 0, signals APU to turn on the DMC</para>
+			/// </summary>
+			public static int APU_enableDMC = 0x6A3D;
+			/// <summary>
+			/// 0x6C1A
+			/// <para>Points JSR C4A0 (LoadDynamicSubroutine_From_InstructionByte)</para>
+			/// </summary>
+			public static int LoadDynamicSubroutine_GetCharacterCountAndNameIndices = 0x6C1A;
 		}
 
 
@@ -423,8 +519,10 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			public static Address CharacterLevelUpPointers = new Address("This requires a better name three", 0x02802);
 			public static Address MonsterStatBlockAddress = new Address("Monster Data 1", 0x0032D3, UniversalConsts.MonsterStatLength);
 
+
 			/* Bank 1 $04000 */
 			public static Address MonsterRegeneration = new Address("Monster Regeneration", 0x047EF);
+
 
 			/* Bank 2 $08000 */
 			/// <summary>
@@ -441,8 +539,29 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			public static Address MonsterActionChancesType2 = new Address("ActionChancesType2", 0x13432);
 
 			/* Bank 5 $14000 */
+			/// <summary>
+			/// 0x14018
+			/// </summary>
+			public static Address Map_LightWorld_Data_A = new Address("The difference between this and Data_B?", 0x14018, 256);
+			/// <summary>
+			/// 0x14118
+			/// </summary>
+			public static Address Map_LightWorld_Data_B = new Address("The difference between this and Data_A?", 0x14118, 217);
+			/// <summary>
+			/// 0x15A95
+			/// </summary>
+			public static Address Map_DarkWorld = new Address("The difference between this and Data_A?", 0x15A95, 256);
+			/// <summary>
+			/// 0x16DD0
+			/// </summary>
 			public static Address TileBatchSomethingPointerA = new Address("Unclear what this vector does", 0x16DD0, 2);
+			/// <summary>
+			/// 016DD2
+			/// </summary>
 			public static Address TileBatchSomethingPointerB = new Address("Unclear what this vector does", 0x16DD2, 2);
+			/// <summary>
+			/// 0x16DD4
+			/// </summary>
 			public static Address TileBatches_Characters = new Address("Tile batch instructions for character sprites", 0x16DD4);
 
 			public static Address PPUAddressTable = new Address("Unclear what this vector does", 0x17438, 15)
@@ -488,15 +607,28 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			};
 
 			/* Bank 6 $18000 */
+			/// <summary>
+			/// 0x18000
+			/// </summary>
 			public static Address LocalPointers_18000 = new Address("Pointer table for $18000 bank", 0x18000, 24)
 			{
 				notes = "[$0A]: $B387 \n"
 					+ "[$16]: $B755 (Day/Night Palettes)\n",
 			};
+			/// <summary>
+			/// 0x1B755
+			/// </summary>
 			public static Address DayNightPalettes = new Address("Only day/night palettes?", 0x1B755, 84)
 			{
 				notes = "Clock 00: $00-$0B; Clock 1E: $0C-$17; Clock 3C: $18-$23; Clock 5A: $24-$29; "
 					+ "Clock 78 (night start): $30-$3B; Clock 96: $3C-$47; Clock B4: $48-$53",
+			};
+			/// <summary>
+			/// 0x1B7B0
+			/// </summary>
+			public static Address DayNightTransitionTimes = new Address("Day night cycle transition times", 0x1B7B0, 7)
+			{
+				notes = "0x00, 0x1E, 0x3C, 0x5A, 0x78, 0x96, 0xB4",
 			};
 
 			/* Bank 9 $24000 */
@@ -508,7 +640,15 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/* Bank A $28000 */
 			/* Bank B $2C000 */
 			/* Bank C $30000 */
+			/// <summary>
+			/// 0x32FC7
+			/// </summary>
+			public static Address Map_Scroll_Finish_Vector = new Address("Unknown", 0x32FC7, 16);
+
 			/* Bank D $34000 */
+			/// <summary>
+			/// 0x355F9
+			/// </summary>
 			public static Address MenuColorQuarterHP = new Address("Color used when character's HP below quarter max", 0x355F9, 1)
 			{
 				notes = "#$2A (green) by default",
@@ -578,19 +718,65 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 				+ "[$00]: "
 				+ "[$01]: if >= 10, the height is dynamic. Otherwise, this number *2 == height of menu in 8 pixel lines.",
 			};
+			/// <summary>
+			/// 0x39D2B
+			/// </summary>
 			public static Address MenuTitles = new Address("Menu titles", 0x39D2B);
+			/// <summary>
+			/// 0x3A346
+			/// </summary>
+			public static Address Menu_CloseAllMenus_Vector = new Address("Unknown", 0x3A346, 10);
+
+			/// <summary>
+			/// 0x3BA34
+			/// </summary>
 			public static Address LoadSpritesVector = new Address("Unknown", 0x3BA34);
 
+
 			/* Bank F $3C000 (low default) */
+			/// <summary>
+			/// 0x3C000
+			/// </summary>
+			public static Address MainLowBank = new Address("", 0x3C000, 0x4000);
+			/// <summary>
+			/// 0x3C2AB
+			/// </summary>
 			public static Address MapScrollVectorB = new Address("Unknown", 0x3C2AB, 5)
 			{
 				notes = "Used in character sprite parser so...what is this?",
 			};
 
-			public static Address Load07BankIds = new Address("DynamicSubroutine_BankIds_07", 0x3E917);
-			public static Address Load17BankIds = new Address("DynamicSubroutine_BankIds_17", 0x3E997);
-			public static Address Load07PointerIndices = new Address("DynamicSubroutine_PointerIndex_07", 0x3E9ED, 256);
-			public static Address Load17PointerIndices = new Address("DynamicSubroutine_PointerIndex_17", 0x3EAED, 256);
+			/// <summary>
+			/// 0x3E917
+			/// </summary>
+			public static Address Load07BankIds_3C000 = new Address("DynamicSubroutine_BankIds_07", 0x3E917);
+			/// <summary>
+			/// 0x3E997
+			/// </summary>
+			public static Address Load17BankIds_3C000 = new Address("DynamicSubroutine_BankIds_17", 0x3E997);
+			/// <summary>
+			/// 0x3E9ED
+			/// </summary>
+			public static Address Load07PointerIndices_3C000 = new Address("DynamicSubroutine_PointerIndex_07", 0x3E9ED, 256);
+			/// <summary>
+			/// 0x3EAED
+			/// </summary>
+			public static Address Load17PointerIndices_3C000 = new Address("DynamicSubroutine_PointerIndex_17", 0x3EAED, 256);
+			/// <summary>
+			/// 0x3FFFA
+			/// </summary>
+			public static Address NMIPointer_3C000 = new Address("RESET address", 0x3FFFA, 2);
+			/// <summary>
+			/// 0x3FFFC
+			/// </summary>
+			public static Address RESETPointer_3C000 = new Address("RESET address", 0x3FFFC, 2);
+			/// <summary>
+			/// 0x3FFFE
+			/// </summary>
+			public static Address IRQBRKPointer_3C000 = new Address("IRQ/BRK address", 0x3FFFE, 2);
+
+
+
 
 
 			/* Bank 16 $58000 */
@@ -605,42 +791,162 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 				notes = "Clock Value: 00, 1E, 3C, 5A, 78 (night start), 96, B4",
 			};
 
-
-			/* Bank 1F $7C000 (high default) */
-
+			/* Bank 1E $78000 */
+			/// <summary>
+			/// 0x78000
+			/// <para>appear to be all APU related.</para>
+			/// </summary>
+			public static Address LocalPointers_78000 = new Address("", 0x78000, 16)
+			{
+				notes = "[$00]: $B365 APU_RunEngine\n"
+					+ "[$04]: $B8C5 ResetAPU\n"
+					+ "[$06]: $B904 APU_StartNewSequence\n"
+					+ "[$0E]: $B35A\n",
+			};
+			/// <summary>
+			/// 0x7816B
+			/// </summary>
 			public static Address APU_DutySetup_Addresses = new Address("Addresses to APU_DutySettings_Vector", 0x7816B, 52);
+			/// <summary>
+			/// 0x7835B
+			/// </summary>
 			public static Address APU_DutySettings_Vector = new Address("Duty setting data?", 0x7835B, 12);
 			/// <summary>
 			/// 0x7863E
 			/// </summary>
 			public static Address SequenceData = new Address("Start of music sequence data", 0x7863E);
+			/// <summary>
+			/// 0x79064
+			/// </summary>
+			public static Address SFX_Pointers = new Address("SFX pointers", 0x79064);
+
+
+			/* Bank 1F $7C000 (high default) */
+			/// <summary>
+			/// 0x7C000
+			/// </summary>
+			public static Address MainHighBank = new Address("", 0x7C000, 0x4000);
 
 			/// <summary>
-			/// Mirror of 0x3E917 Load07BankIds
+			/// 0x7E917
 			/// </summary>
-			public static Address LocalPointerBanks = new Address("Compressed bank indices", 0x7E917, 128)
-			{
-				notes = "Index used is half index used for LocalPointerIndices.\n"
-					+ "Data is compressed: high nibble & low nibbles are two different bank Ids",
-			};
+			public static Address Load07BankIds_7C000 = new Address("DynamicSubroutine_BankIds_07", 0x7E917);
 			/// <summary>
-			/// Mirror of 0x3E9ED Load07PointerIndices 
+			/// 0x7E997
 			/// </summary>
-			public static Address LocalPointerIndices = new Address("Indices to LocalPointer", 0x7E9ED, 256)
-			{
-				notes = "The index of the pointer in the LocalPointers in the bank to be loaded.\n"
-					+ "The index used in this vector determines which nibble to use from LocalPointerBanks: "
-					+ "Even: use high nibble. Odd: use low nibble.\n"
-					+ "[$8B]: (Day/Night Palettes) 0B",
-			};
+			public static Address Load17BankIds_7C000 = new Address("DynamicSubroutine_BankIds_17", 0x7E997);
+			/// <summary>
+			/// 0x7E9ED
+			/// </summary>
+			public static Address Load07PointerIndices_7C000 = new Address("DynamicSubroutine_PointerIndex_07", 0x7E9ED, 256);
+			/// <summary>
+			/// 0x7EAED
+			/// </summary>
+			public static Address Load17PointerIndices_7C000 = new Address("DynamicSubroutine_PointerIndex_17", 0x7EAED, 256);
 
-			public static Address GetBankAddressFromId(byte bankId)
+			/// <summary>
+			/// 0x7EC99. 4842c bytes that differ from LowMainBank ($1F).
+			/// A lot of empty space (0xFF and 0xAA) but there is code in there too (APU related?).
+			/// </summary>
+			public static Address DiffFromBank0F = new Address(
+				"This block is different from Bank 1F (0x3C000)", 0x7EC99, 4842);
+
+
+			/// <summary>
+			/// 0x7FFFA
+			/// </summary>
+			public static Address NMIPointer_7C000 = new Address("RESET address", 0x7FFFA, 2);
+			/// <summary>
+			/// 0x7FFFC
+			/// </summary>
+			public static Address RESETPointer_7C000 = new Address("RESET address", 0x7FFFC, 2);
+			/// <summary>
+			/// 0x7FFFE
+			/// </summary>
+			public static Address IRQBRKPointer_7C000 = new Address("IRQ/BRK address", 0x7FFFE, 2);
+
+
+
+
+
+
+			public static Address GetBankAddress(byte bankId)
 			{
-				int address = 0;
-				if ((bankId & 0x10) == 0x10)
-					address += 0x40000;
-				address += (bankId & 0x0F) * 0x4000;
-				return new Address(address.ToString(), address);
+				int address = bankId * 0x4000;
+				return new Address(address.ToString(), address, 0x4000);
+			}
+
+			/// <summary>
+			/// Does not include iNES header.
+			/// </summary>
+			/// <param name="bankId"></param>
+			/// <returns>address of bank without iNES header</returns>
+			public static int GetBankPointer(byte bankId)
+			{
+				return bankId * 0x4000;
+			}
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="pointer">ROM-relative pointer (with iNES header)</param>
+			/// <returns></returns>
+			public static byte GetBankIdFromPointer(int pointer)
+			{
+				return (byte)((pointer - Address.iNESHeaderLength) / 0x4000);
+			}
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="romData"></param>
+			/// <param name="bankId"></param>
+			/// <param name="pointerAddress">rom address (with iNES header)</param>
+			/// <returns>null if invalid address (ie. below 0x8000 or over 0xFFFF)
+			/// or invalid bankId (ie. above 0x1F) or combination of both 
+			/// (ie. bankId 0xXF and address below 0xC000)</returns>
+			public static Address GetAddressAt(byte[] romData, byte bankId, int pointerAddress)
+			{
+				var gameRelativeAddr = GetPointerAt(romData, bankId, pointerAddress);
+				if (gameRelativeAddr == -1)
+					return null;
+				var romRelativeAddr = gameRelativeAddr - Address.iNESHeaderLength;
+				return new Address(romRelativeAddr.ToString(), romRelativeAddr);
+			}
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="romData"></param>
+			/// <param name="bankId"></param>
+			/// <param name="pointerAddress">address of low byte of pointer</param>
+			/// <returns>ROM-relative address, or -1 if invalid ROM address (ie. below 0x8000 or over 0xFFFF)
+			/// or invalid bankId (ie. above 0x1F) or combination of both 
+			/// (ie. bankId 0xXF and address below 0xC000).</returns>
+			public static int GetPointerAt(byte[] romData, byte bankId, int pointerAddress)
+			{
+				if (bankId > 0x1F)
+					return -1;
+				byte lowByte = romData[pointerAddress];
+				int highByte = romData[pointerAddress + 1] << 8;
+				int cpuAddr = highByte + lowByte;
+				int cpuRelativeAddr;
+				if (cpuAddr < 0x8000) // in RAM and not rom-relative address.
+					return -1;
+				else if (cpuAddr > 0xFFFF)
+					return -1;
+				else if (cpuAddr < 0xC000 && (bankId & 0x0F) == 0x0F) // this COULD be valid but I pray to all 
+					return -1; // the gods of ASM programming that it is never the case
+				else if (cpuAddr >= 0xC000) // in main bank (3C000 or 7C000)
+					cpuRelativeAddr = (cpuAddr & 0x3FFF) + GetBankPointer((byte)(bankId | 0x0F));
+				else
+					cpuRelativeAddr = (cpuAddr & 0x3FFF) + GetBankPointer(bankId);
+				return cpuRelativeAddr + Address.iNESHeaderLength;
+			}
+
+			public static int GetPointerAt(byte[] romData, int pointerAddress)
+			{
+				return (romData[pointerAddress + 1] << 8) + romData[pointerAddress];
 			}
 		}
 	}

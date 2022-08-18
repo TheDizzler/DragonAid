@@ -59,6 +59,7 @@ namespace AtomosZ.DragonAid.Libraries
 			return operand;
 		}
 
+
 		public static void Add16Bit(byte operand, ref byte lowByte, ref byte highByte)
 		{
 			int i = operand + lowByte;
@@ -100,30 +101,30 @@ namespace AtomosZ.DragonAid.Libraries
 		/// <param name="x">zeroPages address</param>
 		public static void MultiplyValueAtXByA(byte[] zeroPages, byte a, byte x)
 		{ // C055
-			zeroPages[ZeroPage.dynamicSubroutineAddr + 0] = a;
-			zeroPages[ZeroPage.dynamicSubroutineAddr + 1] = 0;
-			zeroPages[ZeroPage.dynamicSubroutineAddr + 2] = 0;
+			zeroPages[ZeroPages.dynamicSubroutineAddr + 0] = a;
+			zeroPages[ZeroPages.dynamicSubroutineAddr + 1] = 0;
+			zeroPages[ZeroPages.dynamicSubroutineAddr + 2] = 0;
 
 			do
 			{
-				zeroPages[ZeroPage.dynamicSubroutineAddr + 0]
-				= ASMHelper.LSR(zeroPages[ZeroPage.dynamicSubroutineAddr + 0], 1, out bool hasCarry);
+				zeroPages[ZeroPages.dynamicSubroutineAddr + 0]
+				= ASMHelper.LSR(zeroPages[ZeroPages.dynamicSubroutineAddr + 0], 1, out bool hasCarry);
 				if (hasCarry)
 				{
 					hasCarry = false;
-					zeroPages[ZeroPage.dynamicSubroutineAddr + 1]
-						= ASMHelper.ADC(zeroPages[x + 0], zeroPages[ZeroPage.dynamicSubroutineAddr + 1], ref hasCarry);
-					zeroPages[ZeroPage.dynamicSubroutineAddr + 2]
-						= ASMHelper.ADC(zeroPages[x + 1], zeroPages[ZeroPage.dynamicSubroutineAddr + 2], ref hasCarry);
+					zeroPages[ZeroPages.dynamicSubroutineAddr + 1]
+						= ASMHelper.ADC(zeroPages[x + 0], zeroPages[ZeroPages.dynamicSubroutineAddr + 1], ref hasCarry);
+					zeroPages[ZeroPages.dynamicSubroutineAddr + 2]
+						= ASMHelper.ADC(zeroPages[x + 1], zeroPages[ZeroPages.dynamicSubroutineAddr + 2], ref hasCarry);
 				}
 
 				zeroPages[x + 0] = ASMHelper.ASL(zeroPages[x + 0], 1, out hasCarry);
 				zeroPages[x + 1] = ASMHelper.ROL(zeroPages[x + 1], 1, ref hasCarry);
 			}
-			while (zeroPages[ZeroPage.dynamicSubroutineAddr + 0] != 0);
+			while (zeroPages[ZeroPages.dynamicSubroutineAddr + 0] != 0);
 
-			zeroPages[x + 0] = zeroPages[ZeroPage.dynamicSubroutineAddr + 1];
-			zeroPages[x + 1] = zeroPages[ZeroPage.dynamicSubroutineAddr + 2];
+			zeroPages[x + 0] = zeroPages[ZeroPages.dynamicSubroutineAddr + 1];
+			zeroPages[x + 1] = zeroPages[ZeroPages.dynamicSubroutineAddr + 2];
 		}
 
 		/// <summary>

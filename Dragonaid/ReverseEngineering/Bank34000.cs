@@ -22,9 +22,9 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 				return;
 
 			// 35DCF - _DynamicSubroutine_34000_B_cont
-			if (zeroPages[ZeroPage.encounterVariable_A] != 0)
+			if (zeroPages[ZeroPages.encounterVariable_A] != 0)
 				return;
-			if (zeroPages[0xAC & 0x1F] != 0) // AGAIN for some reason
+			if ((zeroPages[0xAC] & 0x1F) != 0) // AGAIN for some reason
 				return;
 
 			zeroPages[0x73] = 0x01;
@@ -62,7 +62,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			byte a = nesRam[NESRAM.Character_Statuses + characterIndex];
 			if (a < 80) // negative flag not set
 				return; // cancel scroll if all characters dead?
-			byte x = zeroPages[ZeroPage.dynamicSubroutineAddr];
+			byte x = zeroPages[ZeroPages.dynamicSubroutineAddr];
 			byte y = 0x03;
 			int address = zeroPages[0x72] + zeroPages[0x73] << 4;
 			a = nesRam[address + y];
@@ -104,7 +104,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			bool hasCarry = false;
 			zeroPages[0x72] = ASMHelper.ADC(zeroPages[0x72], 0x04, ref hasCarry);
 			hasCarry = false;
-			zeroPages[ZeroPage.dynamicSubroutineAddr] = ASMHelper.ADC(zeroPages[ZeroPage.dynamicSubroutineAddr], 0x10, ref hasCarry);
+			zeroPages[ZeroPages.dynamicSubroutineAddr] = ASMHelper.ADC(zeroPages[ZeroPages.dynamicSubroutineAddr], 0x10, ref hasCarry);
 		}
 
 
@@ -136,7 +136,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 
 		private static void L35AB0()
 		{
-			if ((zeroPages[ZeroPage.lightOrDarkWorld] & 0x02) != 0)
+			if ((zeroPages[ZeroPages.lightOrDarkWorld] & 0x02) != 0)
 				return;
 			if ((zeroPages[0x9D] & 0x08) != 0)
 				return;
@@ -162,8 +162,8 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 
 			var x = zeroPages[0x9B];
 			var y = zeroPages[0x9C];
-			if (x != zeroPages[ZeroPage.map_WorldPosition_X]
-				|| y != zeroPages[ZeroPage.map_WorldPosition_Y])
+			if (x != zeroPages[ZeroPages.map_WorldPosition_X]
+				|| y != zeroPages[ZeroPages.map_WorldPosition_Y])
 				__DynamicSubroutine_34000_D_isLightWorld(x, y);
 		}
 
@@ -183,8 +183,8 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// </summary>
 		private static void STA_WorldMapCoordsTo_06_07(byte x, byte y)
 		{
-			zeroPages[0x06] = zeroPages[ZeroPage.map_WorldPosition_X];
-			zeroPages[0x07] = zeroPages[ZeroPage.map_WorldPosition_Y];
+			zeroPages[0x06] = zeroPages[ZeroPages.map_WorldPosition_X];
+			zeroPages[0x07] = zeroPages[ZeroPages.map_WorldPosition_Y];
 			L3F7E0(x, y);
 		}
 

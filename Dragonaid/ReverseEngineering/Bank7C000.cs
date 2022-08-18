@@ -41,14 +41,14 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 
 			internal static void APU_RunEngine()
 			{
-				if ((registers[Register.APUStatus] & 0x10) == 0) // if DMC interupt is not set
+				if ((registers[Registers.APUStatus] & 0x10) == 0) // if DMC interupt is not set
 				{
 					// APU_SetDMCChanel
 					// this is probably used to control the volume of the triangle & noise channels
-					registers[Register.DmcCounter] = 0x7E;
+					registers[Registers.DmcCounter] = 0x7E;
 					//APU_PrepChanneslForUpdate
-					registers[Register.APUStatus] = 0x0F; // turn on all channels except DMC
-					saveRam[SRAM.APUConst] = 0;
+					registers[Registers.APUStatus] = 0x0F; // turn on all channels except DMC
+					saveRam[SRAM.APU_enableDMC] = 0;
 				}
 				// APU_Commence_Update
 				APU_UpdateSequence();
@@ -90,8 +90,8 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 
 					while (x < 0x80)// APU_CheckNextTrackByte_Loop
 					{
-						int address = zeroPages[ZeroPage.APU_TrackPosition + x + 0]
-							+ zeroPages[ZeroPage.APU_TrackPosition + x + 1] << 8;
+						int address = zeroPages[ZeroPages.APU_TrackPosition + x + 0]
+							+ zeroPages[ZeroPages.APU_TrackPosition + x + 1] << 8;
 						a = romData[address];
 						a ^= 0xFC;
 						if (a == 0)
@@ -102,7 +102,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 					x = 0x06;
 					while (x < 0x80) // __APU_FindNonZeroTrackInstruction_Loop_
 					{
-						a = zeroPages[ZeroPage.APU_TrackInstructions + x + 2];
+						a = zeroPages[ZeroPages.APU_TrackInstructions + x + 2];
 						if (a != 0)
 							break;
 						x -= 2;
@@ -129,7 +129,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 				// APU_Sq1_PreSetup();
 				x = 0x02;
 				y = 0x04;
-				if (zeroPages[ZeroPage.APU_TrackInstructions + 10] != 0
+				if (zeroPages[ZeroPages.APU_TrackInstructions + 10] != 0
 					&& (zeroPages[0xFA] & 0x20) != 0)
 				{
 					APU_Track_Vector_ClearBit7();
@@ -146,12 +146,12 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 				a = zeroPages[0xFB]; // APU_Tri_Linear_Store
 				a ^= 0xFF;
 				a &= 0xFE;
-				registers[Register.TriangleLinear] = a;
+				registers[Registers.TriangleLinear] = a;
 
 				// APU_Noise_Update
 				x = 0x06;
 				y = 0x0C;
-				if (zeroPages[ZeroPage.APU_TrackInstructions + 10] != 0)
+				if (zeroPages[ZeroPages.APU_TrackInstructions + 10] != 0)
 				{
 					a = zeroPages[0xFA]; // APU_NewSeq_20or00
 					a &= 0x20;
@@ -189,7 +189,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			private static void APU_DutySetup(byte x)
 			{
 				nesRam[0x06F1] = x; // APU_StoreTrackIndex
-				byte a = zeroPages[ZeroPage.APU_TempDutySettings + x + 1]; // APU_DutySetup_Vector
+				byte a = zeroPages[ZeroPages.APU_TempDutySettings + x + 1]; // APU_DutySetup_Vector
 				if (a > 0x80)
 				{
 					APU_GetDutySetting(ref x);
@@ -204,11 +204,11 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 				a = x;
 				if (nesRam[0x06F1] < 0x08) // APU_StoreTrackIndex
 				{ // track 0, 2, 4, 6
-					zeroPages[ZeroPage.APU_TrackInstructions + 1] = (byte)(a & 0x0F);
-					zeroPages[ZeroPage.APU_TrackInstructions + 0] = nesRam[0x047F];
-					zeroPages[ZeroPage.APU_TrackInstructions + 0] = APU_GetFinalDuty();
+					zeroPages[ZeroPages.APU_TrackInstructions + 1] = (byte)(a & 0x0F);
+					zeroPages[ZeroPages.APU_TrackInstructions + 0] = nesRam[0x047F];
+					zeroPages[ZeroPages.APU_TrackInstructions + 0] = APU_GetFinalDuty();
 					a &= 0xF0;
-					a &= zeroPages[ZeroPage.APU_TrackInstructions + 0];
+					a &= zeroPages[ZeroPages.APU_TrackInstructions + 0];
 				}
 				//APU_SetDuty()
 
@@ -219,25 +219,25 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			/// </summary>
 			private static void APU_GetDutySetting(ref byte x)
 			{
-				byte y = zeroPages[ZeroPage.APU_TempDutySettings + x + 0];
-				zeroPages[ZeroPage.APU_TrackInstructions + 0]
+				byte y = zeroPages[ZeroPages.APU_TempDutySettings + x + 0];
+				zeroPages[ZeroPages.APU_TrackInstructions + 0]
 					= romData[Pointers.ROM.APU_DutySetup_Addresses.offset + y + 0];
-				zeroPages[ZeroPage.APU_TrackInstructions + 1]
+				zeroPages[ZeroPages.APU_TrackInstructions + 1]
 					= romData[Pointers.ROM.APU_DutySetup_Addresses.offset + y + 1];
 
-				int dutySettingsAddress = zeroPages[ZeroPage.APU_TrackInstructions + 0]
-					+ zeroPages[ZeroPage.APU_TrackInstructions + 1 << 8];
+				int dutySettingsAddress = zeroPages[ZeroPages.APU_TrackInstructions + 0]
+					+ zeroPages[ZeroPages.APU_TrackInstructions + 1 << 8];
 				byte a;
 				while (true)
 				{
 					a = romData[dutySettingsAddress + y];
 					if (a >= 0x30)
 						break;
-					zeroPages[ZeroPage.APU_TempDutySettings + x + 1] = a;
+					zeroPages[ZeroPages.APU_TempDutySettings + x + 1] = a;
 					y = a;
 				}
 
-				++zeroPages[ZeroPage.APU_TempDutySettings + x + 1];
+				++zeroPages[ZeroPages.APU_TempDutySettings + x + 1];
 				x = a;
 			}
 
@@ -264,7 +264,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 
 			private static bool APU_TrackNeedsUpdating(byte x)
 			{
-				return (zeroPages[ZeroPage.APU_TrackInstructions + x + 2] != 0);
+				return (zeroPages[ZeroPages.APU_TrackInstructions + x + 2] != 0);
 			}
 
 			/// <summary>
@@ -273,28 +273,28 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			/// <param name="x"></param>
 			private static void APU_PreUpdateTrack(byte x, byte y)
 			{
-				if (zeroPages[ZeroPage.APU_TrackInstructions + x + 12] != 0
-					&& --zeroPages[ZeroPage.APU_TrackInstructions + x + 12] == 0)
+				if (zeroPages[ZeroPages.APU_TrackInstructions + x + 12] != 0
+					&& --zeroPages[ZeroPages.APU_TrackInstructions + x + 12] == 0)
 				{
-					byte a = zeroPages[ZeroPage.APU_TempDutySettings + x + 1]; // APU_DutySetup_Vector
+					byte a = zeroPages[ZeroPages.APU_TempDutySettings + x + 1]; // APU_DutySetup_Vector
 					if (a != 0xFF)
 					{
-						zeroPages[ZeroPage.APU_TempDutySettings + x + 1] = 0xFE; // APU_DutySetup_Vector
+						zeroPages[ZeroPages.APU_TempDutySettings + x + 1] = 0xFE; // APU_DutySetup_Vector
 						if (APU_SetOrClearCarry(x))
 							nesRam[0x06F4] = 0xFF;
 					}
 				}
 				// APU_UpdateTrack_cont_
-				if (--zeroPages[ZeroPage.APU_TrackInstructions + x + 2] != 0)// when this reaches 0, update track. Note length tracker?
+				if (--zeroPages[ZeroPages.APU_TrackInstructions + x + 2] != 0)// when this reaches 0, update track. Note length tracker?
 					return;
 				//B503
 				if (x == 0x00)
-					APU_DisableSweep(Register.SQ0Sweep);
+					APU_DisableSweep(Registers.SQ0Sweep);
 				else if (x == 0x08)
-					APU_DisableSweep(Register.SQ1Sweep);
-				else if (x == 0x02 && zeroPages[ZeroPage.APU_TrackInstructions + 10] == 0)
-					APU_DisableSweep(Register.SQ1Sweep); // this probably never happens?
-				APU_ParseNextTrackByte(zeroPages[ZeroPage.APU_TrackInstructions + 10], x, y);
+					APU_DisableSweep(Registers.SQ1Sweep);
+				else if (x == 0x02 && zeroPages[ZeroPages.APU_TrackInstructions + 10] == 0)
+					APU_DisableSweep(Registers.SQ1Sweep); // this probably never happens?
+				APU_ParseNextTrackByte(zeroPages[ZeroPages.APU_TrackInstructions + 10], x, y);
 			}
 
 			/// <summary>
@@ -318,8 +318,8 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 						break;
 
 					case 0xFD: // move track position to stored address at 0x06F7
-						zeroPages[ZeroPage.APU_TrackPosition + x + 0] = nesRam[0x06F7 + x + 0];
-						zeroPages[ZeroPage.APU_TrackPosition + x + 1] = nesRam[0x06F7 + x + 1];
+						zeroPages[ZeroPages.APU_TrackPosition + x + 0] = nesRam[0x06F7 + x + 0];
+						zeroPages[ZeroPages.APU_TrackPosition + x + 1] = nesRam[0x06F7 + x + 1];
 						APU_ParseNextTrackByte(a, x, y);
 						break;
 
@@ -343,10 +343,10 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 						if (--nesRam[0x0472 + x] != 0)
 						{
 							hasCarry = false;
-							zeroPages[ZeroPage.APU_TrackPosition + x + 0]
-								= ASMHelper.ADC(nextTrackByte, zeroPages[ZeroPage.APU_TrackPosition + x + 0], ref hasCarry);
+							zeroPages[ZeroPages.APU_TrackPosition + x + 0]
+								= ASMHelper.ADC(nextTrackByte, zeroPages[ZeroPages.APU_TrackPosition + x + 0], ref hasCarry);
 							if (!hasCarry)
-								--zeroPages[ZeroPage.APU_TrackPosition + x + 1];
+								--zeroPages[ZeroPages.APU_TrackPosition + x + 1];
 						}
 
 						APU_ParseNextTrackByte(a, x, y);
@@ -432,7 +432,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 						if (a == 0x49)
 						{
 							a = 0xFF;
-							zeroPages[ZeroPage.APU_TempDutySettings + x + 1] = a; // APU_DutySetup_Vector
+							zeroPages[ZeroPages.APU_TempDutySettings + x + 1] = a; // APU_DutySetup_Vector
 						}
 						else if (a < 0x49)
 						{
@@ -441,11 +441,11 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 							nesRam[0x0472 + x + 1] = a; // APU_Track_Vector
 							if (APU_SetOrClearCarry(x))
 								nesRam[0x06F4] = 0x00;
-							a = zeroPages[ZeroPage.APU_TrackInstructions + x + 13];
+							a = zeroPages[ZeroPages.APU_TrackInstructions + x + 13];
 							if (a < 0x80)
 							{
 								a = 0x0;
-								zeroPages[ZeroPage.APU_TempDutySettings + x + 1] = a; // APU_DutySetup_Vector
+								zeroPages[ZeroPages.APU_TempDutySettings + x + 1] = a; // APU_DutySetup_Vector
 							}
 						}
 						// L72624();
@@ -454,8 +454,8 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 							a = (byte)(romData[0x7B579 + x] & nesRam[0x47F]); //APU_NoteLoByte_Effector_Vector & APU_NoteLoByte_Effector
 							if (a != 0)
 							{
-								zeroPages[ZeroPage.APU_TrackInstructions + x + 3] = zeroPages[ZeroPage.APU_TrackInstructions + x + 1];
-								zeroPages[ZeroPage.APU_TrackInstructions + x + 13] = zeroPages[ZeroPage.APU_TrackInstructions + x + 11];
+								zeroPages[ZeroPages.APU_TrackInstructions + x + 3] = zeroPages[ZeroPages.APU_TrackInstructions + x + 1];
+								zeroPages[ZeroPages.APU_TrackInstructions + x + 13] = zeroPages[ZeroPages.APU_TrackInstructions + x + 11];
 							}
 						}
 						// APU_All_Tracks
@@ -470,21 +470,21 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 						if (nextTrackByte >= 0x4B)
 						{
 							nextTrackByte = APU_ReadNextTrackByte(x);
-							zeroPages[ZeroPage.APU_TrackInstructions + x + 3] = (byte)(nextTrackByte & 0x7F);
+							zeroPages[ZeroPages.APU_TrackInstructions + x + 3] = (byte)(nextTrackByte & 0x7F);
 							if (nextTrackByte >= 0x80)
 							{
 								nextTrackByte = APU_ReadNextTrackByte(x);
-								zeroPages[ZeroPage.APU_TrackInstructions + x + 13] = nextTrackByte;
+								zeroPages[ZeroPages.APU_TrackInstructions + x + 13] = nextTrackByte;
 							}
 						}
 						// _APU_ParseTrackByte_End_
 
-						zeroPages[ZeroPage.APU_TrackInstructions + x + 2] // this effects whether the track gets updated next frame?
-							= zeroPages[ZeroPage.APU_TrackInstructions + x + 3];
-						a = zeroPages[ZeroPage.APU_TrackInstructions + x + 13];
+						zeroPages[ZeroPages.APU_TrackInstructions + x + 2] // this effects whether the track gets updated next frame?
+							= zeroPages[ZeroPages.APU_TrackInstructions + x + 3];
+						a = zeroPages[ZeroPages.APU_TrackInstructions + x + 13];
 						a &= 0x7F;
 						a = APU_Track04_SpecialOps(a, x);
-						zeroPages[ZeroPage.APU_TrackInstructions + x + 12] = a;
+						zeroPages[ZeroPages.APU_TrackInstructions + x + 12] = a;
 						break;
 				}
 			}
@@ -494,12 +494,12 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			{
 				if (x != 0x04)
 					return a;
-				zeroPages[ZeroPage.APU_TrackInstructions + 1] = a;
+				zeroPages[ZeroPages.APU_TrackInstructions + 1] = a;
 				a = nesRam[0x047F];
 				a &= 0x1F;
 				if (a >= 0x06)
 				{ // _L7B6F7_
-					zeroPages[ZeroPage.APU_TrackInstructions + 0] = a;
+					zeroPages[ZeroPages.APU_TrackInstructions + 0] = a;
 					a = APU_GetFinalDuty();
 					if (a != 0)
 						return a;
@@ -507,7 +507,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 				else // B6F3
 					a = 0x00; // what's the point of this?? I wonder if this is a bug?
 							  // _L7B700_
-				zeroPages[ZeroPage.APU_TempDutySettings + 1 + x] = 0xFF;
+				zeroPages[ZeroPages.APU_TempDutySettings + 1 + x] = 0xFF;
 				a = 0x01;
 				return a;
 			}
@@ -518,23 +518,23 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			/// <returns>result in a</returns>
 			private static byte APU_GetFinalDuty()
 			{
-				byte a = zeroPages[ZeroPage.APU_TrackInstructions + 0];
+				byte a = zeroPages[ZeroPages.APU_TrackInstructions + 0];
 				a ^= 0xFF; // invert byte
 				a <<= 3;
-				zeroPages[ZeroPage.APU_TrackInstructions + 0] = a;
+				zeroPages[ZeroPages.APU_TrackInstructions + 0] = a;
 				a = 0;
-				zeroPages[ZeroPage.APU_TrackInstructions + 0]
-					= ASMHelper.ASL(zeroPages[ZeroPage.APU_TrackInstructions + 0], 1, out bool hasCarry);
+				zeroPages[ZeroPages.APU_TrackInstructions + 0]
+					= ASMHelper.ASL(zeroPages[ZeroPages.APU_TrackInstructions + 0], 1, out bool hasCarry);
 				if (!hasCarry)
-					a = ASMHelper.ADC(a, zeroPages[ZeroPage.APU_TrackInstructions + 1], ref hasCarry);
+					a = ASMHelper.ADC(a, zeroPages[ZeroPages.APU_TrackInstructions + 1], ref hasCarry);
 
 				for (int i = 0; i < 4; ++i)
 				{
-					zeroPages[ZeroPage.APU_TrackInstructions + 1] >>= 1;
-					zeroPages[ZeroPage.APU_TrackInstructions + 0]
-						= ASMHelper.ASL(zeroPages[ZeroPage.APU_TrackInstructions + 0], 1, out hasCarry);
+					zeroPages[ZeroPages.APU_TrackInstructions + 1] >>= 1;
+					zeroPages[ZeroPages.APU_TrackInstructions + 0]
+						= ASMHelper.ASL(zeroPages[ZeroPages.APU_TrackInstructions + 0], 1, out hasCarry);
 					if (!hasCarry)
-						a = ASMHelper.ADC(a, zeroPages[ZeroPage.APU_TrackInstructions + 1], ref hasCarry);
+						a = ASMHelper.ADC(a, zeroPages[ZeroPages.APU_TrackInstructions + 1], ref hasCarry);
 				}
 
 				return a;
@@ -542,10 +542,10 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 
 			private static byte APU_ReadNextTrackByte(byte x)
 			{
-				int address = zeroPages[ZeroPage.APU_TrackPosition + x + 0]
-							+ zeroPages[ZeroPage.APU_TrackPosition + x + 1] << 8;
-				if (++zeroPages[ZeroPage.APU_TrackPosition + x] == 0)
-					++zeroPages[ZeroPage.APU_TrackPosition + x + 1];
+				int address = zeroPages[ZeroPages.APU_TrackPosition + x + 0]
+							+ zeroPages[ZeroPages.APU_TrackPosition + x + 1] << 8;
+				if (++zeroPages[ZeroPages.APU_TrackPosition + x] == 0)
+					++zeroPages[ZeroPages.APU_TrackPosition + x + 1];
 				return romData[0x78000 + address - 0x8000];
 			}
 

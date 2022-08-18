@@ -610,7 +610,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 
 		private void PrepAddressAndWriteSpriteToPPU()
 		{ // E6C1
-			Address bankAddress = Pointers.ROM.GetBankAddressFromId(tileBankId);
+			Address bankAddress = Pointers.ROM.GetBankAddress(tileBankId);
 
 			for (int i = 0; i < 4; ++i)
 			{ // set spritePointer
