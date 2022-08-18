@@ -115,10 +115,9 @@ namespace AtomosZ.MiNesEmulator
 
 			foreach (var pcc in pcCode)
 			{
+				/* @TODO: make sure to check if labels are pointing to zeropages and change opc mode accordingly */
 				var instr = ParseInstruction(pcc);
-				int addr = pcc.address - 0x8000; // justify to bank address
-				/* @TODO: bank address validation? */
-				addr += pcc.bankId * 0x4000;
+				int romAddress = GetRomJustifiedAddress(pcc.address, pcc.bankId);
 
 				/* @TODO: make sure only writing to unwritten addresses? */
 				CheckAndWriteByte(machineCode, romAddress, instr.opcode.opc);
@@ -130,8 +129,7 @@ namespace AtomosZ.MiNesEmulator
 
 			foreach (var pcd in pcData)
 			{
-				int addr = pcd.address - 0x8000;
-				addr += pcd.bankId * 0x4000;
+				int romAddress = GetRomJustifiedAddress(pcd.address, pcd.bankId);
 
 				switch (pcd.type)
 				{
@@ -199,6 +197,15 @@ namespace AtomosZ.MiNesEmulator
 			return machineCode;
 		}
 
+		private static int GetRomJustifiedAddress(int address, int bankId)
+		{
+			int addr = address;
+			while (addr >= 0x4000)
+				addr -= 0x4000;
+			/* @TODO: bank address validation? */
+			addr += bankId * 0x4000;
+			return addr;
+		}
 
 		/// <summary>
 		/// Adds iNESHeaderLength to addr
