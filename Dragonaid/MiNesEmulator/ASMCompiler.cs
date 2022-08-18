@@ -150,7 +150,7 @@ namespace AtomosZ.MiNesEmulator
 						}
 
 						for (int i = 0; i < sequenceCount; ++i)
-							machineCode[addr + i] = value;
+							CheckAndWriteByte(machineCode, romAddress + i, value);
 						break;
 
 
@@ -162,8 +162,7 @@ namespace AtomosZ.MiNesEmulator
 								throw new Exception($"Invalid dbyte parameter on line {pcd.sourceCodeLine} : {pcd.sourceCode}"
 									+ "");
 							}
-
-							machineCode[addr + i] = value;
+							CheckAndWriteByte(machineCode, romAddress + i, value);
 						}
 
 						break;
@@ -186,8 +185,8 @@ namespace AtomosZ.MiNesEmulator
 									+ "");
 							}
 
-							machineCode[addr + (i * 2) + 0] = lowByte;
-							machineCode[addr + (i * 2) + 1] = highByte;
+							CheckAndWriteByte(machineCode, romAddress + (i * 2) + 0, lowByte);
+							CheckAndWriteByte(machineCode, romAddress + (i * 2) + 1, highByte);
 						}
 						break;
 				}
@@ -197,6 +196,21 @@ namespace AtomosZ.MiNesEmulator
 			return machineCode;
 		}
 
+
+		/// <summary>
+		/// Adds iNESHeaderLength to addr
+		/// </summary>
+		/// <param name="writeTo"></param>
+		/// <param name="address">Non-iNES header offset address</param>
+		/// <param name="writeByte"></param>
+		/// <exception cref="Exception"></exception>
+		private static void CheckAndWriteByte(byte[] writeTo, int address, byte writeByte)
+		{
+			address += Address.iNESHeaderLength;
+			if (writeTo[address] != 0xFF)
+				throw new Exception($"Attempting to write to {address} but it has already been written to.");
+			writeTo[address] = writeByte;
+		}
 
 		/// <summary>
 		/// 
