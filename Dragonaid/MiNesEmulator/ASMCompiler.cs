@@ -74,7 +74,7 @@ namespace AtomosZ.MiNesEmulator
 
 		private static readonly List<char> labelForbiddenCharacters = new List<char>()
 		{
-			'+', '\\', '/', '%', '$', '#'
+			'+', '\\', '/', '%', '$', '#', '(', ')', ',', '.',
 		};
 
 
