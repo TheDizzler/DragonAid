@@ -97,7 +97,8 @@ namespace AtomosZ.MiNesEmulator
 				throw new Exception($"Invalid or no nesprg : {nesprg}");
 
 
-			var machineCode = new byte[nesprg * 0x4000 + Address.iNESHeaderLength];
+			var machineCode = Enumerable.Repeat((byte)0xFF, nesprg * 0x4000 + Address.iNESHeaderLength).ToArray();
+
 			// Create iNES header
 			machineCode[0] = (byte)'N';
 			machineCode[1] = (byte)'E';
