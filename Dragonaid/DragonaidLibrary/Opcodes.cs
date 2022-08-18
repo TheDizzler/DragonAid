@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AtomosZ.DragonAid.Libraries
 {
@@ -190,6 +191,118 @@ namespace AtomosZ.DragonAid.Libraries
 		public const byte TXA = 0x8A;
 		public const byte TXS = 0x9A;
 		public const byte TYA = 0x98;
+
+		private static Dictionary<string, byte> singleModeOpcodes = new Dictionary<string, byte>()
+		{
+			["BRK"] = BRK,
+
+			["BCC"] = BCC,
+			["BCS"] = BCS,
+			["BEQ"] = BEQ,
+			["BMI"] = BMI,
+			["BNE"] = BNE,
+			["BPL"] = BPL,
+			["BVC"] = BVC,
+			["BVS"] = BVS,
+
+			["CLC"] = CLC,
+			["CLD"] = CLD,
+			["CLI"] = CLI,
+			["CLV"] = CLV,
+
+			["DEX"] = DEX,
+			["DEY"] = DEY,
+
+			["INX"] = INX,
+			["INY"] = INY,
+
+			["JSR"] = JSR,
+
+			["NOP"] = NOP,
+
+			["PHA"] = PHA,
+			["PLA"] = PLA,
+			["PLP"] = PLP,
+			["PHP"] = PHP,
+
+			["RTI"] = RTI,
+			["RTS"] = RTS,
+
+			["SEC"] = SEC,
+			["SED"] = SED,
+			["SEI"] = SEI,
+
+			["TAX"] = TAX,
+			["TAY"] = TAY,
+			["TSX"] = TSX,
+			["TXA"] = TXA,
+			["TXS"] = TXS,
+			["TYA"] = TYA,
+		};
+
+		public static Opcode GetOpcode(string opcStr, Opcode.Mode mode)
+		{
+			if (singleModeOpcodes.TryGetValue(opcStr, out byte opc))
+				return opcodes[opc];
+
+			string modeStr = GetModeTag(mode);
+			string oCode = opcStr + modeStr;
+			return opcodes.FirstOrDefault(o => o.Value.asm == oCode).Value;
+		}
+
+		public static byte GetOpcodeByte(string opcStr, Opcode.Mode mode, string operandStr)
+		{
+			if (singleModeOpcodes.TryGetValue(opcStr, out byte opc))
+				return opc;
+
+			if (operandStr.Length == 0)
+				throw new Exception("Invalid operator or operands");
+			string modeStr = GetModeTag(mode);
+			string oCode = opcStr + modeStr;
+			return opcodes.FirstOrDefault(o => o.Value.asm == oCode).Key;
+		}
+
+		private static string GetModeTag(Opcode.Mode mode)
+		{
+			switch (mode)
+			{
+				case Opcode.Mode.Absolute:
+					return "_abs";
+				case Opcode.Mode.Absolute_X:
+					return "_abx";
+				case Opcode.Mode.Absolute_Y:
+					return "_aby";
+
+				case Opcode.Mode.Accumulator:
+					return "_acc";
+
+				case Opcode.Mode.Immediate:
+					return "_imm";
+
+				case Opcode.Mode.Implied:
+					return "";
+
+				case Opcode.Mode.Indirect:
+					return "_ind";
+				case Opcode.Mode.Indirect_X:
+					return "_inx";
+				case Opcode.Mode.Indirect_Y:
+					return "_iny";
+
+				case Opcode.Mode.Relative:
+					return "";
+
+				case Opcode.Mode.ZeroPage:
+					return "_zpg";
+				case Opcode.Mode.ZeroPage_X:
+					return "_zpx";
+				case Opcode.Mode.ZeroPage_Y:
+					return "_zpy";
+
+				default:
+					throw new Exception($"what the hell is a {mode}?");
+			}
+		}
 
 
 		public static Dictionary<byte, Opcode> opcodes = new Dictionary<byte, Opcode>()
@@ -569,10 +682,10 @@ namespace AtomosZ.DragonAid.Libraries
 			if (operands[0] >= 0x80)
 			{
 				var i = 0x100 - operands[0];
-				return (address -i).ToString("x4");
+				return (address - i).ToString("X4");
 			}
 			else
-				return (address + operands[0]).ToString("x4");
+				return (address + operands[0]).ToString("X4");
 		}
 	}
 
