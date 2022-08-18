@@ -2548,11 +2548,11 @@
       "loader": 0,
       "bankId": 1,
       "dsIndex": 2,
-      "name": null,
+      "name": "ResetAPU",
       "notes": "DynamicSubroutine_Addresses_04000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Runs in ResetNMI\ncalls rare BRK (02EF) -> LocalPointers_78000[$04] => $B8C5 ResetAPU",
         "name": "Full address",
         "pointer": 16432,
         "offset": 16448

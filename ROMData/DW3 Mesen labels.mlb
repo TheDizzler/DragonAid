@@ -107,8 +107,9 @@ R:00CF:Item_Check_IsEquipped:item to check if equipped\n\n#$44 noh mask\n#$4B Me
 R:00D0::GetSpellByte\n----------------------------\nFormation index?\n$99DC - LDA, AND #$03\n$99F0 - LDA, AND #$03
 R:00D2:NextChar_F2_Variable:NextChar_F2_JMP\n--------------------\n$A883 - LDA[X]
 R:00D6-00DD:APU_TrackPosition:Holds 2 byte addresses\natleast 8 bytes long (4 entries)\n\n[0x00] = Pointer to next byte sequence of track 0\n[0x02] = Next byte in sequence of track 1\n[0x04] = Next byte in sequence of track 2\n[0x06] = APU_DutySetup_Addresses
-R:00DE-00DF:APU_SFX_Store:[0]:8169 - silent track\n[1]:91CE\n[2]:91E5\n[3]:91F5\n[$12]:9237
+R:00DE-00DF:SFX_Pointer:[0]:8169 - silent track\n[1]:91CE\n[2]:91E5\n[3]:91F5\n[$12]:9237
 R:00E0-00F3:APU_TrackInstructions:This seems like it's one vector with multiple different pointer arithmetics to navigate it.\n\nbase +1 is used for track 4 only?\nbase +x +2, +3 (check if track needs updating this frame),\nbase +10, +11, \nbase +12, +13 (on APU_UpdateTrack)
+R:00F5::initialized in SFX Init
 R:00F6-00F7:APU_TempDutySettings:APU_ModTrackByte_Less_49\n-----------------------------------------\n$B622 - init with $00\n\nAPU_DutySetup\n------------------------------------------- \nX is TrackIndex# (0, 2, 4, 6)\n$B44C [1+X]: if < $80 goto APU_GetDutySetting\n\nAPU_GetDutySetting\n--------------------------------------\nX: track# (0, 2, 4, 6)\n$B47A [0+X]: y in LDA APU_DutySetup_Addresses,Y\n$B488 [1+X]: y in LDA (APU_Multivariable_Store), Y which points to $78400 area\n$B493 [1+X]: INC\n\n\n\n[0]: $B5E8 - stores track byte after track instruction $E1\n\n$B4F3 APU_SubUpdate - Each index lo byte set to $FE\n\n\n[0]: $B5EA - LDA after instruction byte $E1, if not BMI, STA $00 in it's place, and get next TrackByte\n      $B602 - STA $FF if TrackByte less than $E1\n\n\nUnknown length. Atleast 2 indices. Probably 8 bytes?
 R:00FA:APU_NewSeq_20or00:APU_SFX_Init\n---------------------\n$B998  - when SFX track hibyte is >= 80, at minimum is set to be $20 (ORA $20)\n\nAPU_UpdateTrack1_Sq1\n------------------\n$B404 - if AND $20 == $0, skip most Sq1 duty setup\n\n\nNextTrackByte == EF\n----------------------\n$B5D6 - AND $20 ORA $44.\n Can be $44 or $64\n\n\n$B95A - ANDed with $20 and saved\n\n($B88F) APU_Sub_Update_A -\n  if 6th bit = 0\n    return\n  else\n run some subroutine
 R:00FB:APU_Tri_Linear_Store
@@ -577,7 +578,8 @@ P:32D3-32E9:MonsterStats:23 bytes per enemy\n[0]:Level\n[1-2]:Exp\n[3]:Agility\n
 P:32EA-3300:Monster_StatBlock_Raven
 P:3F50:ClearRam
 P:3FD8-3FFF:EndOfBank00000to03FFF
-P:4036-405B:DynamicSubroutine_Addresses_04000:[6]: $8067 -> APU_InitiateNewSequence\n[$14]:$8788 -> Battle_EndOfTurn_Regeneration\n[$16]:$87F5 -> \n[$1A]:$8A2A -> \n[$20]:$805C ->\n\nthis label is defintely wrong
+P:4030:DynamicSubroutine_04000_C
+P:4037-4039:BRKInstruction_EF02:Calls a bank switch to $1E
 P:405C:WaitForNMI_78000_BSDynamic
 P:4064-4065:BRKInstructions_WaitForNMI_78000:EF - BRKInstruction_BankSwitch\n07 - WaitForNMI_78000_Subroutine
 P:4067:APU_InitiateNewSequence_SpecialBRK:sequence index
@@ -2777,7 +2779,7 @@ P:3C9C3:_L3C9C3_
 P:3C9D0::if low byte == $07 || $0F\n   BRK\nelse RTI
 P:3C9DC:NMI_RTI_as_normal
 P:3C9E2:NMI_BRK_insteadof_RTI
-P:3C9EA:ResetNMI_3C000_sub:plz someone explain plox
+P:3C9EA:ResetNMI_3C000_sub:does this clear the shift register?
 P:3C9FE:L3C9FE
 P:3C9FF:L3C9FF
 P:3CA59:L3CA59
@@ -3154,7 +3156,8 @@ P:3E88F-3E894:BRK_CheckHiNibbleIsGreaterOrEqual4
 P:3E895-3E898:BRK_CheckHiNibbleIsLessThanF0
 P:3E899:BRK_CheckLowNibbleIsF:High nibble equal to or greater than $4\nCompare low nibble to F again\n...but why? To get Carry flag?
 P:3E89F:BRK_JMP_DynamicSubroutine:DynamicSubroutine_Address ==\nremove low nybble\nROR, LSR x2
-P:3E8BA:BRKInstruction_BankSwitch:Load Subroutine without 07 or 17 loader\nPLA (>> 4) | 0x10 == Bank switch id
+P:3E8BA:BRKInstruction_BankSwitch:Load Subroutine without 07 or 17 loader\nPLA (>> 4) | 0x10 == Bank switch id\n\nex: in Reset NMI (DynamicSubroutine_04000_A)\nBRK 02EF -> bankId 1E
+P:3E8C0::bank id
 P:3E8C2::first value in BRKInstructions
 P:3E8CD::the bank to return to after this operation
 P:3E917-3E98F:DynamicSubroutine_BankIds_07:[$00]:$EE\n[$01]:$EE\n[$02]:$EE\n[$03]:$EE\n[$04]:$EE Bank E $38000\n[$11]:$50\n[$13]:$00\n[$16]:$00\n[$18]:$00\n[$19]:$00\n[$1B]:$00\n[$1C]:$00\n[$1D]:$00 (#3A)\n[$1E]:$00 (#3C & #3D)\n[$1F]:$00\n[$26]:$00\n[$27]:$00\n[$29]:$00\n[$2A]:$00\n[$2D]:$00 Character_GetSpellCount\n[$31]:$22\n[$32]:$22\n[$35]:$04\n[$36]:$44 Bank 4 $10000\n[$37]:$44\n[$38]:$44\n[$39]:$44 \n[$3A]:$44\n[$3B]:$44 Bank 4 $10000\n[$3C]:$42\n[$3E]:$4?\n[$4E]:$0C\n[$50]:$11 Bank 1 $04000\n[$52]:$21 (Bank 2 $08000 -> Battle_GetName)\n[$53]:$E4\n[$54]:$E0\n[$55]:$0E\n[$68]:$44 (#D1)\n[$69]:$44 (high nibble $10000)\n[$6B]:$44 (high nybble ->\n[$6C]:$11\n[$6D]:$11 High nibble \n[$6E]:$1D\n[$74]:$EE\n[$78]:$15
@@ -3299,7 +3302,7 @@ P:3FF91:BankSwitch_SaveNextBank_3C000:save bank # (A) in bankSwitch_CurrentBankI
 P:3FF94:BankSwitch_3C000
 P:3FF98::clear bit 4, to make sure we have $00
 P:3FFD8:RESET_3C000
-P:3FFD9::what does this do???
+P:3FFD9::this probably has something to do with reseting the MMC latch?
 P:3FFFA-3FFFB:NMIPointer_3C000
 P:3FFFC-3FFFD:ResetPointer_3C000
 P:3FFFE-3FFFF:IRQBRKPointer_3C000
@@ -3355,7 +3358,7 @@ P:5D8EF-5D8FA:TitleScreen_FadeIn_Palette_dragontablet
 P:5DA59-5DA70:TitleScreen_FadeIn_Palette_torcheswall
 P:5FFD8-5FFFF:EndofBank5C000to5FFFF
 P:63FD8-63FFF:EndOfBank60000to63FFF
-P:78000-7800F:LocalPointer_List_78000:[$00]: $B365 APU_RunEngine\n[$06]: $B904 APU_StartNewSequence\n[$0E]: $B35A
+P:78000-7800F:LocalPointers_78000:[$00]: $B365 APU_RunEngine\n[$04]: $B8C5\n[$06]: $B904 APU_StartNewSequence\n[$0E]: $B35A
 P:78010-78097:APU_TrackPointer_Vector:Each Song has up to 4 (8 bytes) tracks (instruments).\n69 81 means track is not used (perhaps $8169 sets instrument to off?)\n\nUnknown starting point. Unknown Length.\n\n[] = Level Up\n[]
 P:78110:APU_VectorTableD
 P:78111:APU_VectorTableC
@@ -3373,7 +3376,7 @@ P:789F9-78B8A:Music_04_Map
 P:78CAA-78E16:Music_Jipang
 P:78E17-78E29:Music_LevelUp_Confirm
 P:78E83-78E8C:Music_16_BattleVictory
-P:79064-790A9:APU_SFX_Address_List:Adress of first byte of SFX sequence\n\n[$00]:8169 - silent track\n[$02]:11CE\n[$04]:11E5 ($91E5) - Walking\n[$06]:11F5 (#83)\n[$08]:1207 (#84) - poison damage?\n\n[$0E]:921D 87 enemy takes damage\n[$12]:9237 89 player attacks\n[$14]:9241 8A Player takes damage\n[$16]:924C 8B enemy attacks\n\n\n+A:0E\n[??]: $92A5   - Dialog SFX\n[$44]: $93EE - Wall bump\n
+P:79064-790A9:SFX_Pointers:Adress of first byte of SFX sequence\n\n[$00]:8169 - silent track\n[$02]:11CE\n[$04]:11E5 ($91E5) - Walking\n[$06]:11F5 (#83)\n[$08]:1207 (#84) - poison damage?\n\n[$0E]:921D 87 enemy takes damage\n[$12]:9237 89 player attacks\n[$14]:9241 8A Player takes damage\n[$16]:924C 8B enemy attacks\n\n\n+A:0E\n[??]: $92A5   - Dialog SFX\n[$44]: $93EE - Wall bump\n
 P:791A2-791BB:SFX_Unknown_F
 P:791BC-791C3:SFX_Unknown_E
 P:791C4-791CD:SFX_Unknown_D
@@ -3546,25 +3549,28 @@ P:7B885:_APU_GetFinalDuty_RTS_
 P:7B88F:APU_Sub_Update_A:If APU_Sub_Update_Variable 6th bit = 0\n   return\nelse\n  run some subroutine
 P:7B8B3:L7B8B3
 P:7B8BF:_APU_Sub_Update_A_RTS
+P:7B8C5:ResetAPU
+P:7B8C8::disable all channels
+P:7B8D2::turn on triangle and squares
+P:7B8D7::disable sweep
+P:7B8E6::prep the APU sequencer
 P:7B904:APU_StartNewSequence:Sequence can be a song or SFX\n\nA - becomes Sequence# (after ASL x3 and ORA #$06)\nASL x3  == A * 8, because there are 4 track pointers,\nORA $06 == start on last track of sequence
-P:7B908::branch if A>=$F0
+P:7B908::SFX if A>=$F0
 P:7B90A::check not same sequence as last load
 P:7B920:APU_InitTrackCarets:X: (Sequence#) * 4 + instrument#\nY: instrument#
 P:7B931:APU_RareMysteryRoutine:if last ASL A set the Carry flag
 P:7B93D:L7B93D
 P:7B950:APU_SequenceInit
-P:7B96D:APU_StartNewSequence_End
+P:7B96D:__JMP_APU_DisableUpdate
 P:7B970:APU_SFX_Init
 P:7B97D::Enable DMC - pretty sure this never happens
-P:7B97F:__L7B97F
-P:7B988:__lolwut:skip this if DMC enabled
-P:7B993:APU_SFX_HiByte_Greater_79
-P:7B994::A:$20
-P:7B996::A:$20
-P:7B99B:__L7B99B
-P:7B9B3-7B9BB:APU_GetPreviousSequenceID:Load A with last sequence Id with disable bit 0 (enabled)\nand JMP to APU_UpdateCurrentSequence
-P:7B9BC-7B9C1:APU_DisableUpdate:Turns on 0th bit of APU_CurrentSequence\nturning off APU_Updates
-P:7B9C2-7B9C6:APU_UpdateCurrentSequence
+P:7B97F:_L7B97F_
+P:7B988:_lolwut_:\n???
+P:7B99B:_L7B99B_
+P:7B9B3:APU_GetPreviousSequenceID:Load A with last sequence Id with disable bit 0 (enabled)\nand JMP to APU_UpdateCurrentSequence
+P:7B9B7::clear the skip update bit
+P:7B9BC:APU_DisableUpdate:Turns on 0th bit of APU_CurrentSequence\nturning off APU_Updates
+P:7B9C2:APU_UpdateCurrentSequence
 P:7B9C7-7BA57:APU_Note_Vector:[$00] $06AD C2 [$01] $0643 C#2 [$02] $05F3 D2\n....\n[$47] $001D A#7 [$48] $001B B7 [$49] $1A08? C8?
 P:7BA59-7BB5F:Music_TitleScreen
 P:7BFD8-7BFFF:EndOfBank78000To7BFFFF
@@ -3652,7 +3658,7 @@ S:00CB:encounterCheckRequired_C:if this AND $90 == $80, skip encounter check
 S:0A32:IsDoneReadingFromBank:bit 5 == 1 done\nbit 5 == 0 not done\n\nEoTCharFound\n----------------------\n$ABD1 - Set bit 5\n\nAfter line written to staging area, turn off bit 0
 S:0A33:DialogSegment_Index:if >= #$96, Segment is in High Bank
 S:0A34:Menu_SingularEnding_Variable:Menu_WriteSingularChars\n-------------------------------\n$8EFB - Temp stores the type of plural ending to print\n5:standard "s"\n\n$8F07 - Stores index of last char printed
-S:0A3D:APU_Const_A3D:$B37D APU_RunEngine - Initialized with $00\n\nSuspect this for DMC, and thus never used.
+S:0A3D:APU_enableDMC_A3D:when not 0, signals APU to turn on the DMC
 S:0A3F-0A41:ExperienceForNextLevel_Character0
 S:0A42-0A44:ExperienceForNextLevel_Character1
 S:0A45-0A47:ExperienceForNextLevel_Character2
