@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriteAid", "SpriteAid\Spri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReverseEngineering", "ReverseEngineering\ReverseEngineering.csproj", "{A80750C9-B3D0-48F6-81F4-CFFFC31052FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiNesEmulator", "MiNesEmulator\MiNesEmulator.csproj", "{882416F2-3339-4303-9D57-98DB9B95C0EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
