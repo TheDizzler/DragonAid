@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Reflection.Emit;
+using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static AtomosZ.DragonAid.Libraries.PointerList.Pointers;
-using static AtomosZ.MiNesEmulator.MemLabel;
+
 
 namespace AtomosZ.MiNesEmulator
 {
@@ -19,52 +15,50 @@ namespace AtomosZ.MiNesEmulator
 		{
 			InitializeComponent();
 
-			this.SuspendLayout();
-			rowHeader_flowLayoutPanel.Controls.Clear();
-			code_flowLayoutPanel.Controls.Clear();
-			for (int i = 0; i <= 0x1FF; ++i)
+			scrollTextBox.Clear();
+			rowHeader_textBox.Clear();
+
+			StringBuilder sb = new StringBuilder();
+			int i;
+			for (i = 0; i <= 0xFFFF; ++i)
 			{
-				var codeLbl = new MemLabel();
-				codeLbl.LabelState = State.Focus;
-				codeLbl.Text = 0.ToString("X2");
-				code_flowLayoutPanel.Controls.Add(codeLbl);
-				if (i % 0x10 == 0)
+				if (i % 0x0010 == 0)
 				{
-					var label = new MemLabel();
-					label.LabelState = State.Normal;
-					int row = i & 0xFFF0;
-					label.Text = row.ToString("X4");
-					rowHeader_flowLayoutPanel.Controls.Add(label);
+					sb.Append(Environment.NewLine);
+					rowHeader_textBox.Text += (i & 0xFFF0).ToString("X4") + Environment.NewLine;
 				}
+
+				sb.Append(/*"00 "*/ (i & 0xFF).ToString("X2") + " ");
 			}
+			rowHeader_textBox.Text.Trim();
+			sb = sb.Remove(0, 1);
+			Debug.WriteLine($"sb.Length: {sb.Length}");
+			Debug.WriteLine($"i: {i}");
 
-			code_flowLayoutPanel.Size = new Size(colHeader_flowLayoutPanel.Size.Width, code_flowLayoutPanel.Size.Height);
+			scrollTextBox.Text = sb.ToString();
+			scrollTextBox.row_textBox = rowHeader_textBox;
 
-			this.ResumeLayout();
+			scrollTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			//scrollTextBox.MaximumSize = new Size(this.Size.Width - scrollTextBox.Location.X - 50, this.Size.Height - scrollTextBox.Location.Y);
 		}
 
-		public void SetZeroPages(byte[] zeroPages)
+
+		public void SetSize()
 		{
-			this.SuspendLayout();
-			for (int i = 0; i < zeroPages.Length; ++i)
-			{
-				var mem = (MemLabel)code_flowLayoutPanel.Controls[i];
-				mem.Text = zeroPages[i].ToString("X2");
-			}
+			scrollTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			scrollTextBox.MaximumSize = new Size(this.Size.Width - scrollTextBox.Location.X - 50, this.Size.Height - scrollTextBox.Location.Y);
 
-			this.ResumeLayout();
+			rowHeader_textBox.Size = new Size(rowHeader_textBox.Size.Width, scrollTextBox.Size.Height);
 		}
 
-		public void SetStack(byte[] theStack)
+		public void SetMemory(CPU cpu)
 		{
-			this.SuspendLayout();
-			for (int i = 0; i < theStack.Length; ++i)
+			var mem = cpu.GetMemory();
+			for (int i = 0; i < mem.Length; ++i)
 			{
-				var mem = (MemLabel)code_flowLayoutPanel.Controls[i + CPU.Stack.stackStart];
-				mem.Text = theStack[i].ToString("X2");
+				//scrollTextBox.Text[i * 3] = mem[i] + " ";
 			}
-
-			this.ResumeLayout();
 		}
+
 	}
 }

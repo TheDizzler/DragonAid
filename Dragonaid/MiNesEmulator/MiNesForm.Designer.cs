@@ -648,28 +648,27 @@
 			// 
 			// memoryViewer
 			// 
-			this.memoryViewer.AutoScroll = true;
-			this.memoryViewer.AutoScrollMinSize = new System.Drawing.Size(27, 0);
-			this.memoryViewer.Location = new System.Drawing.Point(759, 12);
+			this.memoryViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.memoryViewer.Location = new System.Drawing.Point(760, 13);
 			this.memoryViewer.Name = "memoryViewer";
-			this.memoryViewer.Size = new System.Drawing.Size(658, 613);
-			this.memoryViewer.TabIndex = 8;
+			this.memoryViewer.Size = new System.Drawing.Size(720, 576);
+			this.memoryViewer.TabIndex = 10;
+			this.memoryViewer.Resize += new System.EventHandler(this.MemoryViewer_Resize);
 			// 
 			// MiNesForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-			this.AutoSize = true;
-			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ClientSize = new System.Drawing.Size(1687, 905);
-			this.Controls.Add(this.reset_button);
+			this.ClientSize = new System.Drawing.Size(1557, 660);
 			this.Controls.Add(this.memoryViewer);
+			this.Controls.Add(this.reset_button);
 			this.Controls.Add(this.run_button);
 			this.Controls.Add(this.flowLayoutPanel1);
 			this.Controls.Add(this.code_listBox);
 			this.Controls.Add(this.nextLine_button);
 			this.Controls.Add(this.cpu_groupBox);
 			this.Name = "MiNesForm";
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "MiNes Emulator";
 			this.cpu_groupBox.ResumeLayout(false);
@@ -742,8 +741,8 @@
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private System.Windows.Forms.Label pc_label;
 		private System.Windows.Forms.Button run_button;
-		private MemoryViewer memoryViewer;
 		private System.Windows.Forms.Button reset_button;
+		private MemoryViewer memoryViewer;
 	}
 }
 
