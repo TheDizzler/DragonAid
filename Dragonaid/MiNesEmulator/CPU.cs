@@ -1,85 +1,119 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using AtomosZ.DragonAid.Libraries;
-using static AtomosZ.DragonAid.Libraries.PointerList.Pointers;
 
 namespace AtomosZ.MiNesEmulator
 {
 	public class CPU
 	{
-		public byte[] mem;
-		public Stack theStack;
-		public ControlUnit cu;
-
-		public byte[] zeroPages
-		{
-			get
-			{
-				return this[0, 0x100];
-			}
-		}
-
-		public byte[] stack
-		{
-			get { return this[Stack.stackStart, 0x100]; }
-		}
-
-		public byte[] newRAM
-		{
-			get { return this[0, 0x2000]; }
-		}
-
-		public byte[] saveRAM
-		{
-			get { return this[0x6000, 0x2000]; }
-		}
-
 		/// <summary>
-		/// Copies bytes from byte array to pointer address.
+		/// A class to encapsulate memory so as to simulate memory mirroring without
+		/// having to worry about someone doing something silly.
 		/// </summary>
-		/// <param name="pointer"></param>
-		/// <returns>nothing</returns>
-		public byte[] this[int pointer]
+		private class CPUMemory
 		{
-			set
+			private byte[] mem;
+
+			public CPUMemory()
 			{
-				for (int i = 0; i < value.Length; ++i)
+				mem = Enumerable.Repeat((byte)0x00, 0x10000).ToArray();
+			}
+
+			public int Length { get { return mem.Length; } }
+
+			public byte this[byte zeroPagePointer]
+			{
+				get
 				{
-					mem[pointer + i] = value[i];
+					return mem[zeroPagePointer];
+				}
+				set
+				{
+					mem[zeroPagePointer] = value;
+				}
+			}
+
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="pointer"></param>
+			/// <returns>nothing</returns>
+			public byte this[int pointer]
+			{
+				get
+				{
+					Clamp(ref pointer);
+					return mem[pointer];
+				}
+
+				set
+				{
+					Clamp(ref pointer);
+					mem[pointer] = value;
+				}
+			}
+
+			/// <summary>
+			/// Copies memory of length bytes to byte array or
+			/// Copies bytes from byte array to pointer address.
+			/// </summary>
+			/// <param name="pointer"></param>
+			/// <param name="length"></param>
+			/// <returns></returns>
+			public byte[] this[int pointer, int length]
+			{
+				get
+				{
+					Clamp(ref pointer);
+					byte[] b = new byte[length];
+					for (int i = 0; i < length; ++i)
+						b[i] = mem[pointer + i];
+
+					return b;
+				}
+
+				set
+				{
+					Clamp(ref pointer);
+					for (int i = 0; i < length; ++i)
+						mem[pointer + i] = value[i];
+				}
+			}
+
+			/// <summary>
+			/// Clamp pointer to simulate memory mirroring.
+			/// </summary>
+			/// <param name="pointer"></param>
+			private void Clamp(ref int pointer)
+			{
+				if (pointer <= 0x1FFF)
+				{
+					pointer &= 0x07FF;
+				}
+				else if (pointer > 0x2007 && pointer <= 0x3FFF)
+				{
+					pointer &= 0x2007;
 				}
 			}
 		}
 
-		/// <summary>
-		/// Copies memory of length bytes to byte array.
-		/// </summary>
-		/// <param name="pointer"></param>
-		/// <param name="length"></param>
-		/// <returns></returns>
-		public byte[] this[int pointer, int length]
-		{
-			get
-			{
-				byte[] b = new byte[length];
-				for (int i = 0; i < length; ++i)
-					b[i] = mem[pointer + i];
 
-				return b;
-			}
-		}
+		public Stack theStack;
+		public ControlUnit cu;
+
+		private CPUMemory mem;
 
 		public CPU()
 		{
-			mem = Enumerable.Repeat((byte)0x00, 0x10000).ToArray();
+			mem = new CPUMemory();
 			theStack = new Stack(this);
 			cu = new ControlUnit(this);
 		}
 
 		public void Reset()
 		{
-			mem = Enumerable.Repeat((byte)0x00, 0x10000).ToArray();
+			mem = new CPUMemory();
 			cu.Reset();
 			Initialize();
 		}
@@ -92,6 +126,46 @@ namespace AtomosZ.MiNesEmulator
 			cu.pc = GetPointerAt(UniversalConsts.RESET_Pointer);
 		}
 
+		public byte[] GetMemory()
+		{
+			return mem[0, 0x10000];
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="bankData"></param>
+		/// <param name="bankLocation">must be 0x8000 or 0xC000</param>
+		public void SetBank(byte[] bankData, int bankLocation)
+		{
+			mem[bankLocation, bankData.Length] = bankData;
+		}
+
+
+
+		public byte this[int pointer]
+		{
+			get { return mem[pointer]; }
+		}
+		public byte[] zeroPages
+		{
+			get { return mem[0, 0x100]; }
+		}
+
+		public byte[] stack
+		{
+			get { return mem[Stack.stackStart, 0x100]; }
+		}
+
+		public byte[] nesRAM
+		{
+			get { return mem[0, 0x2000]; }
+		}
+
+		public byte[] saveRAM
+		{
+			get { return mem[0x6000, 0x2000]; }
+		}
 
 		public string GetASM(int address)
 		{
@@ -106,12 +180,16 @@ namespace AtomosZ.MiNesEmulator
 			instr.opcode = opc;
 
 			instr.operands = new byte[opc.bytes - 1];
+			int addr = 0;
 			for (int i = 1; i < opc.bytes; ++i)
 			{
 				instr.operands[i - 1] = mem[address + i];
+				addr += mem[address + i] << i;
 			}
 
-			return instr.ToString();
+			byte pointsTo = mem[addr];
+
+			return instr.ToString() + " => " + pointsTo.ToString("X4");
 		}
 
 		private Instruction GetInstruction(int address)
@@ -138,7 +216,6 @@ namespace AtomosZ.MiNesEmulator
 		{
 			return mem[lowByteAddress] + (mem[lowByteAddress + 1] << 8);
 		}
-
 
 		private int GetBRKPointer()
 		{
@@ -168,16 +245,6 @@ namespace AtomosZ.MiNesEmulator
 			{
 				get { return cpu.mem[stackStart + index]; }
 				set { cpu.mem[stackStart + index] = value; }
-			}
-
-			/// <summary>
-			/// 
-			/// </summary>
-			/// <param name="sp">Stack pointer</param>
-			/// <returns></returns>
-			public byte PullByte(byte sp)
-			{
-				return cpu.mem[stackStart + sp];
 			}
 		}
 
@@ -749,7 +816,7 @@ namespace AtomosZ.MiNesEmulator
 						if (sp >= 0xFE)
 							throw new Exception("Invalid stack state");
 						var i = interrupt;
-						ps = cpu.theStack.PullByte(sp++);
+						ps = PullByteFromStack();
 						interrupt = i;
 						pc = PullPointerFromStack();
 						return; // skip the pc += opc bytes
