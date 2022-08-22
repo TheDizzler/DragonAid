@@ -343,13 +343,81 @@ namespace AtomosZ.MiNesEmulator
 				return lowByte + (highByte << 8);
 			}
 
-
+			public string PeekNextInstruction()
+			{
+				var instr = cpu.GetInstruction(pc);
+				return Peek(instr);
+			}
 			public void ParseNextInstruction()
 			{
 				var instr = cpu.GetInstruction(pc);
 				Parse(instr);
 			}
 
+			public string Peek(Instruction instruction)
+			{
+				var instrView = instruction.opcode.asm.Substring(0, 3);
+
+				switch (instruction.opcode.mode)
+				{
+					case Opcode.Mode.Absolute:
+						instrView += $" ${instruction.GetPointer().ToString("X4")}"
+							+ $" = ${cpu.mem[instruction.GetPointer()].ToString("X2")}";
+						break;
+					case Opcode.Mode.Absolute_X:
+						instrView += $" ${instruction.GetPointer().ToString("X4")},X"
+							+ $"  = ${cpu.mem[instruction.GetPointer() + x].ToString("X2")}";
+						break;
+					case Opcode.Mode.Absolute_Y:
+						instrView += $" ${instruction.GetPointer().ToString("X4")},Y"
+							+ $"  = ${cpu.mem[instruction.GetPointer() + y].ToString("X2")}";
+						break;
+
+					case Opcode.Mode.Immediate:
+						instrView += $" #${instruction.operands[0].ToString("X2")}";
+						break;
+
+
+					case Opcode.Mode.Indirect:
+						instrView += $" (${instruction.operands[0].ToString("X2")})"
+							+ $" = ${cpu.mem[cpu.GetPointerAt(instruction.operands[0])].ToString("X2")}";
+						break;
+					case Opcode.Mode.Indirect_X:
+						instrView += $" (${instruction.operands[0].ToString("X2")},X)"
+							+ $" = ${cpu.mem[cpu.GetPointerAt(instruction.operands[0] + x)].ToString("X2")}";
+						break;
+					case Opcode.Mode.Indirect_Y:
+						instrView += $" (${instruction.operands[0].ToString("X2")}),Y"
+							+ $" = ${cpu.mem[cpu.GetPointerAt(instruction.operands[0]) + y].ToString("X2")}";
+						break;
+
+					case Opcode.Mode.Relative:
+						var offset = 0;
+						if (instruction.operands[0] >= 0x80)
+							offset = 0x100 - instruction.operands[0];
+						else
+							offset = instruction.operands[0];
+						instrView += $" (${offset.ToString("X2")}),Y"
+							+ $" = ${cpu.mem[instruction.operands[0] + offset].ToString("X2")}";
+						break;
+
+
+					case Opcode.Mode.ZeroPage:
+						instrView += $" ${instruction.operands[0].ToString("X2")}"
+							+ $" = ${cpu.mem[instruction.operands[0]].ToString("X2")}";
+						break;
+					case Opcode.Mode.ZeroPage_X:
+						instrView += $" ${instruction.operands[0].ToString("X2")},X"
+							+ $" = ${cpu.mem[instruction.operands[0] + x].ToString("X2")}";
+						break;
+					case Opcode.Mode.ZeroPage_Y:
+						instrView += $" ${instruction.operands[0].ToString("X2")},Y"
+							+ $" = ${cpu.mem[instruction.operands[0] + y].ToString("X2")}";
+						break;
+				}
+
+				return instrView;
+			}
 
 			/// <summary>
 			/// Reads instruction, performs the appropirate operations, then increments the PC.
@@ -441,51 +509,35 @@ namespace AtomosZ.MiNesEmulator
 
 					case Opcodes.BCC:
 						if (!carry)
-						{
 							MovePC(instruction.operands[0]);
-						}
 						break;
 					case Opcodes.BCS:
 						if (carry)
-						{
 							MovePC(instruction.operands[0]);
-						}
 						break;
 					case Opcodes.BEQ:
 						if (zero)
-						{
 							MovePC(instruction.operands[0]);
-						}
 						break;
 					case Opcodes.BNE:
 						if (!zero)
-						{
 							MovePC(instruction.operands[0]);
-						}
 						break;
 					case Opcodes.BMI:
 						if (negative)
-						{
 							MovePC(instruction.operands[0]);
-						}
 						break;
 					case Opcodes.BPL:
 						if (!negative)
-						{
 							MovePC(instruction.operands[0]);
-						}
 						break;
 					case Opcodes.BVC:
 						if (!overflow)
-						{
 							MovePC(instruction.operands[0]);
-						}
 						break;
 					case Opcodes.BVS:
 						if (overflow)
-						{
 							MovePC(instruction.operands[0]);
-						}
 						break;
 
 					case Opcodes.BIT_zpg:
