@@ -257,9 +257,14 @@ namespace AtomosZ.DragonAid.Libraries
 
 			if (operandStr.Length == 0)
 				throw new Exception("Invalid operator or operands");
+
 			string modeStr = GetModeTag(mode);
 			string oCode = opcStr + modeStr;
-			return opcodes.FirstOrDefault(o => o.Value.asm == oCode).Key;
+			byte opcByte = opcodes.FirstOrDefault(o => o.Value.asm == oCode).Key;
+			if (opcByte == 0)
+				throw new Exception("Illegal Instruction");
+
+			return opcByte;
 		}
 
 		private static string GetModeTag(Opcode.Mode mode)
@@ -600,6 +605,10 @@ namespace AtomosZ.DragonAid.Libraries
 		}
 	}
 
+	/// <summary>
+	/// This data structure class is for debugging purposes and could be stream-lined away eventually.
+	/// However it's very useful for peeking into the next instruction the CPU is about to execute.
+	/// </summary>
 	public class Instruction
 	{
 		public Opcode opcode;
