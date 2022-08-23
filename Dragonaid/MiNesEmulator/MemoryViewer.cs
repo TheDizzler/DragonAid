@@ -24,16 +24,17 @@ namespace AtomosZ.MiNesEmulator
 			{
 				if (i % 0x0010 == 0)
 				{
-					sb.Append(Environment.NewLine);
+					if (i != 0)
+					{
+						sb.Remove(sb.Length - 1, 1);
+						sb.Append(Environment.NewLine);
+					}
 					rowHeader_textBox.Text += (i & 0xFFF0).ToString("X4") + Environment.NewLine;
 				}
 
 				sb.Append(/*"00 "*/ (i & 0xFF).ToString("X2") + " ");
 			}
-			rowHeader_textBox.Text.Trim();
-			sb = sb.Remove(0, 1);
-			Debug.WriteLine($"sb.Length: {sb.Length}");
-			Debug.WriteLine($"i: {i}");
+			rowHeader_textBox.Text = rowHeader_textBox.Text.Trim();
 
 			scrollTextBox.Text = sb.ToString();
 			scrollTextBox.row_textBox = rowHeader_textBox;
