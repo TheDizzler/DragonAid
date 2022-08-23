@@ -33,21 +33,15 @@
 			this.cpu_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.acc_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
-			this.a_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.x_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.y_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.pc_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.label5 = new System.Windows.Forms.Label();
-			this.cycles_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.flag_groupBox = new System.Windows.Forms.GroupBox();
 			this.flags_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.flags_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.ps_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.label6 = new System.Windows.Forms.Label();
-			this.ps_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.negative_checkBox = new System.Windows.Forms.CheckBox();
 			this.overflow_checkBox = new System.Windows.Forms.CheckBox();
 			this.reserved_checkBox = new System.Windows.Forms.CheckBox();
@@ -60,7 +54,6 @@
 			this.stack_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.sp_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.label7 = new System.Windows.Forms.Label();
-			this.sp_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.stack_textBox = new System.Windows.Forms.TextBox();
 			this.nextLine_button = new System.Windows.Forms.Button();
 			this.code_listBox = new System.Windows.Forms.ListBox();
@@ -70,6 +63,13 @@
 			this.run_button = new System.Windows.Forms.Button();
 			this.reset_button = new System.Windows.Forms.Button();
 			this.memoryViewer = new AtomosZ.MiNesEmulator.MemoryViewer();
+			this.a_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
+			this.x_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
+			this.y_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
+			this.pc_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
+			this.cycles_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
+			this.ps_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
+			this.sp_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.cpu_groupBox.SuspendLayout();
 			this.cpuStatus_flowLayoutPanel.SuspendLayout();
 			this.cpu_flowLayoutPanel.SuspendLayout();
@@ -144,181 +144,56 @@
 			// 
 			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 6);
+			this.label1.Location = new System.Drawing.Point(3, 9);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(24, 20);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "A:";
 			// 
-			// a_numberBox
-			// 
-			this.a_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.a_numberBox.Hexadecimal = true;
-			this.a_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.a_numberBox.Location = new System.Drawing.Point(33, 3);
-			this.a_numberBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.a_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.a_numberBox.Name = "a_numberBox";
-			this.a_numberBox.Size = new System.Drawing.Size(39, 26);
-			this.a_numberBox.TabIndex = 1;
-			this.a_numberBox.Value = 255;
-			// 
 			// label2
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(78, 6);
+			this.label2.Location = new System.Drawing.Point(159, 9);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(24, 20);
 			this.label2.TabIndex = 2;
 			this.label2.Text = "X:";
 			// 
-			// x_numberBox
-			// 
-			this.x_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.x_numberBox.Hexadecimal = true;
-			this.x_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.x_numberBox.Location = new System.Drawing.Point(108, 3);
-			this.x_numberBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.x_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.x_numberBox.Name = "x_numberBox";
-			this.x_numberBox.Size = new System.Drawing.Size(39, 26);
-			this.x_numberBox.TabIndex = 3;
-			this.x_numberBox.Value = 255;
-			// 
 			// label3
 			// 
 			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(153, 6);
+			this.label3.Location = new System.Drawing.Point(315, 9);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(24, 20);
 			this.label3.TabIndex = 4;
 			this.label3.Text = "Y:";
 			// 
-			// y_numberBox
-			// 
-			this.y_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.y_numberBox.Hexadecimal = true;
-			this.y_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.y_numberBox.Location = new System.Drawing.Point(183, 3);
-			this.y_numberBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.y_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.y_numberBox.Name = "y_numberBox";
-			this.y_numberBox.Size = new System.Drawing.Size(39, 26);
-			this.y_numberBox.TabIndex = 5;
-			this.y_numberBox.Value = 255;
-			// 
 			// label4
 			// 
 			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(228, 6);
+			this.label4.Location = new System.Drawing.Point(471, 9);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(34, 20);
 			this.label4.TabIndex = 6;
 			this.label4.Text = "PC:";
 			// 
-			// pc_numberBox
-			// 
-			this.pc_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.pc_numberBox.Hexadecimal = true;
-			this.pc_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.pc_numberBox.Location = new System.Drawing.Point(268, 3);
-			this.pc_numberBox.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-			this.pc_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.pc_numberBox.Name = "pc_numberBox";
-			this.pc_numberBox.Size = new System.Drawing.Size(49, 26);
-			this.pc_numberBox.TabIndex = 7;
-			this.pc_numberBox.Value = 65535;
-			// 
 			// label5
 			// 
 			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(323, 6);
+			this.label5.Location = new System.Drawing.Point(637, 9);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(59, 20);
 			this.label5.TabIndex = 8;
 			this.label5.Text = "Cycles:";
 			// 
-			// cycles_numberBox
-			// 
-			this.cycles_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.cycles_numberBox.Hexadecimal = false;
-			this.cycles_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.cycles_numberBox.Location = new System.Drawing.Point(388, 3);
-			this.cycles_numberBox.Maximum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.cycles_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.cycles_numberBox.Name = "cycles_numberBox";
-			this.cycles_numberBox.Size = new System.Drawing.Size(119, 26);
-			this.cycles_numberBox.TabIndex = 9;
-			this.cycles_numberBox.Value = 0;
-			// 
 			// flag_groupBox
 			// 
 			this.flag_groupBox.Controls.Add(this.flags_flowLayoutPanel);
-			this.flag_groupBox.Location = new System.Drawing.Point(3, 41);
+			this.flag_groupBox.Location = new System.Drawing.Point(3, 59);
 			this.flag_groupBox.Name = "flag_groupBox";
 			this.flag_groupBox.Size = new System.Drawing.Size(569, 102);
 			this.flag_groupBox.TabIndex = 2;
@@ -375,36 +250,11 @@
 			// 
 			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(3, 6);
+			this.label6.Location = new System.Drawing.Point(3, 0);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(34, 20);
 			this.label6.TabIndex = 2;
 			this.label6.Text = "PS:";
-			// 
-			// ps_numberBox
-			// 
-			this.ps_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ps_numberBox.Hexadecimal = true;
-			this.ps_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.ps_numberBox.Location = new System.Drawing.Point(43, 3);
-			this.ps_numberBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.ps_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.ps_numberBox.Name = "ps_numberBox";
-			this.ps_numberBox.Size = new System.Drawing.Size(39, 26);
-			this.ps_numberBox.TabIndex = 3;
-			this.ps_numberBox.Value = 255;
 			// 
 			// negative_checkBox
 			// 
@@ -492,7 +342,7 @@
 			// stack_groupBox
 			// 
 			this.stack_groupBox.Controls.Add(this.stack_flowLayoutPanel);
-			this.stack_groupBox.Location = new System.Drawing.Point(584, 3);
+			this.stack_groupBox.Location = new System.Drawing.Point(586, 3);
 			this.stack_groupBox.Name = "stack_groupBox";
 			this.stack_groupBox.Size = new System.Drawing.Size(153, 182);
 			this.stack_groupBox.TabIndex = 3;
@@ -526,36 +376,11 @@
 			// 
 			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(3, 6);
+			this.label7.Location = new System.Drawing.Point(3, 9);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(34, 20);
 			this.label7.TabIndex = 2;
 			this.label7.Text = "SP:";
-			// 
-			// sp_numberBox
-			// 
-			this.sp_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.sp_numberBox.Hexadecimal = true;
-			this.sp_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.sp_numberBox.Location = new System.Drawing.Point(43, 3);
-			this.sp_numberBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.sp_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.sp_numberBox.Name = "sp_numberBox";
-			this.sp_numberBox.Size = new System.Drawing.Size(39, 26);
-			this.sp_numberBox.TabIndex = 3;
-			this.sp_numberBox.Value = 255;
 			// 
 			// stack_textBox
 			// 
@@ -646,6 +471,39 @@
 			this.reset_button.UseVisualStyleBackColor = true;
 			this.reset_button.Click += new System.EventHandler(this.Reset_button_Click);
 			// 
+			// numberBox1
+			// 
+			this.numberBox1.Hexadecimal = false;
+			this.numberBox1.Increment = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.numberBox1.Location = new System.Drawing.Point(357, 598);
+			this.numberBox1.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.numberBox1.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.numberBox1.Name = "numberBox1";
+			this.numberBox1.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.numberBox1.Postfix = "";
+			this.numberBox1.Prefix = "";
+			this.numberBox1.ReadOnly = false;
+			this.numberBox1.Size = new System.Drawing.Size(120, 26);
+			this.numberBox1.TabIndex = 11;
+			this.numberBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.numberBox1.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
 			// memoryViewer
 			// 
 			this.memoryViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -654,6 +512,259 @@
 			this.memoryViewer.Size = new System.Drawing.Size(720, 576);
 			this.memoryViewer.TabIndex = 10;
 			this.memoryViewer.Resize += new System.EventHandler(this.MemoryViewer_Resize);
+			// 
+			// a_numberBox
+			// 
+			this.a_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.a_numberBox.Hexadecimal = true;
+			this.a_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.a_numberBox.Location = new System.Drawing.Point(33, 3);
+			this.a_numberBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.a_numberBox.MaximumSize = new System.Drawing.Size(500, 25);
+			this.a_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.a_numberBox.MinimumSize = new System.Drawing.Size(30, 32);
+			this.a_numberBox.Name = "a_numberBox";
+			this.a_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.a_numberBox.Postfix = "";
+			this.a_numberBox.Prefix = "$";
+			this.a_numberBox.ReadOnly = false;
+			this.a_numberBox.Size = new System.Drawing.Size(120, 32);
+			this.a_numberBox.TabIndex = 1;
+			this.a_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.a_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
+			// x_numberBox
+			// 
+			this.x_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.x_numberBox.Hexadecimal = true;
+			this.x_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.x_numberBox.Location = new System.Drawing.Point(189, 3);
+			this.x_numberBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.x_numberBox.MaximumSize = new System.Drawing.Size(500, 25);
+			this.x_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.x_numberBox.MinimumSize = new System.Drawing.Size(30, 32);
+			this.x_numberBox.Name = "x_numberBox";
+			this.x_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.x_numberBox.Postfix = "";
+			this.x_numberBox.Prefix = "$";
+			this.x_numberBox.ReadOnly = false;
+			this.x_numberBox.Size = new System.Drawing.Size(120, 32);
+			this.x_numberBox.TabIndex = 2;
+			this.x_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.x_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
+			// y_numberBox
+			// 
+			this.y_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.y_numberBox.Hexadecimal = true;
+			this.y_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.y_numberBox.Location = new System.Drawing.Point(345, 3);
+			this.y_numberBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.y_numberBox.MaximumSize = new System.Drawing.Size(500, 25);
+			this.y_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.y_numberBox.MinimumSize = new System.Drawing.Size(30, 32);
+			this.y_numberBox.Name = "y_numberBox";
+			this.y_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.y_numberBox.Postfix = "";
+			this.y_numberBox.Prefix = "$";
+			this.y_numberBox.ReadOnly = false;
+			this.y_numberBox.Size = new System.Drawing.Size(120, 32);
+			this.y_numberBox.TabIndex = 3;
+			this.y_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.y_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
+			// pc_numberBox
+			// 
+			this.pc_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.pc_numberBox.Hexadecimal = true;
+			this.pc_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.pc_numberBox.Location = new System.Drawing.Point(511, 3);
+			this.pc_numberBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+			this.pc_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.pc_numberBox.Name = "pc_numberBox";
+			this.pc_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.pc_numberBox.Postfix = "";
+			this.pc_numberBox.Prefix = "$";
+			this.pc_numberBox.ReadOnly = false;
+			this.pc_numberBox.Size = new System.Drawing.Size(120, 26);
+			this.pc_numberBox.TabIndex = 4;
+			this.pc_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.pc_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
+			// cycles_numberBox
+			// 
+			this.cycles_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.cycles_numberBox.Hexadecimal = false;
+			this.cycles_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.cycles_numberBox.Location = new System.Drawing.Point(702, 3);
+			this.cycles_numberBox.Maximum = new decimal(new int[] {
+            1569325055,
+            23283064,
+            0,
+            0});
+			this.cycles_numberBox.MaximumSize = new System.Drawing.Size(500, 25);
+			this.cycles_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.cycles_numberBox.MinimumSize = new System.Drawing.Size(30, 32);
+			this.cycles_numberBox.Name = "cycles_numberBox";
+			this.cycles_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.cycles_numberBox.Padding = new System.Windows.Forms.Padding(3);
+			this.cycles_numberBox.Postfix = "";
+			this.cycles_numberBox.Prefix = "";
+			this.cycles_numberBox.ReadOnly = false;
+			this.cycles_numberBox.Size = new System.Drawing.Size(120, 32);
+			this.cycles_numberBox.TabIndex = 5;
+			this.cycles_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.cycles_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
+			// ps_numberBox
+			// 
+			this.ps_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ps_numberBox.Hexadecimal = true;
+			this.ps_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.ps_numberBox.Location = new System.Drawing.Point(3, 23);
+			this.ps_numberBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.ps_numberBox.MaximumSize = new System.Drawing.Size(500, 25);
+			this.ps_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.ps_numberBox.MinimumSize = new System.Drawing.Size(30, 32);
+			this.ps_numberBox.Name = "ps_numberBox";
+			this.ps_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.ps_numberBox.Padding = new System.Windows.Forms.Padding(3);
+			this.ps_numberBox.Postfix = "";
+			this.ps_numberBox.Prefix = "$";
+			this.ps_numberBox.ReadOnly = false;
+			this.ps_numberBox.Size = new System.Drawing.Size(120, 32);
+			this.ps_numberBox.TabIndex = 3;
+			this.ps_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.ps_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
+			// sp_numberBox
+			// 
+			this.sp_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.sp_numberBox.Hexadecimal = true;
+			this.sp_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.sp_numberBox.Location = new System.Drawing.Point(43, 3);
+			this.sp_numberBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.sp_numberBox.MaximumSize = new System.Drawing.Size(500, 25);
+			this.sp_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.sp_numberBox.MinimumSize = new System.Drawing.Size(30, 32);
+			this.sp_numberBox.Name = "sp_numberBox";
+			this.sp_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.sp_numberBox.Padding = new System.Windows.Forms.Padding(3);
+			this.sp_numberBox.Postfix = "";
+			this.sp_numberBox.Prefix = "$";
+			this.sp_numberBox.ReadOnly = false;
+			this.sp_numberBox.Size = new System.Drawing.Size(120, 32);
+			this.sp_numberBox.TabIndex = 3;
+			this.sp_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.sp_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			// 
 			// MiNesForm
 			// 
