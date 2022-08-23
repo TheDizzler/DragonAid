@@ -39,15 +39,13 @@ namespace AtomosZ.MiNesEmulator
 			scrollTextBox.Text = sb.ToString();
 			scrollTextBox.row_textBox = rowHeader_textBox;
 
-			scrollTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-			//scrollTextBox.MaximumSize = new Size(this.Size.Width - scrollTextBox.Location.X - 50, this.Size.Height - scrollTextBox.Location.Y);
+			scrollTextBox.Size = new Size(this.Size.Width - scrollTextBox.Location.X - 50, this.Size.Height - scrollTextBox.Location.Y - scrollTextBox.Margin.Vertical);
 		}
 
 
 		public void SetSize()
 		{
-			scrollTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-			scrollTextBox.MaximumSize = new Size(this.Size.Width - scrollTextBox.Location.X - 50, this.Size.Height - scrollTextBox.Location.Y);
+			scrollTextBox.Size = new Size(this.Size.Width - scrollTextBox.Location.X - 50, this.Size.Height - scrollTextBox.Location.Y - scrollTextBox.Margin.Vertical);
 
 			rowHeader_textBox.Size = new Size(rowHeader_textBox.Size.Width, scrollTextBox.Size.Height);
 		}

@@ -159,5 +159,21 @@ namespace AtomosZ.MiNesEmulator
 			FillCPU();
 			UpdateDisplay();
 		}
+
+		private void MemoryViewer_Resize(object sender, EventArgs e)
+		{
+			memoryViewer.SetSize();
+		}
+
+		private void MemoryViewer_SizeChanged(object sender, EventArgs e)
+		{
+			memoryViewer.SetSize();
+		}
+
+		private void MemoryViewer_AutoSizeChanged(object sender, EventArgs e)
+		{
+			memoryViewer.SetSize();
+		}
+
 	}
 }
