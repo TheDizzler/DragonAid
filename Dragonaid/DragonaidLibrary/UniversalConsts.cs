@@ -13,6 +13,12 @@ namespace AtomosZ.DragonAid.Libraries
 		/// 0x35067 (SetMenuColor)
 		/// </summary>
 		public static byte NightBattleStartTime = 0x78;
+		/// <summary>
+		/// Time that day/night timer rolls over.
+		/// 
+		/// Hardcoded at:
+		/// 0x3D03D (IncrementClock)
+		/// </summary>
 		public static byte DayTimer = 0xCC;
 
 		/// <summary>
@@ -74,8 +80,17 @@ namespace AtomosZ.DragonAid.Libraries
 		/// </summary>
 		public static byte FemaleClassSpriteOffset = 0x07;
 
-		public static int NMI_Vector = 0xFFFA;
-		public static int RESET_Vector = 0xFFFC;
-		public static int IRQBRK_Vector = 0xFFFE;
+		/// <summary>
+		/// 0xFFFA-0xFFFB
+		/// </summary>
+		public static int NMI_Pointer = 0xFFFA;
+		/// <summary>
+		/// 0xFFFC-0xFFFD
+		/// </summary>
+		public static int RESET_Pointer = 0xFFFC;
+		/// <summary>
+		/// 0xFFFE-0xFFFF
+		/// </summary>
+		public static int IRQBRK_Pointer = 0xFFFE;
 	}
 }

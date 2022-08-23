@@ -107,11 +107,11 @@ R:00CF:Item_Check_IsEquipped:item to check if equipped\n\n#$44 noh mask\n#$4B Me
 R:00D0::GetSpellByte\n----------------------------\nFormation index?\n$99DC - LDA, AND #$03\n$99F0 - LDA, AND #$03
 R:00D2:NextChar_F2_Variable:NextChar_F2_JMP\n--------------------\n$A883 - LDA[X]
 R:00D6-00DD:APU_TrackPosition:Holds 2 byte addresses\natleast 8 bytes long (4 entries)\n\n[0x00] = Pointer to next byte sequence of track 0\n[0x02] = Next byte in sequence of track 1\n[0x04] = Next byte in sequence of track 2\n[0x06] = APU_DutySetup_Addresses
-R:00DE-00DF:SFX_Pointer:[0]:8169 - silent track\n[1]:91CE\n[2]:91E5\n[3]:91F5\n[$12]:9237
-R:00E0-00F3:APU_TrackInstructions:This seems like it's one vector with multiple different pointer arithmetics to navigate it.\n\nbase +1 is used for track 4 only?\nbase +x +2, +3 (check if track needs updating this frame),\nbase +10, +11, \nbase +12, +13 (on APU_UpdateTrack)
+R:00DE-00DF:SFX_Pointer_DE:[0]:8169 - silent track\n[1]:91CE\n[2]:91E5\n[3]:91F5\n[$12]:9237
+R:00E0-00F3:APU_TrackInstructions_E0:This seems like it's one vector with multiple different pointer arithmetics to navigate it.\n\nbase +1 is used for track 4 only?\nbase +x +2, +3 (check if track needs updating this frame),\nbase +10, +11, \nbase +12, +13 (on APU_UpdateTrack)
 R:00F5::initialized in SFX Init
 R:00F6-00F7:APU_TempDutySettings:APU_ModTrackByte_Less_49\n-----------------------------------------\n$B622 - init with $00\n\nAPU_DutySetup\n------------------------------------------- \nX is TrackIndex# (0, 2, 4, 6)\n$B44C [1+X]: if < $80 goto APU_GetDutySetting\n\nAPU_GetDutySetting\n--------------------------------------\nX: track# (0, 2, 4, 6)\n$B47A [0+X]: y in LDA APU_DutySetup_Addresses,Y\n$B488 [1+X]: y in LDA (APU_Multivariable_Store), Y which points to $78400 area\n$B493 [1+X]: INC\n\n\n\n[0]: $B5E8 - stores track byte after track instruction $E1\n\n$B4F3 APU_SubUpdate - Each index lo byte set to $FE\n\n\n[0]: $B5EA - LDA after instruction byte $E1, if not BMI, STA $00 in it's place, and get next TrackByte\n      $B602 - STA $FF if TrackByte less than $E1\n\n\nUnknown length. Atleast 2 indices. Probably 8 bytes?
-R:00FA:APU_NewSeq_20or00:APU_SFX_Init\n---------------------\n$B998  - when SFX track hibyte is >= 80, at minimum is set to be $20 (ORA $20)\n\nAPU_UpdateTrack1_Sq1\n------------------\n$B404 - if AND $20 == $0, skip most Sq1 duty setup\n\n\nNextTrackByte == EF\n----------------------\n$B5D6 - AND $20 ORA $44.\n Can be $44 or $64\n\n\n$B95A - ANDed with $20 and saved\n\n($B88F) APU_Sub_Update_A -\n  if 6th bit = 0\n    return\n  else\n run some subroutine
+R:00FA:APU_NewSeq_20or00_FA:APU_SFX_Init\n---------------------\n$B998  - when SFX track hibyte is >= 80, at minimum is set to be $20 (ORA $20)\n\nAPU_UpdateTrack1_Sq1\n------------------\n$B404 - if AND $20 == $0, skip most Sq1 duty setup\n\n\nNextTrackByte == EF\n----------------------\n$B5D6 - AND $20 ORA $44.\n Can be $44 or $64\n\n\n$B95A - ANDed with $20 and saved\n\n($B88F) APU_Sub_Update_A -\n  if 6th bit = 0\n    return\n  else\n run some subroutine
 R:00FB:APU_Tri_Linear_Store
 R:00FD:APU_Noise_DutySettings_Store
 R:0100-01FF:TheStack
@@ -123,7 +123,7 @@ R:0400-045F:Menu_WriteBlock
 R:0460:AttributeVariables_maybe
 R:0470:menu_PositionA:sprite position\nx pos: low nybble * 2\ny pos: high nybble * 2
 R:0471:menu_WriteDimensions:Menu_GetDimensions_Parse\n---------------------------------------\n$8CFB - menu_Width / 2, ORA #$10\n\nBattle_GetPPUPosition_EnemyDisplay\n--------------------------------------\n$C76E - LDA ($18)\n  DynamicSubroutine[1]: High nybble * 2 (num lines to write to staging area) (2)\n  DynamicSubroutine[2]: Low nybble * 2 (num of chars to write to staging area) (16)
-R:0472-047A:APU_Track_Vector:SFX_Init\n------------\n[8] $B9AC - Initialized with $00\n\nAPU_InitTrackCarets\n-----------------------------\n[6]: $B947 - init with $00\n\nAPU_CheckIfNextNote\n-------------------------------\n$B722 [+X]:\n   if < $80, ORA $80 and re-save\n   else return\n\n\nif vector+X = $0C\n  byte is Noise Period & Length control\n\n$B847 - Clear bit 7\n\n[0]: $B60F - STA ModTrackByte\n\nLength: 6 to 8 bytes
+R:0472-047A:APU_Track_Vector_0472:SFX_Init\n------------\n[8] $B9AC - Initialized with $00\n\nAPU_InitTrackCarets\n-----------------------------\n[6]: $B947 - init with $00\n\nAPU_CheckIfNextNote\n-------------------------------\n$B722 [+X]:\n   if < $80, ORA $80 and re-save\n   else return\n\n\nif vector+X = $0C\n  byte is Noise Period & Length control\n\n$B847 - Clear bit 7\n\n[0]: $B60F - STA ModTrackByte\n\nLength: 6 to 8 bytes
 R:047C:updateTracks:APU\nit this is  >= 6A, run track updates
 R:047D:APU_SequenceHeader:First byte of Sequence
 R:047E:APU_AddToModTrackByte:APU_SequenceIinit\n---------------------------\n$B950 - init with $00\n\n\n$B890 - init to $00\n\n$B60C - $FE
@@ -154,14 +154,14 @@ R:065B:Monster_GetStats_Vector_E:Monster_GetStats\n-----------------------------
 R:0697::DynamicSubroutine_08000_A_Sub_A\n----------------------\n$9913 - LDA[X]\n\nDynamicSubroutine_08000_A_Sub_B\n-----------------+\n$A064 - LDA,Y
 R:06B8::DynamicSubroutine_08000_A_Sub_B\n-------------------\n$A056 - LDA
 R:06BC::$D053 store last walk direction
-R:06C7:resetNMIBankLoad_6C7
-R:06C8:bankSwitchReg1HiLoSwitch_6C8:4th bit 0 - lower PRG banks ($00000-$3FFFF)\n4th bit 1 - upprt PRG banks ($40000-7FFFF))
+R:06C7:resetNMIBankLoad_06C7:ClearRAM\n------------\nset to $0E
+R:06C8:bankSwitchReg1HiLoSwitch_06C8:4th bit 0 - lower PRG banks ($00000-$3FFFF)\n4th bit 1 - upprt PRG banks ($40000-7FFFF))
 R:06D0:PPUScroll_X
 R:06D1:PPU_Scroll_Y
 R:06D2:waitForNMI_flag:$3C99F - INCed in NMI after BankSwitch
-R:06D3:PPUControl_2000_Settings:7  bit  0\n---- ----\nVPHB SINN\n|||| ||||\n|||| ||++- Base nametable address\n|||| ||    (0 = $2000; 1 = $2400; 2 = $2800; 3 = $2C00)\n|||| |+--- VRAM address increment per CPU read/write of PPUDATA\n|||| |     (0: add 1, going across; 1: add 32, going down)\n|||| +---- Sprite pattern table address for 8x8 sprites\n||||       (0: $0000; 1: $1000; ignored in 8x16 mode)\n|||+------ Background pattern table address (0: $0000; 1: $1000)\n||+------- Sprite size (0: 8x8; 1: 8x16)\n|+-------- PPU master/slave select\n|          (0: read backdrop from EXT pins; 1: output color on EXT pins)\n+--------- Generate an NMI at the start of the\n           vertical blanking interval (0: off; 1: on)\n\nBattle_WriteTo_PPUSetup\n---------------------------------\n$C2CF - LDA, ASL x2, AND $04 ORA $20 STA Battle_PPUControl_Settings+1
-R:06D4:PPUMask_2001_Settings:$18 = 0001 1000\n\nbit 4 - Enable sprite rendering\nbit 3 - Enable bg rendering
-R:06D5:bankSwitch_CurrentBankId_6D5:lo nybble is bank # to switch to.\n\nif >= $10, load high banks\nelse load low banks\n\n\nBankSwitch_GetSubroutineFromX_3C000\nBank we want to return to 
+R:06D3:PPUControl_2000_Settings_06D3:7  bit  0\n---- ----\nVPHB SINN\n|||| ||||\n|||| ||++- Base nametable address\n|||| ||    (0 = $2000; 1 = $2400; 2 = $2800; 3 = $2C00)\n|||| |+--- VRAM address increment per CPU read/write of PPUDATA\n|||| |     (0: add 1, going across; 1: add 32, going down)\n|||| +---- Sprite pattern table address for 8x8 sprites\n||||       (0: $0000; 1: $1000; ignored in 8x16 mode)\n|||+------ Background pattern table address (0: $0000; 1: $1000)\n||+------- Sprite size (0: 8x8; 1: 8x16)\n|+-------- PPU master/slave select\n|          (0: read backdrop from EXT pins; 1: output color on EXT pins)\n+--------- Generate an NMI at the start of the\n           vertical blanking interval (0: off; 1: on)\n\nBattle_WriteTo_PPUSetup\n---------------------------------\n$C2CF - LDA, ASL x2, AND $04 ORA $20 STA Battle_PPUControl_Settings+1
+R:06D4:PPUMask_2001_Settings_06D4:$18 = 0001 1000\n\nbit 4 - Enable sprite rendering\nbit 3 - Enable bg rendering
+R:06D5:bankSwitch_CurrentBankId_06D5:lo nybble is bank # to switch to.\n\nif >= $10, load high banks\nelse load low banks\n\n\nBankSwitch_GetSubroutineFromX_3C000\nBank we want to return to 
 R:06D6:caretUpdate_flag:Caret_Update\n-------------\n$9F1D - init with $02\n->WaitForNMI_Loop\n$9F25 - init with $00\n\n\nPPU_Render\n--------------------------------\n$CA92 - if != $02, skip Sprite DMA
 R:06D7:Post_NMI_Variable:either incremented or zero'd after NMI
 R:06D8:Menu_StagingArea_NextCharPos:next char pos to write in staging area for enemy display\n\nMenu_GetPPUPosition\n------------------------------------\n$C781 - LDX\n\nPPU_LoadPaletteWithBlack\n---------------------------------------\n$CAFC - init with $00
@@ -170,7 +170,7 @@ R:06DA::PPU_LoadPaletteWithBlack\n---------------------------------------\n$CAFC
 R:06DD:IndexTo_FramesToWait
 R:06DE:timeSubValue:after each step on overworld\nADC ((seed & 31) + 223)\nif hasCarry, increment timeOfDay
 R:06DF:timeOfDay:In-game time-of-day\n$00-$CB\nNight begins at $78\nDay begins at $00
-R:06E0::$961E menu color
+R:06E0::$961E menu color\n\nClearRAM\n--------------\nSet to $30
 R:06E1:encounterCheckRequired_A:Check for encounter if == $00\n\nMap_Scroll_Finish\n-----------------------\n$AF95 if 0....\n\nDynamicPointer_30000_A\n-----------------------------------\n$8078 - if < #$40 RTS\n       else....
 R:06F0:APU_SequenceID:Current sequence ID (Sequence # * 2)\n\n0th bit determines if APU updates or not\n$B389 APU_CheckUpdateNeeded - \nif bit 0 == 1 skip update
 R:06F1:APU_StoreTrackIndex:$B45C - check if equal to or greater than $08\nif it is, set duty right away
@@ -206,7 +206,7 @@ R:07B4-07BB:Character3_Spells
 R:07BC-07BE:Character_GoldPurse
 R:07C1-07C2:Character_NameIndices:GetCharacterNameIndex\n--------------------------------\n$9C27 - LDA[0] == index of characters name (how is this known)\n\nDynamicSubroutine_00000_C_Loop\n----------------------------------\n$9992 - LDA,X\nif >= $80 do not check character status byte
 R:0804:Temp_Text_Storage_Maybe
-P:0000-008B:DynamicSubroutine_Addresses_00000:[$04]:$92A8 Character_GetCurrentHP (#23)\n[$0C]:$932C Character_GetCurrentMP (#27)\n[$18]:$93D0 Character_CheckStatus (#2D)\n[$1E]:$9445 TransferCharacterNameTo_QuickStorage\n[$24]:$9486 \n[$2C]:$94CF \n[$2E]:$9527 \n[$30]:$9540 \n[$32]:$9586 TransferXPToQuickStorage (#3A)\n[$34]:$959A Character_GainXP (#3B)\n[$36]:$95ED Character_GetTotalGold (#3C)\n[$38]:$95FD Character_GainGold (#3D)\n[$3C]:$9668 Character_GetEquippedItems\n[$58]:$993A GetCharacterClass\n[$5A]:$9944 GetCharacterClass_JMP ($4E)\n[$62]:$9976 Character_GetCountAndNameIndices (#52)\n[$66]:$998A\n[$72]:$9AA3 - Character_GetSpellCount\n[$8C]:$A38D (#A9)\n[$86]:$B2D3 MonsterStats\n[$8A]:$9862 Character_Item_IsEquipped\n[$8E]:$A35B Character_CheckForLevelUp (#AA)\n[$A0]:$9E09 Character_CheckIfSpecial_IsEquipped\n[$AA]:$A149 SetOrClearCarryFlag
+P:0000-008B:DynamicSubroutine_Addresses_00000:[$04]:$92A8 Character_GetCurrentHP (#23)\n[$0C]:$932C Character_GetCurrentMP (#27)\n[$18]:$93D0 Character_CheckStatus (#2D)\n[$1E]:$9445 TransferCharacterNameTo_QuickStorage\n[$24]:$9486 \n[$2C]:$94CF \n[$2E]:$9527 \n[$30]:$9540 \n[$32]:$9586 TransferXPToQuickStorage (#3A)\n[$34]:$959A Character_GainXP (#3B)\n[$36]:$95ED Character_GetTotalGold (#3C)\n[$38]:$95FD Character_GainGold (#3D)\n[$3C]:$9668 Character_GetEquippedItems\n[$58]:$993A GetCharacterClass\n[$5A]:$9944 GetCharacterClass_JMP ($4E)\n[$62]:$9976 Character_GetCountAndNameIndices (#52)\n[$66]:$998A\n[$72]:$9AA3 - Character_GetSpellCount\n[$8C]:$A38D (#A9)\n[$86]:$B2D3 MonsterStats\n[$8A]:$9862 Character_Item_IsEquipped\n[$8E]:$A35B Character_CheckForLevelUp (#AA)\n[$A0]:$9E09 Character_CheckIfSpecial_IsEquipped\n[$AA]:$A149 SetOrClearCarryFlag\n\n[$65?]:$BF50 ClearRam
 P:01B8:F01B8
 P:01C0:L01C0
 P:01D8:L01D8
@@ -577,9 +577,18 @@ P:2CAE-2CAF:BRKInstructions_IsSpecialEquipped:17\n49 - Character_CheckIfSpecial_
 P:32D3-32E9:MonsterStats:23 bytes per enemy\n[0]:Level\n[1-2]:Exp\n[3]:Agility\n[4]:GP\n[5]:Attack\n[6]:Defense\n[7]:HP\n[8]:MP\n[9]:Item drop\n[10-17]: bits 0-6 Move sets\n\n[12-14]: bit 7: ??\n[14-15]: bit 7: num attacks?\n[16-17]: bit 7: regen?\n\n[18]: 0-1 GP 255+, 2-3 Infernos, 4-5 Icebolt, 6-7 Blaze&Fireball&Bang\n[19]: 0-1 Attack 255+, 2-3 Sacrifice, 4-5 Beat, 6-7 Lightning\n[20]: 0-1 Defense 255+, 2-3 Sap, 4-5 Stopspell, 6-7 SLeep\n[21]: 0-1 HP 255+, 2-3 Confuse, 4-5 Robmagix, 6-7 Surround\n[22]: bit 0-2 Item drop rate, 3 ???, 4-5 Expel, 6-7 Slow&Limbo
 P:32EA-3300:Monster_StatBlock_Raven
 P:3F50:ClearRam
+P:3F57:_Clear0x00_to_0x0700_Loop_:clears one page at time
+P:3F6C::does this ever run?
+P:3F6E:_L03F6E_Loop_
+P:3F74:_Clear_loop_break_
+P:3F76::turn on NMI and bg table address 0x1000
+P:3F7B::enable sprites and BG
+P:3F8C::why these coordinates?
+P:3F9D:_Init_StackFirstHalf_Loop_:\nsets all to 0xFF
+P:3FA9:_Init_SaveRAM_6D40_to_6DE0_Loop_:sets to $FF
 P:3FD8-3FFF:EndOfBank00000to03FFF
-P:4030:DynamicSubroutine_04000_C
-P:4037-4039:BRKInstruction_EF02:Calls a bank switch to $1E
+P:4030:ResetAPU_04000
+P:4037-4039:BRKInstruction_EF02:Calls a bank switch to $1E\nthen runs ResetAPU_78000
 P:405C:WaitForNMI_78000_BSDynamic
 P:4064-4065:BRKInstructions_WaitForNMI_78000:EF - BRKInstruction_BankSwitch\n07 - WaitForNMI_78000_Subroutine
 P:4067:APU_InitiateNewSequence_SpecialBRK:sequence index
@@ -2521,7 +2530,7 @@ P:3BA28:__CopySpriteVector_Loop
 P:3BA34-3BA3F:LoadSpritesVector
 P:3BA6B-3BFD7:FreeSpace38000to3BFFF
 P:3BFD8-3BFFF:EndOfBank38000To3BFFF
-P:3C000-3C001:Bank3C000to3FFFF
+P:3C000-3C001:ResetNMI_ClearData
 P:3C020:F3C020
 P:3C028:L3C028
 P:3C035:Monster_GetMaxHP_maybe:A:1 X:59 Y:15\nstart of battle 2 ravens
@@ -2830,6 +2839,11 @@ P:3CB99:_L3CB99_
 P:3CB9F:Burn_Cycles
 P:3CBA3:L3CBA3
 P:3CBA4:L3CBA4
+P:3CBB3:F3CBB3
+P:3CBB5::reset the stack pointer
+P:3CBC7:_L3CBC7_
+P:3CBCC-3CBCE:BRKInstructions_007F
+P:3CBF2:_L3CBF2_
 P:3CC5C-3CC61:BottomOfStack:Base loop? Not running when a menu is open.
 P:3CC62:F3CC62
 P:3CC79-3CC7A:BRKInstructions_1746
@@ -3147,7 +3161,12 @@ P:3E800::set SP to 0xFF, clearing the stack
 P:3E803::disable NMI
 P:3E81E:ResetNMI_3C000_sub_cont:\nFall through from ResetNMI_7C000_sub_cont\npost BankSwitch
 P:3E820::turn off all APU tracks
-P:3E826-3E828:BRKInstruction_079F
+P:3E826-3E828:BRKInstruction_ResetAPU_04000:07\n9F - ResetAPU
+P:3E829:ResetPPU
+P:3E83B:_ClearCHRRAM_1000_to_1010_Loop
+P:3E841-3E843:BRKInstructions_1763:17\n63 - 
+P:3E84B:_SetBGPaletteColor_Store_Loop_:set to 0x0F
+P:3E851::show sprites and BG
 P:3E864:BRK_3C000
 P:3E868-3E86D:BRK_StoreCPUStatus
 P:3E87E:BRK_GetValuesAfterBRK
@@ -3160,6 +3179,8 @@ P:3E8BA:BRKInstruction_BankSwitch:Load Subroutine without 07 or 17 loader\nPLA (
 P:3E8C0::bank id
 P:3E8C2::first value in BRKInstructions
 P:3E8CD::the bank to return to after this operation
+P:3E903:ResetNMI_3C000_sub_cont_prereturn:\ncontrol flow right before endo of BRK returns here
+P:3E905::$37
 P:3E917-3E98F:DynamicSubroutine_BankIds_07:[$00]:$EE\n[$01]:$EE\n[$02]:$EE\n[$03]:$EE\n[$04]:$EE Bank E $38000\n[$11]:$50\n[$13]:$00\n[$16]:$00\n[$18]:$00\n[$19]:$00\n[$1B]:$00\n[$1C]:$00\n[$1D]:$00 (#3A)\n[$1E]:$00 (#3C & #3D)\n[$1F]:$00\n[$26]:$00\n[$27]:$00\n[$29]:$00\n[$2A]:$00\n[$2D]:$00 Character_GetSpellCount\n[$31]:$22\n[$32]:$22\n[$35]:$04\n[$36]:$44 Bank 4 $10000\n[$37]:$44\n[$38]:$44\n[$39]:$44 \n[$3A]:$44\n[$3B]:$44 Bank 4 $10000\n[$3C]:$42\n[$3E]:$4?\n[$4E]:$0C\n[$50]:$11 Bank 1 $04000\n[$52]:$21 (Bank 2 $08000 -> Battle_GetName)\n[$53]:$E4\n[$54]:$E0\n[$55]:$0E\n[$68]:$44 (#D1)\n[$69]:$44 (high nibble $10000)\n[$6B]:$44 (high nybble ->\n[$6C]:$11\n[$6D]:$11 High nibble \n[$6E]:$1D\n[$74]:$EE\n[$78]:$15
 P:3E997-3E9EC:DynamicSubroutine_BankIds_17:[$17]:$0D\n[$19]:$DD\n[$24]:$C0\n[$28]:$EE\n[$2D]:$CC\n[$39]:$C0\n[$3D]:$D0\n[$43]:$26\n[$4D]:$6A\n[$4E]:$A4\n[$4F]:$44\n[$51]:$AA
 P:3E9ED-3EADE:DynamicSubroutine_PointerIndex_07
@@ -3301,6 +3322,7 @@ P:3FA01:Map_Decompress_A
 P:3FF91:BankSwitch_SaveNextBank_3C000:save bank # (A) in bankSwitch_CurrentBankId before running bank switch
 P:3FF94:BankSwitch_3C000
 P:3FF98::clear bit 4, to make sure we have $00
+P:3FFAB::these might be here to push the 2nd 5x bank STA to the next page.
 P:3FFD8:RESET_3C000
 P:3FFD9::this probably has something to do with reseting the MMC latch?
 P:3FFFA-3FFFB:NMIPointer_3C000
@@ -3351,10 +3373,35 @@ P:583A3-583A9:TimeOfDayPaletteOffsets_Vector:offsets to palettes for different t
 P:583AA-583B0:TimeOfDayPaletteChangeTimes_Vector:times at which palette changes
 P:5C000-5C001:CopyrightNotice_Pointer
 P:5C002-5C003:TitleScreen_Pointer
+P:5C004:DynamicSubroutine_5C000:\nA non-standard BRKInstruction call
+P:5C031:F5C031
+P:5C035:_Clear_BGPaletteStore_Loop_
+P:5C044:__JMP_F7C421_
+P:5C047:F5C047
+P:5C049:_LoadCopyrightPalette_Loop
+P:5C057::probably the intro song
+P:5C059:BRKInstructions_07A0:07\nA0 - APU_InitiateNewSequence
+P:5C05D:F5C05D
+P:5C092:F5C092:address to copy right sprites?
+P:5C0AB:L5C0AB
+P:5C0B9:F5C0B9
+P:5C0C9:F5C0C9
+P:5C0D6:F5C0D6
+P:5C0DA:L5C0DA
+P:5C0E7:F5C0E7
+P:5C111:L5C111
+P:5C12F:F5C12F
+P:5C136:F5C136
 P:5C14A-5C162:Copyright_Palette
 P:5C173-5C322:Copyright_Background
 P:5D7D6-5D7D9:Copyright_CHR_Pointers
+P:5D8A2:_L5D8A2_
+P:5D8BD:F5D8BD
 P:5D8EF-5D8FA:TitleScreen_FadeIn_Palette_dragontablet
+P:5D949:F5D949
+P:5D957:F5D957
+P:5D966:__F5D957_RTS
+P:5D9E7:F5D9E7
 P:5DA59-5DA70:TitleScreen_FadeIn_Palette_torcheswall
 P:5FFD8-5FFFF:EndofBank5C000to5FFFF
 P:63FD8-63FFF:EndOfBank60000to63FFF
@@ -3563,8 +3610,10 @@ P:7B93D:L7B93D
 P:7B950:APU_SequenceInit
 P:7B96D:__JMP_APU_DisableUpdate
 P:7B970:APU_SFX_Init
+P:7B973::disable DMC
 P:7B97D::Enable DMC - pretty sure this never happens
 P:7B97F:_L7B97F_
+P:7B980::0x0F - turn on everything except DMC\n0x1F - turn on everything
 P:7B988:_lolwut_:\n???
 P:7B99B:_L7B99B_
 P:7B9B3:APU_GetPreviousSequenceID:Load A with last sequence Id with disable bit 0 (enabled)\nand JMP to APU_UpdateCurrentSequence
@@ -3576,11 +3625,18 @@ P:7BA59-7BB5F:Music_TitleScreen
 P:7BFD8-7BFFF:EndOfBank78000To7BFFFF
 P:7C000-7C001:Bank7C000to7FFFF
 P:7C002-7C01F:ZeroOutVariables
+P:7C0B6:F7C0B6
 P:7C0BC:ZeroOutPPU
 P:7C341:WaitForNMI_78000
 P:7C344:_WaitForNMI_78000_Loop_
+P:7C34C:F5C34C
+P:7C35B:F5C35B
+P:7C363:F7C363
+P:7C369:F5C369
 P:7C383:SetupBGPalettes_HighBanks
 P:7C3B6:BRKInstructions_6F00_B:6F -  pull subroutine address from bank subroutine list ($0000 of bank)\n00 - 
+P:7C421:F7C421
+P:7C427:F7C427
 P:7C46B:BRK_DynamicSub_Destination_1
 P:7C4F7:BankSwitch_GetBankNumber
 P:7C4FE::A == 0 || 1
@@ -3658,12 +3714,12 @@ S:00CB:encounterCheckRequired_C:if this AND $90 == $80, skip encounter check
 S:0A32:IsDoneReadingFromBank:bit 5 == 1 done\nbit 5 == 0 not done\n\nEoTCharFound\n----------------------\n$ABD1 - Set bit 5\n\nAfter line written to staging area, turn off bit 0
 S:0A33:DialogSegment_Index:if >= #$96, Segment is in High Bank
 S:0A34:Menu_SingularEnding_Variable:Menu_WriteSingularChars\n-------------------------------\n$8EFB - Temp stores the type of plural ending to print\n5:standard "s"\n\n$8F07 - Stores index of last char printed
-S:0A3D:APU_enableDMC_A3D:when not 0, signals APU to turn on the DMC
+S:0A3D:APU_enableDMC_6A3D:when not 0, signals APU to turn on the DMC
 S:0A3F-0A41:ExperienceForNextLevel_Character0
 S:0A42-0A44:ExperienceForNextLevel_Character1
 S:0A45-0A47:ExperienceForNextLevel_Character2
 S:0A48-0A4A:ExperienceForNextLevel_Character3
-S:0A58::Menu_SetColor\n------------------\n$9614 if == 0 then menu palette color = #$30 (white)
+S:0A58::ResetPPU\n---------------\n$E836 - set to 0\n\nMenu_SetColor\n------------------\n$9614 if == 0 then menu palette color = #$30 (white)
 S:0A63::DynamicJumpDestination_10000_A\n----------------------------------\n$805B - init with $00
 S:0A68:RNG_MultiRandomDiscardCounter:Many RNG routines discard this # of random numbers before selecting.\n\nUpdated with a random number in the range [0,15] during each turn of battle, after all characters' commands have been entered. 
 S:0A6B:Run_AutoFail:if != 0\n  run attempt auto-fail
@@ -3739,7 +3795,7 @@ S:1200-1241:CHR_TileIndex_Vector:Tile Index of tiles written to PPU
 S:1300-130D:PPU_NumTilesInBatch_Vector
 G:2000:PPUControl_2000:7  bit  0\n---- ----\nVPHB SINN\n|||| ||||\n|||| ||++- Base nametable address\n|||| ||    (0 = $2000; 1 = $2400; 2 = $2800; 3 = $2C00)\n|||| |+--- VRAM address increment per CPU read/write of PPUDATA\n|||| |     (0: add 1, going across; 1: add 32, going down)\n|||| +---- Sprite pattern table address for 8x8 sprites\n||||       (0: $0000; 1: $1000; ignored in 8x16 mode)\n|||+------ Background pattern table address (0: $0000; 1: $1000)\n||+------- Sprite size (0: 8x8; 1: 8x16)\n|+-------- PPU master/slave select\n|          (0: read backdrop from EXT pins; 1: output color on EXT pins)\n+--------- Generate an NMI at the start of the\n           vertical blanking interval (0: off; 1: on)
 G:2001:PPUMask_2001:7  bit  0\n---- ----\nBGRs bMmG\n|||| ||||\n|||| |||+- Display type: (0: color, 1: grayscale)\n|||| ||+-- 1: Show background in leftmost 8 pixels of screen, 0: Hide\n|||| |+--- 1: Show sprites in leftmost 8 pixels of screen, 0: Hide\n|||| +---- 1: Show background\n|||+------ 1: Show sprites\n||+------- Emphasize red\n|+-------- Emphasize green\n+--------- Emphasize blue
-G:2002:PpuStatus_2002:7  bit  0\n---- ----\nVSO. ....\n|||| ||||\n|||+-++++- Least significant bits previously written into a PPU register\n|||        (due to register not being updated for this address)\n||+------- Sprite overflow. The intent was for this flag to be set\n||         whenever more than eight sprites appear on a scanline, but a\n||         hardware bug causes the actual behavior to be more complicated\n||         and generate false positives as well as false negatives; see\n||         PPU sprite evaluation. This flag is set during sprite\n||         evaluation and cleared at dot 1 (the second dot) of the\n||         pre-render line.\n|+-------- Sprite 0 Hit.  Set when a nonzero pixel of sprite 0 overlaps\n|          a nonzero background pixel; cleared at dot 1 of the pre-render\n|          line.  Used for raster timing.\n+--------- Vertical blank has started (0: not in vblank; 1: in vblank).\n           Set at dot 1 of line 241 (the line *after* the post-render\n           line, false); cleared after reading $2002 and at dot 1 of the\n           pre-render line.
+G:2002:PpuStatus_2002:-READ-\nClears bit 7 and the address latches PPU_Scroll and PPU_Addr.\n\n-WRITE-\n7  bit  0\n---- ----\nVSO. ....\n|||| ||||\n|||+-++++- Least significant bits previously written into a PPU register\n|||        (due to register not being updated for this address)\n||+------- Sprite overflow. The intent was for this flag to be set\n||         whenever more than eight sprites appear on a scanline, but a\n||         hardware bug causes the actual behavior to be more complicated\n||         and generate false positives as well as false negatives; see\n||         PPU sprite evaluation. This flag is set during sprite\n||         evaluation and cleared at dot 1 (the second dot) of the\n||         pre-render line.\n|+-------- Sprite 0 Hit.  Set when a nonzero pixel of sprite 0 overlaps\n|          a nonzero background pixel; cleared at dot 1 of the pre-render\n|          line.  Used for raster timing.\n+--------- Vertical blank has started (0: not in vblank; 1: in vblank).\n           Set at dot 1 of line 241 (the line *after* the post-render\n           line, false); cleared after reading $2002 and at dot 1 of the\n           pre-render line.
 G:2003:OamAddr_2003:Set OAM address - Write only
 G:2004:OamData_2004:Read/Write OAM data
 G:2005:PPUScroll_2005:Set PPU scroll, write twice - Write only

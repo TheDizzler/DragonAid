@@ -142,6 +142,10 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </summary>
 			public static int PPU_StagingArea = 0x0300;
 			/// <summary>
+			/// 0x03E7
+			/// </summary>
+			public static int PPU_BGPaletteColor_Store = 0x03E7;
+			/// <summary>
 			/// 0x0400
 			/// <para>96 byte length array</para>
 			/// </summary>
@@ -223,7 +227,6 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// <br></br>$8080 is normal, anything else is dead?</para>
 			/// </summary>
 			public static int Character_Statuses = 0x073C;
-
 		}
 
 		/// <summary>
@@ -267,6 +270,19 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </para>
 			/// </summary>
 			public static int PPU_Scroll = 0x2005;
+			/// <summary>
+			/// 0x2006
+			/// <para>
+			/// <br>Set PPU address, write twice - Write only</br>
+			/// <br>Where in PPU memory the sprite gets written</br>
+			/// </para>
+			/// </summary>
+			public static int PPU_Addr = 0x2006;
+			/// <summary>
+			/// Read/Write VRAM.
+			/// </summary>
+			public static int PPU_Data = 0x2007;
+
 
 			/// <summary>
 			/// <para> 0x4000
@@ -364,7 +380,13 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </summary>
 			public static int TriangleLength = 0x400B;
 
-
+			/// <summary>
+			/// 0x4010
+			/// <para>
+			/// <br>IL-- RRRR</br>
+			/// <br> IRQ enable (I), loop (L), frequency (R)</br></para>
+			/// </summary>
+			public static int DMCFreq = 0x4010;
 			/// <summary>
 			/// <para>0x4011
 			/// <br>-DDD DDDD</br>
