@@ -34,6 +34,7 @@
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.pointer17_listBox = new System.Windows.Forms.ListBox();
+			this.addressView = new AtomosZ.DragonAid.Libraries.AddressView();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.save_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,9 +47,6 @@
 			this.searchAddress_spinner = new System.Windows.Forms.NumericUpDown();
 			this.searchAddr_button = new System.Windows.Forms.Button();
 			this.saveStatus_label = new System.Windows.Forms.Label();
-			this.tabPage3 = new System.Windows.Forms.TabPage();
-			this.localPointers_listBox = new System.Windows.Forms.ListBox();
-			this.addressView = new AtomosZ.DragonAid.Libraries.AddressView();
 			this.pointerAndAddress_flowLayoutPanel.SuspendLayout();
 			this.subroutine_tabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
@@ -57,7 +55,6 @@
 			this.info_panel.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.searchAddress_spinner)).BeginInit();
-			this.tabPage3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pointer07_listBox
@@ -67,7 +64,7 @@
 			this.pointer07_listBox.ItemHeight = 20;
 			this.pointer07_listBox.Location = new System.Drawing.Point(3, 3);
 			this.pointer07_listBox.Name = "pointer07_listBox";
-			this.pointer07_listBox.Size = new System.Drawing.Size(387, 337);
+			this.pointer07_listBox.Size = new System.Drawing.Size(415, 337);
 			this.pointer07_listBox.TabIndex = 2;
 			this.pointer07_listBox.SelectedIndexChanged += new System.EventHandler(this.Pointer07_listBox_SelectedIndexChanged);
 			// 
@@ -87,7 +84,6 @@
 			// 
 			this.subroutine_tabControl.Controls.Add(this.tabPage1);
 			this.subroutine_tabControl.Controls.Add(this.tabPage2);
-			this.subroutine_tabControl.Controls.Add(this.tabPage3);
 			this.subroutine_tabControl.HotTrack = true;
 			this.subroutine_tabControl.Location = new System.Drawing.Point(3, 3);
 			this.subroutine_tabControl.Name = "subroutine_tabControl";
@@ -102,7 +98,7 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 29);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(393, 343);
+			this.tabPage1.Size = new System.Drawing.Size(421, 343);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "Dynamic Subs 07";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -113,7 +109,7 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 29);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(393, 343);
+			this.tabPage2.Size = new System.Drawing.Size(421, 343);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Dynamic Subs 17";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -125,9 +121,18 @@
 			this.pointer17_listBox.ItemHeight = 20;
 			this.pointer17_listBox.Location = new System.Drawing.Point(3, 3);
 			this.pointer17_listBox.Name = "pointer17_listBox";
-			this.pointer17_listBox.Size = new System.Drawing.Size(387, 337);
+			this.pointer17_listBox.Size = new System.Drawing.Size(415, 337);
 			this.pointer17_listBox.TabIndex = 3;
 			this.pointer17_listBox.SelectedIndexChanged += new System.EventHandler(this.Pointer17_listBox_SelectedIndexChanged);
+			// 
+			// addressView
+			// 
+			this.addressView.AutoSize = true;
+			this.addressView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.addressView.Location = new System.Drawing.Point(438, 3);
+			this.addressView.Name = "addressView";
+			this.addressView.Size = new System.Drawing.Size(490, 376);
+			this.addressView.TabIndex = 1;
 			// 
 			// menuStrip1
 			// 
@@ -136,7 +141,7 @@
             this.fileToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(940, 33);
+			this.menuStrip1.Size = new System.Drawing.Size(934, 33);
 			this.menuStrip1.TabIndex = 5;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -186,7 +191,7 @@
 			this.info_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.info_panel.Location = new System.Drawing.Point(0, 414);
 			this.info_panel.Name = "info_panel";
-			this.info_panel.Size = new System.Drawing.Size(940, 42);
+			this.info_panel.Size = new System.Drawing.Size(934, 42);
 			this.info_panel.TabIndex = 6;
 			// 
 			// flowLayoutPanel1
@@ -244,7 +249,7 @@
 			// 
 			this.saveStatus_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.saveStatus_label.AutoSize = true;
-			this.saveStatus_label.Location = new System.Drawing.Point(818, 4);
+			this.saveStatus_label.Location = new System.Drawing.Point(832, 13);
 			this.saveStatus_label.Name = "saveStatus_label";
 			this.saveStatus_label.Size = new System.Drawing.Size(96, 20);
 			this.saveStatus_label.TabIndex = 0;
@@ -252,43 +257,12 @@
 			this.saveStatus_label.TextAlign = System.Drawing.ContentAlignment.BottomRight;
 			this.saveStatus_label.Visible = false;
 			// 
-			// tabPage3
-			// 
-			this.tabPage3.Controls.Add(this.localPointers_listBox);
-			this.tabPage3.Location = new System.Drawing.Point(4, 29);
-			this.tabPage3.Name = "tabPage3";
-			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage3.Size = new System.Drawing.Size(421, 343);
-			this.tabPage3.TabIndex = 2;
-			this.tabPage3.Text = "Local Pointers";
-			this.tabPage3.UseVisualStyleBackColor = true;
-			// 
-			// localPointers_listBox
-			// 
-			this.localPointers_listBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.localPointers_listBox.FormattingEnabled = true;
-			this.localPointers_listBox.ItemHeight = 20;
-			this.localPointers_listBox.Location = new System.Drawing.Point(3, 3);
-			this.localPointers_listBox.Name = "localPointers_listBox";
-			this.localPointers_listBox.Size = new System.Drawing.Size(415, 337);
-			this.localPointers_listBox.TabIndex = 4;
-			this.localPointers_listBox.SelectedIndexChanged += new System.EventHandler(this.LocalPointers_listBox_SelectedIndexChanged);
-			// 
-			// addressView
-			// 
-			this.addressView.AutoSize = true;
-			this.addressView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.addressView.Location = new System.Drawing.Point(438, 3);
-			this.addressView.Name = "addressView";
-			this.addressView.Size = new System.Drawing.Size(490, 376);
-			this.addressView.TabIndex = 1;
-			// 
 			// PointerAidForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ClientSize = new System.Drawing.Size(940, 456);
+			this.ClientSize = new System.Drawing.Size(934, 456);
 			this.Controls.Add(this.info_panel);
 			this.Controls.Add(this.pointerAndAddress_flowLayoutPanel);
 			this.Controls.Add(this.menuStrip1);
@@ -308,7 +282,6 @@
 			this.flowLayoutPanel1.ResumeLayout(false);
 			this.flowLayoutPanel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.searchAddress_spinner)).EndInit();
-			this.tabPage3.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -335,8 +308,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.NumericUpDown searchAddress_spinner;
 		private System.Windows.Forms.Button searchAddr_button;
-		private System.Windows.Forms.TabPage tabPage3;
-		private System.Windows.Forms.ListBox localPointers_listBox;
 	}
 }
 

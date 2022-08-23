@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using AtomosZ.DragonAid.Libraries;
-using AtomosZ.DragonAid.Libraries.PointerList;
 using Newtonsoft.Json;
 
 using static AtomosZ.DragonAid.Libraries.DynamicSubroutine;
@@ -78,10 +77,6 @@ namespace AtomosZ.DragonAid.PointerAid
 			source = new BindingSource();
 			source.DataSource = pointerData.subroutines07;
 			pointer07_listBox.DataSource = source;
-
-			source = new BindingSource();
-			source.DataSource = pointerData.localPointers;
-			localPointers_listBox.DataSource = source;
 		}
 
 
@@ -119,14 +114,6 @@ namespace AtomosZ.DragonAid.PointerAid
 				pointer17_listBox.DataSource = source;
 				pointer17_listBox.SelectedIndex = index;
 			}
-			else
-			{
-				var index = localPointers_listBox.SelectedIndex;
-				BindingSource source = new BindingSource();
-				source.DataSource = localPointers_listBox.DataSource;
-				localPointers_listBox.DataSource = source;
-				localPointers_listBox.SelectedIndex = index;
-			}
 
 			SaveNeeded(true);
 		}
@@ -152,12 +139,10 @@ namespace AtomosZ.DragonAid.PointerAid
 			if (listsToExtract[0])
 			{
 				var subroutines07 = new List<DynamicSubroutine>();
-				for (int i = 0; i < ROM.Load07PointerIndices.length; ++i)
+				for (int i = 0; i < ROM.Load07PointerIndices_3C000.length; ++i)
 				{
-					if (i == 145)
-						Console.WriteLine("");
-					byte index = data[ROM.Load07PointerIndices.offset + i];
-					byte bankId = data[ROM.Load07BankIds.offset + (i / 2)];
+					byte index = data[ROM.Load07PointerIndices_3C000.offset + i];
+					byte bankId = data[ROM.Load07BankIds_3C000.offset + (i / 2)];
 					int bank;
 					if (i % 2 == 0)
 						bank = bankId >> 4;
@@ -194,10 +179,10 @@ namespace AtomosZ.DragonAid.PointerAid
 			if (listsToExtract[1])
 			{
 				var subroutines17 = new List<DynamicSubroutine>();
-				for (int i = 0; i < ROM.Load17PointerIndices.length; ++i)
+				for (int i = 0; i < ROM.Load17PointerIndices_3C000.length; ++i)
 				{
-					byte index = data[ROM.Load17PointerIndices.offset + i];
-					byte bankId = data[ROM.Load17BankIds.offset + (i / 2)];
+					byte index = data[ROM.Load17PointerIndices_3C000.offset + i];
+					byte bankId = data[ROM.Load17BankIds_3C000.offset + (i / 2)];
 					int bank;
 					if (i % 2 == 0)
 						bank = bankId >> 4;
@@ -230,46 +215,6 @@ namespace AtomosZ.DragonAid.PointerAid
 				}
 				pointerData.subroutines17 = subroutines17;
 			}
-
-			if (listsToExtract[2])
-			{
-				var localPointers = new List<DynamicSubroutine>();
-				for (int i = 0; i < ROM.LocalPointerIndices.length; ++i)
-				{
-					byte index = data[ROM.LocalPointerIndices.offset + i];
-					byte bankId = data[ROM.LocalPointerBanks.offset + (i / 2)];
-					int bank;
-					if (i % 2 == 0)
-						bank = bankId >> 4;
-					else
-						bank = bankId & 0x0F;
-
-					Address bankPointer = DynamicSubroutineBankPointers[bank];
-					if (bankPointer.pointer == -1)
-					{
-						Debug.WriteLine($"No Addresses for {i.ToString("X2")} => {bankPointer.name}");
-						continue;
-					}
-
-					int subroutine = data[bankPointer.offset + index * 2]
-						+ (data[bankPointer.offset + (index * 2) + 1] << 8);
-
-					DynamicSubroutine ds = new DynamicSubroutine()
-					{
-						code = i,
-						bankId = bank,
-						dsIndex = index,
-						loader = DynamicLoader.LocalPointers,
-						address = subroutine,
-						prgAddress = new Address("Full address", Math.Max(0, subroutine - 0x8000) + bankPointer.pointer, 2),
-						notes = bankPointer.name,
-					};
-
-					localPointers.Add(ds);
-				}
-
-				pointerData.localPointers = localPointers;
-			}
 		}
 
 
@@ -283,10 +228,6 @@ namespace AtomosZ.DragonAid.PointerAid
 			addressView.LoadDynamicSubroutine((DynamicSubroutine)pointer17_listBox.SelectedItem);
 		}
 
-		private void LocalPointers_listBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			addressView.LoadDynamicSubroutine((DynamicSubroutine)localPointers_listBox.SelectedItem);
-		}
 
 		private void Subroutine_tabControl_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -294,8 +235,6 @@ namespace AtomosZ.DragonAid.PointerAid
 				addressView.LoadDynamicSubroutine((DynamicSubroutine)pointer07_listBox.SelectedItem);
 			else if (subroutine_tabControl.SelectedIndex == 1)
 				addressView.LoadDynamicSubroutine((DynamicSubroutine)pointer17_listBox.SelectedItem);
-			else
-				addressView.LoadDynamicSubroutine((DynamicSubroutine)localPointers_listBox.SelectedItem);
 		}
 
 		private void RestoreFromROM_ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -436,11 +375,6 @@ namespace AtomosZ.DragonAid.PointerAid
 			{
 				subroutine_tabControl.SelectedIndex = 1;
 				pointer17_listBox.SelectedItem = dynamicSubroutine;
-			}
-			else
-			{
-				subroutine_tabControl.SelectedIndex = 2;
-				localPointers_listBox.SelectedItem = dynamicSubroutine;
 			}
 		}
 	}
