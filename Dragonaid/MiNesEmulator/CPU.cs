@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using AtomosZ.DragonAid.Libraries;
 using AtomosZ.DragonAid.Libraries.ASM;
+
 
 namespace AtomosZ.MiNesEmulator
 {
@@ -56,8 +58,12 @@ namespace AtomosZ.MiNesEmulator
 			}
 
 			/// <summary>
-			/// Copies memory of length bytes to byte array or
-			/// Copies bytes from byte array to pointer address.
+			/// <para>
+			/// <br>Copies memory of length bytes to byte array or </br>
+			/// <br>Copies bytes from byte array to pointer address. </br>
+			/// <br>NOTE: Since this clamps the pointer value from a mirrored address
+			///		to a non-mirrored address, this COULD have unexpected behaviour.</br>
+			///	</para>
 			/// </summary>
 			/// <param name="pointer"></param>
 			/// <param name="length"></param>
@@ -172,6 +178,11 @@ namespace AtomosZ.MiNesEmulator
 		{
 			get { return mem[pointer]; }
 		}
+
+		public byte[] this[int pointer, int length]
+		{
+			get { return mem[pointer, length]; }
+		}
 		public byte[] zeroPages
 		{
 			get { return mem[0, 0x100]; }
@@ -225,15 +236,15 @@ namespace AtomosZ.MiNesEmulator
 
 		private Instruction GetInstruction(int address)
 		{
-			var line = mem[address];
-			if (!Opcodes.opcodes.TryGetValue(line, out Opcode opc))
+			var instrByte = mem[address];
+			if (!Opcodes.opcodes.TryGetValue(instrByte, out Opcode opc))
 			{
-				throw new Exception($"Invalid opcode $({line.ToString("X2")}) at ${address.ToString("x2")}");
+				throw new Exception($"Invalid opcode $({instrByte:X2)}) at ${address:X4}");
 			}
 
 			var instr = new Instruction();
 			instr.opcode = opc;
-
+			instr.address = address;
 			instr.operands = new byte[opc.bytes - 1];
 			for (int i = 1; i < opc.bytes; ++i)
 			{
@@ -267,7 +278,7 @@ namespace AtomosZ.MiNesEmulator
 			public byte sp = 0xFF;
 
 
-			// processor status flags
+			/* processor status flags */
 			public bool carry;
 			public bool zero;
 			public bool interrupt;
@@ -352,6 +363,12 @@ namespace AtomosZ.MiNesEmulator
 				var instr = cpu.GetInstruction(pc);
 				return Peek(instr);
 			}
+
+			public string PeekNextInstruction(Instruction instr)
+			{
+				return Peek(instr);
+			}
+
 			public void ParseNextInstruction()
 			{
 				var instr = cpu.GetInstruction(pc);
