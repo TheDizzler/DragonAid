@@ -99,6 +99,30 @@ namespace AtomosZ.MiNesEmulator
 			}
 		}
 
+		/// <summary>
+		/// This class stores no data or status. It is just a go-between to the memory
+		/// for simplicity.
+		/// All indexing is relative to the start of the STACK (not cpu memory).
+		/// </summary>
+		public class Stack
+		{
+			internal const int stackStart = 0x100;
+
+			private CPU cpu;
+
+
+			public Stack(CPU cpu)
+			{
+				this.cpu = cpu;
+			}
+
+			public byte this[byte index]
+			{
+				get { return cpu.mem[stackStart + index]; }
+				set { cpu.mem[stackStart + index] = value; }
+			}
+		}
+
 
 		public Stack theStack;
 		public ControlUnit cu;
@@ -193,6 +217,12 @@ namespace AtomosZ.MiNesEmulator
 			return instr.ToString() + " => " + pointsTo.ToString("X4");
 		}
 
+
+		public int GetPointerAt(int lowByteAddress)
+		{
+			return mem[lowByteAddress] + (mem[lowByteAddress + 1] << 8);
+		}
+
 		private Instruction GetInstruction(int address)
 		{
 			var line = mem[address];
@@ -213,10 +243,6 @@ namespace AtomosZ.MiNesEmulator
 			return instr;
 		}
 
-		private int GetPointerAt(int lowByteAddress)
-		{
-			return mem[lowByteAddress] + (mem[lowByteAddress + 1] << 8);
-		}
 
 		private int GetBRKPointer()
 		{
@@ -225,29 +251,6 @@ namespace AtomosZ.MiNesEmulator
 		}
 
 
-		/// <summary>
-		/// This class stores no data or status. It is just a go-between to the memory
-		/// for simplicity.
-		/// All indexing is relative to the start of the STACK (not cpu memory).
-		/// </summary>
-		public class Stack
-		{
-			internal const int stackStart = 0x100;
-
-			private CPU cpu;
-
-
-			public Stack(CPU cpu)
-			{
-				this.cpu = cpu;
-			}
-
-			public byte this[byte index]
-			{
-				get { return cpu.mem[stackStart + index]; }
-				set { cpu.mem[stackStart + index] = value; }
-			}
-		}
 
 
 		/// <summary>
