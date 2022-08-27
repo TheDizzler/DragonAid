@@ -34,7 +34,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,17 +50,17 @@
   <ItemGroup>
     <Compile Include="ASMCompiler.cs" />
     <Compile Include="CPU.cs" />
-    <Compile Include="MemLabel.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="NoScrollJumpPanel.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MemLabel.Designer.cs">
-      <DependentUpon>MemLabel.cs</DependentUpon>
+    <Compile Include="NoScrollJumpPanel.Designer.cs">
+      <DependentUpon>NoScrollJumpPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="MemoryViewer.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="ExRichTextBox.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MemoryViewer.Designer.cs">
-      <DependentUpon>MemoryViewer.cs</DependentUpon>
+    <Compile Include="ExRichTextBox.Designer.cs">
+      <DependentUpon>ExRichTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="MiNesForm.cs">
       <SubType>Form</SubType>
@@ -68,17 +70,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScrollTextBox.cs">
-      <SubType>Component</SubType>
+    <Compile Include="MemoryScrollView.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ScrollTextBox.Designer.cs">
-      <DependentUpon>ScrollTextBox.cs</DependentUpon>
+    <Compile Include="MemoryScrollView.Designer.cs">
+      <DependentUpon>MemoryScrollView.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="MemLabel.resx">
-      <DependentUpon>MemLabel.cs</DependentUpon>
+    <EmbeddedResource Include="NoScrollJumpPanel.resx">
+      <DependentUpon>NoScrollJumpPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MemoryViewer.resx">
-      <DependentUpon>MemoryViewer.cs</DependentUpon>
+    <EmbeddedResource Include="ExRichTextBox.resx">
+      <DependentUpon>ExRichTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MiNesForm.resx">
       <DependentUpon>MiNesForm.cs</DependentUpon>
@@ -93,8 +95,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ScrollTextBox.resx">
-      <DependentUpon>ScrollTextBox.cs</DependentUpon>
+    <EmbeddedResource Include="MemoryScrollView.resx">
+      <DependentUpon>MemoryScrollView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
