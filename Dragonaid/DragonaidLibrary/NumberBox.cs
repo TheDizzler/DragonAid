@@ -12,17 +12,15 @@ namespace AtomosZ.DragonAid.Libraries
 		public delegate void OnValueChanged(NumberBox sender, decimal numericalValue);
 		public event OnValueChanged onValueChanged;
 
+		private string prefix = "";
+		private string postfix = "";
 		/// <summary>
 		/// The number without prefix or postfix.
 		/// </summary>
 		private decimal value;
-		//private string text = "";
-		private string prefix = "";
-		private string postfix = "";
-
 		private decimal previousValue;
 		private bool hexadecimal;
-		private decimal increment;
+		private decimal increment = 1;
 		private decimal maximum = 100;
 		private decimal minimum = 0;
 
@@ -34,6 +32,11 @@ namespace AtomosZ.DragonAid.Libraries
 			textBox.LostFocus += TextBox_LostFocus;
 		}
 
+		private void TextBox_SizeChanged(object sender, EventArgs e)
+		{
+			textBox.Size = new Size(this.Size.Width - 3, 0);
+			this.Size = new Size(this.Size.Width, textBox.Height + 3);
+		}
 
 		public decimal Increment
 		{
@@ -246,11 +249,6 @@ namespace AtomosZ.DragonAid.Libraries
 				Debug.WriteLine("Implement UserControlParent on ParentForm to allow for auto-defocus.");
 			else
 				((UserControlParent)ParentForm).Defocus(sender, e);
-		}
-
-		{
-			get { return (int)numericUpDown.Value; }
-			set { numericUpDown.Value = value; }
 		}
 	}
 }

@@ -28,33 +28,38 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.numericUpDown = new System.Windows.Forms.NumericUpDown();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).BeginInit();
+			this.textBox = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
-			// numericUpDown
+			// textBox
 			// 
-			this.numericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.textBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericUpDown.Location = new System.Drawing.Point(0, 0);
-			this.numericUpDown.Name = "numericUpDown";
-			this.numericUpDown.Size = new System.Drawing.Size(106, 26);
-			this.numericUpDown.TabIndex = 0;
+			this.textBox.Location = new System.Drawing.Point(3, 3);
+			this.textBox.Margin = new System.Windows.Forms.Padding(0);
+			this.textBox.Name = "textBox";
+			this.textBox.Size = new System.Drawing.Size(117, 26);
+			this.textBox.TabIndex = 0;
+			this.textBox.SizeChanged += new System.EventHandler(this.TextBox_SizeChanged);
+			this.textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumberOnly_TextBox_KeyDown);
+			this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NumberOnly_TextBox_KeyPress);
 			// 
 			// NumberBox
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.numericUpDown);
+			this.Controls.Add(this.textBox);
 			this.Name = "NumberBox";
-			this.Size = new System.Drawing.Size(83, 26);
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).EndInit();
+			this.Size = new System.Drawing.Size(123, 32);
+			this.ClientSizeChanged += new System.EventHandler(this.TextBox_SizeChanged);
+			this.SizeChanged += new System.EventHandler(this.TextBox_SizeChanged);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
 		#endregion
 
-		public System.Windows.Forms.NumericUpDown numericUpDown;
+		private System.Windows.Forms.TextBox textBox;
 	}
 }
