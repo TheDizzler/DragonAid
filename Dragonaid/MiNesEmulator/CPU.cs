@@ -675,7 +675,7 @@ namespace AtomosZ.MiNesEmulator
 						pc = instruction.GetPointer();
 						return; // skip the pc += opc bytes
 					case Opcodes.JMP_ind:
-						pc = cpu.mem[instruction.GetPointer()];
+						pc = cpu.GetPointerAt(instruction.GetPointer());
 						return; // skip the pc += opc bytes
 
 					case Opcodes.JSR:
@@ -874,7 +874,7 @@ namespace AtomosZ.MiNesEmulator
 						var i = interrupt;
 						ps = PullByteFromStack();
 						interrupt = i;
-						pc = PullPointerFromStack();
+						pc = PullPointerFromStack() - 1;
 						return; // skip the pc += opc bytes
 					case Opcodes.RTS:
 						if (sp >= 0xFE)
