@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -266,9 +265,6 @@ namespace AtomosZ.MiNesEmulator
 
 				if (string.IsNullOrEmpty(line))
 					continue;
-
-				if (i == 21)
-					Debug.WriteLine("");
 
 				if (line.StartsWith(".nesprg"))
 				{
@@ -567,17 +563,17 @@ namespace AtomosZ.MiNesEmulator
 					if (y >= 0 && x == -1)
 					{
 						mode = Opcode.Mode.Indirect_Y;  // LDA ($44),Y
-						operandStr = line.Substring(2, 2);
+						operandStr = operands.Substring(2, 2);
 					}
 					else if (x >= 0 && y == -1)
 					{
 						mode = Opcode.Mode.Indirect_X;  // LDA ($44,X)
-						operandStr = line.Substring(2, 2);
+						operandStr = operands.Substring(2, 2);
 					}
 					else if (y == -1 && x == -1)
 					{
 						mode = Opcode.Mode.Indirect;    // JMP ($5597)
-						operandStr = line.Substring(2, 4);
+						operandStr = operands.Substring(2, 4);
 					}
 					else
 						throw new Exception($"Syntax error: invalid Indirect syntax");
@@ -703,6 +699,9 @@ namespace AtomosZ.MiNesEmulator
 						break;
 
 					case Mode.Indirect:
+						instr.operands[0] = (byte)(labelAddr);
+						instr.operands[1] = (byte)(labelAddr >> 8);
+						break;
 					case Mode.Indirect_X:
 					case Mode.Indirect_Y:
 						instr.operands[0] = (byte)labelAddr;
@@ -714,7 +713,7 @@ namespace AtomosZ.MiNesEmulator
 						if (diff > 127 || diff < -127)
 						{
 							throw new Exception($"Invalid relative address on line {pcc.sourceCodeLine} : {pcc.sourceCode}"
-								+ " - {operandStr} (${labelAddr}) to far from ${pcc.address}");
+								+ $" - {operandStr} (${labelAddr}) to far from ${pcc.address}");
 						}
 						else if (diff == 0)
 						{
@@ -722,7 +721,8 @@ namespace AtomosZ.MiNesEmulator
 								+ $": {pcc.opcode.asm.Substring(0, 3)} {pcc.operandStr}");
 						}
 
-						byte relativeDistance = (byte)(labelAddr - pcc.address);
+						/* when branching, difference is from instruction AFTER branch (so pcc.address + 2)*/
+						byte relativeDistance = (byte)(labelAddr - (pcc.address + 2));
 						instr.operands[0] = relativeDistance;
 					}
 					break;
