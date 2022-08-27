@@ -203,7 +203,78 @@ namespace AtomosZ.MiNesEmulator
 			get { return mem[0x6000, 0x2000]; }
 		}
 
-		public string GetASM(int address)
+		/// <summary>
+		/// Get all instructions and branch addresses starting from address until a JMP, RTI, or RTS.
+		/// </summary>
+		/// <param name="address"></param>
+		/// <returns></returns>
+		public Tuple<List<Instruction>, List<int>> GetInstructionBlock(int address)
+		{
+			var readAddrHash = new HashSet<int>();
+			var instrItems = new List<Instruction>();
+			var addrToTraverse = new List<int>();
+
+			int pseudoPC = address;
+			// traverse code from address
+			readAddrHash.Add(pseudoPC);
+			var instr = GetInstruction(pseudoPC);
+			instrItems.Add(instr);
+			while (!instr.opcode.IsControlFlowEnd())
+			{
+				if (instr.opcode.IsControlFlow())
+				{
+					if (GetPointerFromInstruction(instr, out int targetAddr))
+					{
+						// check if target already visited
+						if (readAddrHash.Add(targetAddr))
+						{
+							addrToTraverse.Add(targetAddr);
+						}
+					}
+					else
+						MessageBox.Show($"What's the deal with {pseudoPC} : {instr.ToString()}?");
+				}
+
+				pseudoPC += instr.opcode.bytes;
+				instr = GetInstruction(pseudoPC);
+				instrItems.Add(instr);
+				readAddrHash.Add(pseudoPC);
+
+			}
+
+
+
+			return new Tuple<List<Instruction>, List<int>>(instrItems, addrToTraverse);
+		}
+
+		private bool GetPointerFromInstruction(Instruction instr, out int targetAddr)
+		{
+			switch (instr.opcode.mode)
+			{
+				case Opcode.Mode.Relative:  // any branch
+					targetAddr = instr.GetRelativeAddress();
+					return true;
+
+				case Opcode.Mode.Absolute: // JMP, JSR $4444
+					targetAddr = instr.GetPointer();
+					return true;
+
+				case Opcode.Mode.Indirect: // JMP ($4444)
+					targetAddr = GetPointerAt(instr.GetPointer());
+					return true;
+
+				default: // BRK, RTI, RTS
+					targetAddr = -1;
+					return false;
+			}
+		}
+
+		/// <summary>
+		/// @Obsolete
+		/// </summary>
+		/// <param name="address"></param>
+		/// <returns></returns>
+		public string GetASMAt(int address)
 		{
 			var line = mem[address];
 			if (!Opcodes.opcodes.TryGetValue(line, out Opcode opc))
