@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AtomosZ.DragonAid.Libraries;
 using static AtomosZ.DragonAid.Libraries.Opcode;
+using AtomosZ.DragonAid.Libraries.ASM;
 
 namespace AtomosZ.MiNesEmulator
 {

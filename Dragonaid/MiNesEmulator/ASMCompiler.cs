@@ -9,9 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using AtomosZ.DragonAid.Libraries;
-using static AtomosZ.DragonAid.Libraries.Opcode;
+using AtomosZ.DragonAid.Libraries.ASM;
+using static AtomosZ.DragonAid.Libraries.ASM.Opcode;
 
-namespace AtomosZ.MiNesEmulator
+namespace AtomosZ.MiNesEmulator.Compiler
 {
 	public static class ASMCompiler
 	{
