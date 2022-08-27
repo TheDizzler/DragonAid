@@ -65,7 +65,16 @@
     </Compile>
     <Compile Include="DynamicPointerData.cs" />
     <Compile Include="DynamicSubroutine.cs" />
+    <Compile Include="Instruction.cs" />
     <Compile Include="Names.cs" />
+    <Compile Include="NumberBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NumberBox.Designer.cs">
+      <DependentUpon>NumberBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Opcode.cs" />
+    <Compile Include="Opcodes.cs" />
     <Compile Include="PointerList.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -94,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CaptionedPictureBox.resx">
       <DependentUpon>CaptionedPictureBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NumberBox.resx">
+      <DependentUpon>NumberBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
