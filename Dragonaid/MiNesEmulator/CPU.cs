@@ -370,10 +370,12 @@ namespace AtomosZ.MiNesEmulator
 						break;
 					case Opcode.Mode.Absolute_X:
 						instrView += $" ${instruction.GetPointer().ToString("X4")},X"
+							+ $" @ ${(instruction.GetPointer() + x):X2}"
 							+ $"  = ${cpu.mem[instruction.GetPointer() + x].ToString("X2")}";
 						break;
 					case Opcode.Mode.Absolute_Y:
 						instrView += $" ${instruction.GetPointer().ToString("X4")},Y"
+							+ $" @ ${(instruction.GetPointer() + y):X2}"
 							+ $"  = ${cpu.mem[instruction.GetPointer() + y].ToString("X2")}";
 						break;
 
@@ -383,26 +385,25 @@ namespace AtomosZ.MiNesEmulator
 
 
 					case Opcode.Mode.Indirect:
-						instrView += $" (${instruction.operands[0].ToString("X2")})"
-							+ $" = ${cpu.mem[cpu.GetPointerAt(instruction.operands[0])].ToString("X2")}";
+						instrView += $" (${(instruction.GetPointer()):X4})"
+							+ $" @ ${cpu.GetPointerAt(instruction.GetPointer()):X4}"
+							+ $" = ${cpu.mem[cpu.GetPointerAt(instruction.GetPointer())].ToString("X4")}";
 						break;
 					case Opcode.Mode.Indirect_X:
 						instrView += $" (${instruction.operands[0].ToString("X2")},X)"
+							+ $" @ ${cpu.GetPointerAt(instruction.operands[0] + x).ToString("X2")}"
 							+ $" = ${cpu.mem[cpu.GetPointerAt(instruction.operands[0] + x)].ToString("X2")}";
 						break;
 					case Opcode.Mode.Indirect_Y:
 						instrView += $" (${instruction.operands[0].ToString("X2")}),Y"
+							+ $" @ ${(cpu.GetPointerAt(instruction.operands[0]) + y).ToString("X2")}"
 							+ $" = ${cpu.mem[cpu.GetPointerAt(instruction.operands[0]) + y].ToString("X2")}";
 						break;
 
 					case Opcode.Mode.Relative:
-						var offset = 0;
-						if (instruction.operands[0] >= 0x80)
-							offset = 0x100 - instruction.operands[0];
-						else
-							offset = instruction.operands[0];
-						instrView += $" (${offset.ToString("X2")}),Y"
-							+ $" = ${cpu.mem[instruction.operands[0] + offset].ToString("X2")}";
+						instrView += $" ${instruction.operands[0]:X2}"
+								+ $" @ ${instruction.GetRelativeAddressString()}"
+								+ $" = ${cpu.mem[instruction.GetRelativeAddress()]:X2}";
 						break;
 
 
@@ -412,10 +413,12 @@ namespace AtomosZ.MiNesEmulator
 						break;
 					case Opcode.Mode.ZeroPage_X:
 						instrView += $" ${instruction.operands[0].ToString("X2")},X"
+							+ $" @ ${(instruction.operands[0] + x):X2}"
 							+ $" = ${cpu.mem[instruction.operands[0] + x].ToString("X2")}";
 						break;
 					case Opcode.Mode.ZeroPage_Y:
 						instrView += $" ${instruction.operands[0].ToString("X2")},Y"
+							+ $" @ ${(instruction.operands[0] + y):X2}"
 							+ $" = ${cpu.mem[instruction.operands[0] + y].ToString("X2")}";
 						break;
 				}
