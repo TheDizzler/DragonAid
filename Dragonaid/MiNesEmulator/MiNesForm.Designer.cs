@@ -33,15 +33,21 @@
 			this.cpu_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.acc_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
+			this.a_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.label2 = new System.Windows.Forms.Label();
+			this.x_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.label3 = new System.Windows.Forms.Label();
+			this.y_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.label4 = new System.Windows.Forms.Label();
+			this.pc_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.label5 = new System.Windows.Forms.Label();
+			this.cycles_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.flag_groupBox = new System.Windows.Forms.GroupBox();
 			this.flags_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.flags_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.ps_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.label6 = new System.Windows.Forms.Label();
+			this.ps_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.negative_checkBox = new System.Windows.Forms.CheckBox();
 			this.overflow_checkBox = new System.Windows.Forms.CheckBox();
 			this.reserved_checkBox = new System.Windows.Forms.CheckBox();
@@ -54,22 +60,28 @@
 			this.stack_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.sp_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.label7 = new System.Windows.Forms.Label();
+			this.sp_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.stack_textBox = new System.Windows.Forms.TextBox();
 			this.nextLine_button = new System.Windows.Forms.Button();
-			this.code_listBox = new System.Windows.Forms.ListBox();
 			this.nextLine_textBox = new System.Windows.Forms.TextBox();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.pc_label = new System.Windows.Forms.Label();
 			this.run_button = new System.Windows.Forms.Button();
 			this.reset_button = new System.Windows.Forms.Button();
-			this.memoryViewer = new AtomosZ.MiNesEmulator.MemoryViewer();
-			this.a_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
-			this.x_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
-			this.y_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
-			this.pc_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
-			this.cycles_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
-			this.ps_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
-			this.sp_numberBox = new AtomosZ.DragonAid.Libraries.NumberBox();
+			this.memViewer_tabControl = new System.Windows.Forms.TabControl();
+			this.ramData_tabPage = new System.Windows.Forms.TabPage();
+			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.ram_panel = new AtomosZ.MiNesEmulator.NoScrollJumpPanel();
+			this.ram_memoryScrollView = new AtomosZ.MiNesEmulator.MemoryScrollView();
+			this.romData_tabPage = new System.Windows.Forms.TabPage();
+			this.rom_panel = new AtomosZ.MiNesEmulator.NoScrollJumpPanel();
+			this.rom_memoryScrollView = new AtomosZ.MiNesEmulator.MemoryScrollView();
+			this.colHeader_textBox = new System.Windows.Forms.TextBox();
+			this.code_listView = new System.Windows.Forms.ListView();
+			this.cursor_columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.addr_columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.byteCode_columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.asm_columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.cpu_groupBox.SuspendLayout();
 			this.cpuStatus_flowLayoutPanel.SuspendLayout();
 			this.cpu_flowLayoutPanel.SuspendLayout();
@@ -82,6 +94,11 @@
 			this.stack_flowLayoutPanel.SuspendLayout();
 			this.sp_flowLayoutPanel.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
+			this.memViewer_tabControl.SuspendLayout();
+			this.ramData_tabPage.SuspendLayout();
+			this.ram_panel.SuspendLayout();
+			this.romData_tabPage.SuspendLayout();
+			this.rom_panel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// cpu_groupBox
@@ -116,13 +133,12 @@
 			this.cpu_flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.cpu_flowLayoutPanel.Location = new System.Drawing.Point(3, 3);
 			this.cpu_flowLayoutPanel.Name = "cpu_flowLayoutPanel";
-			this.cpu_flowLayoutPanel.Size = new System.Drawing.Size(575, 146);
+			this.cpu_flowLayoutPanel.Size = new System.Drawing.Size(575, 150);
 			this.cpu_flowLayoutPanel.TabIndex = 1;
 			this.cpu_flowLayoutPanel.WrapContents = false;
 			// 
 			// acc_flowLayoutPanel
 			// 
-			this.acc_flowLayoutPanel.AutoSize = true;
 			this.acc_flowLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.acc_flowLayoutPanel.Controls.Add(this.label1);
 			this.acc_flowLayoutPanel.Controls.Add(this.a_numberBox);
@@ -136,7 +152,8 @@
 			this.acc_flowLayoutPanel.Controls.Add(this.cycles_numberBox);
 			this.acc_flowLayoutPanel.Location = new System.Drawing.Point(3, 3);
 			this.acc_flowLayoutPanel.Name = "acc_flowLayoutPanel";
-			this.acc_flowLayoutPanel.Size = new System.Drawing.Size(510, 32);
+			this.acc_flowLayoutPanel.Padding = new System.Windows.Forms.Padding(0, 0, 0, 15);
+			this.acc_flowLayoutPanel.Size = new System.Drawing.Size(566, 36);
 			this.acc_flowLayoutPanel.TabIndex = 0;
 			this.acc_flowLayoutPanel.WrapContents = false;
 			// 
@@ -144,56 +161,231 @@
 			// 
 			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 9);
+			this.label1.Location = new System.Drawing.Point(3, 7);
+			this.label1.Margin = new System.Windows.Forms.Padding(3);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(24, 20);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "A:";
 			// 
+			// a_numberBox
+			// 
+			this.a_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.a_numberBox.Hexadecimal = true;
+			this.a_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.a_numberBox.Location = new System.Drawing.Point(33, 3);
+			this.a_numberBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.a_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.a_numberBox.Name = "a_numberBox";
+			this.a_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.a_numberBox.Postfix = "";
+			this.a_numberBox.Prefix = "$";
+			this.a_numberBox.ReadOnly = false;
+			this.a_numberBox.Size = new System.Drawing.Size(42, 29);
+			this.a_numberBox.TabIndex = 1;
+			this.a_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.a_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
 			// label2
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(159, 9);
+			this.label2.Location = new System.Drawing.Point(81, 7);
+			this.label2.Margin = new System.Windows.Forms.Padding(3);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(24, 20);
 			this.label2.TabIndex = 2;
 			this.label2.Text = "X:";
 			// 
+			// x_numberBox
+			// 
+			this.x_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.x_numberBox.Hexadecimal = true;
+			this.x_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.x_numberBox.Location = new System.Drawing.Point(111, 3);
+			this.x_numberBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.x_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.x_numberBox.Name = "x_numberBox";
+			this.x_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.x_numberBox.Postfix = "";
+			this.x_numberBox.Prefix = "$";
+			this.x_numberBox.ReadOnly = false;
+			this.x_numberBox.Size = new System.Drawing.Size(42, 29);
+			this.x_numberBox.TabIndex = 2;
+			this.x_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.x_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
 			// label3
 			// 
 			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(315, 9);
+			this.label3.Location = new System.Drawing.Point(159, 7);
+			this.label3.Margin = new System.Windows.Forms.Padding(3);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(24, 20);
 			this.label3.TabIndex = 4;
 			this.label3.Text = "Y:";
 			// 
+			// y_numberBox
+			// 
+			this.y_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.y_numberBox.Hexadecimal = true;
+			this.y_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.y_numberBox.Location = new System.Drawing.Point(189, 3);
+			this.y_numberBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.y_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.y_numberBox.Name = "y_numberBox";
+			this.y_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.y_numberBox.Postfix = "";
+			this.y_numberBox.Prefix = "$";
+			this.y_numberBox.ReadOnly = false;
+			this.y_numberBox.Size = new System.Drawing.Size(42, 29);
+			this.y_numberBox.TabIndex = 3;
+			this.y_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.y_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
 			// label4
 			// 
 			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(471, 9);
+			this.label4.Location = new System.Drawing.Point(237, 7);
+			this.label4.Margin = new System.Windows.Forms.Padding(3);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(34, 20);
 			this.label4.TabIndex = 6;
 			this.label4.Text = "PC:";
 			// 
+			// pc_numberBox
+			// 
+			this.pc_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.pc_numberBox.Hexadecimal = true;
+			this.pc_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.pc_numberBox.Location = new System.Drawing.Point(277, 3);
+			this.pc_numberBox.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+			this.pc_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.pc_numberBox.Name = "pc_numberBox";
+			this.pc_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.pc_numberBox.Postfix = "";
+			this.pc_numberBox.Prefix = "$";
+			this.pc_numberBox.ReadOnly = false;
+			this.pc_numberBox.Size = new System.Drawing.Size(62, 29);
+			this.pc_numberBox.TabIndex = 4;
+			this.pc_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.pc_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
 			// label5
 			// 
 			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(637, 9);
+			this.label5.Location = new System.Drawing.Point(345, 7);
+			this.label5.Margin = new System.Windows.Forms.Padding(3);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(59, 20);
 			this.label5.TabIndex = 8;
 			this.label5.Text = "Cycles:";
 			// 
+			// cycles_numberBox
+			// 
+			this.cycles_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.cycles_numberBox.Hexadecimal = false;
+			this.cycles_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.cycles_numberBox.Location = new System.Drawing.Point(410, 3);
+			this.cycles_numberBox.Maximum = new decimal(new int[] {
+            1569325055,
+            23283064,
+            0,
+            0});
+			this.cycles_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.cycles_numberBox.Name = "cycles_numberBox";
+			this.cycles_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.cycles_numberBox.Postfix = "";
+			this.cycles_numberBox.Prefix = "";
+			this.cycles_numberBox.ReadOnly = false;
+			this.cycles_numberBox.Size = new System.Drawing.Size(152, 29);
+			this.cycles_numberBox.TabIndex = 5;
+			this.cycles_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.cycles_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
 			// flag_groupBox
 			// 
 			this.flag_groupBox.Controls.Add(this.flags_flowLayoutPanel);
-			this.flag_groupBox.Location = new System.Drawing.Point(3, 59);
+			this.flag_groupBox.Location = new System.Drawing.Point(3, 45);
 			this.flag_groupBox.Name = "flag_groupBox";
 			this.flag_groupBox.Size = new System.Drawing.Size(569, 102);
 			this.flag_groupBox.TabIndex = 2;
@@ -245,16 +437,50 @@
 			this.flags_tableLayoutPanel.SetRowSpan(this.ps_flowLayoutPanel, 2);
 			this.ps_flowLayoutPanel.Size = new System.Drawing.Size(90, 54);
 			this.ps_flowLayoutPanel.TabIndex = 0;
+			this.ps_flowLayoutPanel.WrapContents = false;
 			// 
 			// label6
 			// 
-			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.label6.AutoSize = true;
 			this.label6.Location = new System.Drawing.Point(3, 0);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(34, 20);
+			this.label6.Size = new System.Drawing.Size(34, 54);
 			this.label6.TabIndex = 2;
 			this.label6.Text = "PS:";
+			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// ps_numberBox
+			// 
+			this.ps_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ps_numberBox.Hexadecimal = true;
+			this.ps_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.ps_numberBox.Location = new System.Drawing.Point(43, 3);
+			this.ps_numberBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.ps_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.ps_numberBox.Name = "ps_numberBox";
+			this.ps_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.ps_numberBox.Postfix = "";
+			this.ps_numberBox.Prefix = "$";
+			this.ps_numberBox.ReadOnly = false;
+			this.ps_numberBox.Size = new System.Drawing.Size(42, 29);
+			this.ps_numberBox.TabIndex = 6;
+			this.ps_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.ps_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			// 
 			// negative_checkBox
 			// 
@@ -342,7 +568,7 @@
 			// stack_groupBox
 			// 
 			this.stack_groupBox.Controls.Add(this.stack_flowLayoutPanel);
-			this.stack_groupBox.Location = new System.Drawing.Point(586, 3);
+			this.stack_groupBox.Location = new System.Drawing.Point(584, 3);
 			this.stack_groupBox.Name = "stack_groupBox";
 			this.stack_groupBox.Size = new System.Drawing.Size(153, 182);
 			this.stack_groupBox.TabIndex = 3;
@@ -358,17 +584,18 @@
 			this.stack_flowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.stack_flowLayoutPanel.Location = new System.Drawing.Point(3, 22);
 			this.stack_flowLayoutPanel.Name = "stack_flowLayoutPanel";
-			this.stack_flowLayoutPanel.Size = new System.Drawing.Size(140, 159);
+			this.stack_flowLayoutPanel.Size = new System.Drawing.Size(140, 157);
 			this.stack_flowLayoutPanel.TabIndex = 0;
 			this.stack_flowLayoutPanel.WrapContents = false;
 			// 
 			// sp_flowLayoutPanel
 			// 
+			this.sp_flowLayoutPanel.AutoSize = true;
 			this.sp_flowLayoutPanel.Controls.Add(this.label7);
 			this.sp_flowLayoutPanel.Controls.Add(this.sp_numberBox);
 			this.sp_flowLayoutPanel.Location = new System.Drawing.Point(3, 3);
 			this.sp_flowLayoutPanel.Name = "sp_flowLayoutPanel";
-			this.sp_flowLayoutPanel.Size = new System.Drawing.Size(102, 33);
+			this.sp_flowLayoutPanel.Size = new System.Drawing.Size(88, 35);
 			this.sp_flowLayoutPanel.TabIndex = 0;
 			this.sp_flowLayoutPanel.WrapContents = false;
 			// 
@@ -376,47 +603,73 @@
 			// 
 			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(3, 9);
+			this.label7.Location = new System.Drawing.Point(3, 7);
+			this.label7.Margin = new System.Windows.Forms.Padding(3);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(34, 20);
 			this.label7.TabIndex = 2;
 			this.label7.Text = "SP:";
+			// 
+			// sp_numberBox
+			// 
+			this.sp_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.sp_numberBox.Hexadecimal = true;
+			this.sp_numberBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.sp_numberBox.Location = new System.Drawing.Point(43, 3);
+			this.sp_numberBox.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+			this.sp_numberBox.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.sp_numberBox.Name = "sp_numberBox";
+			this.sp_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.sp_numberBox.Postfix = "";
+			this.sp_numberBox.Prefix = "$";
+			this.sp_numberBox.ReadOnly = false;
+			this.sp_numberBox.Size = new System.Drawing.Size(42, 29);
+			this.sp_numberBox.TabIndex = 3;
+			this.sp_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.sp_numberBox.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			// 
 			// stack_textBox
 			// 
 			this.stack_textBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.stack_textBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.stack_textBox.Location = new System.Drawing.Point(3, 42);
+			this.stack_textBox.Location = new System.Drawing.Point(3, 44);
 			this.stack_textBox.Multiline = true;
 			this.stack_textBox.Name = "stack_textBox";
 			this.stack_textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.stack_textBox.ShortcutsEnabled = false;
-			this.stack_textBox.Size = new System.Drawing.Size(134, 114);
+			this.stack_textBox.Size = new System.Drawing.Size(134, 110);
 			this.stack_textBox.TabIndex = 1;
 			this.stack_textBox.Tag = "";
 			this.stack_textBox.Text = "$00, $00, $00, $00";
 			// 
 			// nextLine_button
 			// 
+			this.nextLine_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.nextLine_button.AutoSize = true;
-			this.nextLine_button.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.nextLine_button.Location = new System.Drawing.Point(7, 595);
+			this.nextLine_button.Location = new System.Drawing.Point(7, 593);
 			this.nextLine_button.Name = "nextLine_button";
-			this.nextLine_button.Size = new System.Drawing.Size(53, 30);
+			this.nextLine_button.Size = new System.Drawing.Size(132, 30);
 			this.nextLine_button.TabIndex = 2;
 			this.nextLine_button.Text = "Step";
 			this.nextLine_button.UseVisualStyleBackColor = true;
 			this.nextLine_button.Click += new System.EventHandler(this.NextLine_button_Click);
-			// 
-			// code_listBox
-			// 
-			this.code_listBox.FormattingEnabled = true;
-			this.code_listBox.ItemHeight = 20;
-			this.code_listBox.Location = new System.Drawing.Point(6, 285);
-			this.code_listBox.Name = "code_listBox";
-			this.code_listBox.Size = new System.Drawing.Size(747, 304);
-			this.code_listBox.TabIndex = 4;
 			// 
 			// nextLine_textBox
 			// 
@@ -451,10 +704,11 @@
 			// 
 			// run_button
 			// 
+			this.run_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.run_button.AutoSize = true;
-			this.run_button.Location = new System.Drawing.Point(94, 595);
+			this.run_button.Location = new System.Drawing.Point(158, 593);
 			this.run_button.Name = "run_button";
-			this.run_button.Size = new System.Drawing.Size(75, 30);
+			this.run_button.Size = new System.Drawing.Size(142, 30);
 			this.run_button.TabIndex = 7;
 			this.run_button.Text = "Run";
 			this.run_button.UseVisualStyleBackColor = true;
@@ -462,320 +716,174 @@
 			// 
 			// reset_button
 			// 
+			this.reset_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.reset_button.AutoSize = true;
-			this.reset_button.Location = new System.Drawing.Point(212, 599);
+			this.reset_button.Location = new System.Drawing.Point(653, 593);
 			this.reset_button.Name = "reset_button";
-			this.reset_button.Size = new System.Drawing.Size(75, 30);
+			this.reset_button.Size = new System.Drawing.Size(97, 30);
 			this.reset_button.TabIndex = 9;
 			this.reset_button.Text = "Reset";
 			this.reset_button.UseVisualStyleBackColor = true;
 			this.reset_button.Click += new System.EventHandler(this.Reset_button_Click);
 			// 
-			// numberBox1
+			// memViewer_tabControl
 			// 
-			this.numberBox1.Hexadecimal = false;
-			this.numberBox1.Increment = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.numberBox1.Location = new System.Drawing.Point(357, 598);
-			this.numberBox1.Maximum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.numberBox1.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.numberBox1.Name = "numberBox1";
-			this.numberBox1.NumberBoxBackColor = System.Drawing.SystemColors.Window;
-			this.numberBox1.Postfix = "";
-			this.numberBox1.Prefix = "";
-			this.numberBox1.ReadOnly = false;
-			this.numberBox1.Size = new System.Drawing.Size(120, 26);
-			this.numberBox1.TabIndex = 11;
-			this.numberBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-			this.numberBox1.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
+			this.memViewer_tabControl.Controls.Add(this.ramData_tabPage);
+			this.memViewer_tabControl.Controls.Add(this.romData_tabPage);
+			this.memViewer_tabControl.Location = new System.Drawing.Point(760, 13);
+			this.memViewer_tabControl.Name = "memViewer_tabControl";
+			this.memViewer_tabControl.SelectedIndex = 0;
+			this.memViewer_tabControl.Size = new System.Drawing.Size(623, 576);
+			this.memViewer_tabControl.TabIndex = 10;
 			// 
-			// memoryViewer
+			// ramData_tabPage
 			// 
-			this.memoryViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.memoryViewer.Location = new System.Drawing.Point(760, 13);
-			this.memoryViewer.Name = "memoryViewer";
-			this.memoryViewer.Size = new System.Drawing.Size(720, 576);
-			this.memoryViewer.TabIndex = 10;
-			this.memoryViewer.Resize += new System.EventHandler(this.MemoryViewer_Resize);
+			this.ramData_tabPage.Controls.Add(this.textBox1);
+			this.ramData_tabPage.Controls.Add(this.ram_panel);
+			this.ramData_tabPage.Location = new System.Drawing.Point(4, 29);
+			this.ramData_tabPage.Name = "ramData_tabPage";
+			this.ramData_tabPage.Padding = new System.Windows.Forms.Padding(3);
+			this.ramData_tabPage.Size = new System.Drawing.Size(615, 543);
+			this.ramData_tabPage.TabIndex = 0;
+			this.ramData_tabPage.Text = "RAM data";
+			this.ramData_tabPage.UseVisualStyleBackColor = true;
 			// 
-			// a_numberBox
+			// textBox1
 			// 
-			this.a_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.a_numberBox.Hexadecimal = true;
-			this.a_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.a_numberBox.Location = new System.Drawing.Point(33, 3);
-			this.a_numberBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.a_numberBox.MaximumSize = new System.Drawing.Size(500, 25);
-			this.a_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.a_numberBox.MinimumSize = new System.Drawing.Size(30, 32);
-			this.a_numberBox.Name = "a_numberBox";
-			this.a_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
-			this.a_numberBox.Postfix = "";
-			this.a_numberBox.Prefix = "$";
-			this.a_numberBox.ReadOnly = false;
-			this.a_numberBox.Size = new System.Drawing.Size(120, 32);
-			this.a_numberBox.TabIndex = 1;
-			this.a_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-			this.a_numberBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
+			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.textBox1.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBox1.Location = new System.Drawing.Point(42, 0);
+			this.textBox1.Margin = new System.Windows.Forms.Padding(0);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.ReadOnly = true;
+			this.textBox1.ShortcutsEnabled = false;
+			this.textBox1.Size = new System.Drawing.Size(572, 19);
+			this.textBox1.TabIndex = 32;
+			this.textBox1.TabStop = false;
+			this.textBox1.Text = "00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F";
+			this.textBox1.WordWrap = false;
 			// 
-			// x_numberBox
+			// ram_panel
 			// 
-			this.x_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.x_numberBox.Hexadecimal = true;
-			this.x_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.x_numberBox.Location = new System.Drawing.Point(189, 3);
-			this.x_numberBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.x_numberBox.MaximumSize = new System.Drawing.Size(500, 25);
-			this.x_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.x_numberBox.MinimumSize = new System.Drawing.Size(30, 32);
-			this.x_numberBox.Name = "x_numberBox";
-			this.x_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
-			this.x_numberBox.Postfix = "";
-			this.x_numberBox.Prefix = "$";
-			this.x_numberBox.ReadOnly = false;
-			this.x_numberBox.Size = new System.Drawing.Size(120, 32);
-			this.x_numberBox.TabIndex = 2;
-			this.x_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-			this.x_numberBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
+			this.ram_panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ram_panel.AutoScroll = true;
+			this.ram_panel.Controls.Add(this.ram_memoryScrollView);
+			this.ram_panel.Location = new System.Drawing.Point(0, 18);
+			this.ram_panel.Name = "ram_panel";
+			this.ram_panel.Size = new System.Drawing.Size(614, 525);
+			this.ram_panel.TabIndex = 1;
 			// 
-			// y_numberBox
+			// ram_memoryScrollView
 			// 
-			this.y_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.y_numberBox.Hexadecimal = true;
-			this.y_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.y_numberBox.Location = new System.Drawing.Point(345, 3);
-			this.y_numberBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.y_numberBox.MaximumSize = new System.Drawing.Size(500, 25);
-			this.y_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.y_numberBox.MinimumSize = new System.Drawing.Size(30, 32);
-			this.y_numberBox.Name = "y_numberBox";
-			this.y_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
-			this.y_numberBox.Postfix = "";
-			this.y_numberBox.Prefix = "$";
-			this.y_numberBox.ReadOnly = false;
-			this.y_numberBox.Size = new System.Drawing.Size(120, 32);
-			this.y_numberBox.TabIndex = 3;
-			this.y_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-			this.y_numberBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
+			this.ram_memoryScrollView.AutoSize = true;
+			this.ram_memoryScrollView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.ram_memoryScrollView.Location = new System.Drawing.Point(0, 0);
+			this.ram_memoryScrollView.Name = "ram_memoryScrollView";
+			this.ram_memoryScrollView.Size = new System.Drawing.Size(477, 417);
+			this.ram_memoryScrollView.TabIndex = 0;
 			// 
-			// pc_numberBox
+			// romData_tabPage
 			// 
-			this.pc_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.pc_numberBox.Hexadecimal = true;
-			this.pc_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.pc_numberBox.Location = new System.Drawing.Point(511, 3);
-			this.pc_numberBox.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-			this.pc_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.pc_numberBox.Name = "pc_numberBox";
-			this.pc_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
-			this.pc_numberBox.Postfix = "";
-			this.pc_numberBox.Prefix = "$";
-			this.pc_numberBox.ReadOnly = false;
-			this.pc_numberBox.Size = new System.Drawing.Size(120, 26);
-			this.pc_numberBox.TabIndex = 4;
-			this.pc_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-			this.pc_numberBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
+			this.romData_tabPage.Controls.Add(this.rom_panel);
+			this.romData_tabPage.Controls.Add(this.colHeader_textBox);
+			this.romData_tabPage.Location = new System.Drawing.Point(4, 29);
+			this.romData_tabPage.Name = "romData_tabPage";
+			this.romData_tabPage.Padding = new System.Windows.Forms.Padding(3);
+			this.romData_tabPage.Size = new System.Drawing.Size(615, 543);
+			this.romData_tabPage.TabIndex = 1;
+			this.romData_tabPage.Text = "ROM data";
+			this.romData_tabPage.UseVisualStyleBackColor = true;
 			// 
-			// cycles_numberBox
+			// rom_panel
 			// 
-			this.cycles_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.cycles_numberBox.Hexadecimal = false;
-			this.cycles_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.cycles_numberBox.Location = new System.Drawing.Point(702, 3);
-			this.cycles_numberBox.Maximum = new decimal(new int[] {
-            1569325055,
-            23283064,
-            0,
-            0});
-			this.cycles_numberBox.MaximumSize = new System.Drawing.Size(500, 25);
-			this.cycles_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.cycles_numberBox.MinimumSize = new System.Drawing.Size(30, 32);
-			this.cycles_numberBox.Name = "cycles_numberBox";
-			this.cycles_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
-			this.cycles_numberBox.Padding = new System.Windows.Forms.Padding(3);
-			this.cycles_numberBox.Postfix = "";
-			this.cycles_numberBox.Prefix = "";
-			this.cycles_numberBox.ReadOnly = false;
-			this.cycles_numberBox.Size = new System.Drawing.Size(120, 32);
-			this.cycles_numberBox.TabIndex = 5;
-			this.cycles_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-			this.cycles_numberBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
+			this.rom_panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.rom_panel.AutoScroll = true;
+			this.rom_panel.Controls.Add(this.rom_memoryScrollView);
+			this.rom_panel.Location = new System.Drawing.Point(0, 18);
+			this.rom_panel.Name = "rom_panel";
+			this.rom_panel.Size = new System.Drawing.Size(615, 525);
+			this.rom_panel.TabIndex = 32;
 			// 
-			// ps_numberBox
+			// rom_memoryScrollView
 			// 
-			this.ps_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ps_numberBox.Hexadecimal = true;
-			this.ps_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.ps_numberBox.Location = new System.Drawing.Point(3, 23);
-			this.ps_numberBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.ps_numberBox.MaximumSize = new System.Drawing.Size(500, 25);
-			this.ps_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.ps_numberBox.MinimumSize = new System.Drawing.Size(30, 32);
-			this.ps_numberBox.Name = "ps_numberBox";
-			this.ps_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
-			this.ps_numberBox.Padding = new System.Windows.Forms.Padding(3);
-			this.ps_numberBox.Postfix = "";
-			this.ps_numberBox.Prefix = "$";
-			this.ps_numberBox.ReadOnly = false;
-			this.ps_numberBox.Size = new System.Drawing.Size(120, 32);
-			this.ps_numberBox.TabIndex = 3;
-			this.ps_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-			this.ps_numberBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
+			this.rom_memoryScrollView.AutoSize = true;
+			this.rom_memoryScrollView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.rom_memoryScrollView.Location = new System.Drawing.Point(0, 0);
+			this.rom_memoryScrollView.Name = "rom_memoryScrollView";
+			this.rom_memoryScrollView.Size = new System.Drawing.Size(477, 417);
+			this.rom_memoryScrollView.TabIndex = 0;
 			// 
-			// sp_numberBox
+			// colHeader_textBox
 			// 
-			this.sp_numberBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.sp_numberBox.Hexadecimal = true;
-			this.sp_numberBox.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.sp_numberBox.Location = new System.Drawing.Point(43, 3);
-			this.sp_numberBox.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-			this.sp_numberBox.MaximumSize = new System.Drawing.Size(500, 25);
-			this.sp_numberBox.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-			this.sp_numberBox.MinimumSize = new System.Drawing.Size(30, 32);
-			this.sp_numberBox.Name = "sp_numberBox";
-			this.sp_numberBox.NumberBoxBackColor = System.Drawing.SystemColors.Window;
-			this.sp_numberBox.Padding = new System.Windows.Forms.Padding(3);
-			this.sp_numberBox.Postfix = "";
-			this.sp_numberBox.Prefix = "$";
-			this.sp_numberBox.ReadOnly = false;
-			this.sp_numberBox.Size = new System.Drawing.Size(120, 32);
-			this.sp_numberBox.TabIndex = 3;
-			this.sp_numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-			this.sp_numberBox.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
+			this.colHeader_textBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.colHeader_textBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.colHeader_textBox.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.colHeader_textBox.Location = new System.Drawing.Point(42, 0);
+			this.colHeader_textBox.Margin = new System.Windows.Forms.Padding(0);
+			this.colHeader_textBox.Name = "colHeader_textBox";
+			this.colHeader_textBox.ReadOnly = true;
+			this.colHeader_textBox.ShortcutsEnabled = false;
+			this.colHeader_textBox.Size = new System.Drawing.Size(572, 19);
+			this.colHeader_textBox.TabIndex = 31;
+			this.colHeader_textBox.TabStop = false;
+			this.colHeader_textBox.Text = "00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F";
+			this.colHeader_textBox.WordWrap = false;
+			// 
+			// code_listView
+			// 
+			this.code_listView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.code_listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.cursor_columnHeader,
+            this.addr_columnHeader,
+            this.byteCode_columnHeader,
+            this.asm_columnHeader});
+			this.code_listView.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.code_listView.FullRowSelect = true;
+			this.code_listView.GridLines = true;
+			this.code_listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+			this.code_listView.HideSelection = false;
+			this.code_listView.Location = new System.Drawing.Point(3, 285);
+			this.code_listView.MultiSelect = false;
+			this.code_listView.Name = "code_listView";
+			this.code_listView.Size = new System.Drawing.Size(747, 300);
+			this.code_listView.TabIndex = 12;
+			this.code_listView.UseCompatibleStateImageBehavior = false;
+			this.code_listView.View = System.Windows.Forms.View.Details;
+			this.code_listView.VirtualMode = true;
+			// 
+			// cursor_columnHeader
+			// 
+			this.cursor_columnHeader.Text = "cursor";
+			this.cursor_columnHeader.Width = 28;
+			// 
+			// addr_columnHeader
+			// 
+			this.addr_columnHeader.Text = "Address";
+			this.addr_columnHeader.Width = 36;
+			// 
+			// asm_columnHeader
+			// 
+			this.asm_columnHeader.Text = "ASM";
+			this.asm_columnHeader.Width = 400;
 			// 
 			// MiNesForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-			this.ClientSize = new System.Drawing.Size(1557, 660);
-			this.Controls.Add(this.memoryViewer);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.ClientSize = new System.Drawing.Size(1593, 632);
+			this.Controls.Add(this.code_listView);
+			this.Controls.Add(this.memViewer_tabControl);
 			this.Controls.Add(this.reset_button);
 			this.Controls.Add(this.run_button);
 			this.Controls.Add(this.flowLayoutPanel1);
-			this.Controls.Add(this.code_listBox);
 			this.Controls.Add(this.nextLine_button);
 			this.Controls.Add(this.cpu_groupBox);
 			this.Name = "MiNesForm";
@@ -787,7 +895,6 @@
 			this.cpuStatus_flowLayoutPanel.ResumeLayout(false);
 			this.cpuStatus_flowLayoutPanel.PerformLayout();
 			this.cpu_flowLayoutPanel.ResumeLayout(false);
-			this.cpu_flowLayoutPanel.PerformLayout();
 			this.acc_flowLayoutPanel.ResumeLayout(false);
 			this.acc_flowLayoutPanel.PerformLayout();
 			this.flag_groupBox.ResumeLayout(false);
@@ -796,7 +903,6 @@
 			this.flags_tableLayoutPanel.ResumeLayout(false);
 			this.flags_tableLayoutPanel.PerformLayout();
 			this.ps_flowLayoutPanel.ResumeLayout(false);
-			this.ps_flowLayoutPanel.PerformLayout();
 			this.stack_groupBox.ResumeLayout(false);
 			this.stack_groupBox.PerformLayout();
 			this.stack_flowLayoutPanel.ResumeLayout(false);
@@ -805,6 +911,15 @@
 			this.sp_flowLayoutPanel.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			this.flowLayoutPanel1.PerformLayout();
+			this.memViewer_tabControl.ResumeLayout(false);
+			this.ramData_tabPage.ResumeLayout(false);
+			this.ramData_tabPage.PerformLayout();
+			this.ram_panel.ResumeLayout(false);
+			this.ram_panel.PerformLayout();
+			this.romData_tabPage.ResumeLayout(false);
+			this.romData_tabPage.PerformLayout();
+			this.rom_panel.ResumeLayout(false);
+			this.rom_panel.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -847,13 +962,25 @@
 		private System.Windows.Forms.TextBox stack_textBox;
 		private System.Windows.Forms.FlowLayoutPanel cpuStatus_flowLayoutPanel;
 		private System.Windows.Forms.Button nextLine_button;
-		private System.Windows.Forms.ListBox code_listBox;
 		private System.Windows.Forms.TextBox nextLine_textBox;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private System.Windows.Forms.Label pc_label;
 		private System.Windows.Forms.Button run_button;
 		private System.Windows.Forms.Button reset_button;
-		private MemoryViewer memoryViewer;
+		private System.Windows.Forms.TabControl memViewer_tabControl;
+		private System.Windows.Forms.TabPage ramData_tabPage;
+		private System.Windows.Forms.TabPage romData_tabPage;
+		private MemoryScrollView rom_memoryScrollView;
+		private System.Windows.Forms.TextBox colHeader_textBox;
+		private MemoryScrollView ram_memoryScrollView;
+		private System.Windows.Forms.TextBox textBox1;
+		private NoScrollJumpPanel rom_panel;
+		private NoScrollJumpPanel ram_panel;
+		private System.Windows.Forms.ListView code_listView;
+		private System.Windows.Forms.ColumnHeader cursor_columnHeader;
+		private System.Windows.Forms.ColumnHeader addr_columnHeader;
+		private System.Windows.Forms.ColumnHeader byteCode_columnHeader;
+		private System.Windows.Forms.ColumnHeader asm_columnHeader;
 	}
 }
 
