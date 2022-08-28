@@ -10,6 +10,16 @@ namespace AtomosZ.MiNesEmulator
 {
 	public class CPU
 	{
+		private enum MirroringMode
+		{
+			Horizontal = 0x0,
+			Vertical = 0x01,
+		}
+		/// <summary>
+		/// In bytes, of course.
+		/// </summary>
+		private const int BankLength = 0x4000;
+
 		/// <summary>
 		/// A class to encapsulate memory so as to simulate memory mirroring without
 		/// having to worry about someone doing something silly.
@@ -134,6 +144,32 @@ namespace AtomosZ.MiNesEmulator
 		public ControlUnit cu;
 
 		private CPUMemory mem;
+		/// <summary>
+		/// In 16KB units.
+		/// </summary>
+		private byte prgRomSize;
+		/// <summary>
+		/// In 8KB units. 0 means board uses CHR RAM
+		/// </summary>
+		private byte chrRomSize;
+		/// <summary>
+		/// <para>
+		/// <br>0: Horizontal</br>
+		/// <br>1: Vertical</br>
+		/// </para>
+		/// </summary>
+		private MirroringMode mirroring;
+		/// <summary>
+		/// PRG RAM $6000-7FFF
+		/// </summary>
+		private bool hasBattery;
+		/// <summary>
+		/// Ignore mirroring mode and instead use four-screen VRAM.
+		/// </summary>
+		private bool use4ScreenRam;
+		private byte mapperNum;
+		private byte lastBankLowId;
+		private byte lastBankHighId;
 
 		public CPU()
 		{
@@ -142,12 +178,53 @@ namespace AtomosZ.MiNesEmulator
 			cu = new ControlUnit(this);
 		}
 
+		public void LoadRom(byte[] romData)
+		{
+			// read iNES header
+			if (romData[0] != 'N' && romData[1] != 'E' && romData[2] != 'S' && romData[3] != 0x1A)
+			{
+				throw new Exception("Invalid rom header");
+			}
+
+			prgRomSize = romData[4];
+			chrRomSize = romData[5];
+
+			// flag 6
+			mirroring = (MirroringMode)(romData[6] & 0x01);
+			hasBattery = (romData[6] & 0x02) == 0x02;
+			// 0x02 is trainer. Don't think we need to worry about this
+			use4ScreenRam = (romData[6] & 0x04) == 0x04;
+
+			// flag 7
+			// 0x00 VS Unisystem
+			// 0x01 PlayChoice-10
+			// 0x02 & 0x04 == NES 2.0 format (flags 8-15)
+
+			mapperNum = (byte)((romData[6] & 0xF0) + ((romData[7] & 0xF0) << 4));
+
+			/* TODO: Determine memory banks by mapperNum. */
+			// this should work for mappers with high and low banks
+			lastBankLowId = (byte)((prgRomSize / 2) - 1);
+			lastBankHighId = (byte)(prgRomSize - 1);
+
+			byte[] bank = new byte[BankLength];
+			Array.Copy(romData, Address.iNESHeaderLength, bank, 0, BankLength);
+			SetPRGROMBankLow(bank);
+
+			Array.Copy(romData, (BankLength * lastBankLowId) + Address.iNESHeaderLength, bank, 0, BankLength);
+			SetPRGROMBankHigh(bank);
+
+			Initialize();
+		}
+
 		public void Reset()
 		{
 			mem = new CPUMemory();
 			cu.Reset();
 			Initialize();
 		}
+
+
 
 		/// <summary>
 		/// Sets program counter to Reset pointer
@@ -163,15 +240,22 @@ namespace AtomosZ.MiNesEmulator
 		}
 
 		/// <summary>
-		/// 
+		/// Writes data to 0x8000-0xBFFF
 		/// </summary>
 		/// <param name="bankData"></param>
-		/// <param name="bankLocation">must be 0x8000 or 0xC000</param>
-		public void SetBank(byte[] bankData, int bankLocation)
+		private void SetPRGROMBankLow(byte[] bankData)
 		{
-			mem[bankLocation, bankData.Length] = bankData;
+			mem[0x8000, bankData.Length] = bankData;
 		}
 
+		/// <summary>
+		/// Writes data to 0xC000-0xFFFF
+		/// </summary>
+		/// <param name="bankData"></param>
+		private void SetPRGROMBankHigh(byte[] bankData)
+		{
+			mem[0xC000, bankData.Length] = bankData;
+		}
 
 
 		public byte this[int pointer]

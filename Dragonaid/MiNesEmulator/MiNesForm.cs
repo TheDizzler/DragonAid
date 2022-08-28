@@ -34,7 +34,7 @@ namespace AtomosZ.MiNesEmulator
 
 
 
-			FillCPU();
+			AssembleAndLoadRom();
 
 			// start from RESET_IRQ
 			var instrAndBranchPointers = cpu.GetInstructionBlock(cpu.GetPointerAt(UniversalConsts.RESET_Pointer));
@@ -64,17 +64,12 @@ namespace AtomosZ.MiNesEmulator
 				e.Item.UseItemStyleForSubItems = false;
 		}
 
-		private void FillCPU()
-		{
-			var machineCode = ASMCompiler.Compile(asmFilepath);
-			File.WriteAllBytes(asmFilepath.Replace(".asm", ".nes"), machineCode);
 
-			byte[] bank = new byte[0x4000];
-			Array.Copy(machineCode, 0x0010, bank, 0, 0x4000);
-			cpu.SetBank(bank, 0x8000);
-			Array.Copy(machineCode, 0x4010, bank, 0, 0x4000);
-			cpu.SetBank(bank, 0xC000);
-			cpu.Initialize();
+		private void AssembleAndLoadRom()
+		{
+			var byteCode = ASMCompiler.Compile(asmFilepath);
+			File.WriteAllBytes(asmFilepath.Replace(".asm", ".nes"), byteCode);
+			cpu.LoadRom(byteCode);
 		}
 
 		private void UpdateDisplay()
@@ -122,7 +117,7 @@ namespace AtomosZ.MiNesEmulator
 		private void Reset_button_Click(object sender, EventArgs e)
 		{
 			cpu.Reset();
-			FillCPU();
+			AssembleAndLoadRom();
 			UpdateDisplay();
 		}
 
