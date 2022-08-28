@@ -141,7 +141,7 @@ namespace AtomosZ.MiNesEmulator
 
 
 		public Stack theStack;
-		public ControlUnit cu;
+		public ControlUnit controlUnit;
 
 		private CPUMemory mem;
 		/// <summary>
@@ -175,7 +175,7 @@ namespace AtomosZ.MiNesEmulator
 		{
 			mem = new CPUMemory();
 			theStack = new Stack(this);
-			cu = new ControlUnit(this);
+			controlUnit = new ControlUnit(this);
 		}
 
 		public void LoadRom(byte[] romData)
@@ -220,7 +220,7 @@ namespace AtomosZ.MiNesEmulator
 		public void Reset()
 		{
 			mem = new CPUMemory();
-			cu.Reset();
+			controlUnit.Reset();
 			Initialize();
 		}
 
@@ -231,7 +231,7 @@ namespace AtomosZ.MiNesEmulator
 		/// </summary>
 		public void Initialize()
 		{
-			cu.pc = GetPointerAt(UniversalConsts.RESET_Pointer);
+			controlUnit.pc = GetPointerAt(UniversalConsts.RESET_Pointer);
 		}
 
 		public byte[] GetMemory()
@@ -389,6 +389,36 @@ namespace AtomosZ.MiNesEmulator
 			return mem[lowByteAddress] + (mem[lowByteAddress + 1] << 8);
 		}
 
+		/// <summary>
+		/// Use ViewNextInstruction() for human readable string of instruction.
+		/// </summary>
+		/// <returns></returns>
+		public Instruction PeekNextInstruction()
+		{
+			return GetInstruction(controlUnit.pc);
+		}
+
+		/// <summary>
+		/// Use PeekNextInstruction() to get next Instruction.
+		/// </summary>
+		/// <returns>human readable string of instruction</returns>
+		public string ViewNextInstruction()
+		{
+			var instr = GetInstruction(controlUnit.pc);
+			return controlUnit.Peek(instr);
+		}
+
+		public string ViewNextInstruction(Instruction instr)
+		{
+			return controlUnit.Peek(instr);
+		}
+
+		public void ParseNextInstruction()
+		{
+			var instr = GetInstruction(controlUnit.pc);
+			controlUnit.Parse(instr);
+		}
+
 		private Instruction GetInstruction(int address)
 		{
 			var instrByte = mem[address];
@@ -513,22 +543,6 @@ namespace AtomosZ.MiNesEmulator
 				return lowByte + (highByte << 8);
 			}
 
-			public string PeekNextInstruction()
-			{
-				var instr = cpu.GetInstruction(pc);
-				return Peek(instr);
-			}
-
-			public string PeekNextInstruction(Instruction instr)
-			{
-				return Peek(instr);
-			}
-
-			public void ParseNextInstruction()
-			{
-				var instr = cpu.GetInstruction(pc);
-				Parse(instr);
-			}
 
 			public string Peek(Instruction instruction)
 			{

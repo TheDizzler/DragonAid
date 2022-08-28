@@ -16,7 +16,7 @@ namespace AtomosZ.MiNesEmulator
 	public partial class MiNesForm : Form, UserControlParent
 	{
 		private CPU cpu;
-		private CPU.ControlUnit acc;
+		private CPU.ControlUnit cu;
 		private byte[] byteStream;
 
 		private string asmFilepath = @"D:\github\RomHacking\Working ROMs\ROM writing\unit test code.asm";
@@ -27,7 +27,7 @@ namespace AtomosZ.MiNesEmulator
 			InitializeComponent();
 
 			cpu = new CPU();
-			acc = cpu.cu;
+			cu = cpu.controlUnit;
 
 			ram_memoryScrollView.Initialize(0x8000);
 			rom_memoryScrollView.Initialize(0x8000, 0x8000);
@@ -74,38 +74,40 @@ namespace AtomosZ.MiNesEmulator
 
 		private void UpdateDisplay()
 		{
-			a_numberBox.Value = acc.a;
-			x_numberBox.Value = acc.x;
-			y_numberBox.Value = acc.y;
-			pc_numberBox.Value = acc.pc;
-			sp_numberBox.Value = acc.sp;
-			ps_numberBox.Value = acc.ps;
+			a_numberBox.Value = cu.a;
+			x_numberBox.Value = cu.x;
+			y_numberBox.Value = cu.y;
+			pc_numberBox.Value = cu.pc;
+			sp_numberBox.Value = cu.sp;
+			ps_numberBox.Value = cu.ps;
 
 			stack_textBox.Text = "";
-			for (int i = acc.sp + 1; i <= 0xFF; ++i)
+			for (int i = cu.sp + 1; i <= 0xFF; ++i)
 			{
 				var s = cpu.stack;
 				var b = s[i];
 				stack_textBox.Text += b.ToString("X2") + ", ";
 			}
 
-			carry_checkBox.Checked = acc.carry;
-			zero_checkBox.Checked = acc.zero;
-			interrupt_checkBox.Checked = acc.interrupt;
-			overflow_checkBox.Checked = acc.overflow;
-			negative_checkBox.Checked = acc.negative;
+			carry_checkBox.Checked = cu.carry;
+			zero_checkBox.Checked = cu.zero;
+			interrupt_checkBox.Checked = cu.interrupt;
+			overflow_checkBox.Checked = cu.overflow;
+			negative_checkBox.Checked = cu.negative;
 
 			ram_memoryScrollView.SetMemory(cpu[0, 0x8000]);
 			rom_memoryScrollView.SetMemory(cpu[0x8000, 0x8000]);
 
 
-			pc_label.Text = "$" + acc.pc.ToString("X4");
-			nextLine_textBox.Text = acc.PeekNextInstruction();
+			pc_label.Text = "$" + cu.pc.ToString("X4");
+			nextLine_textBox.Text = cpu.ViewNextInstruction();
+
+
 		}
 
 		private void NextLine_button_Click(object sender, EventArgs e)
 		{
-			acc.ParseNextInstruction();
+			cpu.ParseNextInstruction();
 			UpdateDisplay();
 		}
 
