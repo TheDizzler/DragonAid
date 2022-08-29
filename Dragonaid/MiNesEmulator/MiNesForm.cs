@@ -9,14 +9,14 @@ using System.Windows.Forms;
 using AtomosZ.DragonAid.Libraries;
 using AtomosZ.DragonAid.Libraries.ASM;
 using AtomosZ.MiNesEmulator.Compiler;
-
+using AtomosZ.MiNesEmulator.CPU2A03;
 
 namespace AtomosZ.MiNesEmulator
 {
 	public partial class MiNesForm : Form, UserControlParent
 	{
-		private CPU cpu;
-		private CPU.ControlUnit cu;
+		private CPU6502 cpu;
+		private ControlUnit6502 cu;
 		private byte[] byteStream;
 
 		private string asmFilepath = @"D:\github\RomHacking\Working ROMs\ROM writing\unit test code.asm";
@@ -26,7 +26,7 @@ namespace AtomosZ.MiNesEmulator
 		{
 			InitializeComponent();
 
-			cpu = new CPU();
+			cpu = new CPU6502();
 			cu = cpu.controlUnit;
 
 			ram_memoryScrollView.Initialize(0x8000);
