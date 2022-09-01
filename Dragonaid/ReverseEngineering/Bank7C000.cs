@@ -555,7 +555,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			}
 
 			/// <summary>
-			/// 7B707
+			/// 0x7B707
 			/// <para>Always false if x >= 0x06, or 0x6F3 == 0xFF</para>
 			/// </summary>
 			/// <param name="x">track index.</param>
@@ -575,6 +575,60 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 
 				return true;
 			}
+		}
+
+		/// <summary>
+		/// 0x7C9F9
+		/// </summary>
+		public static void ResetNMI_7C000_sub()
+		{
+			BankSwitchRegister2_7C000(0);
+		}
+		/// <summary>
+		/// 0x7E819
+		/// </summary>
+		public static void ResetNMI_7C000_sub_cont()
+		{
+			BankSwitch_SaveNextBank_7C000(0x01);
+		}
+
+		private static void BankSwitch_SaveNextBank_7C000(byte a)
+		{
+			nesRam[NESRAM.bankSwitch_CurrentBankId] = a;
+			BankSwitch_7C000(a);
+			Bank3C000.ResetNMI_3C000_sub_cont();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="a"></param>
+		/// /// <summary>
+		/// <para>0x7FF94 - identical to 3C000.BankSwitch
+		/// <br>Switch out 0x8000 to 0xBFFF with bank from ROM.</br>
+		/// <br>If BankId &lt; 0x10, 0xC000 to 0xFFFF is set to ($0F) $3C000 bank from ROM.</br>
+		/// <br>If BankId &gt;= 0x10, 0xC000 to 0xFFFF is set to ($1F) $7C000 bank from ROM.</br>
+		/// </para>
+		/// </summary>
+		/// <param name="bankId"></param>
+		private static void BankSwitch_7C000(byte a)
+		{
+
+		}
+
+		/// <summary>
+		/// 0x7E8DA
+		/// <para>comes from a non-standard BRK instruction. First instruction byte is in dynamicSubroutine+1.</para>
+		/// </summary>
+		public static void DynamicSubRoutine_Setup()
+		{
+			byte a = zeroPages[ZeroPages.dynamicSubroutineAddr + 1];
+			a <<= 1;
+			byte x = a;
+			int addr = romData[ROM.LocalPointers_78000.offset + x] + (romData[ROM.LocalPointers_78000.offset + x + 1] << 8);
+			// possible addr include APU_RunEngine and
+			if (x == 0x04)
+				Bank78000.ResetAPU_78000();
 		}
 	}
 }

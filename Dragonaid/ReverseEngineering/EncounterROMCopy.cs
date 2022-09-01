@@ -23,9 +23,6 @@ namespace AtomosZ.DragonAid.EncounterAid
 			get { return new Address("Dynamic Subroutine", zeroPages[0x21] + (zeroPages[0x22] << 8)); }
 		}
 
-
-
-
 		/// <summary>
 		/// zeroPages[0x4A]
 		/// </summary>
@@ -53,43 +50,6 @@ namespace AtomosZ.DragonAid.EncounterAid
 			set { zeroPages[0x92] = value; }
 		}
 
-		/// <summary>
-		/// registers that need to be set before this subroutine:
-		/// zeroPages[0x2C]
-		/// zeroPages[0x2F] day/night?
-		/// zeroPages[0x92] currentTileType
-		/// _06DF time of day?
-		/// </summary>
-		/// <param name="romData"></param>
-		/// <param name="xMapPos"></param>
-		/// <param name="yMapPos"></param>
-		/// <param name="y">This is used when 0x2C == 0x01</param>
-		public void CheckForEncounterLightWorld(byte[] romData, byte xMapPos, byte yMapPos, bool isGoldenClawEquipped, byte y)
-		{ // 82C3
-			this.romData = romData;
-			this.isGoldenClawEquipped = isGoldenClawEquipped;
-			encounterTile = (byte)(xMapPos >> 4); // top 4 bits in low nibble
-			byte x = (byte)((yMapPos & 0xF0) | encounterTile);
-
-			byte encounterByte = romData[ROM.LightWorldEncounterZones.offset + x];
-			if (encounterByte == 0xFF) // does this ever happen?
-				return;
-			ParseEncounterTile(encounterByte, y);
-		}
-
-		private void ParseEncounterTile(byte encounterByte, byte y)
-		{
-			encounterTile = encounterByte;
-			if (zeroPages[0x2C] > 0x01)
-				return;
-			if (zeroPages[0x2C] == 0x01)
-			{
-				L02E7(y); // never seen
-			}
-			else
-				L02FA();
-		}
-
 		private void L02E7(byte y)
 		{
 			byte a = 0;
@@ -102,46 +62,6 @@ namespace AtomosZ.DragonAid.EncounterAid
 			carrySet = false;
 			encounterTile = ASMHelper.ADC(a, y, ref carrySet);
 			//L035A();
-		}
-
-		private void L02FA()
-		{ // 82FA
-			byte a = currentTileType; // the tile type index currently standing on
-			if (a >= 0x08)  // this is out-of-range for the encounter rates so must be special tile
-			{ // night time encounter rates?
-				if (a == 0x1E)
-				{
-					//L0305();
-				}
-			}
-			else
-			{
-				// L0307
-				encounterRateTileIndex = a;
-				GetEncounterZoneMonsterList((byte)(encounterTile & 0x3F));
-			}
-		}
-
-
-		private void GetEncounterZoneMonsterList(byte encounterZoneCode)
-		{
-			zeroPages[0x4B] = encounterZoneCode; // this is top nibble of x pos in low nibble
-			if (encounterZoneCode == 0xFF) // can this even happen? (because & 0x3F)
-				return;
-
-			byte zeroPageAddress = 0x4B;
-
-			ASMHelper.MultiplyValueAtXByA(zeroPages, 0x0F, zeroPageAddress);
-
-			ASMHelper.IncrementValueAtXBy_AandY(
-				zeroPages, romData[ROM.EncounterMonsterListPointer.offset + 0],
-				zeroPageAddress, romData[ROM.EncounterMonsterListPointer.offset + 1]);
-
-			int encounterMonstersPointer = zeroPages[zeroPageAddress] + (zeroPages[zeroPageAddress + 1] << 8);
-			byte encounterMonsters =
-				romData[encounterMonstersPointer - 8000 + Address.iNESHeaderLength];
-			if (encounterMonsters != 0)
-				GetEncounterRateMultiplier(encounterMonsters);
 		}
 
 		private void GetEncounterRateMultiplier(byte a)

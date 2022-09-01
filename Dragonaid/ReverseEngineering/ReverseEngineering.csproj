@@ -46,11 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bank00000.cs" />
+    <Compile Include="Bank04000.cs" />
     <Compile Include="Bank14000.cs" />
+    <Compile Include="Bank18000.cs" />
     <Compile Include="Bank28000.cs" />
+    <Compile Include="Bank30000.cs" />
     <Compile Include="Bank34000.cs" />
     <Compile Include="Bank38000.cs" />
     <Compile Include="Bank3C000.cs" />
+    <Compile Include="Bank5C000.cs" />
+    <Compile Include="Bank78000.cs" />
     <Compile Include="Bank7C000.cs" />
     <Compile Include="EncounterROMCopy.cs" />
     <Compile Include="Form1.cs">

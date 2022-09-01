@@ -7,6 +7,8 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 	public static class ROMPlaceholders
 	{
 		public static byte[] romData;
+		public static CPUMemory cpuMemory = new CPUMemory();
+
 		public static byte[] zeroPages = new byte[0x100];
 		/// <summary>
 		/// 0x100 to 0x1FF of CPU Memory.
@@ -17,7 +19,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// </summary>
 		public static byte[] nesRam = new byte[0x2000];
 		/// <summary>
-		/// CPU Memory between 0x6000 and 0x7FFF.
+		/// CPU Memory between 0x6000 and 0x7FFF. For simplicity, using cpu index.
 		/// </summary>
 		public static byte[] saveRam = new byte[0x2000 + (0x6000)];
 		/// <summary>
@@ -37,7 +39,20 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			[Registers.SpriteDMA] = 0x0,
 		};
 
+		public class CPUMemory
+		{
+			public static byte[] memory = new byte[0x10000];
 
+			public byte this[int index]
+			{
+				get { return memory[index]; }
+				set
+				{
+					memory[index] = value;
+				}
+			}
+
+		}
 
 		public class TheStack
 		{

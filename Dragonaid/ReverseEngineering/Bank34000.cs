@@ -13,7 +13,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// <summary>
 		/// 35DC0
 		/// </summary>
-		public static void DynamicSubroutine_34000_B()
+		public static void AdjustSpriteDMA()
 		{
 			if ((byte)(zeroPages[0xAC] & 0x1F) != 0)
 				return;

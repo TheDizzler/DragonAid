@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using AtomosZ.DragonAid.Libraries;
-using AtomosZ.DragonAid.Libraries.PointerList;
 using AtomosZ.DragonAid.TextToHex;
 using static AtomosZ.DragonAid.Libraries.PointerList.Pointers;
 
