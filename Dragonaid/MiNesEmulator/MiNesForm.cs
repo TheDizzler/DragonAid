@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,18 +14,19 @@ namespace AtomosZ.MiNesEmulator
 {
 	public partial class MiNesForm : Form, UserControlParent
 	{
-		private CPU6502 cpu;
+		private CPU cpu;
 		private ControlUnit6502 cu;
 		private byte[] byteStream;
 
 		private string asmFilepath = @"D:\github\RomHacking\Working ROMs\ROM writing\unit test code.asm";
-		private List<Instruction> allInstructions;
+		private List<CPU.VirtualInstruction> allInstructions;
+
 
 		public MiNesForm()
 		{
 			InitializeComponent();
 
-			cpu = new CPU6502();
+			cpu = new CPU();
 			cu = cpu.controlUnit;
 
 			ram_memoryScrollView.Initialize(0x8000);
@@ -37,9 +37,15 @@ namespace AtomosZ.MiNesEmulator
 			AssembleAndLoadRom();
 
 			// start from RESET_IRQ
-			var instrAndBranchPointers = cpu.GetInstructionBlock(cpu.GetPointerAt(UniversalConsts.RESET_Pointer));
+			var instrAndBranchPointers =
+				cpu.RunInstructionBlockVirtually(cpu.GetPointerAt(UniversalConsts.RESET_Pointer));
 
-			allInstructions =  instrAndBranchPointers.Item1; 
+			allInstructions = instrAndBranchPointers;
+
+			var imageList = new ImageList();
+			Image img = (Image)Properties.Resources.Arrow;
+			imageList.Images.Add("Selected", img);
+			code_listView.StateImageList = imageList;
 
 			code_listView.RetrieveVirtualItem += Code_listView_RetrieveVirtualItem;
 			code_listView.VirtualListSize = allInstructions.Count;
@@ -78,14 +84,14 @@ namespace AtomosZ.MiNesEmulator
 			x_numberBox.Value = cu.x;
 			y_numberBox.Value = cu.y;
 			pc_numberBox.Value = cu.pc;
+			cycles_numberBox.Value = cu.cycleCount;
 			sp_numberBox.Value = cu.sp;
 			ps_numberBox.Value = cu.ps;
 
 			stack_textBox.Text = "";
 			for (int i = cu.sp + 1; i <= 0xFF; ++i)
 			{
-				var s = cpu.stack;
-				var b = s[i];
+				var b = cpu.memory[0x100 + i];
 				stack_textBox.Text += b.ToString("X2") + ", ";
 			}
 
@@ -95,19 +101,17 @@ namespace AtomosZ.MiNesEmulator
 			overflow_checkBox.Checked = cu.overflow;
 			negative_checkBox.Checked = cu.negative;
 
-			ram_memoryScrollView.SetMemory(cpu[0, 0x8000]);
-			rom_memoryScrollView.SetMemory(cpu[0x8000, 0x8000]);
+			ram_memoryScrollView.SetMemory(cpu.memory[0, 0x8000]);
+			rom_memoryScrollView.SetMemory(cpu.memory[0x8000, 0x8000]);
 
 
 			pc_label.Text = "$" + cu.pc.ToString("X4");
 			nextLine_textBox.Text = cpu.ViewNextInstruction();
-
-
 		}
 
 		private void NextLine_button_Click(object sender, EventArgs e)
 		{
-			cpu.ParseNextInstruction();
+			cpu.ParseAndRunNextInstruction();
 			UpdateDisplay();
 		}
 

@@ -24,9 +24,6 @@ namespace AtomosZ.DragonAid.Libraries.ASM
 		/// Total # of bytes for this opcode.
 		/// </summary>
 		public byte bytes;
-		/// <summary>
-		/// For funsies only. Cycle count can change from +0 to +2 depending on page boundary crossing!
-		/// </summary>
 		public byte cycles;
 		public Mode mode;
 

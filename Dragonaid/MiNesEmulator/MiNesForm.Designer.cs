@@ -78,7 +78,6 @@
 			this.rom_memoryScrollView = new AtomosZ.MiNesEmulator.MemoryScrollView();
 			this.colHeader_textBox = new System.Windows.Forms.TextBox();
 			this.code_listView = new System.Windows.Forms.ListView();
-			this.cursor_columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.addr_columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.byteCode_columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.asm_columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -840,8 +839,9 @@
 			// 
 			this.code_listView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+			this.code_listView.AutoArrange = false;
+			this.code_listView.CheckBoxes = true;
 			this.code_listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.cursor_columnHeader,
             this.addr_columnHeader,
             this.byteCode_columnHeader,
             this.asm_columnHeader});
@@ -850,24 +850,21 @@
 			this.code_listView.GridLines = true;
 			this.code_listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.code_listView.HideSelection = false;
+			this.code_listView.LabelWrap = false;
 			this.code_listView.Location = new System.Drawing.Point(3, 285);
 			this.code_listView.MultiSelect = false;
 			this.code_listView.Name = "code_listView";
 			this.code_listView.Size = new System.Drawing.Size(747, 300);
 			this.code_listView.TabIndex = 12;
+			this.code_listView.TabStop = false;
 			this.code_listView.UseCompatibleStateImageBehavior = false;
 			this.code_listView.View = System.Windows.Forms.View.Details;
 			this.code_listView.VirtualMode = true;
 			// 
-			// cursor_columnHeader
-			// 
-			this.cursor_columnHeader.Text = "cursor";
-			this.cursor_columnHeader.Width = 28;
-			// 
 			// addr_columnHeader
 			// 
 			this.addr_columnHeader.Text = "Address";
-			this.addr_columnHeader.Width = 36;
+			this.addr_columnHeader.Width = 52;
 			// 
 			// asm_columnHeader
 			// 
@@ -977,7 +974,6 @@
 		private NoScrollJumpPanel rom_panel;
 		private NoScrollJumpPanel ram_panel;
 		private System.Windows.Forms.ListView code_listView;
-		private System.Windows.Forms.ColumnHeader cursor_columnHeader;
 		private System.Windows.Forms.ColumnHeader addr_columnHeader;
 		private System.Windows.Forms.ColumnHeader byteCode_columnHeader;
 		private System.Windows.Forms.ColumnHeader asm_columnHeader;

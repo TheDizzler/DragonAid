@@ -18,7 +18,7 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		public int pc;
 		public byte sp = 0xFF;
 
-		public uint cycleCount = 0;
+		public int cycleCount = 0;
 
 		/* processor status flags */
 		public bool carry;
@@ -68,7 +68,10 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 			overflow = false;
 			negative = false;
 		}
-
+		
+		/// <summary>
+		/// State of ControlUnit plus first 0x800 bytes of memory and memory mapper register states.
+		/// </summary>
 		public class ControlUnitState
 		{
 			public byte a;
@@ -77,7 +80,7 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 			public int pc;
 			public byte sp;
 
-			public uint cycleCount;
+			public int cycleCount;
 
 			public bool carry;
 			public bool zero;
@@ -87,10 +90,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 
 			public byte ps;
 
-			public byte[] theStack;
+			/// <summary>
+			/// 0x800 bytes of CPU RAM.
+			/// </summary>
+			public byte[] memory;
+
+			public byte[] registerStates;
 		}
 
-		internal ControlUnitState GetCurrentState()
+		internal ControlUnitState GetState()
 		{
 			return new ControlUnitState()
 			{
@@ -105,14 +113,33 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 				overflow = this.overflow,
 				negative = this.negative,
 				ps = this.ps,
-				theStack = cpu[0x100, 0x100],
+				memory = cpu.memory[0, 0x800],
 				cycleCount = this.cycleCount,
+				registerStates = cpu.memory.GetRegisterStates(),
 			};
+		}
+
+		internal void SetState(ControlUnitState state)
+		{
+			a = state.a;
+			x = state.x;
+			y = state.y;
+			pc = state.pc;
+			sp = state.sp;
+			carry = state.carry;
+			zero = state.zero;
+			interrupt = state.interrupt;
+			overflow = state.overflow;
+			negative = state.negative;
+			ps = state.ps;
+			cpu.memory[0, 0x800] = state.memory;
+			cycleCount = state.cycleCount;
+			cpu.memory.SetRegisterStates(state.registerStates);
 		}
 
 		private void PushByteToStack(byte value)
 		{
-			cpu.theStack[sp--] = value;
+			cpu.memory[0x100 + sp--] = value;
 		}
 
 		private void PushPointerToStack(byte[] operands)
@@ -127,12 +154,12 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 			PushByteToStack((byte)(address));
 		}
 
-		private byte PullByteFromStack()
+		internal byte PullByteFromStack()
 		{
-			return cpu.theStack[++sp];
+			return cpu.memory[0x100 + ++sp];
 		}
 
-		private int PullPointerFromStack()
+		internal int PullPointerFromStack()
 		{
 			var lowByte = PullByteFromStack();
 			var highByte = PullByteFromStack();
@@ -213,7 +240,7 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		/// Reads instruction, performs the appropirate operations, then increments the PC.
 		/// </summary>
 		/// <param name="instruction"></param>
-		public void Parse(Instruction instruction)
+		public void RunInstruction(Instruction instruction)
 		{
 			switch (instruction.opcode.opc)
 			{
@@ -284,8 +311,12 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 					a = ASL(a);
 					break;
 				case Opcodes.ASL_zpg:
-					cpu.Write(instruction.operands[0], ASL(cpu.Read(instruction.operands[0])));
+				{
+					var addr = instruction.operands[0];
+					cpu.Write(addr, ASL(cpu.Read(addr)));
+					cpu.memory[addr] = ASL(cpu.memory[addr]);
 					break;
+				}
 				case Opcodes.ASL_zpx:
 				{
 					var addr = instruction.operands[0] + x;
@@ -351,7 +382,8 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 					byte sr = (byte)(ps | 0x20); // interrupt flag turned on
 					PushByteToStack(sr);
 					pc = cpu.GetBRKPointer();
-					return; // skip the pc += opc bytes
+					instruction.opcode.bytes = 0; // skip the pc += opc bytes
+					break;
 
 
 				case Opcodes.CMP_imm:
@@ -513,15 +545,18 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 
 				case Opcodes.JMP_abs:
 					pc = instruction.GetPointer();
-					return; // skip the pc += opc bytes
+					instruction.opcode.bytes = 0; // skip the pc += opc bytes
+					break;
 				case Opcodes.JMP_ind:
 					pc = cpu.GetPointerAt(instruction.GetPointer());
-					return; // skip the pc += opc bytes
+					instruction.opcode.bytes = 0; // skip the pc += opc bytes
+					break;
 
 				case Opcodes.JSR:
-					PushPointerToStack(pc + 2);
+					PushPointerToStack(pc + 2); // address -1 of next operation 
 					pc = instruction.GetPointer();
-					return; // skip the pc += opc bytes
+					instruction.opcode.bytes = 0; // skip the pc += opc bytes
+					break;
 
 
 
@@ -753,18 +788,18 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 				case Opcodes.RTI:
 					if (sp >= 0xFE)
 						throw new Exception("Invalid stack state");
-					var i = interrupt;
-					ps = PullByteFromStack();
-					interrupt = i;
-					pc = PullPointerFromStack() - 1;
+					var intrrpt = interrupt;
+					ps = PullByteFromStack(); // saved interrupt flag is ignored
+					interrupt = intrrpt;
+					pc = PullPointerFromStack() - 1; // is this -1 needed?
 					instruction.opcode.bytes = 0; // cancel out the + after the switch
-					break; // skip the pc += opc bytes
+					break;
 				case Opcodes.RTS:
 					if (sp >= 0xFE)
 						throw new Exception("Invalid stack state");
 					pc = PullPointerFromStack() + 1;
 					instruction.opcode.bytes = 0; // cancel out the + after the switch
-					break; // skip the pc += opc bytes
+					break;
 
 
 				case Opcodes.SBC_imm:
@@ -898,8 +933,14 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 				++cycleCount;
 		}
 
+		/// <summary>
+		/// Moves PC by amount (>= 0x80 is negative) and adds +1 to cycle count,
+		/// or +2 if page boundary crossed.
+		/// </summary>
+		/// <param name="amount"></param>
 		private void MovePC(byte amount)
 		{
+			int prev = pc;
 			if (amount >= 0x80)
 			{
 				var i = 0x100 - amount;
@@ -907,8 +948,10 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 			}
 			else
 				pc += amount;
+			if ((prev & 0xFF00) != (pc & 0xFF00))
+				++cycleCount; // extra cycle count if branch goes to different page
+			++cycleCount;
 		}
-
 
 		/// <summary>
 		/// Sets N, Z, C.
@@ -983,7 +1026,6 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 			zero = result == 0;
 		}
 
-
 		/// <summary>
 		/// BIT sets the Z flag as though the value in the address tested were ANDed with the accumulator.
 		/// The N and V flags are set to match bits 7 and 6 respectively in the value stored at the tested address. 
@@ -995,7 +1037,6 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 			negative = (mem & 0x80) == 0x80;
 			overflow = (mem & 0x40) == 0x40;
 		}
-
 
 		/// <summary>
 		/// Sets N, Z, C.
