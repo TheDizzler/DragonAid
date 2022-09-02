@@ -9,24 +9,25 @@ using AtomosZ.DragonAid.Libraries;
 using AtomosZ.DragonAid.Libraries.ASM;
 using AtomosZ.MiNesEmulator.Compiler;
 using AtomosZ.MiNesEmulator.CPU2A03;
+using static AtomosZ.MiNesEmulator.CPU2A03.VirtualCPU;
 
 namespace AtomosZ.MiNesEmulator
 {
 	public partial class MiNesForm : Form, UserControlParent
 	{
-		private CPU cpu;
+		private VirtualCPU cpu;
 		private ControlUnit6502 cu;
 		private byte[] byteStream;
 
 		private string asmFilepath = @"D:\github\RomHacking\Working ROMs\ROM writing\unit test code.asm";
-		private List<CPU.VirtualInstruction> allInstructions;
+		private List<VirtualCPU.VirtualInstruction> allInstructions;
 
 
 		public MiNesForm()
 		{
 			InitializeComponent();
 
-			cpu = new CPU();
+			cpu = new VirtualCPU();
 			cu = cpu.controlUnit;
 
 			ram_memoryScrollView.Initialize(0x8000);
@@ -37,8 +38,14 @@ namespace AtomosZ.MiNesEmulator
 			AssembleAndLoadRom();
 
 			// start from RESET_IRQ
+			
+			var first = cpu.PeekNextInstruction();
+			var vInstr = new VirtualInstruction();
+			vInstr.instruction = first;
+			vInstr.state = cpu.GetCurrentState();
+
 			var instrAndBranchPointers =
-				cpu.RunInstructionBlockVirtually(cpu.GetPointerAt(UniversalConsts.RESET_Pointer));
+				cpu.RunInstructionBlockVirtually(vInstr.state);
 
 			allInstructions = instrAndBranchPointers;
 

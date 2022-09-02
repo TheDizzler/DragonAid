@@ -80,6 +80,7 @@
     <Compile Include="MemoryScrollView.Designer.cs">
       <DependentUpon>MemoryScrollView.cs</DependentUpon>
     </Compile>
+    <Compile Include="VirtualCPU.cs" />
     <EmbeddedResource Include="NoScrollJumpPanel.resx">
       <DependentUpon>NoScrollJumpPanel.cs</DependentUpon>
     </EmbeddedResource>
