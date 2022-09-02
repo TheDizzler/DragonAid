@@ -68,7 +68,7 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 			overflow = false;
 			negative = false;
 		}
-		
+
 		/// <summary>
 		/// State of ControlUnit plus first 0x800 bytes of memory and memory mapper register states.
 		/// </summary>
@@ -94,10 +94,17 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 			/// 0x800 bytes of CPU RAM.
 			/// </summary>
 			public byte[] memory;
+			public byte[] sRAM;
 
 			public byte[] registerStates;
 		}
 
+		/// <summary>
+		/// Gets current state of ControlUnit, memory (0x0000 to 0x0800 and 0x6000 to 0x7FFF),
+		/// and cartridge register states. 
+		/// @TODO: PPU/APU/etc. register states.
+		/// </summary>
+		/// <returns></returns>
 		internal ControlUnitState GetState()
 		{
 			return new ControlUnitState()
@@ -112,9 +119,12 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 				interrupt = this.interrupt,
 				overflow = this.overflow,
 				negative = this.negative,
-				ps = this.ps,
-				memory = cpu.memory[0, 0x800],
 				cycleCount = this.cycleCount,
+				ps = this.ps,
+
+				memory = cpu.memory[0, 0x800],
+				sRAM = cpu.memory[0x6000, 0x2000],
+
 				registerStates = cpu.memory.GetRegisterStates(),
 			};
 		}
@@ -131,9 +141,12 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 			interrupt = state.interrupt;
 			overflow = state.overflow;
 			negative = state.negative;
-			ps = state.ps;
-			cpu.memory[0, 0x800] = state.memory;
 			cycleCount = state.cycleCount;
+			ps = state.ps;
+
+			cpu.memory[0, 0x800] = state.memory;
+			cpu.memory[0x6000, 0x2000] = state.sRAM;
+
 			cpu.memory.SetRegisterStates(state.registerStates);
 		}
 
