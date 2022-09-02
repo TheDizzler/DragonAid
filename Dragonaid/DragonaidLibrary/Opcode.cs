@@ -110,7 +110,7 @@ namespace AtomosZ.DragonAid.Libraries.ASM
 		}
 
 		/// <summary>
-		/// Control Flow is JMP, JSR, BRK, RTS, RTI,
+		/// Control Flow is JMP, JSR, BRK, RTS, RTI, and all branch codes.
 		/// </summary>
 		/// <returns></returns>
 		public bool IsControlFlow()
@@ -131,13 +131,14 @@ namespace AtomosZ.DragonAid.Libraries.ASM
 					return false;
 			}
 
-			switch (asm.Substring(0, 3))
+			switch (opc)
 			{
-				case "JSR":
-				case "JMP":
-				case "RTS":
-				case "RTI":
-				case "BRK":
+				case Opcodes.JSR:
+				case Opcodes.JMP_abs:
+				case Opcodes.JMP_ind:
+				case Opcodes.BRK:
+				case Opcodes.RTI:
+				case Opcodes.RTS:
 					return true;
 			}
 
@@ -151,15 +152,21 @@ namespace AtomosZ.DragonAid.Libraries.ASM
 		/// <returns></returns>
 		public bool IsControlFlowEnd()
 		{
-			switch (asm.Substring(0, 3))
+			switch (opc)
 			{
-				case "JMP":
-				case "RTS":
-				case "RTI":
+				case Opcodes.JMP_abs:
+				case Opcodes.JMP_ind:
+				case Opcodes.RTI:
+				case Opcodes.RTS:
 					return true;
 			}
 
 			return false;
+		}
+
+		public bool IsBranch()
+		{
+			return mode == Mode.Relative;
 		}
 	}
 }
