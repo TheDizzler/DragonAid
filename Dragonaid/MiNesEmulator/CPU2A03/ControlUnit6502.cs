@@ -250,7 +250,66 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		}
 
 		/// <summary>
-		/// Reads instruction, performs the appropirate operations, then increments the PC.
+		/// Saves current state of ControlUnit/Memory, runs the instruction,
+		/// returns the state after instruction run, then resets ControlUnit/Memory.
+		/// <para>@TODO: save and restore PPU/APU/etc. register states.</para>
+		/// </summary>
+		/// <param name="instr"></param>
+		/// <returns></returns>
+		public ControlUnitState PeekRunInstruction(Instruction instr)
+		{
+			var saveState = GetState();
+			RunInstruction(instr);
+			var virtualState = GetState();
+			SetState(saveState);
+			return virtualState;
+		}
+
+		/// <summary>
+		/// Instruction MUST be a Relative mode opcode.
+		/// </summary>
+		/// <param name="instruction"></param>
+		/// <exception cref="Exception"></exception>
+		public void RunInstructionForceNonBranched(Instruction instruction)
+		{
+			if (instruction.opcode.mode != Opcode.Mode.Relative)
+				throw new Exception("This is not a branch opcode");
+
+			switch (instruction.opcode.opc)
+			{
+				case Opcodes.BCC:
+					carry = true;
+					break;
+				case Opcodes.BCS:
+					carry = false;
+					break;
+				case Opcodes.BEQ:
+					zero = false;
+					break;
+				case Opcodes.BNE:
+					zero = true;
+					break;
+				case Opcodes.BMI:
+					negative = false;
+					break;
+				case Opcodes.BPL:
+					negative = true;
+					break;
+				case Opcodes.BVC:
+					overflow = true;
+					break;
+				case Opcodes.BVS:
+					overflow = false;
+					break;
+			}
+
+			cycleCount += instruction.opcode.cycles;
+			pc += instruction.opcode.bytes;
+		}
+
+
+		/// <summary>
+		/// Reads instruction, performs the appropriate operations, then increments the PC.
 		/// </summary>
 		/// <param name="instruction"></param>
 		public void RunInstruction(Instruction instruction)
