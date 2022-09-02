@@ -711,7 +711,7 @@ namespace AtomosZ.MiNesEmulator.Compiler
 					case Mode.Relative:
 					{
 						int diff = labelAddr - pcc.address;
-						if (diff > 127 || diff < -127)
+						if (diff > 127 || diff < -128)
 						{
 							throw new Exception($"Invalid relative address on line {pcc.sourceCodeLine} : {pcc.sourceCode}"
 								+ $" - {operandStr} (${labelAddr}) to far from ${pcc.address}");
