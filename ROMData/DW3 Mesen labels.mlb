@@ -1524,6 +1524,7 @@ P:1C000-1C001:Bank1C000to1FFFF
 P:1C115-1C117:Map_Pointers:[0]: lobyte\n[1]: hibyte\n[2]: ??\n\nAliahanCastle_F2
 P:1E2E7-1E499:Map_xF2_RubissTower_4f:#F2\nroof_type:"tower",\ntileset:"dw3_tileset_1B",
 P:1E9F3-1E9F4:CharacterNames_Pointer
+P:1ECFE-1ED0A:SRAM_CheckSum:MANABU YAMANA in ASCII
 P:1ED42:PreGenNames
 P:1F23E-1F284:Class_BaseStats
 P:1FDB7-1FFD7:FreeSpace1C000to1FFFF:Post credits
@@ -2669,7 +2670,7 @@ P:3C5FF:GetVariable_FromDynamic:A: bank id where data is located\nX: register in
 P:3C601::bank id to return to
 P:3C609::bank id
 P:3C64E-3C664:BankRegisterSwitch_3C000:0-1 Name Table Mirroring\n2-3 PRG-Switching Mode\n    0,1  8000-FFFF (32K)  set via Register 3\n    2     C000-FFFF set via Register 3\n           8000-BFFF set to $00000\n    3     8000-BFFF set via Register 3\n           C000-FFFF set to $7CFFF\n4     <1024K carts>\n    0 = Ignore 256K selection register 1\n    1 = Acknowledge 256K selection register
-P:3C665-3C67B:BankSwitch_SetHiOrLowBanks_3C000:Bit4 - 256K ROM Selection Register 0\n<512K carts>\n(0 = Swap banks from first 256K of PRG  $00000-$3FFFF\n1 = Swap banks from second 256K of PRG $40000-$7FFFF)
+P:3C665-3C67B:Register1_SetHiOrLowBanks_3C000:Bit4 - 256K ROM Selection Register 0\n<512K carts>\n(0 = Swap banks from first 256K of PRG  $00000-$3FFFF\n1 = Swap banks from second 256K of PRG $40000-$7FFFF)
 P:3C67C-3C68F:BankSwitchRegister2_3C000:Register 2, Bit4 - 256K ROM Selection Register 1\n\n<1024K carts with bit 4 of register 0 off>\nStore but ignore this bit (base 256K selection on 256K selection Reg 0)\n<1024K carts with bit 4 of register 0 on>\nHigh bit of 256K PRG bank selection
 P:3C690:F3C690
 P:3C6A2:__PPUWriteAddress_27_presumably
@@ -2788,7 +2789,7 @@ P:3C9C3:_L3C9C3_
 P:3C9D0::if low byte == $07 || $0F\n   BRK\nelse RTI
 P:3C9DC:NMI_RTI_as_normal
 P:3C9E2:NMI_BRK_insteadof_RTI
-P:3C9EA:ResetNMI_3C000_sub:does this clear the shift register?
+P:3C9EA:ResetNMI_SetRegisters_3C000:INC $FFDF - clears the shift register
 P:3C9FE:L3C9FE
 P:3C9FF:L3C9FF
 P:3CA59:L3CA59
@@ -3325,6 +3326,7 @@ P:3FF98::clear bit 4, to make sure we have $00
 P:3FFAB::these might be here to push the 2nd 5x bank STA to the next page.
 P:3FFD8:RESET_3C000
 P:3FFD9::this probably has something to do with reseting the MMC latch?
+P:3FFE0-3FFEF:SECRET_MESSAGE_3C000:DRAGON WARRIOR 3 in ASCII\n$44 D\n$52 R\n$41 A\netc...
 P:3FFFA-3FFFB:NMIPointer_3C000
 P:3FFFC-3FFFD:ResetPointer_3C000
 P:3FFFE-3FFFF:IRQBRKPointer_3C000
@@ -3651,9 +3653,9 @@ P:7C5A2:LoadLocalPointer_Setup:A: index of LocalPointer/BankId to load\nresult i
 P:7C5AB::offset to DynamicSubroutine
 P:7C5BC:_GetNextDayNightPaletteColor_BankSwitchReturn
 P:7C60E-7C61B:Dialog_ReadNextCharFromBank:X: register in zero page where address to data is\n\n1) Gets address of next char from DialogBlockPointerMod\nand copy to DialogReadNextCharPointer\n2) Get next char from DialogReadNextCharPointer\n3) Switch banks\n
-P:7C64E-7C664:BankSwitchRegister0_7C000:0-1 Name Table Mirroring\n2-3 PRG-Switching Mode\n    0,1  8000-FFFF (32K)  set via Register 3\n    2     C000-FFFF set via Register 3\n           8000-BFFF set to $00000\n    3     8000-BFFF set via Register 3\n           C000-FFFF set to $7CFFF\n4     <1024K carts>\n    0 = Ignore 256K selection register 1\n    1 = Acknowledge 256K selection register
-P:7C665-7C67B:BankSwitch_SetHiOrLowBanks_7C000:Bit4 - 256K ROM Selection Register 0\n<512K carts>\n(0 = Swap banks from first 256K of PRG  $00000-$3FFFF\n1 = Swap banks from second 256K of PRG $40000-$7FFFF)
-P:7C67C-7C691:BankSwitchRegister2_7C000:<1024K carts only?>\n  Register 0 bit 4: ON - High bit of 256K PRG bank selection 
+P:7C64E-7C664:Register0_Set_7C000:0-1 Name Table Mirroring\n2-3 PRG-Switching Mode\n    0,1  8000-FFFF (32K)  set via Register 3\n    2     C000-FFFF set via Register 3\n           8000-BFFF set to $00000\n    3     8000-BFFF set via Register 3\n           C000-FFFF set to $7CFFF\n4   CHR ROM bank mode (0: switch 8 KB at a time; 1: switch two separate 4 KB banks)\n4     <1024K carts>\n    0 = Ignore 256K selection register 1\n    1 = Acknowledge 256K selection register
+P:7C665-7C67B:Register1_SetHiOrLowBanks_7C000:Bit4 - 256K ROM Selection Register 0\n<512K carts>\n(0 = Swap banks from first 256K of PRG $00000-$3FFFF\n1 = Swap banks from second 256K of PRG $40000-$7FFFF)
+P:7C67C-7C691:Register2_Set_7C000:<1024K carts only?>\n  Register 0 bit 4: ON - High bit of 256K PRG bank selection 
 P:7C90A:WaitForNMI_78000_Post
 P:7C91C:Post_NMI_store_Not_FD
 P:7C91F:_WaitForNMI_78000_Post_RTS
@@ -3664,8 +3666,9 @@ P:7C98B::again....?
 P:7C990::Run APU engine
 P:7C9C3:L7C9C3
 P:7C9E2:L7C9E2
-P:7C9EA:F7C9EA:what does this do??
-P:7C9F9:ResetNMI_7C000_sub:\ncomes directly from ResetNMI_3C000_sub
+P:7C9EA:ResetNMI_SetRegisters_7C000:Clone of ResetNMI_SetRegisters_3C000\n
+P:7C9ED::INC $FFDF - clear shift register
+P:7C9F9:ResetNMI_SetRegisters_7C000_cont:\ncomes directly from ResetNMI_3C000_sub
 P:7CA5C:F7CA5C
 P:7CA6E:L7CA6E
 P:7CA7A:L7CA7A
@@ -3675,7 +3678,8 @@ P:7CAA6:L7CAA6
 P:7CB0A:L7CB0A
 P:7CB86-7CB9E:ReadController_7C000
 P:7E7C0-7E7C3:BRK_DynamicSubroutineAddr_Vector:[1]:$C46B BRK_DynamicSub_Destination_1
-P:7E819:ResetNMI_7C000_sub_cont:\nAfter ResetNMI_7C000_sub, due to stored address in stack
+P:7E7E8:ResetNMI_7C000:\nClone of ResetNMI_3C000
+P:7E819:ResetNMI_7C000_cont:\nAfter ResetNMI_SetRegisters_7C000, due to stored address in stack
 P:7E864:BRK_7C000
 P:7E865::get IRQ status flags
 P:7E89F:L7E89F
@@ -3700,9 +3704,11 @@ P:7EE9A:MysteryByteC
 P:7FAB0-7FF8D:FreeSpace7F0000
 P:7FF91:BankSwitch_SaveNextBank_7C000
 P:7FF94:BankSwitch_7C000
-P:7FF98::force to low bank
-P:7FF9F::set to high bank if required
-P:7FFD8-7FFF9:EndOfBank7C000to7FFFF
+P:7FF98::get bankId without high/low bit
+P:7FF9F::get high bank bit
+P:7FFA8::bank id without high/low bit
+P:7FFBF::switch to high or low banks
+P:7FFE0-7FFEF:SECRET_MESSAGE_7C000:DRAGON WARRIOR 3 in ASCII
 P:7FFFA-7FFFB:NMIPointer_7C000
 P:7FFFC-7FFFD:ResetPointer_7C000
 P:7FFFE-7FFFF:IRQBRKPointer_7C000
