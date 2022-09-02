@@ -168,6 +168,8 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 
 		internal abstract byte[] GetRegisterStates();
 		internal abstract void SetRegisterStates(byte[] states);
+
+
 		/// <summary>
 		/// <para>
 		/// <br>Copies memory of length bytes to byte array or </br>
@@ -201,7 +203,10 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 				if (address < 0x2000)
 					return internalRAM[address & 0x07FF];
 				if (address < 0x4000)
-					return ppuIOPorts[address & 0x08].Read();
+				{
+					var addr = address & 0x07;
+					return ppuIOPorts[addr].Read();
+				}
 				if (address < 0x6000)
 					return apuControllerIOPorts[address & 0x17].Read();
 				if (address < 0x8000) // Save RAM. May not exist!

@@ -69,7 +69,7 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 			this.romData = romData;
 			this.prgRomSize = prgRomSize;
 
-			if (hasBattery)
+			//if (hasBattery) // DWIII ROM claims there is no battery
 			{
 				wRAM = new byte[0x2000];
 			}
@@ -91,10 +91,10 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 			{
 				if (address >= 0xC000)
 				{
-					return romData[highBankAddress + (address - 0xC000) + Address.iNESHeaderLength];
+					return romData[highBankAddress + (address & 0x3FFF) + Address.iNESHeaderLength];
 				}
 				if (address >= 0x8000)
-					return romData[lowBankAddress + (address - 0x8000) + Address.iNESHeaderLength];
+					return romData[lowBankAddress + (address & 0x3FFF) + Address.iNESHeaderLength];
 				return base[address];
 			}
 			set
@@ -176,7 +176,7 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 			registers[1].Write(states[2]);
 			registers[2].Write(states[3]);
 			registers[3].Write(states[4]);
-			lastCycle = states[5] + (states[6] << 8) + (states[7] << 16) + (states[8] << 24) ;
+			lastCycle = states[5] + (states[6] << 8) + (states[7] << 16) + (states[8] << 24);
 
 			UpdateBankIds();
 		}
