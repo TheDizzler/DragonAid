@@ -86,7 +86,7 @@ namespace AtomosZ.DragonAid.Libraries.ASM
 					break;
 
 				case Opcode.Mode.Relative:
-					t += $" ${GetRelativeAddressString()}";
+					t += $" ${GetRelativeAddress():X4}";
 					break;
 
 				case Opcode.Mode.Implied:
@@ -96,26 +96,15 @@ namespace AtomosZ.DragonAid.Libraries.ASM
 			return t;
 		}
 
-		public string GetRelativeAddressString()
-		{
-			if (operands[0] >= 0x80)
-			{
-				var i = 0x100 - operands[0];
-				return (address - i).ToString("X4");
-			}
-			else
-				return (address + operands[0]).ToString("X4");
-		}
-
 		public int GetRelativeAddress()
 		{
 			if (operands[0] >= 0x80)
 			{
 				var i = 0x100 - operands[0];
-				return address - i;
+				return address + opcode.bytes - i;
 			}
 			else
-				return address + operands[0];
+				return address +opcode.bytes;
 		}
 	}
 }

@@ -212,7 +212,7 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 
 				case Opcode.Mode.Relative:
 					instrView += $" ${instruction.operands[0]:X2}"
-							+ $" @ ${instruction.GetRelativeAddressString()}"
+							+ $" @ ${instruction.GetRelativeAddress():X4}"
 							+ $" = ${cpu.Read(instruction.GetRelativeAddress()):X2}";
 					break;
 
