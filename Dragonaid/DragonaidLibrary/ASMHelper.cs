@@ -92,43 +92,107 @@ namespace AtomosZ.DragonAid.Libraries
 			return ADC(a, memInv, ref hasCarry);
 		}
 
+		public static byte INC(byte operand, out bool z, out bool n)
+		{
+			var result = ++operand;
+			z = result == 0;
+			n = result >= 0x80;
+			return result;
+		}
+
+		public static byte DEC(byte operand, out bool z, out bool n)
+		{
+			var result = --operand;
+			z = result == 0;
+			n = result >= 0x80;
+			return result;
+		}
+
+		public static byte AND(byte a, byte operand, out bool z, out bool n)
+		{
+			var result = (byte)(a & operand);
+			z = result == 0;
+			n = result >= 0x80;
+			return result;
+		}
+
+		public static byte ORA(byte a, byte operand, out bool z, out bool n)
+		{
+			var result = (byte)(a | operand);
+			z = result == 0;
+			n = result >= 0x80;
+			return result;
+		}
+
+		public static byte EOR(byte a, byte operand, out bool z, out bool n)
+		{
+			var result = (byte)(a ^ operand);
+			z = result == 0;
+			n = result >= 0x80;
+			return result;
+		}
+
+		public static void CMP(byte a, byte operand, out bool hasCarry, out bool z, out bool n)
+		{
+			hasCarry = false;
+			var result = SBC(a, operand, ref hasCarry);
+			z = result == 0;
+			n = result >= 0x80;
+		}
 
 		/// <summary>
-		/// Not ASM but a common function in DQ ROM.
+		/// BIT sets the Z flag as though the value in the address tested were ANDed with the accumulator.
+		/// The N and V flags are set to match bits 7 and 6 respectively in the value stored at the tested address. 
+		/// </summary>
+		/// <param name="a"></param>
+		/// <param name="operand"></param>
+		/// <param name="n"></param>
+		/// <param name="v"></param>
+		/// <param name="z"></param>
+		public static void BIT(byte a, byte operand, out bool n, out bool v, out bool z)
+		{
+			z = (a & operand) == 0;
+			n = (operand & 0x80) == 0x80;
+			v = (operand & 0x40) == 0x40;
+		}
+
+
+		/// <summary>
+		/// Not ASM but a common function in DQIII ROM.
 		/// </summary>
 		/// <param name="zeroPages"></param>
 		/// <param name="a"></param>
 		/// <param name="x">zeroPages address</param>
 		public static void MultiplyValueAtXByA(byte[] zeroPages, byte a, byte x)
 		{ // C055
-			zeroPages[ZeroPages.dynamicSubroutineAddr + 0] = a;
-			zeroPages[ZeroPages.dynamicSubroutineAddr + 1] = 0;
-			zeroPages[ZeroPages.dynamicSubroutineAddr + 2] = 0;
+			zeroPages[ZeroPage.dynamicSubroutine_21 + 0] = a;
+			zeroPages[ZeroPage.dynamicSubroutine_21 + 1] = 0;
+			zeroPages[ZeroPage.dynamicSubroutine_21 + 2] = 0;
 
 			do
 			{
-				zeroPages[ZeroPages.dynamicSubroutineAddr + 0]
-				= ASMHelper.LSR(zeroPages[ZeroPages.dynamicSubroutineAddr + 0], 1, out bool hasCarry);
+				zeroPages[ZeroPage.dynamicSubroutine_21 + 0]
+				= ASMHelper.LSR(zeroPages[ZeroPage.dynamicSubroutine_21 + 0], 1, out bool hasCarry);
 				if (hasCarry)
 				{
 					hasCarry = false;
-					zeroPages[ZeroPages.dynamicSubroutineAddr + 1]
-						= ASMHelper.ADC(zeroPages[x + 0], zeroPages[ZeroPages.dynamicSubroutineAddr + 1], ref hasCarry);
-					zeroPages[ZeroPages.dynamicSubroutineAddr + 2]
-						= ASMHelper.ADC(zeroPages[x + 1], zeroPages[ZeroPages.dynamicSubroutineAddr + 2], ref hasCarry);
+					zeroPages[ZeroPage.dynamicSubroutine_21 + 1]
+						= ASMHelper.ADC(zeroPages[x + 0], zeroPages[ZeroPage.dynamicSubroutine_21 + 1], ref hasCarry);
+					zeroPages[ZeroPage.dynamicSubroutine_21 + 2]
+						= ASMHelper.ADC(zeroPages[x + 1], zeroPages[ZeroPage.dynamicSubroutine_21 + 2], ref hasCarry);
 				}
 
 				zeroPages[x + 0] = ASMHelper.ASL(zeroPages[x + 0], 1, out hasCarry);
 				zeroPages[x + 1] = ASMHelper.ROL(zeroPages[x + 1], 1, ref hasCarry);
 			}
-			while (zeroPages[ZeroPages.dynamicSubroutineAddr + 0] != 0);
+			while (zeroPages[ZeroPage.dynamicSubroutine_21 + 0] != 0);
 
-			zeroPages[x + 0] = zeroPages[ZeroPages.dynamicSubroutineAddr + 1];
-			zeroPages[x + 1] = zeroPages[ZeroPages.dynamicSubroutineAddr + 2];
+			zeroPages[x + 0] = zeroPages[ZeroPage.dynamicSubroutine_21 + 1];
+			zeroPages[x + 1] = zeroPages[ZeroPage.dynamicSubroutine_21 + 2];
 		}
 
 		/// <summary>
-		/// Not ASM op but a common function in DQ ROM
+		/// Not ASM op but a common function in DQIII ROM
 		/// </summary>
 		/// <param name="zeroPages"></param>
 		/// <param name="a"></param>
@@ -150,20 +214,5 @@ namespace AtomosZ.DragonAid.Libraries
 			return 0;
 		}
 
-		/// <summary>
-		/// BIT sets the Z flag as though the value in the address tested were ANDed with the accumulator.
-		/// The N and V flags are set to match bits 7 and 6 respectively in the value stored at the tested address. 
-		/// </summary>
-		/// <param name="a"></param>
-		/// <param name="operand"></param>
-		/// <param name="n"></param>
-		/// <param name="v"></param>
-		/// <param name="z"></param>
-		public static void BIT(byte a, byte operand, out bool n, out bool v, out bool z)
-		{
-			z = (a & operand) == 0;
-			n = (operand & 0x80) == 0x80;
-			v = (operand & 0x40) == 0x40;
-		}
 	}
 }
