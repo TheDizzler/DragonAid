@@ -196,8 +196,8 @@ namespace AtomosZ.DragonAid.PointerAid
 						continue;
 					}
 
-					int subroutine = data[bankPointer.offset + index * 2]
-						+ (data[bankPointer.offset + (index * 2) + 1] << 8);
+					int subroutine = data[bankPointer.iNESAddress + index * 2]
+						+ (data[bankPointer.iNESAddress + (index * 2) + 1] << 8);
 					//Debug.WriteLine($"ID: {i.ToString("X2")} BankId: {bank.ToString("X2")} Bank: {bankPointer.name} Index: {index.ToString("X2")} DS: ${subroutine.ToString("X2")}");
 
 					DynamicSubroutine ds = new DynamicSubroutine()
@@ -362,6 +362,8 @@ namespace AtomosZ.DragonAid.PointerAid
 					ShowSearchResult(searchBox.selectedSubroutine);
 				}
 			}
+			else
+				MessageBox.Show("No results found");
 		}
 
 		private void ShowSearchResult(DynamicSubroutine dynamicSubroutine)

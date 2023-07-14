@@ -15,7 +15,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// </summary>
 		public static void DynamicSubroutine_28000_B()
 		{
-			if ((zeroPages[0x2F] & 0x01) != 0
+			if ((zeroPage[0x2F] & 0x01) != 0
 				&& theStack[0x76] != 0)
 				L2816E();
 		}

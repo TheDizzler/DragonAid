@@ -4,6 +4,7 @@ namespace AtomosZ.DragonAid.Libraries
 {
 	public static class UniversalConsts
 	{
+		public static int SaveGameLength = 0x315;
 		/// <summary>
 		/// THIS SHOULD BE FETCHED FROM ROM/EDIT SAVE DATA.
 		/// Timer wraps at 204 (0xCC).

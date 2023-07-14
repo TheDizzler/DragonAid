@@ -14,8 +14,8 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// </summary>
 		public static void Map_Scroll_Check()
 		{
-			if (ROMPlaceholders.zeroPages[0x86] == 0
-				|| ROMPlaceholders.zeroPages[0x87] != 0)
+			if (ROMPlaceholders.zeroPage[0x86] == 0
+				|| ROMPlaceholders.zeroPage[0x87] != 0)
 				Map_Scroll();
 		}
 
@@ -26,12 +26,12 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		private static void Map_Scroll()
 		{
 			byte x = (byte)(nesRam[Pointers.NESRAM.walkDirection] << 1);
-			zeroPages[0x72] = romData[Pointers.ROM.MapScrollVector.offset + x];
-			zeroPages[0x73] = romData[Pointers.ROM.MapScrollVector.offset + x + 1];
+			zeroPage[0x72] = romData[Pointers.ROM.MapScrollVector.iNESAddress + x];
+			zeroPage[0x73] = romData[Pointers.ROM.MapScrollVector.iNESAddress + x + 1];
 
 			x = 0x10;
-			zeroPages[0x6C] = x;
-			zeroPages[0x6D] = 0x02;
+			zeroPage[0x6C] = x;
+			zeroPage[0x6D] = 0x02;
 
 			while (x != 0)
 			{ // loop through PPU_SpriteDMA until find a value that is NOT 0xF8
@@ -43,10 +43,10 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 				}
 				else // the above sometimes (always?) falls into this code
 				{
-					a = zeroPages[0x6C];
+					a = zeroPage[0x6C];
 					bool hasCarry = false;
 					a = ASMHelper.ADC(a, 0x04, ref hasCarry);
-					zeroPages[0x6C] = a;
+					zeroPage[0x6C] = a;
 					x = a;
 				}
 			}
@@ -96,7 +96,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 
 		private static bool PPU_SpriteDMA_NOT_F8(byte x)
 		{
-			if (zeroPages[ZeroPage.encounterVariable_A] != 0x01)
+			if (zeroPage[ZeroPage.encounterVariable_A] != 0x01)
 				return Map_Scroll_JMP_DialogSegmentPointer(x);
 			else
 			{

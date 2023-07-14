@@ -1,6 +1,8 @@
-﻿R:0004-0005:QuickStorage04
-R:0006::Menu_CopyLineTo_StagingArea\n--------------------------\n$C80A - LDA num sprites to write instruction for PPU (1 line)\n\nMenu_CopyLinesTo_StagingArea_Loop\n----------------------------------------\n$C795 -\n  [0]:# of attribute values to write for row\n  [1]:length of row - [0]\n\nCaret_Update\n-----------------------------------\n$9F0C - STA Caret on or off ($00 or $73)
-R:0008-0009:Menu_PPUAddress:Character_GetSpellCount\n-------------------------\n$9AD4 - STA character spell count\n\nMenu_CopyLinesTo_StagingArea_Loop\n---------------------------------------\n$C786 - copy of Menu_ScreenPosition\n\n\n$C8A4 - [1] = [0] AND $1F >> 2\n$C8B0 - [1] = [0] >> 4 ORA [1]
+﻿R:0004-0005:quickStorage_04
+R:0006::DynamicSubroutine_3B482\n--------------------------\nstores index of tile instruction in PPU_TileBatchInstructions_3rdByte with bits 4&5, 4&6, or 4&5&6 set\n\nMenu_CopyLineTo_StagingArea\n--------------------------\n$C80A - LDA num sprites to write instruction for PPU (1 line)\n\nMenu_CopyLinesTo_StagingArea_Loop\n----------------------------------------\n$C795 -\n  [0]:# of attribute values to write for row\n  [1]:length of row - [0]\n\nCaret_Update\n-----------------------------------\n$9F0C - STA Caret on or off ($00 or $73)
+R:0008-0009:Menu_PPUAddress_08:__TitleScreen_loop_\n-------------------\nloop counter\n\nCharacter_GetSpellCount\n-------------------------\n$9AD4 - STA character spell count\n\nMenu_CopyLinesTo_StagingArea_Loop\n---------------------------------------\n$C786 - copy of Menu_ScreenPosition\n\n\n$C8A4 - [1] = [0] AND $1F >> 2\n$C8B0 - [1] = [0] >> 4 ORA [1]
+R:000A::TitleScreen fade in stage counter\n16 stages in total
+R:000B::TitleScreen fade in Prep_Palettes counter
 R:000C::$C8D4 - STA bit 6 of low byte of PPU address in 2nd bit\n$C8DA - ORA with bit 1 and STA\n$C8DC - bit 1 ORA bit 6 in 2nd bit (of low byte of PPU address)\npossible outcomes:\n0, 2, 4, 6\n\n$C8F6 - LDY
 R:000D::$C8F6 - stores value of Menu_AttributeValues,X (X low byte of Attribute Address - #$C0)
 R:000F::Menu_GetAttributeValue\n---------------------------\n$C89C - STA value $460,Y\n$C8FB - ASL * value at $0C\n\nDynamicSubroutine_00000_C_sub_a\n----------------\n$9A19 - STA first character spell byte\n\nDynamicSubroutine_00000_C_sub_B\n-----------------------------\n$9ADB - ROR * 8, count # of carry
@@ -9,37 +11,37 @@ R:0012::max items in menu?
 R:0013::GetSpellByte\n--------------------------------\n$99DA - STA CharacterClass ID (00 = hero, etc...)\n
 R:0014:controller1_ButtonStore:$01 A\n$02\n$04\n$08\n$10 Up\n$20 Down\n$40 Left\n$80 Right
 R:0015:controller2_ButtonStore
-R:0016:controller1_ButtonIndex_Mask:AND's with controllerInputStore and stores the value
+R:0016:controller1_ButtonIndex_Mask_16:AND's with controllerInputStore and stores the value
 R:0017:controller2_ButtonIndex_Mask
 R:0018:controller1_ButtonIndex
 R:0019:controller2_ButtonIndex
-R:001B:loopTrap_flag:NMI_VBlank_3C000\n--------------------------------\nC973 - if == #$10, skip PPU_Update\n\nPPU_DrawBackground\n--------------------------------\n$CA9B - if AND $01 != $00, skip Sprite DMA\n$CAA8 - if AND != $04, skip drawing BG\n\nPPU_LoadPaletteWithBlack\n--------------------------------------\n$CB08 AND with $FB and re-stored\n\n$C2B0 Loop if $04\n$C30A Loop if NOT $04\n\n
-R:001C:currentRNGSeed:Monster_ParseStat_0C_3Deep_Loop\n----------------------------\n$C3D8 - ASL\nLDA\nEOR #21\nSTA\n\nMonster_ParseStat_0C_2Deep\n----------------------------------\n$C3CC - LDA ($75)\nADD $A4
-R:001D::Monster_ParseStat_0C_3Deep_Loop\n-------------------------------\n$C3D4 - LDA\nEOR DynamicSubroutine[0]\nASL DynamicSubroutine[0]\nASL\nBCC\n\n$C3E7 - LDA\nEOR $10\nSTA
-R:001E:CaretState:Caret_GetDrawPPUAddress\n----------------------------\n$C2C7 - STA caret on ($73) or off ($00)\n\nMenu_WritePPUInstructionAndChar\n------------------------------------\n$C32E - char to write to staging area
-R:001F-0020:PPU_WriteAddress:#3F00 palette data address\n\nMenu_GetScreenPosition\n--------------------------------------\n[0]:X pos, then PPU address low byte\n[1]:Y pos, then PPU address high byte\n\n$C2D8 - [1] initially set to $20 or $21, depending on v or h mirroring\n$C2E3 - [0]:DialogBlockPointerStore ASL x3, ADC PPUScroll_X
-R:0021-0023:DynamicSubroutine:PPUAddress_Vector[3]\n\nA dynamically modified subroutine.\nBefore DynamicSubRoutine_Setup, DynamicSubRoutine[1] is set to the dynamic address index to load.\n\nFirst byte is operator, then 2nd and 3rd bytes as target address. (usually)
-R:0024:BankSwitch_LastBankIndex:PPUAddress_Vector[2]\n\nBankSwitch_GetBankNumber\n------------------------------------------\nHolds next bank switch bank number\n\nBattle_EnemyDisplay_Copy_\n-------------------------------------------\nLine count?\n\nBankSwitch_AndGetNextDynamicSubroutine\n------------------------------------------\n$C536 - stores next bank switch #.\n\nMenu_CopyLineTo_StagingArea\n----------------------------------\n$C7F4 - tracking how many lines copied to staging area?
+R:001B:loopTrap_flag_1B:NMI_VBlank_3C000\n--------------------------------\nif == #$10, skip PPU_Update\n\n\nPPU_DrawBackground\n--------------------------------\n$CA9B - if AND $01 != $00, skip Sprite DMA\n$CAA8 - if AND != $04, skip drawing BG\n\nPPU_LoadPaletteWithBlack\n--------------------------------------\n$CB08 AND with $FB and re-stored\n\n$C2B0 Loop if $04\n$C30A Loop if NOT $04\n\n
+R:001C:currentRNGSeed_1C:Monster_ParseStat_0C_3Deep_Loop\n----------------------------\n$C3D8 - ASL\nLDA\nEOR #21\nSTA\n\nMonster_ParseStat_0C_2Deep\n----------------------------------\n$C3CC - LDA ($75)\nADD $A4
+R:001D:RNGRelated_1D:result? or just the 2nd byte for the RNG seed
+R:001E:CaretState_1E:Caret_GetDrawPPUAddress\n----------------------------\n$C2C7 - STA caret on ($73) or off ($00)\n\nMenu_WritePPUInstructionAndChar\n------------------------------------\n$C32E - char to write to staging area
+R:001F-0020:PPU_WriteAddress_1F:#3F00 PPU address of palette data\n\nMenu_GetScreenPosition\n--------------------------------------\n[0]:X pos, then PPU address low byte\n[1]:Y pos, then PPU address high byte\n\n$C2D8 - [1] initially set to $20 or $21, depending on v or h mirroring\n$C2E3 - [0]:DialogBlockPointerStore ASL x3, ADC PPUScroll_X
+R:0021-0023:DynamicSubroutine_21:PPUAddress_Vector[3]\n\nA dynamically modified subroutine.\nBefore DynamicSubRoutine_Setup, DynamicSubRoutine[1] is set to the dynamic address index to load.\n\nFirst byte is operator, then 2nd and 3rd bytes as target address. (usually)
+R:0024:BankSwitch_LastBankIndex_24:PPUAddress_Vector[2]\n\nBankSwitch_GetBankNumber\n------------------------------------------\nHolds next bank switch bank number\n\nBattle_EnemyDisplay_Copy_\n-------------------------------------------\nLine count?\n\nBankSwitch_AndGetNextDynamicSubroutine\n------------------------------------------\n$C536 - stores next bank switch #.\n\nMenu_CopyLineTo_StagingArea\n----------------------------------\n$C7F4 - tracking how many lines copied to staging area?
 R:0025::Menu_GetPPUPosition\n---------------------------------------\n$C76A - init with $00\n\nMenu_CopyLineTo_StagingArea\n-------------------\n$C828 - STY next index to write char in staging area
 R:0026::Menu_GetPPUPosition\n------------------------------------\n$C76C - init with $00\n\nBattle_CopyEnemyDisplayLineTo_StagingArea\n------------------------------------\n$C834 - LDY, offset for $0460\n\nMenu_CalculateAttribute_Loop\n------------------------------\n$C872 - # of attributes
 R:0027::Menu_GetPPUPosition\n-----------------------\n$C77F - STA line length to copy to staging area
 R:0028:PPU_RenderStart_flag:PPU_Render\n--------------------------------\nbeginning of function\n$CA6E - if not zero, do something else
 R:0029:PPU_render_flag
-R:002A:map_WorldPosition_X:DEC on Left\nINC on Right
-R:002B:map_WorldPosition_Y:INC on Down\nDEC on Up
-R:002C:encounterVariable_A:$82DC used in encounter checks\nif > 1 || == 1, special encounter case\n\nPostIncrementClock\n-----------------------------\n$D231 if == #$02 skip this subroutine
-R:002F::Hypothesis: bit 1 - is Light World (0) or Dark world (1)\n\n\nCheckForEncounter\n---------------------------\n$8298 - if bit 0 set -> special encounter subroutine\n$829E - if bit 1 set, use DarkWorld Encounter Tiles\n$83B6 - if not 0, skip time of day check (indoors?)\n\nDynamicSubroutine_34000_C\n-------------------------------------\n$9AB0 - checks bit 1, if != 0 exit routine\n\nIncrementClock\n-----------------------\n$D022 - if bit 1 set, do not increment clock\n\nDynamicSubroutine_38000_A\n---------------------------\n$B2F5 - LDA, AND #$02\n\nDynamicSubroutine_00000_A\n---------------------------\n$A149 - LDA, AND #$01
-R:0030:directionToWalk_Horizontal
-R:0031:DirectionToWalk_Vertical
-R:0032:post_NMI_store:WaitForNMI_Post\n---------------------\n$C911 - LDA, CMP #$FD
-R:0033::Stores high byte of Sprite DMA ($20)\n\nNMI_VBlank_3C000\n-------------------------\n$C979 - init with #$00
-R:0034:CPUStatus_TempStoreX:Stores X before bank switching, BRK, etc
-R:0035:CPUStatus_TempStoreY:Temp?\nBRK - Stores Y when entering BRK\n\nThis is the Y component in\nLDA (DialogReadNextCharPointer),Y\n\n$0 - There is no one in that direction
+R:002A:map_WorldPosition_X_2A:DEC on Left\nINC on Right
+R:002B:map_WorldPosition_Y_2B:INC on Down\nDEC on Up
+R:002C:encounterVariable_A_2C:$82DC used in encounter checks\nif > 1 || == 1, special encounter case\n\nPostIncrementClock\n-----------------------------\n$D231 if == #$02 skip this subroutine
+R:002F::Hypothesis (FALSE): bit 1 - is Light World (0) or Dark world (1), possibly day (0) or night (1) FALSE: was set to 1 when entering Aliahan during the day\n\nBit 0 set to 1 when LocationCheck_6B9 is 0\n\n\nCheckForEncounter\n---------------------------\n$8298 - if bit 0 set -> special encounter subroutine\n$829E - if bit 1 set, use DarkWorld Encounter Tiles\n$83B6 - if not 0, skip time of day check (indoors?)\n\nDynamicSubroutine_34000_C\n-------------------------------------\n$9AB0 - checks bit 1, if != 0 exit routine\n\nIncrementClock\n-----------------------\n$D022 - if bit 1 set, do not increment clock\n\nDynamicSubroutine_38000_A\n---------------------------\n$B2F5 - LDA, AND #$02\n\nDynamicSubroutine_00000_A\n---------------------------\n$A149 - LDA, AND #$01
+R:0030:directionToWalk_Horizontal_30
+R:0031:DirectionToWalk_Vertical_31
+R:0032:post_NMI_flag_32:Is this not always $FD?\n(It starts as 0 on Reset.)\n\nDuring VBlank (at 0x7CA5C) it seems this can be $FE\n\n\nBattleInit ($0A13A)\n--------------\n$A149 - STA #$FD\n\nWaitForNMI_Post\n---------------------\n$C911 - LDA, CMP #$FD
+R:0033::Stores high byte of Sprite DMA ($02)\n\nNMI_VBlank_3C000\n-------------------------\n$C979 - init with #$00
+R:0034:CPUStatus_TempStoreX_34:Stores X before bank switching, BRK, etc
+R:0035:CPUStatus_TempStoreY_35:Temp?\nBRK - Stores Y when entering BRK\n\nThis is the Y component in\nLDA (DialogReadNextCharPointer),Y\n\n$0 - There is no one in that direction
 R:0036:CPUStatus_TempStoreA:Stores A before bank switching, BRK, etc
 R:003C::character count
 R:003E::Stores DirectionToWalk\n00 - Up\n01 - Right\n02 - Down\n03 - Left
 R:0042::Character_GetSpellCount\n-----------------------------\nUsed as index into character spell lists (1 byte per spell list, 4 spell lists per character)\n$9ABA - ADC $08 each iteration\n\n\nDynamicJumpDestination_G\n------------------------------------------\n$B547 - amount of values in DynamicJumpDestination_F_Vector_a are < $80?\n\n_G_Loop_b\n$B55B - init with $08 (loop counter)\n\nMonster_ParseStat_0C_Pre\n-------------------------\n$838C - init with $00
-R:0043:Monster_CurrentIndex:current monster's index in battle formation\n\nMonster_ParseStat_0C_ResultNot03\n---------------------------------\n$8416 - STA Monster_ParseStat_00_BRK_Variable\n$8418 - LSR\n\nMonster_ParseStat_0C_Pre\n-------------------------\n$837F - STA Monster_ParseStat_00_BRK_Variable\n\n$8390 - LSR\nif BCC\n  EOR $47
+R:0043:Monster_CurrentIndex_43:also used in LoadGame\ncurrent monster's index in battle formation\n\nMonster_ParseStat_0C_ResultNot03\n---------------------------------\n$8416 - STA Monster_ParseStat_00_BRK_Variable\n$8418 - LSR\n\nMonster_ParseStat_0C_Pre\n-------------------------\n$837F - STA Monster_ParseStat_00_BRK_Variable\n\n$8390 - LSR\nif BCC\n  EOR $47
 R:0044::bit 6-7 of 3rd instruction byte
 R:0045::Monster_ParseStat_0C_Pre\n---------------------------------\n$8388 - STA ($C0)
 R:0046::Monster_ParseStat_0C_ResultNot03\n------------------------------\n$840E - init with $07\nLoop counter
@@ -49,38 +51,38 @@ R:004A::EncounterCheck:\nencounterZoneCode => encounter something
 R:004C::CheckForEncounter\n--------------------------\n$8294 STA $00
 R:004E::Map_GetEncounterRate\n---------------------------------\n$83B2 STA #$00
 R:004F::TileBatch instructionBytes[0]\n\nEncounter Check:\ncurrentTileType
-R:0050:tileBatchInstructions_1:tileBatchInstructions[1]
-R:0051:character_formationIndex:instructionBytes[2] (Tile Batch)\ncharacter_formationIndex
-R:0052:tileBatchVectorBOffset:tileBatchVectorBOffset
+R:0050:tileBatchInstructions_50:tileBatchInstructions[1]
+R:0051:character_formationIndex_51:instructionBytes[2] (Tile Batch)\ncharacter_formationIndex
+R:0052:tileBatchVectorBOffset_52:tileBatchVectorBOffset
 R:0053:writeTileCount:tiles written to PPU
-R:0055:tileBankId:bank id with tile to write to PPU\n\n$6AA TransferTo_PPUSpriteDMA
-R:0056:baseTileIndex:PPUAddress_Vector[4]
+R:0055:tileBankId_55:bank id with tile to write to PPU\n\n$6AA TransferTo_PPUSpriteDMA
+R:0056:baseTileIndex_56:PPUAddress_Vector[4]
 R:0057::$E638 ReadTileAddress_Vector\n\n$6AA TransferTo_PPUSpriteDMA\nSTA -> PPU_SpriteDMA[1]
-R:0059-0060:ReadTileAddress_Vector:FocusFireBit\n\n\nCheckForEncounter\n--------------------------\n$824B [3]: STA #$FF\n$8290 [5]: STA #$00\n$8391 [5]: if != 0, automatic encounter (?)\n$8250 [3]: if == 0, goto L3CCBD_JMP
-R:0062::CheckForEncounter\n--------------------------\n$8296 STA $00\n\n\nBattle_InitializeVariables\n-----------------------------\n$8239 - init all with $FF
+R:0059-0060:ReadTileAddressess_59:FocusFireBit\n\n\nCheckForEncounter\n--------------------------\n$824B [3]: STA #$FF\n$8290 [5]: STA #$00\n$8391 [5]: if != 0, automatic encounter (?)\n$8250 [3]: if == 0, goto L3CCBD_JMP
+R:0062:MonsterReinforcementCheck_62:CheckForEncounter\n--------------------------\n$8296 STA $00\n\n\nBattle_InitializeVariables\n-----------------------------\n$8239 - init all with $FF
 R:0064:Monster_FormationIndex:Monster_GetSomethingFor_ParseStat\n--------------------\n$BA11 - LDA * 2 as X for $0530,X and $0531,X\n\nHYPOTHESIS - this is the monster index id (NOPE)\n OR this is the index of the monster as seen on screen (maybe)\n\nMenu_Instruction_18_GetNameAndCount\n-------------------------------------\n$8AC3 - stores value of Menu_TextRowCounter / 2 right before BRK\n\nDynamicJumpDestination_G\n--------------------------------------\n$B532 - LDY\n\nDynamicJumpDestination_28000_A\n--------------------------------------\n$824F - STA value of $0540,X ($98) AND #87 AND #7F => $00
-R:006C-006D:dynamicPointerSpace:$8BAF - WriteTo_EnemyDisplay ($96A9),Y\n\n\n$BCCE - In battle...stores address for (draw?) instructions\n  $96A9 => [0]:$10, [1]:$18, [2]:$96, [3]:$80, [4]:$4D, [5]$E1\n\n\n\nThe next byte of map to load.\n\n[00]: Aliahan\n41: Aliahan Hero's Home 2F\n42: Aliahan East House 2F\n43: Aliahan Inn 2F\n44: Aliahan Luisa's Place 2F\n45: Aliahan Castle B1\n46: Aliahan Castle\n47: Aliahan Castle B2
-R:006E-006F:Multi_AddressPointer:Multiuse Address Pointer:\n\nPoints to address of map\n\nBattle_GetMonsterName\n-------------------------------------\n$A9AC Points to address of monster name list
+R:006C-006D:dynamicPointerSpace_6C:$8BAF - WriteTo_EnemyDisplay ($96A9),Y\n\n\n$BCCE - In battle...stores address for (draw?) instructions\n  $96A9 => [0]:$10, [1]:$18, [2]:$96, [3]:$80, [4]:$4D, [5]$E1\n\n\n\nThe next byte of map to load.\n\n[00]: Aliahan\n41: Aliahan Hero's Home 2F\n42: Aliahan East House 2F\n43: Aliahan Inn 2F\n44: Aliahan Luisa's Place 2F\n45: Aliahan Castle B1\n46: Aliahan Castle\n47: Aliahan Castle B2
+R:006E-006F:Multi_AddressPointer_6E:Multiuse Address Pointer:\n\nPoints to address of map\n\nBattle_GetMonsterName\n-------------------------------------\n$A9AC Points to address of monster name list
 R:0072-0073:dialogSegmentPointer:Stores address of next char to read
 R:0074::(PostIncrementClock)\n$D942 compare with PostClockIncrement_Const ($ED)
-R:0076:menu_PositionHighNibble:Caret_FlashCounter\nADC $08 every frame.\n< $80, caret on\n>=$80, caret off\n\nMenu_ResetCaret\n--------------------------------------\n$A182 - init with $F8\n\nCaret_GetStateAndUpdate\n------------------------------\n$A198 - LDA ADD $08 = $08
+R:0076:menu_PositionHighNibble_76:Caret_FlashCounter\nADC $08 every frame.\n< $80, caret on\n>=$80, caret off\n\nMenu_ResetCaret\n--------------------------------------\n$A182 - init with $F8\n\nCaret_GetStateAndUpdate\n------------------------------\n$A198 - LDA ADD $08 = $08
 R:0077:menu_positionLowNibble
 R:0078::DialogJumpStation\n---------------------\nFirst line of function\n$A68F - STY\n\n$A9B7 - something happens if == $00
 R:0079::$EE6C - next map tile\n\n\n$A108 - Menu_Instruction[9] AND $70, >> 4, ADD $02
-R:007C:dialogBankId_and_BlockPointer_Pointer_Index:BankId\nand DialogBlockPointer_Pointers[(Subtract 10) * 2]
+R:007C:dialogBankId_and_BlockPointer_Pointer_Index_7C:BankId\nand DialogBlockPointer_Pointers[(Subtract 10) * 2]
 R:007D::$8DAC - monster group count\n\nMenu_GetHeight\n---------------------\n$8D47 - STA menu (height / 2) - 1
-R:007E:menu_PointerIndex:[$01]:$9074 Menu_Status_2Characters\n[$05]:$910E   Status 2 Characters\n[$13]:$93C7 \n[$14]:$93F1  Menu_MainCommand\n[$15]:$9420 \n[$1B]:$94DB  FIGHT.PARRY.ITEM\n[$2C]:$9612  \n[$39]:$96A9   EnemyDisplay\n[$3D]:$96DD DialogText\n[$3E]: Someone died?\n[$3F]:$96ED -> Enemy Display, Non-Interactive\n[$4E]:????\n[$69]:\n[$6B]: Menu_ItemSelect?
+R:007E:menu_PointerIndex_7E:[$01]:$9074 Menu_Status_2Characters\n[$05]:$910E   Status 2 Characters\n[$13]:$93C7 \n[$14]:$93F1  Menu_MainCommand\n[$15]:$9420 \n[$1B]:$94DB  FIGHT.PARRY.ITEM\n[$2C]:$9612  \n[$39]:$96A9   EnemyDisplay\n[$3D]:$96DD DialogText\n[$3E]: Someone died?\n[$3F]:$96ED -> Enemy Display, Non-Interactive\n[$4E]:????\n[$69]:\n[$6B]: Menu_ItemSelect?
 R:007F::Dialog_GetDimensions\n---------------------------\n$8D05 - init with $FF\n\nBattle_Finalize_EnemyDisplay\n-------------------------\nA0DC - LDA, CMP $FF
 R:0080:charsCopied
 R:0081:linesWrittenToStagingArea:$AA1E INC\n\nafter finishing writing text to WriteLocation\n\n$AB8D - LDX, != 0
 R:0082:isGetNextChar:if < $80 read next char from dialog block\n\nDialogJumpStop2\n----------------------\n$AB51 - init with $00\n\nSetBit7_82\n------------------------------\n$A992 - LDA, ORA #$80, STA\n\nClearBit7_82\n------------------------------------\n$A787 - clear 7th bit\n\n\nNextChar_F2\n---------------------\n$A87B - LDA, AND #$7F, TAX, DEX, used as X in \nLDA NextChar_F2_Variable[X]
 R:0083:Temp_TextStorage_NextCharIndex:TempTextStorage_WriteEC\n-------------------------\n$A969 - init with $00\n\nGetNextCharFrom_TempTextStorage\n----------------------\n$A95A - get next char and INC
 R:0086-0087:mapScrollCheck:WalkDirection_Horizontal\n---------------------\n[1] values of interest:\nx < 0x03                   0000 -> 0001\nx == 0x03 (RTS)     0010\n0x03 < x < 0x09      0011 -> 1000\n0x09 <= x < 0x0B   1001 -> 1010\nx == 0x0B                1011\nx > 0x0B                  1100 -> \n\nMap_ScrollCheck\n-------------------------\n$CD89 - [1] if bit 3 || 4 == 1, scroll horizontal\n        [1] if bit 0-3 == 1, scroll vertical\n\nMap_Scroll_Check\n-----------------------\nBA69 - [0] if zero, scroll map\n$BA6D - [1] If not 0, scroll map\n\nL3CDDA\n--------------\n$CDDA - if AND #$01 == 0 RTS\n             else DynamicSubroutine_18000_A\n\n
-R:008B::SetOrClearCarryFlag\n------------------------\n$A14F - LDA and CMP to $38, $C3, $C6, $CF, $D0
+R:008B:DynamicSubroutine_3B3A1_8B:AddLocationToReturnList_01CF5\n-------------------------------\nstores current location for Return learning\n$00 Aliahan\n$44 is upstairs of Luisa's\n\nDynamicSubroutine_3B3A1\n--------------------\nCMP against DynamicSubroutine_3B3A1_Address_Table\n\nSetOrClearCarryFlag\n------------------------\n$A14F - LDA and CMP to $38, $C3, $C6, $CF, $D0
 R:008E::Dialog_GetDimensions\n-------------------------\n$8D03 - init with $FF
 R:008F::PostIncrementClock\n--------------------------\n$D22D if != 0, run 07C2
 R:0090::0x3CD86 - INC every frame in base game loop\n\n\nDynamicSubroutine_34000_D_isLightWorld\n-----------------------------------------\n$993F if (bit 4 == 1 || bit 5 == 1)  RTS
-R:0092:currentTileType:the type of tile character is standing on\n[0]:  water\n[1]:  woods/desert/ice\n[2]:  grass\n[3]:  woods/desert/ice\n[4]:  heavy forest\n[5]:  hills\n[6]:  dungeon after room change\n[7]:  swamp\n[8]:  dungeon
+R:0092:currentTileType_0092:the type of tile character is standing on\n[0]:  water\n[1]:  woods/desert/ice\n[2]:  grass\n[3]:  woods/desert/ice\n[4]:  heavy forest\n[5]:  hills\n[6]:  dungeon after room change\n[7]:  swamp\n[8]:  dungeon/top left of castle\n[9]: top right corner of castle\n[C]: bottom left castle
 R:0093::hypothesis: these are the tiles that each character is standing on
 R:0094::DynamicSubroutine_34000_E\n-----------------------------\n$9EA9 STA $93
 R:0095::DynamicSubroutine_34000_E\n-----------------------------\n$9EA5 STA $94
@@ -92,45 +94,54 @@ R:009D::DynamicSubroutine_34000_C\n-----------------------------------------\n$9
 R:00A1-00A2:theStack_AddressStore:also used in Swap_SpriteDMA_Positions
 R:00A4::Monster_ParseStat_0C_2Deep\n--------------------------\n$C3C8 - INC ($4B)\nADD $1C ($75 => $C0)
 R:00AA::$8008 init with $00\n\nF3CDCF\n---------------\n$CDCF != 0
-R:00AC:postMovementPreEncounterCheckVariable
+R:00AB::set to to 0 in SetPalette_DayNight after setuping up the palette colors
+R:00AC:postMovementPreEncounterCheckVariable_AC
 R:00AD::CheckForEncounter (F0261)\n--------------------------------------\n$8265 if AND #$7F == 0, run Map_LightOrDarkEncounterTIles
 R:00B0-00B3:CharacterStatusRelated_Vector:investigation needed\nafter movement before encounter check\n\n$B094 checked if bit 1 set \n$B0CE checked if bit 2 set
-R:00B4::SetPaletterToTimeOfDay\n------------------------------\n$8024 - value at TimeOfDayPalette_Pointer\n\nDynamicSubroutine_08000_A_Sub_B\n------------------\n$A083 - STA
-R:00B8::DynamicSubroutine_08000_A\n-------------------------\n$9939 - LDX
-R:00B9::DynamicSubroutine_08000_A\n--------------------------------\n$993B - LDY
-R:00BA::DynamicSubroutine_08000_A_Sub_A\n------------------\n$9906 - STA\n\nDynamicSubroutine_08000_A_Sub_B\n-----------------------\n$A062 - LDY
-R:00BB::DynamicSubroutine_08000_A_Sub_B\n---------------------------\n$A06B - STA
+R:00B4::\nSetPaletteToTimeOfDay\n------------------------------\n$8024 - value at TimeOfDayPalette_Pointer\n\nDynamicSubroutine_08000_A_Sub_B\n------------------\n$A083 - STA
+R:00B6::1 if night\n0 if day
+R:00B7:EncodedByte_B7:byte from compressed sprite
+R:00B8:BattleInit_Variable_00_B8:index for CheckForReinforcements_Table_56D\nprobably monster types\n\nBattleInit [$A13A] (Battle init)\n---------- \n$A161 - STA #$00\n\nDynamicSubroutine_08000_A\n-------------------------\n$9939 - LDX
+R:00B9:BattleInit_Variable_01_B9:BattleInit [$A13A] (Battle init)\n---------- \n$A165 - STA #$00\n\nDynamicSubroutine_08000_A\n--------------------------------\n$993B - LDY
+R:00BE-00BF:PPU_NextTileIndex_BE:[00]: the nametable that the next tile will pushed to ($00 or $01)\n[01]: the index that the next tile will be in the PPU\n($00 to $FF)
+R:00C0:MonsterSpriteCount_C0:total sprites in the current monster
 R:00C1::DynamicSubroutine_08000_A_Sub_B\n----------------------\n$A079 - LDA,Y
+R:00C2::1st instruction byte of compressed sprite
+R:00C3::1st instruction byte of compressed sprite
+R:00C4::low byte of 2nd encoded batch instruction
 R:00CA:controllerInputStore:temp store of all buttons pressed this frame\n$01 - A\n$02 - B\n$04 - Select\n$08 - Start\n$10 - Up\n$20 - Down\n$40 - Left\n$80 - Right
-R:00CE:character_FormationIndex
+R:00CE:character_FormationIndex_CE
 R:00CF:Item_Check_IsEquipped:item to check if equipped\n\n#$44 noh mask\n#$4B Meteorite Armband\n\n\nALSO stores total earned XP after battle
 R:00D0::GetSpellByte\n----------------------------\nFormation index?\n$99DC - LDA, AND #$03\n$99F0 - LDA, AND #$03
 R:00D2:NextChar_F2_Variable:NextChar_F2_JMP\n--------------------\n$A883 - LDA[X]
-R:00D6-00DD:APU_TrackPosition:Holds 2 byte addresses\natleast 8 bytes long (4 entries)\n\n[0x00] = Pointer to next byte sequence of track 0\n[0x02] = Next byte in sequence of track 1\n[0x04] = Next byte in sequence of track 2\n[0x06] = APU_DutySetup_Addresses
+R:00D6-00DD:APU_TrackPosition:Holds 2 byte addresses\natleast 8 bytes long (4 entries)\n\n[0x00] = Pointer to next byte sequence of track 0\n[0x02] = Next byte in sequence of track 1\n[0x04] = Next byte in sequence of track 2\n[0x06] = APU_DutySetup_Addresses\n[0x08] = next byte of SFX
 R:00DE-00DF:SFX_Pointer_DE:[0]:8169 - silent track\n[1]:91CE\n[2]:91E5\n[3]:91F5\n[$12]:9237
-R:00E0-00F3:APU_TrackInstructions_E0:This seems like it's one vector with multiple different pointer arithmetics to navigate it.\n\nbase +1 is used for track 4 only?\nbase +x +2, +3 (check if track needs updating this frame),\nbase +10, +11, \nbase +12, +13 (on APU_UpdateTrack)
+R:00E0-00F3:APU_TrackInstructions_E0:This seems like it's one vector with multiple different pointer arithmetics to navigate it.\n\n\nbase +1 is used for track 4 only?\nbase +x +2, +3 (check if track needs updating this frame),\nbase +10, +11, Noise settings for APU_TrackSettings\nbase +12, +13 (on APU_UpdateTrack)\n\nAPU_SetTrackFrequency [$B76D]\n-----------------------------\n+0: set low 8 bits of frequency\n+1: set high 3 bits, plus note length (if used)\n\nAPU_GetDutySettings [$B478]\n--------------------------------\n+0, 1: address to volume settings for Sq0?\n
 R:00F5::initialized in SFX Init
-R:00F6-00F7:APU_TempDutySettings:APU_ModTrackByte_Less_49\n-----------------------------------------\n$B622 - init with $00\n\nAPU_DutySetup\n------------------------------------------- \nX is TrackIndex# (0, 2, 4, 6)\n$B44C [1+X]: if < $80 goto APU_GetDutySetting\n\nAPU_GetDutySetting\n--------------------------------------\nX: track# (0, 2, 4, 6)\n$B47A [0+X]: y in LDA APU_DutySetup_Addresses,Y\n$B488 [1+X]: y in LDA (APU_Multivariable_Store), Y which points to $78400 area\n$B493 [1+X]: INC\n\n\n\n[0]: $B5E8 - stores track byte after track instruction $E1\n\n$B4F3 APU_SubUpdate - Each index lo byte set to $FE\n\n\n[0]: $B5EA - LDA after instruction byte $E1, if not BMI, STA $00 in it's place, and get next TrackByte\n      $B602 - STA $FF if TrackByte less than $E1\n\n\nUnknown length. Atleast 2 indices. Probably 8 bytes?
-R:00FA:APU_NewSeq_20or00_FA:APU_SFX_Init\n---------------------\n$B998  - when SFX track hibyte is >= 80, at minimum is set to be $20 (ORA $20)\n\nAPU_UpdateTrack1_Sq1\n------------------\n$B404 - if AND $20 == $0, skip most Sq1 duty setup\n\n\nNextTrackByte == EF\n----------------------\n$B5D6 - AND $20 ORA $44.\n Can be $44 or $64\n\n\n$B95A - ANDed with $20 and saved\n\n($B88F) APU_Sub_Update_A -\n  if 6th bit = 0\n    return\n  else\n run some subroutine
+R:00F6-00F7:APU_TempDutySettings:APU_ModTrackByte_Less_49\n-----------------------------------------\n$B622 - init with $00\n\nAPU_GetTrackSettings_ForUpdate [$B449]\n------------------------------------------- \nX is TrackIndex# (0, 2, 4, 6)\n$B44C [1+X]: if < $80 goto APU_GetDutySetting\n\n\nAPU_GetDutySetting [$B478]\n--------------------------------------\nX: track# (0, 2, 4, 6)\n[0+X]: Has offset from APU_DutySetup_Addresses ($816B) for Volume settings?\n[1+X]: Has offset from APU_TrackInstructions_E0 for ???, if (instructions is > $30, STA in APU_TempDutySettings+1,X), increment APU_TempDutySettings+1,X\n\n\n$B47A [0+X]: y in LDA APU_DutySetup_Addresses,Y\n$B488 [1+X]: y in LDA (APU_Multivariable_Store), Y which points to $78400 area\n$B493 [1+X]: INC\n\n\n\n[0]: $B5E8 - stores track byte after track instruction $E1\n\n$B4F3 APU_SubUpdate - Each index lo byte set to $FE\n\n\n[0]: $B5EA - LDA after instruction byte $E1, if not BMI, STA $00 in it's place, and get next TrackByte\n      $B602 - STA $FF if TrackByte less than $E1\n\n\nUnknown length. Atleast 2 indices. Probably 8 bytes?
+R:00FA:APU_NewSeq_20or00_FA:Set_APU_NewSeq_20or00_FA_7B866\n-----------------------\nCan be set to $44 or $64\n\n\nAPU_SFX_Init\n---------------------\n$B998  - when SFX track hibyte is >= 80, at minimum is set to be $20 (ORA $20)\n\nAPU_UpdateTrack1_Sq1\n------------------\n$B404 - if AND $20 == $0, skip most Sq1 duty setup\n\n\nNextTrackByte == EF\n----------------------\n$B5D6 - AND $20 ORA $44.\n Can be $44 or $64\n\n\n$B95A - ANDed with $20 and saved\n\n($B88F) APU_Sub_Update_A -\n  if 6th bit = 0\n    return\n  else\n run some subroutine
 R:00FB:APU_Tri_Linear_Store
 R:00FD:APU_Noise_DutySettings_Store
 R:0100-01FF:TheStack
-R:0200-02FF:PPU_SpriteDMA
-R:0300-033D:PPU_StagingArea:Where menus, palette data are written to the PPU from.\n\nPalettes:\n[0]: 3F (high byte of palette address in PPU)\n[1]: palette index (low byte paletter address?)\n[2]: palette color\n\nFor menus:\n[0]:instruction to prepare PPU for writting\n    AND $3F is high byte of PPU address\n[1]:num sprites to write\n[2]:Low byte of PPU address\n[3 to (3+[1])]:copy of $0400\n\nafter 2 lines, Attribute values follow\n\nA2 10 4C ($0400 Copy starts from $0303)\nA2 is instruction to prepare PPU for writting\n$A2 AND $3F is high byte of PPU address\n4C is low byte of PPU address\n10 is # of sprites to write\n\n\nDrawCaret\n22 6D 73\n$226D PPU address to draw\n$73 caret char
-R:03E7-03F3:PPU_BGPaletteColor_Store:Palettes stored here before copying to PPU staging area.\n\n[0] is probably always black $0F\n\n\nDynamicJumpDestination_E\n-------------------------------------\n$961B - STA $30
-R:03F4-03FF:PPU_SpritePaletterColor_Store
-R:0400-045F:Menu_WriteBlock
-R:0460:AttributeVariables_maybe
-R:0470:menu_PositionA:sprite position\nx pos: low nybble * 2\ny pos: high nybble * 2
-R:0471:menu_WriteDimensions:Menu_GetDimensions_Parse\n---------------------------------------\n$8CFB - menu_Width / 2, ORA #$10\n\nBattle_GetPPUPosition_EnemyDisplay\n--------------------------------------\n$C76E - LDA ($18)\n  DynamicSubroutine[1]: High nybble * 2 (num lines to write to staging area) (2)\n  DynamicSubroutine[2]: Low nybble * 2 (num of chars to write to staging area) (16)
+R:0200-02FF:PPU_SpriteDMA_200
+R:0300-033D:PPU_StagingArea_300:Where menus, palette data are written to the PPU from.\n\nPalettes:\n[0]: 3F (high byte of palette address in PPU)\n[1]: palette index (low byte of palette address)\n[2]: palette color\n\nFor menus:\n[0]:instruction to prepare PPU for writting\n    AND $3F is high byte of PPU address\n[1]:num sprites to write\n[2]:Low byte of PPU address\n[3 to (3+[1])]:copy of $0400\n\nafter 2 lines, Attribute values follow\n\nA2 10 4C ($0400 Copy starts from $0303)\nA2 is instruction to prepare PPU for writting\n$A2 AND $3F is high byte of PPU address\n4C is low byte of PPU address\n10 is # of sprites to write\n\n\nDrawCaret\n22 6D 73\n$226D PPU address to draw\n$73 caret char
+R:03E7-03F3:PPU_BGPalette_Store_3E7:Palettes stored here before copying to PPU staging area.\n\n[0] is probably always black $0F\n\n\nDynamicJumpDestination_E\n-------------------------------------\n$961B - STA $30
+R:03F4-03FF:PPU_SpritePalette_Store_3F4
+R:0400-045F:PPU_WriteBlock_400:Formerly known as Menu_WriteBlock\n\nData here gets written to the PPU, usually to address at PPU_WriteAddress_1F
+R:0460:AttributeVariables_maybe_460
+R:0470:menu_PositionA_470:sprite position\nx pos: low nybble * 2\ny pos: high nybble * 2
+R:0471:menu_WriteDimensions_471:Menu_GetDimensions_Parse\n---------------------------------------\n$8CFB - menu_Width / 2, ORA #$10\n\nBattle_GetPPUPosition_EnemyDisplay\n--------------------------------------\n$C76E - LDA ($18)\n  DynamicSubroutine[1]: High nybble * 2 (num lines to write to staging area) (2)\n  DynamicSubroutine[2]: Low nybble * 2 (num of chars to write to staging area) (16)
 R:0472-047A:APU_Track_Vector_0472:SFX_Init\n------------\n[8] $B9AC - Initialized with $00\n\nAPU_InitTrackCarets\n-----------------------------\n[6]: $B947 - init with $00\n\nAPU_CheckIfNextNote\n-------------------------------\n$B722 [+X]:\n   if < $80, ORA $80 and re-save\n   else return\n\n\nif vector+X = $0C\n  byte is Noise Period & Length control\n\n$B847 - Clear bit 7\n\n[0]: $B60F - STA ModTrackByte\n\nLength: 6 to 8 bytes
 R:047C:updateTracks:APU\nit this is  >= 6A, run track updates
-R:047D:APU_SequenceHeader:First byte of Sequence
+R:047D:APU_SequenceHeader:First byte of Sequence\n\nIntro - $55
 R:047E:APU_AddToModTrackByte:APU_SequenceIinit\n---------------------------\n$B950 - init with $00\n\n\n$B890 - init to $00\n\n$B60C - $FE
-R:047F:APU_NoteLoByte_Effector:$B915 initialized with $10
+R:047F:APU_NoteLoByte_Effector_47F:$B915 initialized with $10
 R:0480-04A3:Menu_AttributeValues:Menu_GetAttributeValue\n-------------------------------\n$C8EF - LDA,X (X low byte of Attribute Address - #$C0)\n$C906 - STA,X after crazy shenanigans
-R:04C0::DynamicSubroutine_08000_A_Sub_B\n--------------\n$A05B - LDA
-R:04D5::DynamicSubroutine_08000_A_Sub_B\n---------------------------\n$A080 - LDA,X
+R:04C0:BattleInit_Variable_02_4C0:BattleInit [$A13A]\n---------- \n$A159 - STA #$00\n\nDynamicSubroutine_08000_A_Sub_B\n--------------\n$A05B - LDA
+R:04C1::ClearMemAndInitPalette ($09870)\n--------------------------\n$9876 - STA #$00
+R:04D0-04D1:SpriteStart_PPUAddress_Table_4D0:For monster sprites\n[01 + x]: the index that the sprites for this monster starts at ($00 to $FF)\n[00 + X]: the nametable that the sprites for this monster are in($00 or $01)\n
+R:04D5-04D7:compressedSpriteData_4D5:[0]: low byte address of compressed sprite data\n[1]: high byte address of compressed sprite data\n[2]: number of sprites to decode
+R:04F3-04F4:NextMonsterStart_PPUAddress_4F3:[00]: the nametable that the next tile will pushed to ($00 or $01)\n[01]: the index that the next tile will be in the PPU\n($00 to $FF)
 R:0500-050F:Monster_CurrentHP_Vector:2 bytes per monster
 R:0510-0517:Monster_CurrentMP_Vector
 R:0518-051F:Monster_CurrentAgility_Vector
@@ -140,39 +151,41 @@ R:0540-0543:Monster_GetStats_Vector_H:Monster_GetStats\n------------------------
 R:054C-0557:Monster_GetStats_Vector_A:Monster_GetStats\n-----------------------------------------------\n$8220 - [4]->[B] zeroed
 R:0558-0559:Monster_GetStats_Vector_B
 R:0565-056C:Battle_Variables_A:Battle_InitializeVariables\n-----------------------------\n$8217 - init all with $00\n\nBattle_Finished_DynamicJumpDestination\n--------------------\n$B40A - [3] LDA, AND $20, BNE
-R:056D::index of monster in monster list? (Raven #01)\nStart Of Battle\n$82CB - LDA[X], CMP $FF\n\n(0 - slime, 1 - raven, FF end enemy list)
-R:0571::Start of Battle\n$82D8 - LDA,X ($02 Raven x2)
+R:056D:CheckForReinforcements_Table_56D:probably list of monster types in battle\n00 Slime\n01 Raven\n\nindex of monster in monster list?\n$FF == end of table\n\nStart Of Battle\n$82CB - LDA[X], CMP $FF\n\n(0 - slime, 1 - raven, FF end enemy list)
+R:0571:BattleInit_Table_571:definitely moster related\nhow many different types of monsters?\n\n$00\n\nStart of Battle\n$82D8 - LDA,X ($02 Raven x2)
 R:0580-062F:menu_Vector:*Never really seen this used. What is it for?\n\nBattle_Init_580_to_62F\n----------------------------\n$ABFC - init block with $00\n\nWrite dialog text\n$A9A7
 R:063F-0641:NextChar_TextReplace_NUM_Vector:damage done saved in [0]
 R:0643::Monster_GetStats\n-----------------------------------------------\n$8229 - [4]->[B] zeroed
-R:0644:walkDirection:0 - Up\n1 - Right\n2 - Down\n3 - Left
+R:0644:walkDirection_644:0 - Up\n1 - Right\n2 - Down\n3 - Left
 R:0645::F3CE10 of base game loop\n+8 per frame\n
 R:0647::$9ED5\nmenu vector\natleast 7 entries
 R:064B:Monster_GetStats_Vector_G:Monster_GetStats\n-----------------------------------------------\n$822C - [4]->[B] zeroed
 R:0653:Monster_GetStats_Vector_D:Monster_GetStats\n-----------------------------------------------\n$8223 - [4]->[B] zeroed
 R:065B:Monster_GetStats_Vector_E:Monster_GetStats\n-----------------------------------------------\n$8226 - [4]->[B] zeroed
-R:0697::DynamicSubroutine_08000_A_Sub_A\n----------------------\n$9913 - LDA[X]\n\nDynamicSubroutine_08000_A_Sub_B\n-----------------+\n$A064 - LDA,Y
-R:06B8::DynamicSubroutine_08000_A_Sub_B\n-------------------\n$A056 - LDA
+R:0698::what is this?
+R:06B7:BattleInit_Variable_03_6B7:BattleInit [$A13A]\n---------- \n$A15C - STA #$00
+R:06B8:BattleInit_Variable_04_6B8:BattleInit [$A13A]\n---------- \n$A14B - STA #$00\n\nDynamicSubroutine_08000_A_Sub_B\n-------------------\n$A056 - LDA
+R:06B9:LocationCheck_6B9:LDA after movement, before entering location?
 R:06BC::$D053 store last walk direction
-R:06C7:resetNMIBankLoad_06C7:ClearRAM\n------------\nset to $0E
-R:06C8:bankSwitchReg1HiLoSwitch_06C8:4th bit 0 - lower PRG banks ($00000-$3FFFF)\n4th bit 1 - upprt PRG banks ($40000-7FFFF))
-R:06D0:PPUScroll_X
-R:06D1:PPU_Scroll_Y
-R:06D2:waitForNMI_flag:$3C99F - INCed in NMI after BankSwitch
+R:06C7:resetNMIBankLoad_06C7:ClearRAM & ResetNMI\n------------\nset to $0E
+R:06C8:bankSwitchReg1HiLoSwitch_06C8:ResetNMI init to #$10\n\n4th bit 0 - lower PRG banks ($00000-$3FFFF)\n4th bit 1 - upprt PRG banks ($40000-7FFFF))
+R:06D0:PPUScroll_X_6D0
+R:06D1:PPU_Scroll_Y_6D1
+R:06D2:waitForNMI_flag_6D2:$3C99F - INCed in NMI after BankSwitch
 R:06D3:PPUControl_2000_Settings_06D3:7  bit  0\n---- ----\nVPHB SINN\n|||| ||||\n|||| ||++- Base nametable address\n|||| ||    (0 = $2000; 1 = $2400; 2 = $2800; 3 = $2C00)\n|||| |+--- VRAM address increment per CPU read/write of PPUDATA\n|||| |     (0: add 1, going across; 1: add 32, going down)\n|||| +---- Sprite pattern table address for 8x8 sprites\n||||       (0: $0000; 1: $1000; ignored in 8x16 mode)\n|||+------ Background pattern table address (0: $0000; 1: $1000)\n||+------- Sprite size (0: 8x8; 1: 8x16)\n|+-------- PPU master/slave select\n|          (0: read backdrop from EXT pins; 1: output color on EXT pins)\n+--------- Generate an NMI at the start of the\n           vertical blanking interval (0: off; 1: on)\n\nBattle_WriteTo_PPUSetup\n---------------------------------\n$C2CF - LDA, ASL x2, AND $04 ORA $20 STA Battle_PPUControl_Settings+1
-R:06D4:PPUMask_2001_Settings_06D4:$18 = 0001 1000\n\nbit 4 - Enable sprite rendering\nbit 3 - Enable bg rendering
-R:06D5:bankSwitch_CurrentBankId_06D5:lo nybble is bank # to switch to.\n\nif >= $10, load high banks\nelse load low banks\n\n\nBankSwitch_GetSubroutineFromX_3C000\nBank we want to return to 
-R:06D6:caretUpdate_flag:Caret_Update\n-------------\n$9F1D - init with $02\n->WaitForNMI_Loop\n$9F25 - init with $00\n\n\nPPU_Render\n--------------------------------\n$CA92 - if != $02, skip Sprite DMA
-R:06D7:Post_NMI_Variable:either incremented or zero'd after NMI
-R:06D8:Menu_StagingArea_NextCharPos:next char pos to write in staging area for enemy display\n\nMenu_GetPPUPosition\n------------------------------------\n$C781 - LDX\n\nPPU_LoadPaletteWithBlack\n---------------------------------------\n$CAFC - init with $00
-R:06D9:PPU_DrawBackgroundLineCount:amount of lines to write to PPU from staging area
+R:06D4:PPUMask_2001_Settings_6D4:$18 = 0001 1000\n\nbit 4 - Enable sprite rendering\nbit 3 - Enable bg rendering
+R:06D5:bankSwitch_CurrentBankId_6D5:low nybble is bank # to switch to.\n\nif >= $10, load high banks\nelse load low banks\n\n\nBankSwitch_GetSubroutineFromX_3C000\nBank we want to return to 
+R:06D6:ppuUpdate_flag_6D6:if == $02, then write palette data\n\nCaret_Update\n-------------\n$9F1D - init with $02\n->WaitForNMI_Loop\n$9F25 - init with $00\n\n\nPPU_Render\n--------------------------------\n$CA92 - if != $02, skip Sprite DMA
+R:06D7:post_NMI_Variable:after NMI, incremented from $00 to $0A, then resets back to $00
+R:06D8:PPU_StagingArea_NextCharPos_6D8:next char pos to write in staging area for enemy display\n\nMenu_GetPPUPosition\n------------------------------------\n$C781 - LDX\n\nPPU_LoadPaletteWithBlack\n---------------------------------------\n$CAFC - init with $00
+R:06D9:PPU_WriteCount_6D9:amount of lines/palettes/etc. to write to PPU from staging area
 R:06DA::PPU_LoadPaletteWithBlack\n---------------------------------------\n$CAFC - init with $00
-R:06DD:IndexTo_FramesToWait
+R:06DD:IndexTo_FramesToWait_6DD
 R:06DE:timeSubValue:after each step on overworld\nADC ((seed & 31) + 223)\nif hasCarry, increment timeOfDay
-R:06DF:timeOfDay:In-game time-of-day\n$00-$CB\nNight begins at $78\nDay begins at $00
-R:06E0::$961E menu color\n\nClearRAM\n--------------\nSet to $30
-R:06E1:encounterCheckRequired_A:Check for encounter if == $00\n\nMap_Scroll_Finish\n-----------------------\n$AF95 if 0....\n\nDynamicPointer_30000_A\n-----------------------------------\n$8078 - if < #$40 RTS\n       else....
-R:06F0:APU_SequenceID:Current sequence ID (Sequence # * 2)\n\n0th bit determines if APU updates or not\n$B389 APU_CheckUpdateNeeded - \nif bit 0 == 1 skip update
+R:06DF:timeOfDay_6DF:In-game time-of-day\n$00-$CB\nNight begins at $78\nDay begins at $00
+R:06E0:Menu_PaletteColor_Store:$961E menu color\n\nClearRAM\n--------------\nSet to $30
+R:06E1:encounterCheckRequired_A_6E1:Check for encounter if == $00\n\nMap_Scroll_Finish\n-----------------------\n$AF95 if 0....\n\nDynamicPointer_30000_A\n-----------------------------------\n$8078 - if < #$40 RTS\n       else....
+R:06F0:APU_SequenceID:Current sequence ID (Sequence # * 2)\n\n0th bit determines if APU updates or not\n$B389 APU_CheckUpdateNeeded - \nif bit 0 != 1 skip update
 R:06F1:APU_StoreTrackIndex:$B45C - check if equal to or greater than $08\nif it is, set duty right away
 R:06F2:APU_Const_03:$B962 StartNewSeq - init with $03\n\nNever changes??
 R:06F3:APU_Const_FF:$B96A APU_SequenceInit - initialized with $FF\n\nUsed in APU_NoiseChannel\n\n($B70B) APU_SubUpdate_Sub\nLoaded and CMP against $FF
@@ -190,7 +203,7 @@ R:072C-0733:Character_MPs_Current
 R:0734-073B:Character_MPs_Max
 R:073C-0743:Character_Statuses:2 bytes per character\n\n$8080 is normal, anything else is dead?
 R:0744-074F:Character_Experiences:3 bytes per character
-R:0750-075B:ReturnDestinations:0x750 + character number * 3.\n\nThe 3 bytes of Return Destinations store one bit per location visited. The upper 4 bits of the third byte are not used.\n\nByte 0\n    Aliahan\n    Reeve\n    Romally\n    Kanave\n    Noaniels\n    Assaram\n    Isis\n    Portoga\n\nByte 1\n    Baharata\n    Dhama\n    Lancel\n    Jipang\n    Eginbear\n    Samano\n    Soo\n    Tantegel\n\nByte 2\n    Hauksness\n    Cantlin\n    Kol\n    Rimuldar
+R:0750-075B:ReturnDestinations_750:0x750 + character number * 3.\n\nThe 3 bytes of Return Destinations store one bit per location visited. The upper 4 bits of the third byte are not used.\n\nByte 0\n    Aliahan\n    Reeve\n    Romally\n    Kanave\n    Noaniels\n    Assaram\n    Isis\n    Portoga\n\nByte 1\n    Baharata\n    Dhama\n    Lancel\n    Jipang\n    Eginbear\n    Samano\n    Soo\n    Tantegel\n\nByte 2\n    Hauksness\n    Cantlin\n    Kol\n    Rimuldar
 R:075C-0763:Character_Name_0
 R:0764-076B:Character_Name_1
 R:076C-0773:Character_Name_2
@@ -203,8 +216,8 @@ R:079C-07A3:Character0_Spells:Byte 0-2: Wizard Spells (in battle)\nByte 3: Wizar
 R:07A4-07AB:Character1_Spells:Byte 0-2: Wizard Spells (in battle)\nByte 3: Wizard Spells (field)\nByte 4-6: Pilgrim Spells (in battle)\nByte 7: Pilgrim Spells (field)\n\nNote: Hero uses location of Wizard spells.
 R:07AC-07B3:Character2_Spells
 R:07B4-07BB:Character3_Spells
-R:07BC-07BE:Character_GoldPurse
-R:07C1-07C2:Character_NameIndices:GetCharacterNameIndex\n--------------------------------\n$9C27 - LDA[0] == index of characters name (how is this known)\n\nDynamicSubroutine_00000_C_Loop\n----------------------------------\n$9992 - LDA,X\nif >= $80 do not check character status byte
+R:07BC-07BE:Character_GoldPurse_7BC
+R:07C1-07C2:Character_Party_NameIndices_7C1:GetCharacterNameIndex\n--------------------------------\n$9C27 - LDA[0] == index of characters name (how is this known)\n\nDynamicSubroutine_00000_C_Loop\n----------------------------------\n$9992 - LDA,X\nif >= $80 do not check character status byte
 R:0804:Temp_Text_Storage_Maybe
 P:0000-008B:DynamicSubroutine_Addresses_00000:[$04]:$92A8 Character_GetCurrentHP (#23)\n[$0C]:$932C Character_GetCurrentMP (#27)\n[$18]:$93D0 Character_CheckStatus (#2D)\n[$1E]:$9445 TransferCharacterNameTo_QuickStorage\n[$24]:$9486 \n[$2C]:$94CF \n[$2E]:$9527 \n[$30]:$9540 \n[$32]:$9586 TransferXPToQuickStorage (#3A)\n[$34]:$959A Character_GainXP (#3B)\n[$36]:$95ED Character_GetTotalGold (#3C)\n[$38]:$95FD Character_GainGold (#3D)\n[$3C]:$9668 Character_GetEquippedItems\n[$58]:$993A GetCharacterClass\n[$5A]:$9944 GetCharacterClass_JMP ($4E)\n[$62]:$9976 Character_GetCountAndNameIndices (#52)\n[$66]:$998A\n[$72]:$9AA3 - Character_GetSpellCount\n[$8C]:$A38D (#A9)\n[$86]:$B2D3 MonsterStats\n[$8A]:$9862 Character_Item_IsEquipped\n[$8E]:$A35B Character_CheckForLevelUp (#AA)\n[$A0]:$9E09 Character_CheckIfSpecial_IsEquipped\n[$AA]:$A149 SetOrClearCarryFlag\n\n[$65?]:$BF50 ClearRam
 P:01B8:F01B8
@@ -231,8 +244,9 @@ P:02D7:CheckValidEncounterZoneAndParse
 P:02DC:ParseEncounterZone:encounter zone code
 P:02E7:L02E7
 P:02FA:L02FA
-P:0305:L0305
-P:0307:L0307:tile type currently standing on
+P:0300:_CurrentTile_GreaterOrEqualTo_08:dungeon/castle\npossibly a location you can enter\nor a location where no encounters possible
+P:0305:_CurrentTile_Is_1E:probably a location you an enter
+P:0307:_CurrentTile_NotDungeon:tile type currently standing on
 P:0309::encounter zone code
 P:0310:_2FBit0Set
 P:035A:GetEncounterZoneMonsterList:encounter zone code
@@ -290,12 +304,12 @@ P:0670:L0670
 P:0682:L0682
 P:0683:L0683
 P:068D:_Clear580to5F7_Loop_
-P:06A4:APU_PickAndLoadSequence:#$10 = Battle Theme
+P:06A4:_APU_LoadBattleSequence:#$10 = Battle Theme
 P:06AC::#$12 == ??
 P:06AF-06B0:BRKInstructions_InitiateSong:07\nA0 - APU_InitiateNewSequence
 P:06C2:L06C2
 P:06F5:L06F5
-P:06F6-06F7:BRKInstructions_075F:07\n5F - 
+P:06F6-06F7:BRKInstructions_BattleInit_075F:07\n5F - BattleInit_0A13A
 P:06F9-06FA:BRKInstructions_0761:07\n61 - 
 P:071B:L071B
 P:0721:L0721
@@ -333,7 +347,7 @@ P:08BD:BattleStart_FlashScreen:num times to flip grayscale
 P:08BF:BattleStart_FlashScreen_Loop
 P:08C4::set grayscale
 P:0934-0945:Map_EncounterRates:0-8 Day encounter rates\n9-16 Night encounter rates\n\nday\n[0]: 04 - water\n[1]: 0F - woods/desert/ice\n[2]: 0A - grass\n[3]: 0F - woods/desert/ice\n[4]: 12 - heavy forest/swamp\n[5]: 19 - hills\n[6]: 54 - dungeon after room change\n[7]: 12 - heavy forest/swamp\n[8]: 0A - dungeon\n\nnight\n[9]: 05 - water\n[10]: 13 - woods/desert/ice\n[11]: 0D - grass\n[12]: 0F - woods/desert/ice\n[13]: 16 - heavy forest/swamp\n[14]: 1F - hills\n[15]: 54 - dungeon after room change\n[16]: 16 - heavy forest/swamp\n[17]: 0A - dungeon
-P:0946-0A45:Map_EncounterZone_LightWorld:High nibble of player's X-position (in tiles of 2x2 sprites) = Low nibble of index\nHigh nibble of player's Y-position (in tiles of 2x2 sprites) = High nibble of index\n\nBit 7-6 = Sea list  (0-3)\nBit 5-0 = Land list (4-3F)\n\nSee dw3MonsterList.txt for more details
+P:0946-0A45:Map_EncounterZone_LightWorld_00946:High nibble of player's X-position (in tiles of 2x2 sprites) = Low nibble of index\nHigh nibble of player's Y-position (in tiles of 2x2 sprites) = High nibble of index\n\nBit 7-6 = Sea list  (0-3)\nBit 5-0 = Land list (4-3F)\n\nSee dw3MonsterList.txt for more details
 P:0A46-0A85:Map_EncounterZones_DarkWorld
 P:0ADB-0B26:MonsterEncounter_Lists:15 bytes per block\n[0] bits 5-7 is index of encounter rate multiplier (0x00628)
 P:10F3-1145:EncounterWeights:               Index ($10F3-$1146)\n  ------------------------------------------\n  |     |Slot ||   0  |   1  |   2  |   3  |\n  |     |----------------------------------|\n  |     |  0  ||  28  |  20  |  18  |  10  |\n  | S   |  1  ||  28  |  20  |  32  |  10  |  \n  | l   |  2  ||  14  |  15  |  13  |  18  |\n  | o   |  3  ||  14  |  15  |  5   |  10  |\n  | t   |  4  ||  28  |  30  |  35  |  70  |\n  |     |  5  ||  20  |  20  |  10  |   0  |\n  | C   |  6  ||  14  |  20  |  19  |  10  |\n  | h   |  7  ||  14  |  10  |  25  |  10  |\n  | a   |  8  ||  14  |  15  |  19  |  18  |\n  | n   |  9  ||  14  |  10  |  15  |  10  |\n  | c   |  A  ||  28  |  40  |  30  |  70  |\n  | e   |  B  ||  11  |  11  |  5   |  10  |\n  |     |  C  ||  14  |  15  |  15  |   9  |\n  |     |  D  ||  15  |  15  |  15  |   1  |\n  |----------------------------------------|\n  | 3 Chance  ||  00  | 0x40 | 0x40 | 0x40 | (chance for a 3rd monster for Slot 0-4)\n  | 4 Chance  ||  00  | 0x80 | 0x10 |  00  | (chance for a 4th monster for Slot 0-4)\n  | 6-A Setup || 0xB6 | 0xB1 | 0xB4 | 0x93 | (4x 2-bit array indeces)\n  | 6-A Setup ||  02  |  01  |  02  |  01  | (2-bit array index)\n  ------------------------------------------
@@ -383,17 +397,18 @@ P:15FD:Battle_AddGoldToPurse
 P:1601::earned gold first digit sprite index?
 P:1631:L1631
 P:1633:_Battle_AddGoldToPurse_Loop_
-P:1668:Character_GetEquippedItems:\nStores equipped items in $04[]\nordered by type:\n$00 weapon\n$01 armor\n$02 shield\n$03 helmet\n.....
+P:1668:Character_GetEquippedItems:Stores equipped items in $04[]\nordered by type:\n$00 weapon\n$01 armor\n$02 shield\n$03 helmet\n.....
 P:166C::character index inventory offset
-P:1672:_GetEquippedItems_Loop
+P:1672:__GetEquippedItems_loop_
 P:1675::character index inventory offset
-P:1676:_GetEquippedItems_InnerLoop
+P:1676:__GetEquippedItems_InnerLoop_
 P:167B::null
 P:167F::remove equipped bit
 P:1684::CMP to last item id
 P:1686::if ItemType == $13\n  store in 04[] and INC $13
-P:1688:Character_ItemNotEquippedOrNull
-P:1690:AddItemToQuickStorage
+P:1688:_Character_ItemNotEquippedOrNull_
+P:1690:_AddItemToQuickStorage_
+P:1693:_L01693_
 P:1698::character index inventory offset
 P:169F::repeat loop
 P:17BF:Character_GetAllHeldItems:Saves held items in\nQuickStorage[0] to [7]
@@ -458,15 +473,24 @@ P:1C5E::charater status
 P:1C60:Item_GetType:A == item code\nReturns\n  A:$00 weapon (except cypress stick?)\n  A:$01 armour\n  A:$02 shield\n\n$4A = Golden Claw
 P:1C64::$00 Cypress Stick
 P:1C68::$20 Clothes
-P:1C6C:ItemType_Weapon
-P:1C6F:ItemType_NotWeapon
+P:1C6C:_ItemType_Weapon
+P:1C6F:_ItemType_NotWeapon
 P:1C71::would mean it's a weapon
-P:1C77:ItemType_Armour
-P:1C7A:ItemType_NotArmour:$38 == Leather Shield
+P:1C77:_ItemType_Armour
+P:1C7A:_ItemType_NotArmour:$38 == Leather Shield
 P:1C7E::$3F == Golden Crown
-P:1C82:ItemType_Shield
+P:1C82:_ItemType_Shield
 P:1C85:ItemType_Other
 P:1C9B-1CAA:GetSpellCount_Pointers:[$00]:$A2F7\n[$02]:$A2FF\n[$04]:$A307\n[$06]:$A30F\n[$08]:$A317\n[$0A]:$A31F\n[$0C]:$A327\n[$0E]:$A32F
+P:1CF5:AddLocationToReturnList_01CF5
+P:1CF7:__FindLocationInTable_loop_
+P:1D00::total locations that can Return to
+P:1D05:_AddLocationToReturnList_
+P:1D1A:_UpdateCharactersReturnDestinations_
+P:1D23::character can't learn return (dead or...?)
+P:1D2F::the bit of this destination in byte 0
+P:1D37::the bit of this destination in byte 1
+P:1D3F::the bit of this destination in byte 2
 P:1E09:Character_CheckIfSpecial_IsEquipped:[$00]:$2C Sacred Robe (what effect does this have?)\n[$01]:$2E Water Flying Cloth (what effect does this have?)\n[$02]:$28 Armor of Radiance (gain HP)\n[$03]:$48 Ring of Life (gain HP)\n[$04]:$49 Shoes of Happiness (gain xp)
 P:1E0D:_CheckIfSpecial_IsEquipped_Loop_
 P:1E1C:_CheckIfSpecial_IsEquipped_Character_Loop_
@@ -474,14 +498,19 @@ P:1E32:_SpecialItem_Equipped_
 P:1E3B:_CheckIfSpecial_IsEquipped_Character_Loop_continue_
 P:1E42:_CheckIfSpecial_IsEquipped_Loop_continue_
 P:1E4B-1E4F:SpecialItem_List:[$00]:$2C Sacred Robe (what effect does this have?)\n[$01]:$2E Water Flying Cloth (what effect does this have?)\n[$02]:$28 Armor of Radiance (gain HP)\n[$03]:$48 Ring of Life (gain HP)\n[$04]:$49 Shoes of Happiness (gain xp)
+P:1E5C:returnLocation_Variable_01E5C:Possible return locations\n[00] $00 Aliahan\n[01] $09 Reeve\n[02] $01 Romaly\n[03] $14 Kanave\n[04] $0B Noaniels\n[05] $0C Assaram
 P:2149:SetOrClearCarryFlag:if $2F AND #$01 == 0\n  SEC\nelse if $8B == #$38 \n   CLC\nelse if $8B < #$C3\n  SEC\nelse if $8B < #C6 (#$C3 <= $8B < #$C6)\n  CLC\nelse if $8B == #$CF\n  CLC\nelse if $8B != #$D0\n  SEC\nelse\n  CLC
 P:2165:ClearCarry
 P:2167:SetCarry
+P:2206:DynamicSubroutine_02206:loads 290 bytes of SaveRam from 6B2F with a 5-byte pattern:\n$20 $A0 $C4 $23 $60\n$20 $A0 $C4 $24 $60\n$20 $A0 $C4 $25 $60\n...\n$20 $A0 $C4 $5C $60\n\nthe $A0 $C4 comes from MainMenuSomething_0226C\n\nthen fills the next 31 Bytes from MainMenuSomething_0226E
+P:220D::equivalent to x5
+P:226C-226D:MainMenuSomething_0226C
+P:226E-228C:MainMenuSomething_0226E
 P:22D7-22F6:Magic_HeroBits:See dw3spell for details
 P:22F7-2316:Magic_WizardBits:See dw3spell for details
 P:2317-2336:Magic_PilgramBits:See dw3spell for details
 P:2337-235A:Magic_GoofoffBits:See dw3spell for details
-P:235B:Character_GetXPForNextLevels
+P:235B:Character_GetXPForNextLevels_0235B
 P:235D:_Character_GetXPForNextLevels_Loop_
 P:235E::character index
 P:236C:Character_GetXPForNextLevel
@@ -522,7 +551,8 @@ P:2739:_Character_LevelUp_GetStatusFormulaAddress_Loop:class code - 1
 P:273D::each class has 5 bytes of exp data
 P:2747:_Character_ParseStatFormula_
 P:274D::stat index (0:Exp 1:Str 2:Agi 3:Vit)
-P:2761:L2761
+P:275B:_L0275B_
+P:2761:_L02761_
 P:276B:_ParseBaseStat_Loop_
 P:2771:__SlideBitIntoPlace_InnerLoop_
 P:2780::base level 1 stat
@@ -539,7 +569,7 @@ P:27C8:L27C8
 P:27E7:L27E7:character level -1
 P:27EF:L27EF
 P:27F3:_Character_LevelUp_GetStatBaseLine_RTS
-P:27F4-27FB:Character_StatFormulas_Pointers:[$00]:$A8D6 Experience\n[$02]:$A8FE Strength\n[$04]:$A926 Agility\n[$06]:$A94E Vitality
+P:27F4-27FB:Character_StatFormulas_Pointers_027F4:[$00]:$A8D6 Experience\n[$02]:$A8FE Strength\n[$04]:$A926 Agility\n[$06]:$A94E Vitality
 P:2800-2801:Character_Stats_Pointer
 P:2802-2805:Character_LevelUp_Vector_C:[$02]: A810 (Warrior Agility)
 P:2806:Character_Something_Vector
@@ -574,9 +604,9 @@ P:2B05-2B06:BRKInstructions_17A6:17\nA6 -
 P:2CA2:Menu_RefreshMap_CheckIsSpecialEquipped
 P:2CA3-2CA4:BRKInstructions_RefreshMap:17\n71 - DynamicSubroutine_30000_C
 P:2CAE-2CAF:BRKInstructions_IsSpecialEquipped:17\n49 - Character_CheckIfSpecial_IsEquipped
-P:32D3-32E9:MonsterStats:23 bytes per enemy\n[0]:Level\n[1-2]:Exp\n[3]:Agility\n[4]:GP\n[5]:Attack\n[6]:Defense\n[7]:HP\n[8]:MP\n[9]:Item drop\n[10-17]: bits 0-6 Move sets\n\n[12-14]: bit 7: ??\n[14-15]: bit 7: num attacks?\n[16-17]: bit 7: regen?\n\n[18]: 0-1 GP 255+, 2-3 Infernos, 4-5 Icebolt, 6-7 Blaze&Fireball&Bang\n[19]: 0-1 Attack 255+, 2-3 Sacrifice, 4-5 Beat, 6-7 Lightning\n[20]: 0-1 Defense 255+, 2-3 Sap, 4-5 Stopspell, 6-7 SLeep\n[21]: 0-1 HP 255+, 2-3 Confuse, 4-5 Robmagix, 6-7 Surround\n[22]: bit 0-2 Item drop rate, 3 ???, 4-5 Expel, 6-7 Slow&Limbo
+P:32D3-32E9:Slime_MonsterStats_032D3:23 bytes per enemy\n[0]:Level\n[1-2]:Exp\n[3]:Agility\n[4]:GP\n[5]:Attack\n[6]:Defense\n[7]:HP\n[8]:MP\n[9]:Item drop\n[10-17]: bits 0-6 Move sets\n\n[12-14]: bit 7: ??\n[14-15]: bit 7: num attacks?\n[16-17]: bit 7: regen?\n\n[18]: 0-1 GP 255+, 2-3 Infernos, 4-5 Icebolt, 6-7 Blaze&Fireball&Bang\n[19]: 0-1 Attack 255+, 2-3 Sacrifice, 4-5 Beat, 6-7 Lightning\n[20]: 0-1 Defense 255+, 2-3 Sap, 4-5 Stopspell, 6-7 SLeep\n[21]: 0-1 HP 255+, 2-3 Confuse, 4-5 Robmagix, 6-7 Surround\n[22]: bit 0-2 Item drop rate, 3 ???, 4-5 Expel, 6-7 Slow&Limbo
 P:32EA-3300:Monster_StatBlock_Raven
-P:3F50:ClearRam
+P:3F50:ClearRam_03F50
 P:3F57:_Clear0x00_to_0x0700_Loop_:clears one page at time
 P:3F6C::does this ever run?
 P:3F6E:_L03F6E_Loop_
@@ -585,13 +615,19 @@ P:3F76::turn on NMI and bg table address 0x1000
 P:3F7B::enable sprites and BG
 P:3F8C::why these coordinates?
 P:3F9D:_Init_StackFirstHalf_Loop_:\nsets all to 0xFF
+P:3FA5:ClearSaveRam_03FA5:$6D40 to $6DE0\nWorld map just appeared
 P:3FA9:_Init_SaveRAM_6D40_to_6DE0_Loop_:sets to $FF
 P:3FD8-3FFF:EndOfBank00000to03FFF
+P:4000-400F:Bank01_04000:Y was in the 1st table in LoadLocalPointer\n\n[06]: $8067 APU_InitiateNewSequence_SpecialBRK?\n[$08]: $8046 intro scene, dragon pulling Ortega into volcano\n[$0E]: $8051 APU Set SQ volume
 P:4030:ResetAPU_04000
 P:4037-4039:BRKInstruction_EF02:Calls a bank switch to $1E\nthen runs ResetAPU_78000
+P:4046:Set_CurrentBankId_to_01:After checking location is somewhere can enter\n\nSets bankSwitch_CurrentBankId_06D5 to #$01\nthen Set_APU_NewSeq_20or00_FA_7B866 (BRKInstructions_EF04)
+P:404D:BRKInstructions_EF04_0404D:\nSet_APU_NewSeq_20or00_FA_7B866
+P:4051:APU_SetSqChannelVolume_04051:during intro cutscene
+P:4058-405A:BRKInstructions_EF06_04058:\nset APU_NoteLoByte_Effector_47F
 P:405C:WaitForNMI_78000_BSDynamic
 P:4064-4065:BRKInstructions_WaitForNMI_78000:EF - BRKInstruction_BankSwitch\n07 - WaitForNMI_78000_Subroutine
-P:4067:APU_InitiateNewSequence_SpecialBRK:sequence index
+P:4067:APU_InitiateNewSequence_04067:\nA sequence index
 P:406F-4070:BRKInstructions_APU_InitiateNewSequence:$EF-> special instruction that indicates a BankSwitch is required to High Bank\n$03 -> $B904 APU_StartNewSequence
 P:4788:Battle_EndOfTurn_Regeneration:This appears to be end of turn stuff\n
 P:4789-478A:BRKInstructions_WaitForNMI_Clear580_AndWait:07 - LoadSubroutine_07\n75 -  $A9A8 Battle_WaitForNMI_Clear580_AndWait
@@ -678,12 +714,20 @@ P:4CC6:CharacterStatuses_80
 P:4CCB:ADC_BattleVariables_B
 P:4DD9-7FD7:FreeSpace04000:MASSIVE
 P:7FD8-7FFF:EndOfBank04000to07FFF
-P:8000-8019:DynamicSubroutine_Addresses_08000:[$02]:$B4FF\n[$04]:$B532\n[$08]:$9956\n[$0A]:$9939 DynamicSubroutine_08000_A\n[$16]:$A34F \n[$18]:$A98D Menu_GetName ($A4)\n[$1A]:$A742
-P:9100::DynamicSubroutine_08000_A_Sub_B\n-------------------------\n$97DD - LDA,Y
-P:97AD:F97AD
-P:97C2:F97C2
-P:97C8:L97C8
+P:8000-8019:DynamicSubroutine_Addresses_08000:[$00]:$A13A BattleInit_0A13A\n[$02]:$B4FF\n[$04]:$B532\n[$08]:$9956\n[$0A]:$9939 DynamicSubroutine_08000_A\n[$16]:$A34F \n[$18]:$A98D Menu_GetName ($A4)\n[$1A]:$A742
+P:9100:EncodedTable_03
+P:9112-9116:EncodedTable_01_9112:[0, 1]: address to write sprite data to in RAM\n[3, 4]: address to EncodedTable_02
+P:93C9-93CC:EncodedTable_02_9329
+P:97A9-97AA:Addressof_EncodedTable_02:$9112
+P:97AB-97AC:PPU_WriteBlock_Address:$0400 - PPU_WriteBlock
+P:97AD:SpriteDecoder_GetNextEncodedByte:bank index is at $B6\naddress is at $B4\nresult stored in A
+P:97B1::offset from address base to get variable
+P:97B3::address to variable in zeropages
+P:97B5::bank where variable is
+P:97C2:Increment_AddressAt_B4
+P:97C8:_BattleInit_GetSomeVariable_00B6_RTS
 P:97C9:F97C9
+P:97D0::index to current monster?
 P:97E0:L97E0
 P:97E9:L97E9
 P:9830:CameraShake
@@ -700,12 +744,14 @@ P:98AD:_SetPaletteColors_ToA_Loop
 P:98B3:F98B3
 P:98B6:_ClearWriteBlock_Loop
 P:98C0:_Clear4C2to4CE_Loop
-P:98C7:F98C7
-P:98D7:L98D7
-P:98D8:L98D8
-P:98DD:L98DD
-P:98EA:F98EA
-P:98F2:L98F2
+P:98C7:MoveToNextDecodingFlags:\nMoves the address at B4 to the next encoding flags.
+P:98CC:_InstrByte_Bit0_1_Bit3_1:1st instruction bit 0 is 1 and bit 3 is 1\n
+P:98D7:_MoveToNextDecodingFlags_RTS
+P:98D8:_MoveToNextDecodingFlags:\nmoves address at B4 to next decoding flags
+P:98DD:_GetPreviousBitFlags_:get 1st bit flag
+P:98E1::get 2nd bit flag
+P:98EA:_MoveToNextDecodingFlags_
+P:98F2:_MoveToNextDecodingFlags_continue
 P:98F5:DynamicSubroutine_08000_A_Sub_A
 P:98FE:L98FE
 P:9901:L9901
@@ -720,17 +766,25 @@ P:9948:L9948
 P:9956:DynamicSubroutine_08000_B:Monster just died\nMonster just took damage\n
 P:9961:L9961
 P:9972:F9972
-P:9988:L9988
-P:9989:DynamicSubroutine_08000_D
-P:998E:L998E
+P:9984::some kind of final decompression check?\nChecks all 1st instruction bytes for bit 6 =1
+P:9988:_F9972_RTS
+P:9989:DynamicSubroutine_09989
+P:998E:__DynamicSubroutine_09989_loop_
 P:999A:L999A
 P:99A4:F99A4
 P:99CD:L99CD
-P:99EB:L99EB
+P:99D2::what is this?
+P:99D4::sprite monster index?
+P:99D6::the low nybble, plus 1, of the last 2nd instruction byte in the encoded sprite
+P:99E8::result from F9D93
+P:99EB:_L99CD_RTS
 P:99EC:F99EC
 P:99F3:L99F3
 P:99F8:L99F8
+P:99FD::What is this? used after monster decoded
+P:9A14::sprite monster index?
 P:9A1B:L9A1B
+P:9A1E::this is what was in $C3
 P:9A25:L9A25
 P:9A2D:L9A2D
 P:9A43:L9A43
@@ -745,14 +799,23 @@ P:9A9F:L9A9F
 P:9AA9:F9AA9
 P:9AB2:L9AB2
 P:9ABB:L9ABB
-P:9AE0:L9AE0
+P:9ADB::monsters can be >= $A7??
+P:9AE0:L9AE0:take the the top 2 bits and ROL into $B5\nThis would only apply to monsters >=$40 (Man O' War and up)\nthis probably is finding offsets to the encoded sprite data
 P:9AEE:L9AEE
+P:9B11::get new table address
+P:9B1D::get data from new table
+P:9B24::check if data has low nybble set
 P:9B32:L9B32
-P:9B4C:L9B4C
+P:9B4C:_CheckHighNybble_
+P:9B54::check if we have 0
 P:9B62:L9B62
-P:9B69:L9B69
-P:9B6F:L9B6F
-P:9B9D:F9B9D
+P:9B69:_HighNybbleZero_:is this the start of the Sprite decoder or does it go back further?
+P:9B6F:_Post_SpriteDecoder_:monster index?
+P:9B76::what is this??
+P:9B7B::the low nybble, plus 1, of the last 2nd instruction byte in the encoded sprite
+P:9B7D::the row or column count of the monster sprites?
+P:9B8C::what is this??
+P:9B9D:GetMonsterPalette_maybe
 P:9BDB:L9BDB
 P:9BE1:L9BE1
 P:9BEC:L9BEC
@@ -763,30 +826,62 @@ P:9C37:L9C37
 P:9C45:L9C45
 P:9C52:L9C52
 P:9C5F:F9C5F
-P:9C79:L9C79
-P:9C89:L9C89
+P:9C64::low byte address of compressed sprite data
+P:9C69::high byte address of compressed sprite data
+P:9C6E::number of sprites to decode
+P:9C79:_SpriteDecoder_PrepareNextSprite_:\nthe loop that gets all the sprites for this monster
+P:9C7E::save the address of the first byte for this batch
+P:9C89:__GetNextEncodedByte_loop:1st instruction byte of batch
 P:9C94:L9C94
-P:9CA6:L9CA6
-P:9CB0:L9CB0
-P:9CB2:L9CB2
-P:9CBD:L9CBD
-P:9CC2:L9CC2
-P:9CD0:L9CD0
-P:9CD4:L9CD4
-P:9D0C:L9D0C
-P:9D17:L9D17
-P:9D1C:L9D1C
-P:9D32:L9D32
-P:9D69:L9D69
-P:9D6B:L9D6B
-P:9D7E:L9D7E
-P:9D85:L9D85
-P:9D8F:L9D8F
-P:9D93:F9D93
+P:9CA1::get base byte, otherwise base byte = $00
+P:9CA6:_GetBitFlags_:get low bit flag
+P:9CAB::get high bit flag
+P:9CB0:SpriteDecoder
+P:9CB2:__SpriteDecoder_Loop_:First byte is base byte (most common byte)\n2nd and 3rd bytes are flags for when a byte\nshould be read from the table (1) or\nthe base byte should be used (0).\nBytes are copied into the block a bit at a time,\n in reverse order (ASLd from A, then RORd into block)
+P:9CBD:_WriteEncodedByte_
+P:9CC2:__BattleInit_ReadEncodedBytes_InnerLoop_
+P:9CD0:__Copy_Reordered_WriteBlock_Loop_:\nCopy and reorder the bytes into 430
+P:9CD4:__Copy_Reordered_WriteBlock_InnerLoop_
+P:9CE3::32 bytes of block filled
+P:9CE5:_ReturnToFirstInstructionByte
+P:9CE9::reset to first instruction address and grab it
+P:9CEF:_SpriteDecoder_GetNextSprite
+P:9CF2::this batchs first instruction byte again
+P:9CF9::1st instruction byte
+P:9D0C:_SpriteDecoder_Parse2ndInstructionByte:Get 2nd instruction byte
+P:9D17:L9D17:x is bit 1 and 2 of 1st instruction byte shifted right once
+P:9D1C:__DivideA_By_Yx2
+P:9D21::was set to 0 before getting 1st instruction byte
+P:9D23::if $C1 != 0, jump
+P:9D28::is this not always $08?
+P:9D32:_Store_PPU_WriteBlock_Address
+P:9D39::offset into PPU_WriteBlock_Address
+P:9D3E::low byte base address to reading/writing to?
+P:9D42::high byte base address
+P:9D47::total bytes to read/write
+P:9D4C::end low-byte address of read/write
+P:9D52::end high-byte address of read/write
+P:9D58::this will either be 10 o 00\nget and move bit 4 to bit 0
+P:9D61::either $BE or $BF loaded and incremented every sprite\nif 1st instruction byte & #$06 != 0, then $BE, else $BF
+P:9D63::$BF's low nybble is the high nybble of the PPU address for next sprite
+P:9D67::sprite totally completed?
+P:9D69:_GetPPUAddressFromTileIndex
+P:9D6B:__Transfer_LowNybble_To_1F_loop
+P:9D6C::PPU address to write next sprite (low byte)
+P:9D73::PPU address to write next sprite (high byte)
+P:9D7E:_Check1stInstructionByte_
+P:9D82:_SpriteDecoder_1stInstructionByte_Pos
+P:9D85:_SpriteDecoder_1stInstructionByte_Neg
+P:9D88::sprites remaining to be decoded
+P:9D8C::get next sprite
+P:9D8F:SpriteDecoder_Done:done getting sprites?
+P:9D93:F9D93:\nreturns A and C\nbut A doesn't matter if C:1
+P:9D95::the low nybble, plus 1, of the last 2nd instruction byte in the encoded sprite
 P:9D9C:L9D9C
-P:9E08:L9E08
-P:9E0E:L9E0E
+P:9E08:L9E08:this is iterating over our monster sprite meta-data,\nwhich is 4 bytes long\nand changes 0xBD if something something
+P:9E0E:__L9E08_loop_:what is this?
 P:9E20:L9E20
+P:9E2A::is this the index of last decompressed monster?
 P:9E35:L9E35
 P:9E39:F9E39
 P:9E51:F9E51
@@ -794,24 +889,35 @@ P:9E69:L9E69
 P:9E7B:L9E7B
 P:9E84:L9E84
 P:9E9C:L9E9C
-P:9E9E:F9E9E
-P:9ECE:L9ECE
+P:9E9E:F9E9E:this appears to be a generic procedure used in\ngetting compressed sprite data\nand\nPPU palettes (?)
+P:9EA0::this was just & #$80
+P:9EB0::what is this?
+P:9EB8::low byte address to next byte in compressed data
+P:9ECE:_Check1stInstructionByte_ForBit6_loop_:checks 1st instruction byte of every compressed sprite\nfor bit 6 = 1\nfor reasons still unknown
+P:9ED5::get bit 6 of 1st instruction byte
 P:9EE9:L9EE9
 P:9EF9:L9EF9
-P:9F15:L9F15
+P:9F15:__L9F15_Loop:Get next sprite instruction byte\nand do SOMETHING with it\neventually stores some bytes in PPU_WriteBlock_0400\n(Slime $415:90 $416:92 $419:91 $420:93
+P:9F19:_L9F19
 P:9F35:L9F35
 P:9F55:L9F55
-P:9F7F:L9F7F
+P:9F7F:L9F7F:1st instruction byte of compressed sprite
+P:9F85::bits 7,6 and 5 of 1st instruction byte
+P:9F8E:__L9F7F_loop_
 P:9F96:L9F96
-P:9FB5:L9FB5
-P:9FC1:L9FC1
-P:9FD6:L9FD6
-P:9FE1:L9FE1
-P:9FF4:L9FF4
-P:A006:LA006
-P:A009:LA009
-P:A013:LA013
+P:9FA2::set back in F9E39
+P:9FB5:__Multiply_X_by_0x05_loop_
+P:9FC1:_L9FC1_
+P:9FC8::index to write next byte in PPU_WriteBlock_400
+P:9FD6:__L9FD6_loop_:\nsubtract 0x06 from A until A goes neg
+P:9FE1:__L9FE1_loop_
+P:9FE7::is this the remainder?
+P:9FF4:__L9FF4_
+P:A006:__LA006
+P:A009:__LA009
+P:A013:__LA013_loop_
 P:A029:LA029
+P:A02B::index to write next byte in PPU_WriteBlock_400
 P:A031:LA031
 P:A038:LA038
 P:A042:LA042
@@ -828,30 +934,35 @@ P:A111:LA111
 P:A11E:LA11E
 P:A130:LA130
 P:A138:LA138
-P:A13A:DynamicSubroutine_00000_D
+P:A13A:BattleInit_0A13A
 P:A142:_SkipReinforcementChecks
-P:A157:FA157
-P:A161:LA161
-P:A1A8:LA1A8
+P:A154::at this point are we all done with sprite decrypting?
+P:A157:BattleInit_BattleVariables_0
+P:A161:__BattleInit_BattleVariables_loop_
+P:A16A::$FF == end of table
+P:A1A8:__LA1A8_loop_
 P:A1BA:LA1BA
-P:A1D6:LA1D6
-P:A1E8:LA1E8
-P:A1F4:LA1F4
-P:A1FC:LA1FC
-P:A22A:LA22A
-P:A23E:LA23E
-P:A259:LA259
+P:A1D6:__BattleInit_BattleVariables_loop_continue_
+P:A1E8:__SpriteDMA_SetEvery4thTo_F0_loop
+P:A1F4:__ClearWriteBlockAndPaletteStore_loop_
+P:A1FC:__LA1FC_loop_
+P:A22A:__LA1FC_continue_
+P:A23E:__LA23E_loop_:foreach >= 0x080 probably a monster, \neither a monster type or an actual monster
+P:A259:__LA23E_loop_continue
 P:A25E:LA25E
 P:A267:CheckForMonstersReinforcements
 P:A276:CheckMonstersCallReinforcements
 P:A27B:_CanMonstersCallReinforcements_Loop_
 P:A27D::monster stat block length?
+P:A283::BattleInit monster count
+P:A291::set Dynamic to monster stat address
 P:A29D::Action0 / AISelector1
-P:A29F:_CanMonsterCallReinforcements_Loop_:bank zero
+P:A29F:_CheckStatsForReinforcementAbility_Loop_:bank zero
 P:A2A1::location of dynamic pointer address
+P:A2A3::get monster stat at Y
 P:A2A6::get action
 P:A2A8::calls for reinforcements(Healer)
-P:A2B6:Monster_FirstAction_EqualOrGreater_3B:monster can call for reinforcements
+P:A2B6:Monster_CanCallReinforcements:\nneed to decode sprites of possible reinforcements
 P:A34F:DynamicSubroutine_08000_C
 P:A355:LA355
 P:A356-A357:BRKInstructions_71:07 - LoadSubroutine_07\n71 - Menu_CreateBattleStatus
@@ -937,13 +1048,14 @@ P:B28F-B3BB:ItemNames2
 P:B3BC-B3C1:MonsterList:[0]: Slime
 P:B8BF:MonsterName_List_2:What is this used for?
 P:BFD8-BFFF:EndOfBank08000to0BFFF
-P:C000-C001:Bank0C000to0FFFF
+P:C000:Sprite_Encrypted_Slime:01 - base byte\n0F0F - bit flags: 0 use base byte, 1 use next byte\n\nbytes are copied to PPU_WriteBlock_400+0\nthen copied in reverse bit order to PPU_WriteBlock_400+16\nthen rearranged into PPU_WriteBlock_400+32\n\nthe reversal is used for mirrored sprites\nbut the rearrangement is a mystery as the bytes are copied from PPU_WriteBlock_400+0!
 P:C12B::DynamicSubroutine_08000_A_Sub_B\n----------------\nLoaded via GetVariable_FromDynamic
 P:C12D::DynamicSubroutine_08000_A_Sub_B\n----------------\nLoaded via GetVariable_FromDynamic
 P:C12E::DynamicSubroutine_08000_A_Sub_B\n----------------\nLoaded via GetVariable_FromDynamic
 P:C137::DynamicSubroutine_08000_A_Sub_B\n----------------\nLoaded via GetVariable_FromDynamic
 P:C13A::DynamicSubroutine_08000_A_Sub_B\n----------------\nLoaded via GetVariable_FromDynamic
 P:C144::DynamicSubroutine_08000_A_Sub_B\n----------------\nLoaded via GetVariable_FromDynamic
+P:C172-C1A5:Sprites_Enemies_Encrypted
 P:FFD8-FFFF:EndOfBank0C000to0FFFF
 P:10000-10055:DynamicSubroutine_Addresses_10000:[$00]:$8059 ->\n[$02]:$B4FF ->\n[$04]:$B532 -> GetMonsterCount\n[$06]:$B93F\n[$0A]:$BA39 -> WaitFor_X_Frames_Setup_B (#70)\n[$0C]:$A906 -> \n[$0E]:$A9C2 -> DynamicSubroutine_10000_C\n[$12]:$A991 BRK_DialogJumpStation_WithCharacterIndex (#74)\n[$14]:$A9A8 -> Battle_WaitForNMI_Clear580_AndWait\n[$18]:$AA7A -> Menu_MulticopyToStagingArea (#77)\n[$1C]:$BA5C RNG_BellCurve128 (#A7)\n[$1E]:$ACA3 RNG_Ranged_A (#7C)\n[$22]:$B965 -> Monster_ParseStat_Y_0A\n[$2E]:$B83D -> Battle_CheckForItemDrop (#D1)\n[$30]:$B96F -> Monster_GetAIType\n[$38]:$B40A -> Battle_Finished_DynamicJumpDestination_A\n[$4E]:$8362 -> Monster_ParseStat_Y_OC\n[$50]:$8473 -> Monster_ParseStat_Y_0A_Extra\n[$52]:$B965 -> Monster_ParseStat_Y_0A\n[$54]:$B96A -> Monster_ParseStat_0E
 P:10059:DynamicSubroutine_10000_A:Pre-battle, after monster initial stats setup
@@ -1422,11 +1534,13 @@ P:13E2A-13E2B:JMP_Adressses_10000:[$00]:$95C6 Character_Attack
 P:13FD2:DynamicSubroutine_10000_E_JMP:Why no just JMP $A969??
 P:13FD5:L13FD5
 P:13FD8-13FFF:EndOfBank10000to13FFFF
-P:14000-14001:Bank14000to17FFF
+P:14000-14017:LocalPointers_14000:[$16]: $BE96
 P:14018-14117:Map_LightWorld_Data_A:this is probably only 0x7F long, or there is special data from 0x80
 P:14118-141F0:Map_LightWorld_Data_B:Addresses to something?
 P:1421A-15A94:Tiles:map tiles?\n\nunconfirmed
 P:15A95-15B94:Map_DarkWorld:unconfirmed\nlength unknown
+P:163EF-163F0:SomethingPointer_163EF:base address to sprites probably\ncould be map or NPCs
+P:16451-16453:TileBatchInstructions_Ship_16451:most likely?
 P:165A1-165A3:Tile_BatchInstructions_WaterTiles:10 - batch: 4 tiles (1 * 3 +1)\n1B - pointer code -> $241B0\n84 - ??
 P:165A4-165A6:Sprite_BatchInstructions_GrassTile02:04 - 1 tile in batch (0 * 3 +1)\n30 - pointer code -> $24300\n00 - ??
 P:165A7-165A9:Sprite_BatchPointer_GrassTile01:0C - 1 tile in batch (0 * 3 +1)\n2F - pointer code -> $242F0\n00 - ??
@@ -1443,7 +1557,8 @@ P:165C5-165C7:Tile_BatchInstructions_CastleC:18 - \n3A - $243A0\n01 -
 P:165C8-165CA:Tile_BatchInstructions_CastleD:18 - \n3E - $243E0\n02 - 
 P:165CB-165CD:Tile_BatchInstructions_:14 - 4 tiles\n56 - $24560\n01 - 
 P:165FE-16600:Tile_BatchInstructions_Icemaybe:10 - 4 tiles in batch\n6A - $246A0\n00 - 
-P:16DD0-16DD1:TileBatchSomethingPointerA
+P:16D30-16D63:Something_16D30
+P:16DD0-16DD1:TileBatchPointer_16DD0:Points to first batch in sprite batches\n$ADD4 (Hero sprite)
 P:16DD2-16DD3:TileBatchSomethingPointerB
 P:16DD4-16DEB:TileBatches_Hero:3 bytes per batch, 8 batches per character\n$16DD4 to $16DEB hero\n\n0x016DFC to 0x016E13 = male wizard\n0x016E14 to 0x016E2B = male pilgrim\n0x016E2C to 0x016E43 = male sage\n0x016E44 to 0x016E5B = male soldier\n0x016E5C to 0x016E73 = male merchant\n0x016E74 to 0x016E8B = male fighter\n0x016E8C to 0x016EA3 = male goof-off\n0x016EA4 to 0x016EBB = female wizard\n0x016EBC to 0x016ED3 = female pilgrim\n0x016ED4 to 0x016EEB = female (?)\n0x016EEC to 0x016F03 = female soldier\n0x016F04 to 0x016F1B = female fighter\n0x016F1C to 0x016F33 = female (?)\n0x016F34 to 0x016F4B = female goof-off\n\n0x016F94 to 0x016FAB = NPC male warrior\n\n0x01712C to 0x017143 = NPC man
 P:16E34-16E36:TileBatches_Soldier_00
@@ -1452,10 +1567,13 @@ P:17224-17226:TileBatch_Vector_Bird01:Bird maybe
 P:17227-17229:TileBatch_Vector_Bird02
 P:1726C-1726E:TileBatchs_Ghost_00
 P:173CA-173CE:TileBatchInstructionsSpecial_Vector
-P:17438-1744B:PPUAddress_Table:4 bytes per sprite meta batch:\n\n[$00] - [$01]:$18D0 -> STA $2006 PPUWrite address\n[$02] - [$03]: $7200 -> area to store?\n[$04]: $8D\n\n[x+0] - [x+1]: STA $2006  PPUWrite address\n[x+2] - [x+3]: area to store sprite data in Save RAM\n[x+4]: ?
-P:17456-174AD:OffsetsToNextSpriteInTileBatch:formerly TileBatch_Vector_B
-P:174BC-174C0:Tile_DynamicOffsets:paired bytes:\n1st byte is added to dynamicSubroutine (pointer to instruction bytes)\n2nd byte is added to tileSomethingVectorCOffset
-P:174CC-174D0:TileBatchSpriteOrder_Vector
+P:17438-1744B:PPUAddresses_17438:4 bytes per sprite meta batch:\n\n[$00] - [$01]:$18D0 -> STA $2006 PPUWrite address\nprobably where to store map tiles\n[$02] - [$03]: $7200 -> area to store?\n[$04]: $8D\n\n[x+0] - [x+1]: STA $2006  PPUWrite address\n[x+2] - [x+3]: area to store sprite data in Save RAM\n[x+4]: ?
+P:17456-174AD:OffsetsToNextSpriteInTileBatch_17456:formerly TileBatch_Vector_B
+P:174B0-174B3:Something_174B0
+P:174B4-174BB:Something_174B4
+P:174BC-174C0:Tile_DynamicOffsets_174BC:paired bytes:\n1st byte is added to dynamicSubroutine (pointer to instruction bytes)\n2nd byte is added to tileSomethingVectorCOffset
+P:174CC-174D0:TileBatchSpriteOrder_174CC
+P:17601-17A60:MainMenu_CHR_Sprites:Each sprite is 8 bytes\n   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e\nf, g, ..... until the "equipped" |e symbol
 P:17A69:Map_Scroll_Check
 P:17A72-17A75:Map_Scroll_Vector:[$00]: (up) $BB13\n[$02]: (right) $BAEC\n[$04]: (down) $BAF8\n[$06]: (left) $BAE5
 P:17A7A:Map_Scroll
@@ -1480,7 +1598,9 @@ P:17B76:Map_Scroll_WalkDirection_Down
 P:17B80:L17B80
 P:17B81:Map_Scroll_WalkDirection_Up
 P:17B8B:Map_Scroll_WalkDirection_Wrap
-P:17CB0:WriteMapTilesToPPU:Writes map tiles to PPU\nand some other stuff?
+P:17C73:DynamicSubroutine_17C73:\nIn Aliahan, happens intermittently when walking
+P:17C92:DynamicSubroutine_17C92:\nentering Aliahan, has sprites but still not palettes
+P:17CB0:WaitForVBlank_17CB0
 P:17CB7-17CB8:BRKInstructions_FillPPUSpriteDMAWithF8:17\n5B - FillPPUSpriteDMAWithF8
 P:17CD7:__L17CD7_Loop
 P:17CF8:L17CF8
@@ -1502,8 +1622,14 @@ P:17E7E:F17E7E
 P:17E87:SetA_WorldPos_X
 P:17E8A:F17E8A
 P:17E93:SetA_WorldPos_Y
+P:17E96:LoadTextIntoCHR_17E96:Setups up CHR for Main Menu, among\nother things, surely
+P:17EB7:__MainMenu_LoadCHRSprites_loop_
+P:17EBB:__MainMenu_LoadNext_CHRSprite_loop_
+P:17ECE:_Clear8Bytes_AtSetPPUAddress:\nPPU address set previously
+P:17ED2:__Clear8Bytes_AtSetPPUAddress_loop
+P:17ED9-17EDA:DynamicSubroutine_17E96_Address_17ED9:$B601
 P:17FD8-17FFF:EndOfBank14000to17FFF
-P:18000-18017:LocalPointer_List_18000:[$0A]: $B387\n[$16]: $B755 (Day/Night Palettes)
+P:18000-18017:LocalPointers_18000:[$0A]: $B387\n[$16]: $B755 (Day/Night Palettes)
 P:18525-1852C:Map_Exit_Pointers:0x018535 to 0x018536 = Exiting town part of Aliahan\n0x018537 to 0x018538 = Exiting Tower of Najima\n0x018539 to 0x01853A = Exiting clearing for Tunner to Tower of Najima
 P:1852D-18645:Map_x00_Aliahan:#00\nroof type: town\ntileset: 01
 P:18646-18666:Map_x41_Home2F:roof_type:"town",\ntileset:"dw3_tileset_03",
@@ -1512,6 +1638,12 @@ P:1878F-187C2:Map_x47_AliahanCastle_F2:#$47\nRoof_type: town\ntileset: 05
 P:187FA-1891F:Map_x01_Romaly:#01\nroof_type:"town",\ntileset:"dw3_tileset_05",
 P:195A1-1963D:Map_x09_Reeve:#09
 P:1B387-1B3E7:PostClockIncrement_Vector
+P:1B59D:DynamicSubroutine_1B59D
+P:1B5B2:_L1B5B2_
+P:1B5E0:_L1B5E0_
+P:1B5F6:_L1B5F6_
+P:1B60B:_DynamicSubroutine_1B59D_RTS
+P:1B60C-1B60D:Something_1B60C:this could be coordinates of current location
 P:1B6BB:CheckDayNightTransitionTimes
 P:1B6C8:_DynamicSubroutine_18000_A_Loop_
 P:1B6D6:L1B6D6
@@ -1520,16 +1652,120 @@ P:1B736:L1B736
 P:1B755-1B7A8:Palettes_DayNight_vector:[$12] - [$17]: day time (1E) palette
 P:1B7B0-1B7B6:DayNightTransitionTimes
 P:1BFD8-1BFFF:EndOfBank18000to1BFFF
-P:1C000-1C001:Bank1C000to1FFFF
+P:1C000-1C001:LocalPointers_1C000:[$00]: $803E Clear_0647to0664?\n[$10]: $B2AB Main Menu?
 P:1C115-1C117:Map_Pointers:[0]: lobyte\n[1]: hibyte\n[2]: ??\n\nAliahanCastle_F2
 P:1E2E7-1E499:Map_xF2_RubissTower_4f:#F2\nroof_type:"tower",\ntileset:"dw3_tileset_1B",
+P:1E865:DynamicSubroutine_1E865:\nDoes something with the checksum
+P:1E86A:__L1E86A_loop_
+P:1E877:_L1E877_
+P:1E87C:_L1E87C_checksum_failure:??\n??
+P:1E887:__L1E887_loop_
+P:1E897:_L1E897_
+P:1E89F:__CopyCheckSumToSRAM_loop_
+P:1E8B5:_1E8B5_
+P:1E8C3-1E8C5:BRKInstructions_2F28_1E8C3:Load APU sequence (or clear sequence?)
+P:1E8C6:F1E8C6
+P:1E8D8:F1E8D8
+P:1E8E7:F1E8E7
+P:1E914:_F1E8D8_RTS_
+P:1E917:F1E917
+P:1E967-1E969:BRKInstruction_E757_1E967
 P:1E9F3-1E9F4:CharacterNames_Pointer
-P:1ECFE-1ED0A:SRAM_CheckSum:MANABU YAMANA in ASCII
-P:1ED42:PreGenNames
+P:1EA29:CopySaveGame
+P:1EA38::address to copy save game from?
+P:1EA41::get address to copy save game to
+P:1EA4B::does this not give the same result as the above??\n315 - 3 = 312
+P:1EA50:__CopySaveGameData_loop_:this doesn't copy the last 3 bytes of the save game data.\nIs ths a buffer or is there a reason for this?
+P:1EA62:_L1EA62_
+P:1EA7B::our random RNG seed
+P:1EABA:F1EABA
+P:1EAC9:_L1EAC9_
+P:1EACD:_6A69_Is07
+P:1EACF:_1EACF_
+P:1EADC-1EADE:BRKInstructions_0700:CreateMenu_Subroutine
+P:1EAF2:F1EAF2
+P:1EAF9:__L1EAF9_loop_
+P:1EB06:__CharacterLevel_MaxSortOf_loop_:\ngets all character levels and ORs them together
+P:1EB13::is this a convoluted way to check that save is not empty?
+P:1EB20:_L1EB20_
+P:1EB28:F1EB28
+P:1EB2C:__L1EB2C_loop_
+P:1EB31:GetSaveGameLength:\nStores in $40 $41
+P:1EB3C:Is16BitValueAt40_Zero:Subtract 1 form value at $40, then or with value at $41\nThis is a simple way to test if a 16bit value is 0
+P:1EB48:F1EB48
+P:1EB51:F1EB51
+P:1EB58-1EB5A:BRKInstruction_0007_1EB58
+P:1EB70:L1EB70
+P:1EB73:F1EB73
+P:1EB98:SaveGame_CheckSaveGameSomethingA_EqualTo_A
+P:1EB9C:__L1EB9C_loop_
+P:1EBB2:_F1EB98_RTS
+P:1EBB3::current save game index?
+P:1EBB5:GetSaveGameAddress:Get address (in SRAM) to save game at index X.\nStores result in $3C
+P:1EBCE:F1EBCE
+P:1EBD2:__ClearPPUWriteBlock_loop_
+P:1EBE1:__1EBE1_loop_
+P:1EBF5:F1EBF5
+P:1EBF9:__L1EBF9_loop_
+P:1EC1E:SaveGameSomethingA_Equals_ValueAt04
+P:1EC26:Is_SaveGameSomethingA_Equal_ValueAt04:C:1 if true, A: index of saveGame\nC:0 if false
+P:1EC28:__L1EC28_loop_
+P:1EC31::check if save game exists
+P:1EC3A:_L1EC3A_
+P:1EC43:_SaveGameSomethingA_Equals_ValueAt04
+P:1EC46:GetSaveGameSomethingA:\nResults stored in A
+P:1ECD0:CycleRNG:I guess. This seems really pointless.
+P:1ECE6:__L1ECE6_loop_:Copies every byte of a save game to $21 then runs the RNG.\nIs this just to cycle the RNG?\nKill time to make the use feel like it's doing more than\nit actually is?
+P:1ECFD:_F1ECD0_RTS_
+P:1ECFE-1ED0A:SRAM_CheckSum_1ECFE:MANABU YAMANA in ASCII
+P:1ED16-1ED19:Something_1ED16
+P:1ED35-1ED36:SaveGameLength_1ED35:length of a save game in SRAM
+P:1ED37-1ED38:FirstSaveGameAddress_1ED37
+P:1ED3B-1ED3C:SaveGameRandomSeed_Offset_1ED3B:byte offset to random seed
+P:1ED3D-1ED3E:SaveGameSomethingA_PointerOffset_1ED3D:offset from save game start to some data
+P:1ED42-1ED9F:PreGenNames_1ED42
+P:1EF8A:LoadGame
+P:1EF8C:__Clear700to7B4_loop_
+P:1EF98:__Copy6313To6001_loop_:\n#$D4 times
+P:1EFA5:__Copy630ATo7BC_loop_:8 times
+P:1EFB2:__Write05To_6A4B_loop
+P:1EFC2:__LoadGame_CopyCharactersData_loop_
+P:1EFD0:_L1EFD0_
+P:1EFD7-1EFD9:BRKInstructions_07AA_1EFD7:AA - Character_GetXPForLevelUp
+P:1F04F:F1F04F
+P:1F068:L1F068
+P:1F06E:__LoadGame_CopyCharacterData_loop_
+P:1F073::bytes to copy
+P:1F093:__1F093_loop_
+P:1F0A0:_L1F0A04_
+P:1F0A4:_LoadGame_CopyCharacterByte
+P:1F0AA::y value offset from address at $3E to store copied byte
+P:1F0B1::y value offset from address at $3C to copy byte from
+P:1F0B3:__LoadGame_CopyCharacterByte_loop_
+P:1F0D5:Prep_JMP_ToAddressAt_4A:$45 - y value offset from address at $3E to store copied byte\n$46 - y value offset from address at $3C to copy byte from\n$44 - loop count
+P:1F0D7::y value offset from address at $3E to store copied byte
+P:1F0DB::y value offset from address at $3C to copy byte from
+P:1F0DD::loop count
+P:1F0DF:__CopyValue_loop_:this might not always have the same JMP address at $4A.\nDuring a menu close, I saw it use Menu_CopyValue_1F200
+P:1F0EA:JMP_ToAddressAt_4A
+P:1F19F:GetSaveGameHeroName_1F19F:save game index (0 - 2) stored in character_FormationIndex_CE\nReturns Hero name is $04
+P:1F1B2:__CopyHeroName_loop_
+P:1F1EA:MultiplyAByValueAt44:Result returned in A
+P:1F1FB:F1F1FB
+P:1F200:LoadGame_CopyValue_1F200:Copies byte pointed to by ($3C),Y (Y is value at $05)\nand stores it at address pointed to by ($3E),Y (Y is value at $04)\nCopied value is in A as well.\n\npointed to by Menu_SomeAddress_1F2A3
 P:1F23E-1F284:Class_BaseStats
+P:1F285-1F28E:LoadGame_SaveGameCharacterDataPointers_1F285:Save game Character data pointers\n\n[$00]: $60D6 levels\n[$02]: $612A current HP\n[$04]: $612A \n[$06]: $61EA names\n[$08]: $62AA spells
+P:1F28F-1F294:LoadGame_RAMCharacterDataPointers_1F28F:Pointers to character data in RAM.\n\n[$00]: 700 Levels\n[$02]: 71C Current HP (2 bytes each)\n[$04]: 744 Exp (3 bytes each)\n[$05]: 75C (3 bytes each)\n[$06]: 79C Spells (8 bytes each)
+P:1F299-1F29C:LoadGame_ByteCopyCount_1F299
+P:1F29E-1F2A1:LoadGame_ByteCopyLoopCount:[00]: 01 byte value (basic stats)\n[01]: 02 byte value (HP/MP/Status)\n[02]: 03 byte values (Exp/Return, gold?)\n[03]: 08 byte values (Name,/spells,/inventories)\n
+P:1F2A3-1F2A4:Menu_SomeAddress_1F2A3:stored in $4A which is used to JMP to $1F200
+P:1F2A7-1F2A8:SaveGame_CharacterNameOffset_1F2A7:offset to first characters name in save game
+P:1F2AB:DynamicSubroutine_1F2AB:Loading MainMenu?
+P:1F2C8:__L1F2C8_loop_
+P:1F2D3-1F2D5:BRKInstructions_1722_1F2D3
 P:1FDB7-1FFD7:FreeSpace1C000to1FFFF:Post credits
 P:1FFD8-1FFFF:EndOfBank1C000to1FFFF
-P:20000-23CBF:Sprites_Characters
+P:20000-23CBF:Sprites_Characters:+0: Hero Sprite\n+480: Soldier Sprite\n+???: Prisoner\n+???: Bunny girl\n+???: Female Wizard\n+???: Male Wizard\n+???: Male Merchant\n+???: Female Merchant\n+???: Male Priest\n+???: Old man\n+???: Ghost (partial)\n+???: Princess\n+???: King\n+???: Boat\n+???: Little Devil\n+???: Kandar\n+???: Bard\n+???: Bald robed guy\n+???: NPC warrior\n+???: Flower girl\n+???: Ghost 2
 P:23CC0-23F7F:Freespace_23000
 P:23FD8-23FFF:EndofBank20000to23FFF
 P:24000-24001:Bank24000to27FFF
@@ -1620,6 +1856,8 @@ P:246E0-246EF:Sprite_Ice_00
 P:246F0-246FF:Sprite_Ice_01
 P:24700-2470F:Sprite_Ice_02
 P:24710-2471F:Sprite_Ice_03
+P:24F80-24F9F:Sprite_Ship_24F80:I think
+P:25000-25007::a ROL table with the occasional carry. This is REMARKABLY similar to the decode flags for the Slime sprite!
 P:27990-279AF:Weapon_AtkPowers:[$00]: Cypress Stick\n[$01]: Club\n[$02]: Copper Sword\n[$03]: Magic Knife\n[$04]: Iron Spear\n[$05]: Battle Axe\n[$06]: Broad Sword\n[$07]: Wizard's Wand\n[$08]: Poison Needle\n[$09]: Iron Claw\n[$0A]: Thorn Whip\n[$0B]: Giant Shears\n[$0C]: Chain Sickle\n[$0D]: Thor's Sword\n[$0E]: Snowblast Sword\n[$0F]: Demon Axe\n0x0279B0 = Staff of Rain\n0x0279B1 = Sword of Gaia\n0x0279B2 = Staff of Reflection\n0x0279B3 = Sword of Destruction\n0x0279B4 = Multi-Edge Sword\n0x0279B5 = Staff of Force\n0x0279B6 = Sword of Illusion\n0x0279B7 = Zombie Slasher\n0x0279B8 = Falcon Sword\n0x0279B9 = Sledge Hammer\n0x0279BA = Thunder Sword\n0x0279BB = Staff of Thunder\n0x0279BC = Sword of Kings\n0x0279BD = Orochi Sword\n0x0279BE = Dragon Killer\n0x0279BF = Staff of Judgement
 P:279B0-279C7:Armor_DefPowers:0x0279C0 = Clothes\n0x0279C1 = Training Suit\n0x0279C2 = Leather Armor\n0x0279C3 = Flashy Clothes\n0x0279C4 = Half Plate Armor\n0x0279C5 = Full Plate Armor\n0x0279C6 = Magic Armor\n0x0279C7 = Cloak of Evasion\n0x0279C8 = Armor of Radiance\n0x0279C9 = Iron Apron\n0x0279CA = Animal Suit\n0x0279CB = Fighting Suit\n0x0279CC = Sacred Robe\n0x0279CD = Armor of Hades\n0x0279CE = Water Flying Cloth\n0x0279CF = Chain Mail\n0x0279D0 = Wayfarers Clothes\n0x0279D1 = Revealing Swimsuit\n0x0279D2 = Magic Bikini\n0x0279D3 = Shell Armor\n0x0279D4 = Armor of Terrafirma\n0x0279D5 = Dragon Mail\n0x0279D6 = Swordedge Armor\n0x0279D7 = Angel's Robe
 P:279C8-279CE:Shield_DefPowers
@@ -1704,6 +1942,9 @@ P:30000-3006B:DynamicSubroutine_Addresses_30000:[$6A]: $8D58 DynamicSubroutine_3
 P:30078:DynamicPointer_30000_A
 P:30081:_DynamicPointer_30000_A_RTS
 P:30082:DynamicPointer_30000_A_Sub
+P:30776:ChangeViewArea_30776:\nwhen walking into or out of a covered area
+P:30C5F:DynamicSubroutine_30C5F
+P:30CB4:DynamicSubroutine_30CB4:switch to world map
 P:30D58:DynamicSubroutine_30000_A
 P:30D70-30D71:BRKInstructions_1733_a:17 - \n33 - 
 P:30D7C-30D7D:BRKInstructions_1733_B
@@ -1712,6 +1953,8 @@ P:30D88-30D89:BRKInstructions_1733_C
 P:30D8A:__JMP_L30D8A
 P:30D94-30D95:BRKInstructions_1733_D
 P:30D96:_DynamicSubroutine_30000_A_RTS_
+P:30DA7:DynamicSubroutine_30DA7:\nentering Aliahan, has sprites but still no palettes
+P:319E8:DynamicSubroutine_319E8
 P:32891:FillPPUSpriteDMAWithF8
 P:32895:__FillPPUSpriteDMAWithF8_Loop
 P:32F95:Map_Scroll_Finish
@@ -1750,8 +1993,15 @@ P:330FF:__L330FF_Loop
 P:33123:_F330FA_RTS
 P:33124:CheckSpecialCoordinates:x: 56 y: 48\nthis COULD be the area that pushes you back\nwithout the locket of love or whatever
 P:33163:_L33163_RTS
+P:33164:DynamicSubroutine_33164
 P:3319A:DynamicSubroutine_30000_C
 P:3319F-331A0:BRKInstructions_071F:07\n1F - DynamicSubroutine_38000_C
+P:339A5:DynamicSubroutine_339A5
+P:339A7:__CheckLocation_Loop_
+P:339B4-339CD:Location_Table_339B4:a table of locations, use unknown\n\ncompares against DynamicSubroutine_3B3A1_8B which has current location Return number\n\n[$09]: $00 Aliahan
+P:339CE::index in table of current locaiton
+P:339DE-339FD:LocationData_Address_Table:addresses to data about a location\n\n[00, 01]: $4A \n[02, 03]: $0F \n[04, 05]: $0A \n[06, 07]: $91\n....\n[12, 13]: $00 Aliahan (=> $BB64)\n....
+P:33B64:Aliahan_data
 P:33C41-33FD7:Freespace30000to33FFF
 P:33FD8-33FFF:EndofBank30000to33FFF
 P:34000-34051:DynamicSubroutine_Addresses_34000:Dynamic addressess\n\n[$32]: $8054 -> DynamicSubroutine_34000_A (#33)\n[$50] ($95A0) $C53E - return from BankSwitch\n[$52]:$9622
@@ -1767,13 +2017,14 @@ P:340F6:L340F6
 P:3411C:__L340F6_RTS
 P:34192:DynamicSubroutine_34000_A_Sub
 P:355A0:Menu_SetStatusColor
-P:355A4:_CheckCharacterStatus_Loop
+P:355A4:__CheckCharacterStatus_loop_
 P:355AF::dead character count?
-P:355BE:__CheckCharacterHPStatus_Loop
+P:355B1:_L355B1_
+P:355BE:__CheckCharacterHPStatus_loop_
 P:355D9::divide max HP by 4 and compare to current HP
 P:355E6:__CheckLowByteHP
 P:355ED:__CurrentHPBelowQuarterMaxHP:below quarter HP count
-P:355EF:__L355BE_Loop_continue
+P:355EF:__CheckCharacterHPStatus_loop__continue
 P:355F8::green - below quarter HP color
 P:355FC:__MenuColor_CheckIfNightTime
 P:3560A:__SetMenuColor_StatusNormal:white
@@ -1788,8 +2039,9 @@ P:35624:L35624
 P:35631:L35631
 P:3565C:DynamicSubroutine_34000_D
 P:35665:__DynamicSubroutine_34000_D_RTS
-P:35666:DynamicSubroutine_34000_D_isDarkWorld
+P:35666:DynamicSubroutine_34000_D_isDarkWorld:has nothing to do with Dark World\nthis was called in Aliahan during the day, every frame it seems
 P:35684:__DynamicSubroutine_34000_D_isDarkWorld_Loop
+P:3587C:DynamicSubroutine_3587C:\nstatus box just closed
 P:3593E:_DynamicSubroutine_34000_D_Sub_RTS
 P:3593F:DynamicSubroutine_34000_D_isLightWorld
 P:3595B:__DynamicSubroutine_34000_D_isLightWorld
@@ -1810,10 +2062,12 @@ P:35AAB-35AAC:BRKInstructions_0709:07 - \n09 - DynamicSubroutine_38000_B
 P:35AAE:L35AAE
 P:35AAF:__L35AAF_RTS
 P:35AB0:L35AB0
-P:35B13:DynamicSubroutine_34000_C:\nMap Screen every frame
+P:35B13:DynamicSubroutine_34000_C:\nMap Screen every frame, Aliahan also
 P:35B1C:L35B1C
 P:35B3A:L35B3A
 P:35B45:L35B45
+P:35D4F:DynamicSubroutine_35D4F:\nCalled when entering Aliahan, after spirtes, before palettes
+P:35D64:__WriteF8_To_Stack_loop_:\nfrom stack+128 to stack+168
 P:35DC0:AdjustSpriteDMA:Checks status of character and makes adjustments to PPU_SpriteDMA depending on direction of movement.\nCould this be something for character sprite movement/direction?
 P:35DCE:_DynamicSubroutine_34000_B_RTS
 P:35DCF:_DynamicSubroutine_34000_B_cont
@@ -1837,7 +2091,7 @@ P:35EBA:DynamicSubroutine_34000_E_Sub_sub
 P:35ECE:DynamicSubroutine_34000_G
 P:375A8:Weird:Initiated dialog\nwith an NPC
 P:37FD8-37FFF:EndofBank34000to37FFF
-P:38000-3800D:DynamicSubroutine_Addresses_38000:[$00]:$87B9 -> Write to EnemyDisplay Menu\n[$04]:$ABDB -> \n[$0A]:$ABF9\n[$0C]:$A68D GetDialogSegment\n[$10]:$A67B LoadDialogJumpStation_WithCharacterIndex\n[$30]:$BA16 (#51)\n[$62]:$B2DB -> 
+P:38000-3800D:DynamicSubroutine_Addresses_38000:[$00]:$87B9 -> Menu\n[$04]:$ABDB -> \n[$0A]:$ABF9\n[$0C]:$A68D GetDialogSegment\n[$10]:$A67B LoadDialogJumpStation_WithCharacterIndex\n[$30]:$BA16 (#51)\n[$62]:$B2DB -> 
 P:38072:ReadControllerInput
 P:38092:_ReadControllerInput_RTS
 P:38093:ReadControllerInput_cont
@@ -1850,7 +2104,7 @@ P:381DB-381DC:BRKInstructions_1749:17\n49 - Character_CheckIfSpecial_IsEquipped
 P:385BE:F385BE:menu pointer index
 P:385C2::menu pointer index
 P:385C4:F385C4
-P:385CD:L385CD
+P:385CD:_OpenStatusBox:status box is about to open
 P:385D6:Menu_ReadLowStack:\nChecking for map wrap-around?
 P:385DF:_Menu_ReadLowStack
 P:385E1::current world X position or last
@@ -1873,7 +2127,7 @@ P:386CE:F386CE
 P:386D5:F386D5
 P:386D9:L386D9
 P:386EB:_L386D9_RTS
-P:386EC:DynamicSubroutine_38000_C
+P:386EC:DynamicSubroutine_38000_C:\nprobably something to do with closing status box
 P:386F5:__38000_C_2F_0Bit_On
 P:386FE:F386FE
 P:38706:__L38706_Loop
@@ -1887,37 +2141,39 @@ P:38766:L38766
 P:38776:L38776
 P:38786:Menu_WaitFor_NMI_Loop_JMP
 P:387AE:Menu_Subroutine
-P:387B9:Menu_Create_Subroutine:A: menu index to write\n
+P:387B9:Menu_CreateNew_387B9:\nA: menu index to write
 P:387BB:_Menu_Subroutine_
 P:387CE:_Menu_Subroutine_RTS
 P:387CF:Menu_WriteToScreen:Instructions\n[$00]:Width in sprites\n[$01]:Height in sprites\n[$02]:coordinates in sprites (*2)\n[$03]:bits 5-6 + 1 = iterations (? of what?)\n[$04]:Menu Title ->\n    bits 0-5:\n        if < #$20, Index to title in Menu_Titles\n        if 20-23, ???\n        if < #$24, Write character name (4 chars)\n        if #$25, Write character name (8 chars)\n[$05]:\n[$07]:if => $80 then takes controller input\n[$08]:low nibble added to x sprite pos of menu for...?\n[$09]:low nibble added to y sprite pos for....?
 P:387DB:Menu_WriteToScreen_Loop
-P:387E7::what is the point of this?
+P:387E7::probably creates the rolling open effect
 P:387EA::-1 lines to write
 P:387F0:Menu_WriteNextLine
+P:387F3::when menu_WriteTo_Counter_6AEA == $01, menu is done
 P:38804::instruction #5
 P:3880C:_Menu_WriteNextLine_RTS_
-P:3880D:L3880D
+P:3880D:_MenuInstructionByte5_bit4Set
 P:3881A:Menu_ParseInstruction_05:A: next char write position\n
 P:3881D::menu instruction #5
+P:38823:_Menu_Instruction05_IsNeg_
 P:38828::x == 0
 P:3882A::A AND $40 == 0?
 P:3882C:Menu_SkipInstructions_Loop:\nFind next #$FF and read from there
 P:38835:Menu_ParseInstructionIndex_0B
 P:3883A:Menu_ParseNextInstructionByte
 P:3885F::Get Name (monster or class)
-P:38870:Menu_InstructionByteIsPrintChar:Byte is a char to write to screen ( < $80)
+P:38870:_Menu_InstructionByteIsPrintChar_:Byte is a char to write to screen ( < $80)
 P:38876:Menu_EoT
-P:3887A:Menu_NextInstructionChar_10or11_JMP:item menu
+P:3887A:Menu_InstructionChar_10or11_JMP:item menu
 P:3887D:Menu_NextInstructionChar_1Bto1E_JMP:Menu_MainCommand
-P:38880:Menu_NextInstructionChar_12or13_JMP
-P:38883:Menu_NextInstructionChar_14or15
-P:38886:Menu_NextInstructionChar_16
-P:38889:Menu_NextInstructionChar_17
-P:3888C:Menu_InstructionByte18_GetName_JMP
-P:3888F:Menu_NextInstructionChar_19
+P:38880:Menu_InstructionChar_12or13_JMP
+P:38883:Menu_InstructionChar_14or15
+P:38886:Menu_InstructionChar_16
+P:38889:Menu_InstructionChar_17
+P:3888C:Menu_InstructionChar18_GetName_JMP
+P:3888F:_Menu_InstructionChar19_GetSaveGameHeroName
 P:38892:Menu_NextInstructionChar_1A
-P:38895:Menu_NextInstructionChar_LessThan10
+P:38895:Menu_InstructionChar_LessThan10
 P:388A3:Menu_GetCharacterInfo:A: menu offset index
 P:388AD::menu offset index
 P:388B2::menu offset
@@ -1932,6 +2188,8 @@ P:3894A::previous instruction byte
 P:3894B:_Menu_NextInstructionChar_10_
 P:38951:Menu_TransferCharacterNameTo_QuickStorage
 P:3896B:_Menu_NextInstructionChar_10_Finish_
+P:38970:Menu_GetSaveGameHeroName
+P:38979:BRKInstructions_1766_38979:\n66 - GetSaveGameHeroName_1F19F
 P:3897F:Menu_NextInstructionChar_12or13
 P:38990::put bit 1 in carry
 P:389A0:Menu_NextInstructionChar_12
@@ -1958,20 +2216,21 @@ P:38AE7::Menu_PointerIndex_66
 P:38B04:Menu_WriteMonsterCount:turn monster count into tile #
 P:38B0B:L38B0B
 P:38B47:Menu_NextInstructionChar_13
+P:38B52:F38B52
 P:38B55:Menu_WriteChars_AndGetNextInstruction
 P:38B5B:Menu_WriteLine
 P:38B64::max chars to print
-P:38B69:_Menu_WriteChar_Loop
+P:38B69:__Menu_WriteChar_Loop_
 P:38B6F::plural ending char $A*
 P:38B73::char starts with A (special plural ending)
 P:38B76:_WriteCharNotPlural_
 P:38B7B:_Menu_WriteChar_Loop_cont:max chars can print
 P:38B81:Menu_NextInstructionChar_1Bto1E
 P:38B8C:_Menu_NextInstructionChar_1Bto1E_Loop_
-P:38B95:Menu_ParseNextCharacterIndex:Slide bits 5-6 into bits 1-2 == character index for next instruction\n\nA: Menu_LastInstructionByte
+P:38B95:Menu_ParseIndex:Takes A and slide bits 5-6 into bits 1-2 ==  index for next instruction (BRK probably)\n\nA: Menu_LastInstructionByte
 P:38B9D:BRK_GetName:Monster name or class name\nX:2 monster name\nX:3 end of monster name list (what is this??)\nX:5 class name
 P:38B9E-38B9F:BRKInstructions_GetName:07 - LoadSubroutine_07\nA4 - $A98D Menu_GetName
-P:38BA1:Menu_GetNextInstructionByte:if next line is Battle_WriteLineTo_EnemyDisplay\n  Battle_LastInstructionChar value >> 4 == max chars to write for line\n\nif next line BPL Battle_NextInstructionChar_Positive\n  if (A AND $1F -> $10 <= A <= $1F) execute instruction\n  else end writing to EnemyDisplay
+P:38BA1:Menu_GetNextInstructionByte:Result stored in A\n\nif next line is Battle_WriteLineTo_EnemyDisplay\n  Battle_LastInstructionChar value >> 4 == max chars to write for line\n\nif next line BPL Battle_NextInstructionChar_Positive\n  if (A AND $1F -> $10 <= A <= $1F) execute instruction\n  else end writing to EnemyDisplay
 P:38BAD:Menu_TitleAndText:(#3) Title instruction 1:\n00: Nothing happened? (CombatText)\nA0:\n\n(#4) Title Instruction 2:\nA1: No title text (CombatText)\n20:
 P:38BAF::menu instruction #3: ??
 P:38BB3:Menu_Instruction03_Negative
@@ -2007,8 +2266,10 @@ P:38C6F::num chars to write
 P:38C73::bar with a notch for menu title
 P:38C78::num chars to write
 P:38C7D:_Menu_WriteNextChar_Loop_
-P:38C89:Menu_SetCharacterIndex:last instruction byte 5-6 result
+P:38C89:Menu_SetIndex:last instruction byte 5-6 result
 P:38C8D::store Y
+P:38C8E::menu instruction byte 8
+P:38C96:_Menu_Instruction08_Bit4_Set_
 P:38C9B:_Menu_SetCharacterIndex_Finish_:old Y
 P:38C9F:Menu_GetDimensions
 P:38CA4::menu $3E is nani?
@@ -2048,13 +2309,13 @@ P:38DBE::bar with a notch for menu title
 P:38DC2:_nextCharPosNot00_
 P:38DC5:_nextCharPos00_AIs79_
 P:38DC8::arrow (not right pointing caret)
-P:38DCC::A == $64(arrow)
+P:38DCC:_Menu_NextCharIs_Arrow_:A == $64(arrow)
 P:38DD6:_Menu_WriteNextChar_RTS_
 P:38DD7:Menu_ClearWriteBlock:LDY #$6F total characters in array
 P:38DDD:Menu_Clear2Lines
 P:38DE0::twice width
 P:38DE4:Menu_ClearLines
-P:38DE6:Menu_ClearWriteBlock_Loop:X:index to write $00\nY:num chars to write
+P:38DE6:__Menu_ClearWriteBlock_Loop_:X:index to write $00\nY:num chars to write
 P:38DFA:Menu_WriteTopBorder:top left corner border sprite
 P:38E02::index of top right
 P:38E03::top right corner border
@@ -2097,7 +2358,7 @@ P:38F43-38F54:Dialog_SingularEndings
 P:38F55:Menu_GetCharacterInfo_IsCheckStatus:== #2D $93D0 Character_CheckStatus 
 P:38F59::result of $93D0 Character_CheckStatus
 P:38F79:_Menu_GetCharacterInfo_IsA0_RTS_
-P:38F84-3905B:Menu_Pointers:[$02]:$9074\n[$0A]:$910E -> Status 2 Characters\n[$18]:$9CFE -> (#69)\n[$26]:$93C7 -> \n[$28]:$93F1 -> Menu_MainCommand\n[$2A]:$9420 -> (#15)\n[$34]:$94BB -> \n[$36]:$94DB -> FIGHT.PARRY.ITEM.\n[$72]:$96A9 -> Enemy Display, Interactive\n[$7A]:$96DD -> DIalog Text\n[$7C]:$96E9 -> Someone died\n[$7E]:$96ED -> Enemy Display, Non-Interactive
+P:38F84-3905B:Menu_Pointers_38F84:[$02]:$9074\n[$0A]:$910E -> Status 2 Characters\n[$18]:$9CFE -> (#69)\n[$26]:$93C7 -> \n[$28]:$93F1 -> Menu_MainCommand\n[$2A]:$9420 -> (#15)\n[$34]:$94BB -> \n[$36]:$94DB -> FIGHT.PARRY.ITEM.\n[$72]:$96A9 -> Enemy Display, Interactive\n[$7A]:$96DD -> DIalog Text\n[$7C]:$96E9 -> Someone died\n[$7E]:$96ED -> Enemy Display, Non-Interactive
 P:39074-39098:Menu_Status_2Characters:This is used when menu #05 is loaded\n\n[00]: width\n[01]: half height\n\n[04]: character name titles\n\n[$0B]: 2C letter H\n[$0C]:$80 Get HP from 1st character\n[$0D]:$03 max number length\n[$0E]: 2C letter H\n[$0F]:$81 Get HP from 2nd character\n[$10]:$03 max number length\n[$11]:$FF row done\n[$12]:$31 letter M\n[$13]:$81 Get MP from 1st character\n[$14]:$03 max number length\n[$15]:$31 letter M\n[$16]:$A1 Get MP from 1st character\n[$17]:$03 max number length\n[$18]:$FF row done\n[$19]:$92 Get Class from 1st character
 P:39099:Menu_Status_3Characters
 P:390CB:Menu_Status_4Characters
@@ -2131,6 +2392,9 @@ P:39854-39880:Menu_ClassChangeList_Text_Sage:Soldier.Pilgram.Wizard.Fighter.Merc
 P:398BF-398DC:Menu_Item_Text_Merchant
 P:398F6-3991D:Menu_ClassChangeList_Text_NoSage:Soldier.Pilgram.Wizard.Fighter.Merchant.
 P:39929-39A2A:Menu_AdventureLogSelect_Text
+P:39A2B-39A7E:Menu_ChangeMessageSpeed_39A2B
+P:39B63-39B93:Menu_SaveGameSelect_39B63
+P:39BC5-39C08:Menu_ChangeMessageSpeed_39BC5:$18\n$04\n$63\n$00\n$60\n$21 -> bit 4 not set\n\n$22\n\n$A3 -> does this menu wait for Input?\n\n$01 & $40 = $00\n$02 00\n\n$25 -> print char 'A'\n$28 -> print char 'D'\n$3A -> print char 'V'\n$29 -> print char 'E'\n$32 -> print char 'N'\n$38 -> print char 'T'\n$39 -> print char 'U'\n$36 -> print char 'R'\n$29 -> print char 'E'\n$00 -> print char whitespace\n$30 -> print char 'L'\n$33 -> print char 'O'\n$2B -> print char 'G'\n$00 -> print char whitespace\n$02 -> print char '1'\n$75 -> print char ':'\n\n$99 & 1F = $19 -> Get Hero name\n        ($99 & $60) ROLx4 = $00 saveGame1\n$40 >> $4 chars to write (Hero name)\n$FF -> End of Line\n\n$25 -> print char 'A'\n...ADVENTURE LOG 2...\n$75 -> print char ':'\n\n$B9 & 1F = $19 -> Get Hero name\n        ($B9 & $60) ROLx4 = $01 saveGame2\n$40 >> $4 chars to write (Hero name)\n$FF -> End of Line\n\nADVENTURE LOG 3:\n$D9 & $1F = $19  -> Get Hero Name\n        ($D9 & $60) ROLx4 = $02 saveGame3
 P:39C14:Menu_FirstMenu
 P:39CFE-39D0A:Menu_Items
 P:39D18-39D28:Menu_ItemSelect_probably:Pointer Index: 6B
@@ -2161,10 +2425,11 @@ P:39F0B:_DynamicSubroutine_38000_B_RTS
 P:39F0C:Text_UpdateWait:Waiting for char of text to print
 P:39F6D:Menu_CheckForInput:if menu instruction #7 >= $80\n  menu expects controller input
 P:39F76:Menu_WaitForInput
-P:39F93:Controller_Update_Loop
+P:39F93:__Controller_Update_Loop_
 P:39FAB:L39FAB
 P:39FAE:Controller_CheckIfUpPressed
-P:39FCA:Controller_CheckIfUpPressed_End
+P:39FCA:_Controller_CheckIfUpPressed_END_
+P:39FCB:F39FCB
 P:39FEB:Controller_CheckIfDownPressed
 P:3A00E:Controller_CheckIfDownPressed_End
 P:3A028:Controller_CheckIfLeftPressed
@@ -2174,9 +2439,9 @@ P:3A067:Controller_CheckIfNonDPadButtonPressed_End
 P:3A068:Controller_CheckIfAorBPressed:if (bit 1)  // bit 1 = A\n   Go to BRK\nif (bit 2)  // bit 2 = B\n   RTS\nelse\n  pull first RTS off stack then RTS
 P:3A070::B pressed
 P:3A074:Controller_B_NotPressed
-P:3A075:Controller_APressed
-P:3A0A1:L3A0A1
-P:3A0A4:Menu_WaitForNoControllerInput:wait for controller input clear
+P:3A075:BRKInstruction_2F85:\nPlay menu select SFX
+P:3A0A1:Menu_IsSubMenu
+P:3A0A4:Menu_WaitForNoControllerInput:waits for controller input to be clear before\nchecking for more input
 P:3A0AC:Menu_Finalize_ResetCaret
 P:3A0B5::menu position
 P:3A0B6::x pos
@@ -2195,10 +2460,13 @@ P:3A15D:L3A15D
 P:3A16B:L3A16B
 P:3A176:L3A176
 P:3A17E:Menu_ResetCaret
+P:3A180:F3A180
+P:3A185:F3A185
 P:3A198:Caret_GetStateAndUpdate:if $76 >= $80\n   caret off\nelse\n   caret on ($73)\n\nCaret on or off ($00 or $73)
 P:3A1A1:F3A1A1:caret char
 P:3A1A5:L3A1A5:caret off
 P:3A1A7:L3A1A7
+P:3A1AA:F3A1AA
 P:3A2C5:Menu_CloseAllMenus
 P:3A2DA:Menu_CloseAllMenus_Loop
 P:3A2F0:Menu_CloseAllMenus_Loop_break
@@ -2451,13 +2719,14 @@ P:3AF0E::offset to dialog pointer
 P:3AF1B:_IsNextChar_FromBank_Or_TempTextStorage_RTS
 P:3AF1E:SECandRTS
 P:3AF20:LDA60_DoneReadingFromBank:Text Done Writing to temp writing block
-P:3AF43:DynamicJumpDestination_C
+P:3AF24:DynamicSubroutine_3AF24:\nmultiplies value at dynamicPointerSpace_6C by value at $89
+P:3AF43:DynamicSubroutine_3AF43
 P:3B097:DynamicSubroutine_38000_F
 P:3B10C:DynamicSubroutine_38000_E
 P:3B117:__L3B117_RTS
 P:3B118:DynamicSubroutine_38000_D
 P:3B169:__L3B169_RTS
-P:3B16A:AnyCharacterStatus1_Bit6_Set
+P:3B16A:AnyCharacterStatus1_Bit6_Set_3B16A
 P:3B1B7:L3B1B7:status normal?\n
 P:3B1BD:CheckCharacterStatuses_something:# characters checked (alive? healthy?) stored in $48\n
 P:3B1C2::character count
@@ -2495,31 +2764,49 @@ P:3B30A:DynamicSubroutine_38000_A_Sub
 P:3B316:_DynamicSubroutine_38000_A_TXA_RTS
 P:3B318:DynamicSubroutine_38000_A_Sub_Sub
 P:3B327:_DynamicSubroutine_38000_A_E
-P:3B5B1:DynamicJumpDestination_BRK
-P:3B6E3:DynamicJumpDestination_B
+P:3B3A1:DynamicSubroutine_3B3A1:\nAfter sprites for town are loaded\n\nLooking for and address to JMP to in\nsearch DynamicSubroutine_3B3A1_Address_Table until\n== DynamicSubroutine_3B3A1_8B\nor\n== $FF (table finished?)
+P:3B3B1:_DynamicSubroutine_3B3A1_RTS
+P:3B3C2-3B3D6:DynamicSubroutine_3B3A1_Address_Table:index 0 [$A0] used to LDA and CMP $8B
+P:3B482:DynamicSubroutine_3B482:Searches PPU_TileBatchInstructions_3rdByte to find last index of a tile with bits 5&6, 4&6, or 4&5&6 on
+P:3B48C:__Check_TileBatchInstructions_Loop_
+P:3B49D:__Check_TileBatchInstructions_Loop_continue
+P:3B4A4:_SpecialTileFound_
+P:3B4B3:__Check_TileBatchInstructions_Loop_break
+P:3B4B7:__Check_address_for__loop_continue_
+P:3B4BD:__Check_address_for__loop_
+P:3B4D3:__check_address_loop2__
+P:3B53E:BRK_3B53E:\nBRK only
+P:3B5B1:BRK_3B5B1:\ncalls BRK only
+P:3B5FE:DynamicSubroutine_3B5FE
+P:3B61A-3B61C:BRKInstructions_1753
+P:3B630-3B633:Something_3B630
+P:3B6E3:DynamicSubroutine_3B6E3:\ngoing up stairs, after fade to black
+P:3B911:DynamicSubroutine_3B911
 P:3B91A:LoadCharacterSprites_FF
 P:3B91E:LoadCharacterSprites_00
-P:3B920:LoadCharacterSprites
+P:3B920:LoadCharacterSprites:$6AC2 gets the value of A\nthis is importand if A >= $80
 P:3B926::character count
-P:3B933:GetCharacterSprite_Loop
+P:3B92D::character index?
+P:3B933:__GetCharacterSprite_loop_
 P:3B938::get character statuses
-P:3B952:__WaitForNMIFinishProbably_Loop
-P:3B957:__L3B957
+P:3B952:__WaitForNMIFinishProbably_loop_
+P:3B957:_60C9_Not3F
 P:3B963::character class
 P:3B96B::animal suit
 P:3B96F:__AnimalSuitEquipped_
-P:3B976:__JMP_L3B976
+P:3B976:_L3B976_
 P:3B97D::character is female\n
 P:3B982::revealing swimsuit
 P:3B986::magic bikini
 P:3B98A:_SwimwearEquipped
 P:3B991:_Character_FemaleClass:character class
 P:3B997::female class offset
-P:3B99C:_LoadSprites
+P:3B99C:_LoadSprites:character index?
 P:3B99F::sprite to draw for character
+P:3B9A2::this is set to A when this subroutine starts
 P:3B9AD:__GetCharacterSprite_Loop_JMP
-P:3B9B0:__L3B9B0
-P:3B9B6:__GetCharacterSprite_Loop_ContinueOrBreak
+P:3B9B0:_6AC2_Bit7_Set
+P:3B9B6:__GetCharacterSprite_loop_continue_
 P:3B9C6:L3B9C6
 P:3B9E6:__JMP_L3B9E6
 P:3B9E9:__JMP_L3B9E9
@@ -2529,22 +2816,24 @@ P:3BA10-3BA11:BRKInstructions_1725:17\n25 - DynamicSubroutine_38000_C
 P:3BA16:LoadSprites:After map tiles loaded\n
 P:3BA28:__CopySpriteVector_Loop
 P:3BA34-3BA3F:LoadSpritesVector
+P:3BA40:DynamicSubroutine_3BA40:\njust walked onto some stairs
+P:3BA60:DynamicSubRoutine_3BA60:\nright after moving right in Aliahan
 P:3BA6B-3BFD7:FreeSpace38000to3BFFF
 P:3BFD8-3BFFF:EndOfBank38000To3BFFF
 P:3C000-3C001:ResetNMI_ClearData
-P:3C020:F3C020
-P:3C028:L3C028
-P:3C035:Monster_GetMaxHP_maybe:A:1 X:59 Y:15\nstart of battle 2 ravens
+P:3C020:LDA_FromZeroPages:X is address of data to LDA\nthen inc address\nReturns result in A
+P:3C028:_LDA_FromZeroPages_
+P:3C035:Sub16Bit_AFromValueAtX:Subtracts A from value at X\nStores result in X
 P:3C038::add normal HP to inverse of A
 P:3C03A::final hp?
 P:3C03E::reduce 255+ hp
 P:3C040:L3C040
-P:3C041:IncrementValueAtX_By_AandY
-P:3C04B:AddATo16bitINTAtX:Add A to $00,X and $01,X\nResults stored in $00,X and $01,X\n\nCombineItemAndAttributePower\nA: item power\n$04[0]: relevant attribute
+P:3C041:Add16bit_AToValueAtX_YToValueAtXPlus1:Adds A to low byte value at X\nand adds Y to high byte value
+P:3C04B:Add16bit_AToValueAtX:Add A to value at X\nResults stored in X\n\nCombineItemAndAttributePower\nA: item power\n$04[0]: relevant attribute
 P:3C054:_AccumulatorQuickStorageADC_RTS_
 P:3C055:MultiplyValueAtXByA:*x = (*x) * a\n\nresults stored at X (2 Bytes)
 P:3C05D:_GetAddressOffset_Loop_
-P:3C06E:__JMP_GetAddressOffsetLoop
+P:3C06E:__MultiplyValueAtXByA_loop_
 P:3C07F:Convert_INTtoSprites
 P:3C08D:_ConvertGold_INTtoSprites_Loop_
 P:3C0B6:ClearPPUNametable
@@ -2552,11 +2841,12 @@ P:3C0BC::high byte
 P:3C0BE::low byte
 P:3C0C3:_SetDMA_and_ClearSpriteDMABlock_Loop
 P:3C0DD:_ClearPPUNameTable_Loop
-P:3C0E9:F3C0E9
-P:3C0F9:L3C0F9
-P:3C1D7:F3C1D7
-P:3C1E4:F3C1E4
-P:3C1E6:L3C1E6
+P:3C0E9:F3C0E9:called when switching to town view...more than once\nalso called when loading MainMenu
+P:3C0F9:_F3C0E9_RTS
+P:3C1D7:BattleInit_WriteToPPU:could be more than just BattleInit using this\n\nPPU address to write to stored at PPU_WriteAddress_1F\n\nLDA 2002 - reset latch\nSTA 2006 - PPU address to write to
+P:3C1E4:_WriteToPPU_From_0021:location of PPU_WriteBlock
+P:3C1E6:__WriteToPPU_Loop_:Writes to PPU from data at address that $00,X points to\n\nX is probably always #21 (DynamicSubroutine_21) and\naddress is probably always starts at $0400
+P:3C1EC::the last address to read/write
 P:3C1F9:F3C1F9
 P:3C1FD:F3C1FD:Reads and writes to PPU_SpriteDMA. My hypothesis is that this is scrolling the the BG.
 P:3C1FF:L3C1FF
@@ -2577,25 +2867,26 @@ P:3C29D::why not just LDA #$FE?
 P:3C2AB-3C2AF:Map_Scroll_Vector_B:at least I think it's map scroll related
 P:3C2B0:WaitForPPUToLoadFromStagingArea
 P:3C2B3:__WaitForNMI_Loop
-P:3C2BA:CheckIfWaitForNMINeeded
+P:3C2BA:WaitForNMI_IfNeeded
 P:3C2C7:SetNextPPUAddress
 P:3C2CF:SetPPUAddress:\nget the PPU address to write data
-P:3C2D4::checking if using horizontal or vertical mirroring
+P:3C2D6::XXXX XXXX\nXXXX XX00 ASL x2\n0000 0X00 & 0x04\n0010 0X00 | 0x20
 P:3C2DA::menu x pos in sprites
 P:3C2DC::x8 will give you pos in pixels
 P:3C2E0::add current X_scroll
-P:3C2ED:L3C2ED
+P:3C2ED:__L3C2ED_
 P:3C2F2::ppu scroll Y in sprites
 P:3C2F4::y pos in sprites
 P:3C2F6::make sure it's even and not overflowing
-P:3C2FC:L3C2FC
+P:3C2FC:__L3C2FC_
 P:3C303::final low byte tile pos in PPU
 P:3C307::final high byte tile pos in PPU
-P:3C30A:WaitForVBlank_Or_WritePPUInstructions
-P:3C313::max screen height
-P:3C31D:WriteDataToPPU:Write data X in PPU_StagingArea[X] to PPU at PPU_WriteAddress
+P:3C30A:WaitForVBlank_And_WritePPUInstructions
+P:3C310::current palette data index
+P:3C313::screen height in pixels
+P:3C31D:_WritePPUInstructions:offset for next palette color data
 P:3C320::$3F00 - Palette data
-P:3C340:_Menu_WritePPUInstructionAndChar_RTS_
+P:3C340:_WaitForVBlank_And_WritePPUInstructions_RTS_
 P:3C341:WaitForNMI_3C000:Waste time until the NMI kicks in,\nI guess
 P:3C344:_WaitFor_NMI_Loop_:NMI checks this byte for BRK instruction
 P:3C347::NMI checks this byte for instruction\nif low byte == $07 || $0F\n   BRK\nelse RTI
@@ -2607,11 +2898,11 @@ P:3C369:SetupPalettes_A10_X10_ForFadeOut
 P:3C36D:FadeOutPalettes
 P:3C36F:__FadeOutPalettes_Loop_
 P:3C383:SetupBGPalettes:PPU palette address $3F00\n\nsubtract DynamicSubroutine[0] from palette color
-P:3C38C:__WriteTo_PPU_StagingArea_Loop:Palette changes\n(fade in/out, status changes, etc...)
-P:3C399:__JMP_3C399_
-P:3C3A4:__JMP_3C3A4_
-P:3C3B5:F3C3B5
-P:3C3B6-3C3B7:BRKInstructions_6F00:6F - \n00 - 
+P:3C38C:__WritePaletteDataTo_PPUStagingArea_Loop_:Palette changes\n(fade in/out, status changes, etc...)
+P:3C399:__3C399_
+P:3C3A4:__3C3A4_
+P:3C3AD::total palette colors
+P:3C3B5-3C3B7:BRKInstructions_006F_3C3B6
 P:3C3B8:RNG:Result in A
 P:3C3B9::say goodbye to these lines
 P:3C3D2:RNG_Sub
@@ -2625,11 +2916,14 @@ P:3C40F:L3C40F
 P:3C420:L3C420
 P:3C421:L3C421
 P:3C427:WaitForVBlank_HideSprites_SetLoopTrap
-P:3C42A:SetLoopTrap
-P:3C431:F3C431
+P:3C42A:SetLoopTrap_
+P:3C431:Negate_LoopTragFlag:Negates #$10 from loopTrap_flag_1B\nso if loopTrap_flag_1B == $10 it's now 0.
 P:3C43A:F3C43A
+P:3C444::enable sprite and BG rendering
 P:3C456:WaitForVBlank_HideSprites
+P:3C458::reset high/low latch
 P:3C45B:_WaitForVBlank_Loop
+P:3C461::hides sprites and bg
 P:3C46B:LoadDynamicSubroutine_17_Prep:Y:$33 -> \nY:$49 -> $9E09 Character_CheckIfSpecial_IsEquipped\nY:$51 -> \nY:$5A -> \nY:$73 -> \nY:$7A -> $9622\nY:$86 -> $A742 Character_IsGoofOff\nY:$9B -> $821C\nY:$9D -> Monster_ParseStat_0C\nY:$9E -> $8473 Monster_ParseStat_Y_0A_Extra\nY:$9F -> $B965 Monster_GetAIType\nY:$A0 -> $B96A Monster_GetActionCount\nY:$A2 -> 
 P:3C475::JMP
 P:3C47F:LoadInstructionByteIntoY
@@ -2664,9 +2958,11 @@ P:3C566:_UseLowNibbleAsIndex_:use low nybble
 P:3C56E:__SwitchBanksAndGetPointer
 P:3C571::result index
 P:3C57E::return bank id
+P:3C5A2:_LoadDynamicSubroutine_21
 P:3C5B0:GetValueFromLocalPointer:Does not get called directly.\nControl flow falls into this after a bank switch.
 P:3C5C1:F3C5C1
-P:3C5FF:GetVariable_FromDynamic:A: bank id where data is located\nX: register in Zero Page to get address from\n\n\nIf GetMonsterStat:\n\nWhere Y is index of desired stat\n$00,X holds base address of monster's stat block\nA is bank to get data from\nResult is stored in DynamicSubroutine[2] and A
+P:3C5E0:F3C5E0
+P:3C5FF:GetVariable_FromDynamic:A: bank id where data is located\nX: register in Zero Page to get address from\nResult is stored in DynamicSubroutine+2 and A\n\nIf GetMonsterStat:\n\nWhere Y is index of desired stat\n$00,X holds base address of monster's stat block\nA is bank to get data from\n
 P:3C601::bank id to return to
 P:3C609::bank id
 P:3C64E-3C664:BankRegisterSwitch_3C000:0-1 Name Table Mirroring\n2-3 PRG-Switching Mode\n    0,1  8000-FFFF (32K)  set via Register 3\n    2     C000-FFFF set via Register 3\n           8000-BFFF set to $00000\n    3     8000-BFFF set via Register 3\n           C000-FFFF set to $7CFFF\n4     <1024K carts>\n    0 = Ignore 256K selection register 1\n    1 = Acknowledge 256K selection register
@@ -2685,7 +2981,7 @@ P:3C6F4:GetNextPPUWriteAddressHighByte:result stored in PPU_WriteAddress[1]
 P:3C711:L3C711
 P:3C713:L3C713
 P:3C719:F3C719
-P:3C74C:Menu_Copy2LinesAndAttributesTo_StagingArea
+P:3C74C:Menu_Copy2LinesAndAttributesTo_StagingArea:this is most likely more that just menus\nit appears to be used for monster sprites as well
 P:3C757:Menu_WaitForNMI_GetPPUPos_CopyLines
 P:3C758:: if != 0 must wait for NMI
 P:3C760:Menu_GetPPUPosition
@@ -2695,23 +2991,24 @@ P:3C777::amount of lines to copy
 P:3C77C::low nibble * 2
 P:3C77D::length of line to copy
 P:3C781::next char pos to write in staging area
-P:3C784:Menu_CopyLinesTo_StagingArea_Loop
+P:3C784:__Menu_CopyLinesTo_StagingArea_Loop_
 P:3C78C::one screen row?
 P:3C78E::x pos
 P:3C790::32 sprites on a row
 P:3C795::remaining sprites on row
 P:3C79E::is 0?
 P:3C7A0::is positive??
-P:3C7A2:L3C7A2
+P:3C7A2:_L3C7A2_
 P:3C7A4::# attributes for row
-P:3C7A9:L3C7A9
+P:3C7A9:_L3C7A9_
 P:3C7C3:Menu_CopyLine_AndPrepNextLine
 P:3C7C6::ppu address high byte
 P:3C7CE::ppuaddress high byte >= $23
 P:3C7D0::meaning is attribute address?
-P:3C7DF:L3C7DF:low byte ppu address
+P:3C7DF:_L3C7DF_:low byte ppu address
 P:3C7E2::+1 sprite row 
 P:3C7E8::if last addition had carry, add to high byte
+P:3C7EA:_L3C7EA_
 P:3C7EC::# lines to copy
 P:3C7F4:Menu_CopyLineAndAttributesTo_StagingArea
 P:3C7FC::A >= $08
@@ -2740,8 +3037,8 @@ P:3C860::attribute value
 P:3C874:Menu_CopyLineTo_StagingArea_End
 P:3C878:Menu_GetPosition_SetPPUAddress:$00
 P:3C87C::$00
-P:3C880:L3C880
-P:3C887:Menu_GetSpritePosition_SetPPUAddress
+P:3C880:_L3C880_
+P:3C887:Menu_GetSpritePosition_SetPPUAddress:X sprite pos is low nybble\nY sprite pos is high nybble\nposition is in sprites (8x8 pixels)\nYYYY XXXX\n---X XXX-\n\n---Y YYY-
 P:3C88D::x pos in sprites
 P:3C897::y pos in sprites
 P:3C89C:Menu_GetAttributeValue:$460,Y
@@ -2770,7 +3067,7 @@ P:3C8EF:L3C8EF
 P:3C8FA:L3C8FA
 P:3C900:L3C900
 P:3C90A:WaitForNMI_Post
-P:3C915::special post NMI stuff. When does this trigger?
+P:3C915::special post NMI stuff. When does this trigger?\nIt triggers at beginning of battle, after sprites\nand palettes have been pushed to the PPU
 P:3C91C:_3C91C_
 P:3C91F:_Battle_WaitForNMI_Post_Finish_
 P:3C925:Swap_SpriteDMA_Positions_Shenanigans:high byte of sprite DMA (always 0x02?)
@@ -2781,7 +3078,7 @@ P:3C952:Swap_SpriteDMA_Positions
 P:3C957:_Swap_SpriteDMA_Positions_Loop
 P:3C96C:NMI_VBlank_3C000:Scanline: 241\nCycle: 28
 P:3C975::skip PPU update
-P:3C97E:_L3C97E_:INC on ROM? what does this do?
+P:3C97E:_L3C97E_:reset latch
 P:3C981::switch to high bank and load $78000 to run APU Engine
 P:3C999:ReturnFrom_RunAPUEngine_78000:but why again?
 P:3C99C::just got here? do we really need to bank switch back here?
@@ -2840,11 +3137,19 @@ P:3CB99:_L3CB99_
 P:3CB9F:Burn_Cycles
 P:3CBA3:L3CBA3
 P:3CBA4:L3CBA4
-P:3CBB3:F3CBB3
+P:3CBB3:_ResetStackPointer
 P:3CBB5::reset the stack pointer
 P:3CBC7:_L3CBC7_
-P:3CBCC-3CBCE:BRKInstructions_007F
+P:3CBCC-3CBCE:BRKInstructions_007F:BRKBRK madness!!
+P:3CBCF-3CBD1:LCBCF_BRKInstruction_7F01_loop_
+P:3CBD2::returned from IntroScene; closed TitleScreen, moving to Main Menu
+P:3CBD9-3CBDB:BRKInstructions_0719_3CBD9
+P:3CBDC:BRKInstructions_1762_3CBDC
 P:3CBF2:_L3CBF2_
+P:3CBFC:F3CBFC
+P:3CC2F-3CC31:BRKInstruction_1750
+P:3CC40-3CC42:BRKInstruction_172F
+P:3CC51:_L3CC51_
 P:3CC5C-3CC61:BottomOfStack:Base loop? Not running when a menu is open.
 P:3CC62:F3CC62
 P:3CC79-3CC7A:BRKInstructions_1746
@@ -2923,11 +3228,17 @@ P:3D27F-3D281:BRKInstructions_07C0:07\nC0 - DynamicSubroutine_38000_D
 P:3D28E-3D28F:BRKInstructions_2F04:2F\n04 - 
 P:3D291:_L3D291_RTS
 P:3D292:TileType_0A_0B
-P:3D2A1:TileType_0C_0D
+P:3D2A1:TileType_0C_0D:if it is OC goto TileType_11_15_OC :/
 P:3D2B0:L3D2B0
-P:3D2BE:TileType_11_15
-P:3D2C7:TileType_0E_0F_13
+P:3D2BE:_Get2BitOf_2F:\ncurrent TileType 11, 15, 0C
+P:3D2C0::get bit 2
+P:3D2C7:TileType_0E_0F_13:\ncurrent TileType 0E, 0F, 13
+P:3D2CD:_TileType_11_15_OC_
+P:3D2D9:_LocationCheck_Is_0
+P:3D2EB:F3D2EB
+P:3D2EC::get map address?
 P:3D342:F3D342
+P:3D4AD:F3D4AD
 P:3D5AB:F3D5AB
 P:3D5C6::what situations is this triggered?
 P:3D5C9:_F3D5AB_RTS_
@@ -2967,9 +3278,11 @@ P:3D954:_F3D92E_CLC_RTS
 P:3D956:PostClockIncrement_Vector_Equals_74
 P:3D9ED:L3D9ED
 P:3D9FA:L3D9FA
+P:3DA32:F3DA32
 P:3DA63:Map_GetMap
 P:3DA6F::lobyte of map address
 P:3DA74::hibtye of map address
+P:3DA81:_L3DA81_
 P:3DAF7:SetPPUScroll_And_MapScrollCheck
 P:3DAF9::why is this bank loaded?
 P:3DAFF-3DB01:BRKInstructions_MapScroll:07 - \n12 - Map_Scroll_Check
@@ -3068,54 +3381,75 @@ P:3E299:F3E299
 P:3E2A8:FetchSpriteDataFromBank05:A: class sprite index\nY: meta batch count?
 P:3E2AA::meta batch count?
 P:3E2C3:F3E2C3
-P:3E2C9:F3E2C9:A: character class\nY: titleInstructionCode (#$00?)
+P:3E2C9:F3E2C9:A: character class/sprite type to load\nY: character index?
+P:3E2D7::character index
 P:3E2DC::multiply by 5
 P:3E2DE::plus 10
-P:3E2F4:PrepTileBatchInst_AndReturnBankSwitch
+P:3E2F4:PrepTileBatchInst_AndReturnBankSwitch:character sprite type to load
 P:3E2FC:F3E2FC
+P:3E2FF::fill CHR with map tiles
 P:3E305:F3E305
-P:3E326:L3E326
-P:3E34B:L3E34B
+P:3E326:_L3E326_
+P:3E335:_FillCHRWithMapTiles_
+P:3E366:L3E366
+P:3E36A:L3E36A
+P:3E36E:__L3E36E_loop_
+P:3E378:__L3E378_loop_
+P:3E384:L3E384
+P:3E388:L3E388
+P:3E38A:L3E38A
 P:3E395:L3E395
 P:3E397:L3E397
 P:3E3A6:L3E3A6
+P:3E3C9:L3E3C9
+P:3E3F0:_L3E3F0_
+P:3E3F4:_L3E3F4_
+P:3E41F:_L3E41F_
+P:3E423:__L3E423_loop_
+P:3E432:_L3E432_
+P:3E45E:__L3E45E_loop_
 P:3E46A:ReturnBankSwitchFromStack
 P:3E46E:SetDynamicSubroutineTo_SpriteAddress:a == sprite index
+P:3E477::add sprite index
+P:3E47B::and again, giving us sprite index x3
 P:3E480:__L3E480_Loop:convert sprite index *3 into address space
 P:3E488:PrepTileBatchInstructions:a: sprite index
 P:3E48F::half tile bank id? Also num of loops below (up to 12 TileBatches)
 P:3E4A1::sprite index
-P:3E4AD:__JMP_E4AD
+P:3E4AD:_L3E4AD_
 P:3E4AF:__PrepAndCopySprites_Loop
-P:3E4B9:__JMP_L3E4B9
+P:3E4B9:_L3E4B9_
 P:3E4CC:__JMP_3E4CC
 P:3E4DC:__JMP_3E4DC
 P:3E4E3:PrepNextTileBatch_AndFetch
+P:3E4ED:F3E4ED
+P:3E4FA:LoadMapTiles
 P:3E4FE:F3E4FE
-P:3E50C:L3E50C
-P:3E51F:L3E51F
+P:3E501:F3E501
+P:3E50C:__3E50C_loop_
+P:3E51F:_L3E51F_
 P:3E525::add 3 to DynamicSubroutine
 P:3E52D:GetTileBatchInstructions_Init4A
 P:3E531:GetTileBatchInstructions
 P:3E533:_GetTileBatchInstructions_Loop_:tile batch instructions
 P:3E53D::first instruction byte
-P:3E550:__JMP_E550:1st instruction high nibble (+#$0F sometimes)
+P:3E550:_L3E550:1st instruction high nibble (+#$0F sometimes)
 P:3E556::total tiles in batch (minus 1)
 P:3E558::1st sprite instruction
-P:3E561:_PrepTilesInBatch_Loop_
+P:3E561:__PrepTilesInBatch_Loop_
 P:3E563::2nd instruction byte
 P:3E576:_PrepTilesInBatch_Loop_continue
-P:3E585:__JMP_L3E585
+P:3E585:_L3E585_
 P:3E586::2nd instruction byte
-P:3E58B:__JMP_E58B
-P:3E58E:_TileBatchInstruction_0_HighNibble_F_
+P:3E58B:_L3E58B_
+P:3E58E:_TileBatchInstruction_0_HighNibble_F
 P:3E5B3:__L3E5B3_Loop
 P:3E5CA:ParseTileBatch
-P:3E5CC:__ParseTileBatch_Loop
+P:3E5CC:__ParseTileBatch_Loop_
 P:3E5DF::instruction byte 3
 P:3E5E5:__InstrByte3Multiply_Loop
-P:3E5E9:__JMP_L3E5E9
-P:3E604:__ReadAndWrite_NextTileToPPU_Loop
+P:3E5E9:_L3E5E9_
+P:3E604:__ReadAndWrite_NextTileToPPU_Loop_
 P:3E60A::first tile index
 P:3E60C::tile index count
 P:3E60E::PPU Address (high byte) to push next sprite to
@@ -3136,7 +3470,7 @@ P:3E680::low nibble == high nibble of high byte
 P:3E691:_NextSprite_CHR:Map tiles\n
 P:3E693:_FindLastTileAddressSlot_Loop_
 P:3E696::if == $FF transfer next sprite
-P:3E6A3:_JMP_E6A3
+P:3E6A3:_L3E6A3_
 P:3E6A7:_FindNextTileAddressSlot_Loop_break
 P:3E6A8:WriteSpriteToPPU_Finish
 P:3E6AA:TransferTo_PPUSpriteDMA
@@ -3152,26 +3486,28 @@ P:3E715:WritePartialSpriteToPPU
 P:3E719:__WriteBGToPPU_Loop_
 P:3E725:CopyStoredPartialSpriteTo_PPUStagingArea:why to staging area instead of directly to PPU as per usual?\nThis runs when a character died on the map
 P:3E729:__L3E725_Loop
+P:3E73A-3E73C:BRKInstructions_175F:\n5F - LoadTextIntoCHR_17E96
 P:3E73E:L3E73E
 P:3E745:L3E745
-P:3E7C0-3E7E7:DynamicSubroutine_Addresses_3C000:BRK_3C000\n------------------\n[$00]: ($C4A3) $07 LoadDynamicSubroutine_07\n[$02]: ($C46B) $17 LoadDynamicSubroutine_17\n[$1A]:($EBD3) $D7 BRKInstruction_D7_Destination\n[$1E]: ($BFD2) $F7\n[$24]: ($EC01) APU_LoadSequenceWith_Y
+P:3E7C0-3E7E7:DynamicSubroutine_Addresses_3C000:BRK_3C000\n------------------\n[$00]: ($C4A3) $07 LoadDynamicSubroutine_07\n[$02]: ($C46B) $17 LoadDynamicSubroutine_17\n[$1A]:($EBD3) $D7 BRKInstruction_D7_Destination\n[$1C]:$EBD8\n[$1E]: ($BFD2) $F7\n[$24]: ($EC01) APU_LoadSequenceWith_Y
 P:3E7E8:ResetNMI_3C000:\nCalled during RESET interrupt
 P:3E7F3:_BIT_PPUStatus_Loop_A:I suspect these loops are a way to wait\nfor the PPU to be ready for drawing
 P:3E7F8:_BIT_PPUStatus_Loop_B
 P:3E800::set SP to 0xFF, clearing the stack
-P:3E803::disable NMI
-P:3E81E:ResetNMI_3C000_sub_cont:\nFall through from ResetNMI_7C000_sub_cont\npost BankSwitch
+P:3E803::disable NMI and set to pattern table to $1000
+P:3E81E:Reset_APU:\nFall through from ResetNMI_7C000_sub_cont\npost BankSwitch
 P:3E820::turn off all APU tracks
 P:3E826-3E828:BRKInstruction_ResetAPU_04000:07\n9F - ResetAPU
 P:3E829:ResetPPU
-P:3E83B:_ClearCHRRAM_1000_to_1010_Loop
-P:3E841-3E843:BRKInstructions_1763:17\n63 - 
+P:3E83B:PPU_ClearCHRRAM_1000_to_1010_Loop
+P:3E841-3E843:BRKInstructions_1763:17\n63 - ClearRam_03F50
 P:3E84B:_SetBGPaletteColor_Store_Loop_:set to 0x0F
 P:3E851::show sprites and BG
+P:3E85B::turn on NMI and set BG nametable to $1000
 P:3E864:BRK_3C000
 P:3E868-3E86D:BRK_StoreCPUStatus
 P:3E87E:BRK_GetValuesAfterBRK
-P:3E887-3E88C:BRK_CheckLowNybbleIsF:If low nibble not $0F, JMP DynamicSubroutine\nelse it may be BankSwitch
+P:3E887-3E88C:BRK_CheckLowNybbleIsF_3C000:If low nibble not $0F, JMP DynamicSubroutine\nelse it may be BankSwitch
 P:3E88F-3E894:BRK_CheckHiNibbleIsGreaterOrEqual4
 P:3E895-3E898:BRK_CheckHiNibbleIsLessThanF0
 P:3E899:BRK_CheckLowNibbleIsF:High nibble equal to or greater than $4\nCompare low nibble to F again\n...but why? To get Carry flag?
@@ -3190,13 +3526,15 @@ P:3EB98:BankSwitch_GetAddress_ReturnBankSwitch:you JUST did a TYA!
 P:3EB9C::bank to return to after dialog fetch
 P:3EBD3:BRK_D7_MenuExtended:BRKInstruction D7
 P:3EBD5-3EBD6:BRKInstructions_0720_B:07 -\n20 - Menu_Subroutine_Extended
+P:3EBD8:DynamicSubroutine_Local_3EBD8
+P:3EBD9:BRKInstruction_0700
 P:3EC01-3EC02:APU_LoadSequenceWith_Y:Y:89 - player attack SFX\n
 P:3EC03:BRKInstructions_LoadSequence:$07 - LoadDynamicSubroutine_07\n$A0 - $8067 APU_InitiateNewSequence
 P:3EC99:F3EC99:left off here when transcribing
 P:3ECA4:F3ECA4
 P:3ECB4:F3ECB4
 P:3ECB9:F3ECB9
-P:3ECC6::dark world?
+P:3ECC6::dark world? Nope, called on entering Aliahan
 P:3ECCD:_L3ECCD_
 P:3ECE3:F3ECE3
 P:3ECFA:L3ECFA:\noutside bounds of map?
@@ -3319,13 +3657,29 @@ P:3F8D7:F3F8D7
 P:3F909:F3F909
 P:3F91A:__JMP_L3F91A_
 P:3F91C:__L3F91C_Loop
+P:3F927:F3F927
+P:3F930:_L3F930_
+P:3F960:F3F960
+P:3F994:F3F994
+P:3F99F:_L3D99F_
+P:3F9A8:F3F9A8
+P:3F9CD:F3F9CD
+P:3F9ED:F3F9ED
 P:3FA01:Map_Decompress_A
+P:3FA05:__L3FA05_loop_
+P:3FA0C:_L3FA0C_
+P:3FA10::current map byte
+P:3FA24:_L3FA24_
+P:3FA2A:F3FA2A
+P:3FCB0:Add_88_To_dynamicPointerSpace:\nadds value at $88 to dynamicPointerSpace
+P:3FCBB:_Add_88_To_dynamicPointerSpace_RTS
+P:3FCBC:Subtract_88_From_dynamicPointerSpace:\nsubtracts value at $88 from dynamicPointerSpace
 P:3FF91:BankSwitch_SaveNextBank_3C000:save bank # (A) in bankSwitch_CurrentBankId before running bank switch
 P:3FF94:BankSwitch_3C000
 P:3FF98::clear bit 4, to make sure we have $00
 P:3FFAB::these might be here to push the 2nd 5x bank STA to the next page.
 P:3FFD8:RESET_3C000
-P:3FFD9::this probably has something to do with reseting the MMC latch?
+P:3FFD9::reset MMC latch
 P:3FFE0-3FFEF:SECRET_MESSAGE_3C000:DRAGON WARRIOR 3 in ASCII\n$44 D\n$52 R\n$41 A\netc...
 P:3FFFA-3FFFB:NMIPointer_3C000
 P:3FFFC-3FFFD:ResetPointer_3C000
@@ -3342,12 +3696,12 @@ P:47FD8-47FFF:EndOfBank44000to47FFF
 P:54000-54001:Bank54000to57FFF
 P:56188-57FD7:FreeSpace54000:7760 bytes
 P:57FD8-57FFF:EndOfBank54000to57FFF
-P:58000-58001:LocalPointer_List_58000:[0]: $8002 DynamicDestination_Pre_Brk\nOnly 1 entry.
+P:58000-58001:LocalPointers_58000:[0]: $8002 DynamicDestination_Pre_Brk\nOnly 1 entry.
 P:58002:SetPalette_DayNight
 P:5800E-5800F:BRKInstructions_172F:17 - \n2F - Menu_SetColor
-P:5801C:SetPaletteToTimeOfDay:first color alwasy $0F (black)
+P:5801C:SetPaletteToTimeOfDay:first color always $0F (black)
 P:58034:__FindTimeOfDayPaletteIndex_Loop
-P:58041:__TimeOfDayIndexFound
+P:58041:_TimeOfDayIndexFound_
 P:58047:__GetAndStorePaletteColor_Loop
 P:58049::index of LocalPointer/BankId to load (Day/Night Palettes)
 P:5804E::result from fetch
@@ -3371,52 +3725,235 @@ P:5815E:Pre_BRK_Vector_Y:Pre_BRK_DirectionRelatedVariable_NOT_00\n-------------\
 P:58164-58165:TimeOfDayPalette_Pointer:maybe
 P:58166-58172:Pre_BRK_Vector_X:Pre_BRK_DirectionRelatedVariable_NOT_00\n-------------\n$808D - [X] -> DynamicSubroutine+1\n[0]:$00 [C]:$51
 P:58188-58193:Pre_BRK_Mem_Vector
-P:583A3-583A9:TimeOfDayPaletteOffsets_Vector:offsets to palettes for different times of day in DayNightPalettes vector ($1B755)
-P:583AA-583B0:TimeOfDayPaletteChangeTimes_Vector:times at which palette changes
-P:5C000-5C001:CopyrightNotice_Pointer
-P:5C002-5C003:TitleScreen_Pointer
-P:5C004:DynamicSubroutine_5C000:\nA non-standard BRKInstruction call
+P:583A3-583A9:TimeOfDayPaletteOffsets_583A3:offsets to palettes for different times of day in DayNightPalettes vector ($1B755)
+P:583AA-583B0:TimeOfDayPaletteChangeTimes_583AA:times at which palette changes\nClock Value: 00, 1E, 3C, 5A, 78 (night start), 96, B4
+P:5C000-5C001:LocalPointers_5C000:[$01]: $8004 CopyrightNotice_Pointer\n[$02]: $97DA TitleScreen_Pointer
+P:5C004:LoadCopyrightScreen_5C004:A non-standard BRKInstruction call\nSets up copyright screen
+P:5C023::prep for fade out
 P:5C031:F5C031
 P:5C035:_Clear_BGPaletteStore_Loop_
-P:5C044:__JMP_F7C421_
-P:5C047:F5C047
-P:5C049:_LoadCopyrightPalette_Loop
+P:5C044:__JMP_ClearBit4_loopTrap_then_CheckAgain_
+P:5C047:Copyright_SetupPalettes_ForFadeIn
+P:5C049:__PPU_PrepCopyrightPalette_Loop
 P:5C057::probably the intro song
 P:5C059:BRKInstructions_07A0:07\nA0 - APU_InitiateNewSequence
-P:5C05D:F5C05D
-P:5C092:F5C092:address to copy right sprites?
-P:5C0AB:L5C0AB
-P:5C0B9:F5C0B9
-P:5C0C9:F5C0C9
-P:5C0D6:F5C0D6
-P:5C0DA:L5C0DA
-P:5C0E7:F5C0E7
-P:5C111:L5C111
-P:5C12F:F5C12F
-P:5C136:F5C136
+P:5C05D:Copyright_WriteSpritesToPPU
+P:5C060::pattern table 1
+P:5C07A::pattern table 2
+P:5C092:Copyright_SetupForWriteToPPU:\nFrom address to 5C563 ($8163)
+P:5C0AB:_WriteToPPU_from_12_loop:write 256 x X bytes of data from [addres at $12] + Y\n\nUsed for Copyright screen. Anywhere else?\n256 x 16 bytes / 16 bytes / sprite = 256 sprites!\nWhy didn't they OAM this?
+P:5C0B9:Copyright_SetupBGAttributes:\nprobably copyright screen attributes
+P:5C0BB:__Copyright_SetupBGAttributes_loop_
+P:5C0C8:_Copyright_SetupBGAttributes_RTS
+P:5C0C9:Copyright_Animation
+P:5C0D6:Copyright_UpdateAnimation
+P:5C0DA:__Copyright_UpdateAnimation_loop_
+P:5C0E7:Copyright_UpdateAnimation_Step:This could be the animation control for\nthe flashing orb held by the dragon\n\nPPU_SpriteDMA_200\nB0 00 01 78\n($B0) - $B0 == 176 which is roughly the y coord\n($00) - sprite index\n($01) - palette index\n($78) -  $78 == 120 which is roughly the x coord
+P:5C0F3:_PPUSpriteDMA_SetAddressHighByte_loop_
+P:5C107:_L5C107_
+P:5C10F:_L5C10F_
+P:5C111:__L5C111_loop_
+P:5C126-5C129:PPUSpriteDMA_LowByteAddress_table:1st low byte address to begin writing to in PPU_SpriteDMA_200\nI believe this is for the animation of the dragon\non the copyright screen
+P:5C12B-5C12E:PPUSpriteDMA_1stByte_table:1st byte to write every fourth entry starting at\nPPUSpriteDMA_200,X+10\n\nI believe this is for the animation of the dragon\non the copyright screen
+P:5C12F:Wait2Frames:\nor something close to it
+P:5C136:SetNMIWait_And_WaitForNMI_78000
 P:5C14A-5C162:Copyright_Palette
-P:5C173-5C322:Copyright_Background
-P:5D7D6-5D7D9:Copyright_CHR_Pointers
-P:5D8A2:_L5D8A2_
+P:5C163-5C562:CopyrightScreen_TileData:Background tile layout for copyright screen
+P:5C563-5C564:CopyrightScreen_TileData_address_5C563:address to CopyrightScreen_TileData
+P:5C565-5C5E5:SomethingCopyrightscreenRelated:attributes probably
+P:5C5E6-5D5E5:CopyrightScreen_Sprites
+P:5D5E6-5D7D5:CopyrightScreen_Sprites_part2:The sprites that only appear on pattern table 2
+P:5D7D6-5D7D7:Copyright_CHR_Pointers_table2:Pointer to copyright screen sprites for pattern table 2\nThis starts 31 sprites after the start of the copyright sprites
+P:5D7D8-5D7D9:Copyright_CHR_Pointers_table1:Pointer to copyright screen sprites for pattern table 1
+P:5D7DA:TitleScreen
+P:5D7FB:__L5D7FB_loop_
+P:5D7FD:__L5D7FD_innerloop_:\nwaits a few seconds
+P:5D808::on controller input
+P:5D80A:_L5D80A_
+P:5D818:BRKInstructions_07A1_5D818
+P:5D820:BRKBRK_5D820:what is this double BRK madness?
+P:5D823::returned from IntroScene
+P:5D84E:F5F84E
+P:5D861:_L5D861_
+P:5D87B:TitleScreen_InitializePalettesAndPPUSettings
+P:5D87F:__TitleScreen_ClearPaletteStoreA_loop_
+P:5D88E:TitleScreen_SetPPUMask_to_1E
+P:5D897:TitleScreen_BGFadeIn
+P:5D8A2:__TitleScreen_ClearPaletteStore_loop_
+P:5D8B4::on controller input
+P:5D8B7:_L5D8B7_
 P:5D8BD:F5D8BD
-P:5D8EF-5D8FA:TitleScreen_FadeIn_Palette_dragontablet
-P:5D949:F5D949
-P:5D957:F5D957
+P:5D8C2:TitleScreen_DragonFadeIn
+P:5D8C4:__TitleScreen_DragonFadeIn_loop_
+P:5D8C6:__TitleScreen_DragonFadeIn_PaletteSetup_loop
+P:5D8EA:_NoInput_
+P:5D8EF-5D8FA:TitleScreen_DragonFadeIn_Palette_5D8EF:[0-2]: sprite and BG palett 0 (1st loop)\n[3-5]:\n[6-8]:\n[9-11]:
+P:5D8FB:TitleScreen_FillCHRTables
+P:5D930:TitleScreen_FillNametables
+P:5D949:PPU_FillFrom_AddressAt_12_loop:\nwrite 256 x X bytes
+P:5D957:TitleScreen_CopyDataTo_SpriteDMA
+P:5D959:__F5D957_loop_
 P:5D966:__F5D957_RTS
-P:5D9E7:F5D9E7
-P:5DA59-5DA70:TitleScreen_FadeIn_Palette_torcheswall
+P:5D977:F5D977
+P:5D979:__F5D977_loop_
+P:5D98B:TitleScreen_III_FadeIn
+P:5D98D:__TitleScreen_WaitForInputOrTimer_loop_
+P:5D998:_L5D998_
+P:5D99C:__TitleScreen_III_loop_
+P:5D9A2:__TitleScreen_PreIII_WaitForInput_loop_
+P:5D9B9:TitleScreen_Setup_III_FadeIn_Sprites
+P:5D9C8:__TitleScreen_SetupIIISprites_loop_:this apparently gets the CHR ready to be copied\nto Sprite RAM
+P:5D9D8:TitleScreen_OnControllerInput
+P:5D9E2-5D9E6:TitleScreen_III_FadeStageWaitCount_5D9E2:amount of time to wait for each stage of the fade in
+P:5D9E7:TitleScreen_TorchFadeIn
+P:5D9EF:__TitleScreen_loop_:\nloops #$50 times or until input
+P:5D9F5::every even count
+P:5D9F8:_L5D9F8_
+P:5D9FE::every 15 count, prep palettes
+P:5DA01:_L5DA01_
+P:5DA0A::on controller input
+P:5DA0D:_L5DA0D_
+P:5DA14:TitleScreen_DEC_SpriteDMA:not palette stuff\n224,228,232,236,240,244,248,252\nand INC $0A
+P:5DA34:_TitleScreen_DEC_PPU_SpriteDMA_RTS_
+P:5DA35:TitleScreen_Prep_Palettes
+P:5DA3E:__TitleScreen_Prep_Palettes_loop_
+P:5DA58:_TitleScreen_Prep_Palettes_RTS
+P:5DA59-5DA70:TitleScreen_FadeIn_Palettes_5DA59:preps 3 at a time\n[0-2]: BG palette 1  (1st loop)\n[3-5]: BG palette 1  (2nd loop)\n[6-8]: BG palette 1  (3rd loop)\n[9-11]: BG palette 1  (4th loop)\n[12-14]: BG palette 3  & Sprite 3 (1st loop)\n[15-17]: BG palette 3  & Sprite 3 (2nd loop)\n[18-20]: BG palette 3  & Sprite 3 (3rd loop)\n[21-23]: BG palette 3  & Sprite 3 (4th loop)
+P:5DA71:TitleScreen_PrepNextTorchSprites_
+P:5DA7B::start the animation over again
+P:5DA7F:_L5DA7F_
+P:5DA85:__L5DA85_loop_
+P:5DA9B:TitleScreen_Wait_AndCopyTMSprites:wait 75 frames
+P:5DB15:TitleScreen_TitleText_FadeIn
+P:5DB23:__TitleScreen_TitleText_FadeIn_loop_
+P:5DB3E:TitleScreen_AddTitleTextSprites
+P:5DB5A:__TitleScreen_GetDRAGONTiles_loop_
+P:5DB86:__TitleScreen_GetWARRIORTiles_loop_
+P:5DBA4:TitleScreen_LetterMasks_Move:move the letter masks to give the impression\nthat the title text is expanding
+P:5DBA6:__TitleScreen_LetterMasks_Move_left_loop_
+P:5DBB9:__TitleScreen_LetterMasks_Move_right_loop_
+P:5DBCB:TitleScreen_LetterMasks_Reset
+P:5DBCF:__TitleScreen_LetterMasks_Reset_left_loop_
+P:5DBDC:__TitleScreen_LetterMasks_Reset_right_loop_
+P:5DBE8:TitleScreen_LetterMask_FadeOut:\nremoves the mask that is covering the W
+P:5DBEA:__FadingLetterMask_loop_
+P:5DC0F::on controller input
+P:5DC12:_L5DC12_
+P:5DC18-5DC29:TitleScreen_FadingLetterMask_5DC18:yile indexes for fading mask sprites
+P:5DC2A-5DC2B:TitleScreen_A_5DC2A:probably position for next CHR tiles on left
+P:5DC36:TitleScreen_B_5DC36:probably position for next CHR tiles on right
+P:5DC42:TitleScreen_Clear_SpriteDMA_144_176:16 bytes from both locations
+P:5DC46:__L5DC46_loop_
+P:5DC52:TitleScreen_CopyTMSprites:from CHR to Sprite RAM
+P:5DC54:__F5DC54_loop_
+P:5DC60:TitleScreen_ReadControllerInput:Reads controller input and waits for NMI X times\nReturns C:1 if any input [A | B | Select | Start]
+P:5DC63::C:1 if input A | B | Select | Start
+P:5DC6C:_TitleScreen_ReadControllerInput_RTS
+P:5DC6D:Controllers_5C000:If any input [A, B, Select, Start], return C, else !C \nIs this only for the title screen?
+P:5DC82:_Controller_InputDetected_5C000
+P:5DC8C:TitleScreen_WaitForNMI_UpdateTorches
+P:5DCA9:_F5DC8C_RTS
+P:5DCAA-5DCD9:TitleScreen_DRAGON_Sprites_5DCAA:79 0C 1C 2C - right sprites of 'n'\n78 0B 1B 2B - left sprites of 'n'\n67 0A 1A 2A - right side of 'o'\n\netc for all of DRAGON
+P:5DCDA-5DD09:TitleScreen_WARRIOR_5DCDA:slowly reveals from left to right "WARRIOR" on title screen
+P:5DD0A-5DD29:TitleScreen_SpriteIndices_5DD0A:Tile Indices for torches (but not the dragon claws)\n8 bytes read per update\nB2 B3  left torch            right torch B6 B7\nC2 C3                                    C6 C7\n
+P:5DD2A-5E129:TitleScreen_NametableData_5DD2A
+P:5E12A-5E12B:TitleScreen_Nametable_address_5E12A:$9D2A
+P:5E12C-5E22B:TitleScreen__data_5E12C
+P:5E236-5E23D:TitleScreen_CopyTMSprites_5E236:copies TM sprites from CHR to sprite RAM
+P:5E23F-5E25E:TitleScreen_DragonFadeIn_setup_5E23F
+P:5E25F-5FF1E:TitleScreen_CHRData_5E260
+P:5FF1F-5FF20:TitleScreen_CHRData_Address_part1_5FF1F:$A25F
+P:5FF21-5FF22:TitleScreen_CHRData_Address_part2_5FF21:$AF1F
+P:5FF23-5FFD6:TitleScreen_III_Sprites:CHR indices for III sprites from most faded (stage 1) to 100% tangible (stage 5)
 P:5FFD8-5FFFF:EndofBank5C000to5FFFF
+P:60000-60003:LocalPointers_60000:[$02]: ($EF) $8018 introscene
+P:60004:IntroScene_WrapUp
+P:600F3:IntroScene_loop_:\nloops X times (== X frames)
+P:60113:IntroScene_OnControllerInput
+P:60118:DynamicSubroutine_60118:From a local pointer BRK (8F?)\n
+P:6020F:IntroScene_ReadControllerInput:returns\nC:1 if controller input\nC:0 otherwise
+P:60224:_IntroScene_ReadControllerInput_OnControllerInput_
+P:60227:F60227
+P:60230:_WaitForVBlank_loop_
+P:60235:_L60235_loop_:\nis there any point to this except for killing time?
+P:60245:_L60145_innerloop_
+P:6024B:_L6024B_innerinnerloop_
+P:6025E:_L6025E_
+P:60272:_L60272_
+P:60281:_L60281_
+P:6029D:F6029D
+P:602B9:BRKInstructions_07A0_602B9:APU_InitiateNewSequence_04067\nThis time with DMC??
+P:62763:BRKInstruction_07A0_62763:\nAPU_InitiateNewSequence_04067
+P:62768:BRKInstruction_07A5_62768:DynamicSubroutine_04051\nduring intro cutscene
+P:62771-62773:BRKInstruction_2FA6_62771:2F - load previous byte as APU sequence Id\nA6 - lightning
+P:6278F-62791:BRKInstructions_2FA6_6278F:2F - load previous byte as APU sequence Id\nA6 - lightning
+P:6279B-6279D:BRKInstructions_2FA6_6279B:2F - load previous byte as APU sequence Id\nA6 - lightning
+P:627A0:__627A0_loop_
+P:627A2-627A4:BRKInstructions_07A5_627A2:A5 - DynamicSubroutine_04051\nsets APU_NoteLoByte_Effector_47F\nsets volume of SQ channels to value at top of stack (and A?)
+P:627C1:__IntroScene_CopyPaletteData_loop_
+P:627DB:F627DB
+P:627FC:L627FC_loop_
+P:6281B:__IntroScene_CopyPalettes_loop_
+P:62829:L62829
+P:62845-62847:BRKInstructions_07A0_62845:APU Initiate audio sequence\nprobably always SFX
+P:62848:_L62848_
+P:62855-62857:BRKInstructions_07A5:\nAPU_SetSqChannelVolume_04051
+P:6285A:_L6285A_
+P:6288D:L6288D
+P:6288E:L6288E
+P:62898-6289B:IntroScene_something_62898:copied straight to PPU_SpriteDMA_200
+P:6289C:IntroScene_ClearPalettes
+P:628A0:__IntroScene_ClearPaletteStore_loop_
+P:628B1:IntroScene_SetupPalettes
+P:628B3:__L628B3_loop_
+P:628C7-628C9:IntroScene_1stPalettes_628C7:1st palette for intro scene\nlightning\n0F - black\n30 - white\n10 - gray
+P:628CA:IntroScene_CopySomethingTo_SpriteDMA
+P:628DA:IntroScene_F628DA
+P:628DC:__F628DA_loop_
+P:628E9:_F628DA_RTS_
+P:6290E:IntroScene_ClearSpriteDMA
+P:62912:__IntroScene_ClearSpriteDMA_loop_
+P:62945-629B5:IntroScene_something_A_62945:copied to PPU_spriteDMA_200
+P:629B6-62A26:IntroScene_something_B_629B6:copied to PPU_spriteDMA_200
+P:62A27-62A3E:IntroScene_Palettes_part1_62A27:lightening again?\ngrays an browns
+P:62A3F-62A56:IntroScene_Palettes_part2_62A27
+P:62A87-62A88:IntroScene_something_62A87:address to the byte right after this....\n$AA89\n\nafter some lightning
+P:6326A:F6326A
+P:63276:_L63276_
+P:63337:F63337
+P:63338:__L63338_loop_
+P:634DC:F634DC
+P:63501:_L63501_
+P:6350B:_L6350B_
+P:63515:_63515_
+P:63537:_L63537_
+P:63564:_L63564_
+P:6356C:_L6356C_
+P:63572:_L63572_
+P:63598:_JMP_F635D7_
+P:635AD:_JMP_F6326A_
+P:635D7:F635D7_loop_:probably copying nametable data to\nPPU_SpriteDMA_200
+P:635E2:_L635E2_
 P:63FD8-63FFF:EndOfBank60000to63FFF
-P:78000-7800F:LocalPointers_78000:[$00]: $B365 APU_RunEngine\n[$04]: $B8C5\n[$06]: $B904 APU_StartNewSequence\n[$0E]: $B35A
+P:64000-64001:LocalPointers_64000:[$00]: $8002 (Seems to be the only one)
+P:64002:DynamicSubroutine_64002:IntroScene stuff\nDude already attacked once\nDragon on right side
+P:64043-64045:BRKInstructions_07A1_64046:\nSet_CurrentBankId_to_01
+P:64077:F64077_loop_
+P:6407E-64080:BRKInstructions_8F01
+P:64088:_L64088_
+P:64089:L64089
+P:65019:F65019
+P:65074:_L65074_
+P:65447:F65447
+P:78000-7800F:LocalPointers_78000:[$00]: $B365 APU_RunEngine\n[$01]: $B886 Set_APU_NewSeq_20or00_FA_7B866\n[$04]: $B8C5\n[$06]: $B904 APU_StartNewSequence\n[$0E]: $B35A
 P:78010-78097:APU_TrackPointer_Vector:Each Song has up to 4 (8 bytes) tracks (instruments).\n69 81 means track is not used (perhaps $8169 sets instrument to off?)\n\nUnknown starting point. Unknown Length.\n\n[] = Level Up\n[]
-P:78110:APU_VectorTableD
-P:78111:APU_VectorTableC
-P:78169:APU_SilentTrack:Where none used tracks go?
-P:7816B-7819E:APU_DutySetup_Addresses
+P:78110-78157:APU_VectorTableC:[38]: ($BA59) track 3\n[3A]: ($BABF) track 2\n[3C]: ($BB25) track 1\n[3E]: ($8169) track 0\n[$46]: ($8169) not main menu music?
+P:78168:APU_SilentTrack:Sequence $00
+P:7816B-7819E:APU_DutySetup_Addresses:C: [835B] - Sq0 is decreasing in volume by small increments(Map song)
 P:781B0:APU_SquareChannel_Vector_22:Index 22 of vector
-P:7835B-78366:APU_DutySettings_Vector
+P:7835B-78366:APU_DutySettings_Vector:Low nybble is volume (Sq0+1).\nWhen reading the last entry, use value from previous entry.\n\nIs this used for all songs? All instruments?\nThis is definitely used in the Map song, for volume control (decreasing volume) of Sq0+1.
 P:7844F:APU_SquareChannel_Post_Variable:$B488 - check if bigger or equal to $30\n
-P:78464-78465:APU_DutySetup_variables_a
+P:78461-78475:APU_DutySettings_78475
 P:78490-78492:APU_DutySetup_variables_b
 P:7849A-7849C:APU_DutySetup_variables_c
 P:7863E-7879F:Music_DQTheme:Needs confirming
@@ -3425,7 +3962,7 @@ P:789F9-78B8A:Music_04_Map
 P:78CAA-78E16:Music_Jipang
 P:78E17-78E29:Music_LevelUp_Confirm
 P:78E83-78E8C:Music_16_BattleVictory
-P:79064-790A9:SFX_Pointers:Adress of first byte of SFX sequence\n\n[$00]:8169 - silent track\n[$02]:11CE\n[$04]:11E5 ($91E5) - Walking\n[$06]:11F5 (#83)\n[$08]:1207 (#84) - poison damage?\n\n[$0E]:921D 87 enemy takes damage\n[$12]:9237 89 player attacks\n[$14]:9241 8A Player takes damage\n[$16]:924C 8B enemy attacks\n\n\n+A:0E\n[??]: $92A5   - Dialog SFX\n[$44]: $93EE - Wall bump\n
+P:79064-790B5:SFX_Pointers_79064:Adress of first byte of SFX sequence\n\n[$00]:8169 - silent track\n[$02]:11CE\n[$04]:11E5 ($91E5) - Walking\n[$06]:11F5 (#83)\n[$08]:1207 (#84) - poison damage?\n\n[$0E]:921D 87 enemy takes damage\n[$12]:9237 89 player attacks\n[$14]:9241 8A Player takes damage\n[$16]:924C 8B enemy attacks\n\n\n+A:0E\n[??]: $92A5   - Dialog SFX\n[$44]: $93EE - Wall bump\n[$4C]: $112E - (#A6) intro - lightning maybe?\n[$4E]: $10F4  - (#A7) DMC !??\n[$50]: $10E1 - (#A8) intro - dude attacks?
 P:791A2-791BB:SFX_Unknown_F
 P:791BC-791C3:SFX_Unknown_E
 P:791C4-791CD:SFX_Unknown_D
@@ -3451,10 +3988,11 @@ P:7AD16-7AF62:Music_10_BattleTheme
 P:7B35A:WaitForNMI_78000_Subroutine
 P:7B365:APU_RunEngine:A:Pushed to stack (unused)\nX->A (Also pushed to stack) (unused?)\nY->A (Also pushed to stack) (unused?)\n\nA:1 X:0 Y:0
 P:7B371:APU_SetDmcChannel:if $4011 == 00, triangle & noise volume max\nif $4011 == 7F, triangle & noise 57% volume.
+P:7B373::keep triangle at almost quietest level
 P:7B376:APU_PrepChannelsForUpdate:\n$0F = all channels except DMC
 P:7B380:APU_Commence_Update
 P:7B383:APU_RunEngine_End
-P:7B389-7B390:APU_UpdateSequence:If APU_SequenceID bit 0 == 0\nreturn immediatly\nelse goto APU_Update
+P:7B389:APU_UpdateSequence:If APU_SequenceID bit 0 == 0\nreturn immediatly\nelse goto APU_Update
 P:7B391:APU_UpdateTracks
 P:7B394::DMC?
 P:7B3A7:__APU_UpdateTracks_Loop_:while APU_TrackUpdateCheck_variable > $6A)\n{\n   APU_TrackUpdateCheck_variable -= $96\n   check track subupdates needed\n}
@@ -3468,21 +4006,27 @@ P:7B3CF::if nextTrackByte == $03
 P:7B3D7:__APU_FindNonZeroTrackInstruction_Loop_:Loop backwards through instruments\nuntil APU_Track_Instructions+X != 0
 P:7B3DF:_APU_FindNonZeroTrackInstruction_Loop_Break_
 P:7B3EA:_APU_TrackInstruction_is_Zero_
-P:7B3EF:_L7B3EF_
-P:7B3F2:APU_Sq0_Update
-P:7B3FC:APU_Sq1_PreSetup
+P:7B3EF:_APU_Set_APU_NoteLoByte_Effector_47F_
+P:7B3F2:APU_Sq0_Update:Sq0 track number
+P:7B3F4::offset from $4000 to Sq0 settings
+P:7B3FC:APU_Sq1_PreSetup:Sq1 track number
+P:7B3FE::offset from $4000 to Sq1 settings
 P:7B416:APU_Sq1_Update
-P:7B41C:APU_Tri_Update
+P:7B41C:APU_Tri_Update:Triangle track number
+P:7B41E::offset from $4000 to Triangle settings
 P:7B423::LDA from store\nEOR $FF (flip all bits)\nAND $FE (turn off bit 0)\n\nif all low 7 bits are off, triangle produces no sound
-P:7B429::bit 0 always off\n\n$FE - 1111 1110\nbit 7 - Disable internal counters (manual length control)\nbit 0-6 Anything from $01-$7F means channel is on
-P:7B42C:APU_Noise_update
+P:7B429:APU_Set_TrgLinear:bit 0 always off\n\n$FE - 1111 1110\nbit 7 - Disable internal counters (manual length control)\nbit 0-6 Anything from $01-$7F means channel is on
+P:7B42C:APU_Noise_update:Noise track number
+P:7B42E::offset from $4000 to Noise settings
 P:7B446:_APU_Noise_update_cont_
-P:7B449:APU_DutySetup:X: track# (0, 2, 4, 6)\nY:Difference between Sq0Duty_4000 and Sq1Duty_4004
-P:7B456::duty setting: (0x32)\n0011 0010\n\n12.5% duty cycle\nLength counter disabled (manual length?)\nVolume 2/15
+P:7B449:APU_GetDutySettings:X: track# (0, 2, 4, 6)\nY:Difference between Sq0Duty_4000 and Sq1Duty_4004
+P:7B456::duty setting: (0x32)\n0011 0010\n12.5% duty cycle\nLength counter disabled (manual length?)\nVolume 2/15
 P:7B458:_APU_ReturnFromGetDutySetting_
 P:7B45C::if X >= $08 skip extra setup and jump to SetDuty
 P:7B461::get low nybble
-P:7B474:APU_SetDuty:$BE - 1011 1110\n%50 duty cycle, manual volume, const volume (has no effect?), volume: 14/15\n\n$B9 - 1011 1001\n%50 duty cycle, manual volume, const volume, volume: 9/15\n\n$32 - 0011 0010\n%12.5% duty, manual volume, const volume, volume: 2/15\n\nif Y == C (Noise channel)\nthen A == Noise volume\nbit 6-7: not used\nbit 5: length counter (0) enabled / (1) disabled\nbit 4: envelope decay: (0) enabled  / (1) fixed volume\nbit 0-3: Volume / decay rate\n\n$33 - 0011 0011\nManual length, fixed volume, volume (3/15)
+P:7B46A::what's the point of this? APU_TrackInstructions_E0\ngets ASLed around and then overwritten by what's in A.
+P:7B472::holds low nybble settings
+P:7B474:APU_SetDuty:Y 0 - 3: Sq0 \nY 4 - 7: SQ1\nY 8 - B: TR\nY C-F: Noise\n\nY + 0, 4: Duty\nY + 1, 5: Sweep\nY + 2, 6: Timer\nY + 3, 7: Length
 P:7B478:APU_GetDutySetting:X:TrackIndex# (0, 2, 4, 6)\n\nReturns X with last value read from APU_DutySettings_Vector\n
 P:7B479::push y on to stack
 P:7B488:__APU_GetDutySetting_Loop
@@ -3494,10 +4038,11 @@ P:7B49A:APU_LoopTrack:If the loaded track byte is FE\nduring ParseNextTrackByte,
 P:7B4B4:APU_TrackByte_is_F9:If the loaded track byte == F9\nduring ParseNextTrackByte,\ncontrol comes back here
 P:7B4B9::NoiseChannel_Vector+X == $00
 P:7B4BD:APU_TrackByte_is_FA:If the loaded track byte is FA\nduring ParseNextTrackByte,\ncontrol comes back here
+P:7B4C7:APU_Store_02_In_TrackVector_X
 P:7B4CA:_L7B4CA_
 P:7B4D2::Jump caret ahead(?) by nextTrackByte bytes.\nBut if trackPosition+0 DOESN'T overflow, DEC trackPosition+1.\nSo basically this is a rewind of 256 - nextTrackByte bytes.
 P:7B4DB:__JMP_APU_ParseNextTrackByte_
-P:7B4DE:APU_UpdateTrackIfNeeded:1st run - X:$08 Y:$00\n2nd run - X:$00 Y++\n3rd run - X:$02\n4th run - X:$04\n5th run - X:$06 Y--\n\nX is instrument channel index\n\nX used as APU_Track_Instructions_A offset\n  if vector+X byte == 0\n    return\n  else\n    run update_B
+P:7B4DE:APU_UpdateTrack_Check:1st run - X:$08 Y:$00\n2nd run - X:$00 Y++\n3rd run - X:$02\n4th run - X:$04\n5th run - X:$06 Y--\n\nX is instrument channel index\n\nX used as APU_Track_Instructions_A offset\n  if vector+X byte == 0\n    return\n  else\n    run update_B
 P:7B4E2:_APU_UpdateTrack_RTS_
 P:7B4E3:APU_UpdateTrack
 P:7B4FF:_APU_UpdateTrack_cont_:when APU_TrackInstructions + x + 2 reaches 0, update track\nIs this note length counter?
@@ -3509,7 +4054,7 @@ P:7B513:APU_Disable_Sq1Sweep:bit 3 - 1 decreasing sweep\nbit 7 - 0 disabled
 P:7B51A:APU_Disable_Sq0Sweep:bit 3 - 1 decreasing sweep\nbit 7 - 0 disabled
 P:7B51F:APU_ParseNextTrackByte:Instruction bytes are:\n$FE $FC $FA $F9 $F7 $F6 $F5\n$F4 $F3 $F1 $F0 $EF $E1
 P:7B526:APU_TrackByte_is_FE:next byte == $FE
-P:7B529:_L7B529_:Next byte is < FE
+P:7B529:APU_TrackByte_NOT_FE:Next byte is < FE
 P:7B52B::next track byte == $FF
 P:7B533:APU_CheckTrackByte_From_FC
 P:7B535::track byte == FC
@@ -3524,9 +4069,10 @@ P:7B556:APU_CheckTrackByte_F9_and_below
 P:7B55A::track byte == F9
 P:7B55D:_APU_CheckTrackByte_F7_and_below_
 P:7B55F::track byte < $F7
-P:7B565::track byte == $F8
-P:7B570:_APU_TrackByte_is_F7_maybe:track byte == $F7
+P:7B565:APU_TrackByte_F7:NOT repeat track
+P:7B570:_APU_TrackByte_is_NOT_F7:track byte == $F8
 P:7B579-7B57A:APU_NoteLoByte_Effector_Vector:Two uses:\n\n$B565 When TrackByte == $F7\n$B62C When Track# == 2\n\nUnknown length (probably 4)
+P:7B57D::repeat track related?
 P:7B57F:_APU_CheckTrackByte_F6_and_below_
 P:7B583:APU_TrackByte_is_F6:track byte == F6
 P:7B58C:_APU_CheckTrackByte_F5_and_below_
@@ -3547,28 +4093,31 @@ P:7B5E1:_APU_CheckTrackByte_E1_and_below_
 P:7B5E5:APU_TrackByte_is_E1_EE:trackbyte >= $E1
 P:7B5F4:APU_TrackByte_Below_E1:store A
 P:7B5F6:_APU_Subtrack4B_Until_Neg_Loop_:4B == 75\n75 * 2 == 150\n150 == # of notes?
+P:7B600:APU_TrackByte_49
 P:7B606:APU_ModTrackByte_Not_49:if previous CMP was >= $49 branch
 P:7B608:APU_ModTrackByte_Less_49:DEY; INY\nBasically a CPY #00?
 P:7B60C::ADC $FE == -1
 P:7B60F:_L7B60F_
 P:7B61C:_L7B61C_
 P:7B624:_L7B624_
-P:7B62C:APU_Only_Track_1_2:X == 2 || X ==4\n
+P:7B62A::jump if track 3
+P:7B62C:APU_Only_Tracks_2_4:X == 2 || X ==4\n
 P:7B640:APU_All_Tracks:restore A from start of subroutine
-P:7B645::A >= $96
+P:7B645:APU_TrackByte_96:A >= $96
 P:7B648::A >= $96
 P:7B64A::A >= $96
 P:7B64D:_L7B64D_
-P:7B651::A >= $4B
+P:7B651:APU_TrackByte_4B:A >= $4B
 P:7B65C::A >= $4B && nextTrackByte > 79
 P:7B661:_APU_ParseTrackByte_End_
 P:7B688:APU_TrackByte_Is_F0
+P:7B6B6:DynamicSubroutine_EF06_7B6B6:Sets APU_NoteLoByte_Effector_47F to\nA | (APU_NoteLoByte_Effector_47F & 0xE0)
 P:7B6C9:APU_TrackByte_is_F5
 P:7B6DB:APU_TrackByte_is_F4
 P:7B6E4:APU_Track04_SpecialOps:x: track index\na: zeroPages[APU_TrackInstructions + x + 13] (x == 4) & 0x7F\n\nreturns result in A
-P:7B6E6::not track 2
+P:7B6E6::not track 4
 P:7B6F3::what's the point of this??
-P:7B6F5::I have a feeling this is a bug
+P:7B6F5::could be needed padding
 P:7B6F7:_L7B6F7_
 P:7B700:_L7B700_
 P:7B706:_APU_Track04_SpecialOps_RTS_
@@ -3581,21 +4130,23 @@ P:7B729:_L7B729_
 P:7B732:APU_Set_Noise_PeriodAndLength:Set Noise Channel to Mode 0\n(7bit of 400E: 0 -ssshhh 1-metallic)\n\nSet Noise Channel Length to $08
 P:7B73D:APU_GetNote:X: index of note\n\nX gets LDX with old NoteLoByte
 P:7B76D:APU_SetTrackFrequency:STA Sq0 + Y\nY being a multiple of 4, presumably\n\nY:0, 4, 8\n\nORA $08 sets bit 3 (for note length)
-P:7B76F::set low 8 bytes of frequency
+P:7B76F::set low 8 bits of frequency
 P:7B774::sets minimum length
-P:7B776::set high 3 bytes of frequency\nand potentially note length
+P:7B776::set high 3 bits of frequency, and potentially note length
 P:7B779:_APU_SetTrackNote_RTS_
 P:7B842:APU_Track_Vector_ClearBit7:[X]: Clear bit 7 of index X\n
 P:7B845::clear bit 7
 P:7B84B:APU_ReadNextTrackByte:LDA next byte of instrument track\nINC to next byte\n\nX being instrument channel\n$00\n$02\n$04\n$08
 P:7B853:APU_ReadNextTrackByte_End
-P:7B854:APU_GetFinalDuty:Returns final result in A\n\nNote: when +0 >= 0x20, result wraps arount to 0\n\n\nAPU_Track04_SpecialOps\n+0 = APU_NoteLoByte_Effector, clamped between 0x06 and 0x1F\n+1 = APU_TrackInstructions + x + 13, clamped at 0x7F\n\nAPU_DutySetup\n+0 = APU_NoteLoByte_Effector\n+1 = possibly 0x30, 0x32, and ???, clamped at 0x0F
+P:7B854:APU_GetFinalTrackSettings:Returns final result in A\n\nNote: when +0 >= 0x20, result wraps arount to 0\n\n\nAPU_Track04_SpecialOps\n+0 = APU_NoteLoByte_Effector, clamped between 0x06 and 0x1F\n+1 = APU_TrackInstructions + x + 13, clamped at 0x7F\n\nAPU_DutySetup\n+0 = APU_NoteLoByte_Effector\n+1 = possibly 0x30, 0x32, and ???, clamped at 0x0F
 P:7B865:_L7B865_
 P:7B86D:_L7B86D_
 P:7B875:_L7B875_
 P:7B87D:_L7B87D_
 P:7B885:_APU_GetFinalDuty_RTS_
+P:7B886:Set_APU_NewSeq_20or00_FA_7B866:Sets it to\n$44 0r $64
 P:7B88F:APU_Sub_Update_A:If APU_Sub_Update_Variable 6th bit = 0\n   return\nelse\n  run some subroutine
+P:7B893::running SFX?
 P:7B8B3:L7B8B3
 P:7B8BF:_APU_Sub_Update_A_RTS
 P:7B8C5:ResetAPU
@@ -3607,13 +4158,13 @@ P:7B904:APU_StartNewSequence:Sequence can be a song or SFX\n\nA - becomes Sequen
 P:7B908::SFX if A>=$F0
 P:7B90A::check not same sequence as last load
 P:7B920:APU_InitTrackCarets:X: (Sequence#) * 4 + instrument#\nY: instrument#
-P:7B931:APU_RareMysteryRoutine:if last ASL A set the Carry flag
-P:7B93D:L7B93D
+P:7B931:APU_RareMysteryRoutine:is this only used for the intro sequence?\nalso for main menu?
+P:7B93D:_APU_IntializeSequence_
 P:7B950:APU_SequenceInit
 P:7B96D:__JMP_APU_DisableUpdate
 P:7B970:APU_SFX_Init
 P:7B973::disable DMC
-P:7B97D::Enable DMC - pretty sure this never happens
+P:7B97D::Enable DMC - it happens!\nin the introscene
 P:7B97F:_L7B97F_
 P:7B980::0x0F - turn on everything except DMC\n0x1F - turn on everything
 P:7B988:_lolwut_:\n???
@@ -3622,72 +4173,129 @@ P:7B9B3:APU_GetPreviousSequenceID:Load A with last sequence Id with disable bit 
 P:7B9B7::clear the skip update bit
 P:7B9BC:APU_DisableUpdate:Turns on 0th bit of APU_CurrentSequence\nturning off APU_Updates
 P:7B9C2:APU_UpdateCurrentSequence
-P:7B9C7-7BA57:APU_Note_Vector:[$00] $06AD C2 [$01] $0643 C#2 [$02] $05F3 D2\n....\n[$47] $001D A#7 [$48] $001B B7 [$49] $1A08? C8?
+P:7B9C7-7BA57:APU_Note_Vector:[$00] $06AD C2 [$01] $0643 C#2 [$02] $05F3 D2\n....\n[$47] $001D A#7 [$48] $001B B7 [$49] $1A08? C8?\n...\n[$5A] $007E A5 (880Hz)
 P:7BA59-7BB5F:Music_TitleScreen
 P:7BFD8-7BFFF:EndOfBank78000To7BFFFF
-P:7C000-7C001:Bank7C000to7FFFF
+P:7C000-7C001:ZeroOutVariables_7C000
 P:7C002-7C01F:ZeroOutVariables
 P:7C0B6:F7C0B6
 P:7C0BC:ZeroOutPPU
+P:7C0C3:__FillSpriteDMA_loop_
+P:7C0DD:__ClearPPU_NameTables_loop_:\nPPU $2000-$27FF
+P:7C0E9:CheckAndWaitIfNeedBit2_loopTrap
+P:7C0F9:_F7C0E9_RTS
+P:7C2B0:WaitFor_loopTrap_flag_1B_Bit2Clear
+P:7C2B3:_WaitFor_loopTrap_flag_1B_Bit2Clear_loop_
+P:7C2BA:WaitFor_loopTrap_flag_1B_Bit2Clear_loop:\nthen set bit2 of flag
+P:7C30A:PPU_PrepNextPaletteColor
+P:7C31D:_PPU_PrepNextPaletteColor_:Writes PPU address for next palette\n(starting from $3F00)\n$3F high byte\n$XX low byte ($00 to $1F)\n$XX color
+P:7C340:_PPU_PrepNextPaletteColor_RTS
 P:7C341:WaitForNMI_78000
-P:7C344:_WaitForNMI_78000_Loop_
-P:7C34C:F5C34C
-P:7C35B:F5C35B
-P:7C363:F7C363
-P:7C369:F5C369
-P:7C383:SetupBGPalettes_HighBanks
+P:7C344:__WaitForNMI_78000_Loop_
+P:7C34C:WaitForNMI_X_Times
+P:7C34F:__WaitForNMI_X_Times_loop_
+P:7C35B:PPU_SetupPalettes
+P:7C363:Coyright_FadeIn
+P:7C369:Screen_FadeOut:Copyright and Titlescreen
+P:7C36D:Screen_FadeInOut_7C36D:\nthis is witnessed for the copyright screen,\nTitlescreen after controller input
+P:7C36F:__Screen_FadeInOut_loop_
+P:7C383:SetupBGPalettes_7C000
+P:7C38C:__PPU_PrepNextPaletteColor_loop_
+P:7C399:_LC399_
+P:7C3A4:_L7C3A4_
 P:7C3B6:BRKInstructions_6F00_B:6F -  pull subroutine address from bank subroutine list ($0000 of bank)\n00 - 
-P:7C421:F7C421
-P:7C427:F7C427
+P:7C421:ClearBit4_loopTrap_then_CheckAgain
+P:7C427:Set_loopTrap_flag_1B_Bit4
+P:7C431:ClearBit4_loopTrap_flag_1B
+P:7C43A:ClearBit4LoopTrap_And_EnableSprites
+P:7C444::turn on sprites and BG
+P:7C456:WaitForVBlankClear_Then_DisableSpritesBG
+P:7C45B:__WaitForVBlankClear_loop:According to nesdev, this is not reliable, and may cause and NMI not to occur this frame.\nhttps://www.nesdev.org/wiki/PPU_programmer_reference
 P:7C46B:BRK_DynamicSub_Destination_1
+P:7C4A3:GetDynamicSubFromLocalPointers_F7C4A3:\nY: index in LocalPointerIndices_7E9ED
+P:7C4AB::JMP
+P:7C4AF::offset to DynamicSubroutine address +1 (zeropage $21)
 P:7C4F7:BankSwitch_GetBankNumber
 P:7C4FE::A == 0 || 1
 P:7C500::A == 0
 P:7C50D:L7C50D:A:2F
 P:7C50E::A / 2 == 17
 P:7C50F::Y:17
-P:7C518:LoadLocalPointer:A: index of LocalPointer/BankId to load\nX: offset to register to store bankId
-P:7C52E:__PaletteSomethingIndexIsOdd
-P:7C536:__L7C536
+P:7C518:LoadLocalPointer:Y: index of LocalPointer/BankId to load\nX: offset to register to store bankId
+P:7C52E:_Index_IsOdd
+P:7C536:_L7C536_
 P:7C5A2:LoadLocalPointer_Setup:A: index of LocalPointer/BankId to load\nresult in A and $25
 P:7C5AB::offset to DynamicSubroutine
 P:7C5BC:_GetNextDayNightPaletteColor_BankSwitchReturn
 P:7C60E-7C61B:Dialog_ReadNextCharFromBank:X: register in zero page where address to data is\n\n1) Gets address of next char from DialogBlockPointerMod\nand copy to DialogReadNextCharPointer\n2) Get next char from DialogReadNextCharPointer\n3) Switch banks\n
-P:7C64E-7C664:Register0_Set_7C000:0-1 Name Table Mirroring\n2-3 PRG-Switching Mode\n    0,1  8000-FFFF (32K)  set via Register 3\n    2     C000-FFFF set via Register 3\n           8000-BFFF set to $00000\n    3     8000-BFFF set via Register 3\n           C000-FFFF set to $7CFFF\n4   CHR ROM bank mode (0: switch 8 KB at a time; 1: switch two separate 4 KB banks)\n4     <1024K carts>\n    0 = Ignore 256K selection register 1\n    1 = Acknowledge 256K selection register
+P:7C64E:Register0_Set_7C000:0-1 Name Table Mirroring\n2-3 PRG-Switching Mode\n    0,1  8000-FFFF (32K)  set via Register 3\n    2     C000-FFFF set via Register 3\n           8000-BFFF set to $00000\n    3     8000-BFFF set via Register 3\n           C000-FFFF set to $7CFFF\n4   CHR ROM bank mode (0: switch 8 KB at a time; 1: switch two separate 4 KB banks)\n4     <1024K carts>\n    0 = Ignore 256K selection register 1\n    1 = Acknowledge 256K selection register
+P:7C651::$0E - 0000 1110\n\nNametable mirroring: 2 - vertical\nPRG-switch mode: $8000 variable bank, $C000 set bank
 P:7C665-7C67B:Register1_SetHiOrLowBanks_7C000:Bit4 - 256K ROM Selection Register 0\n<512K carts>\n(0 = Swap banks from first 256K of PRG $00000-$3FFFF\n1 = Swap banks from second 256K of PRG $40000-$7FFFF)
 P:7C67C-7C691:Register2_Set_7C000:<1024K carts only?>\n  Register 0 bit 4: ON - High bit of 256K PRG bank selection 
 P:7C90A:WaitForNMI_78000_Post
-P:7C91C:Post_NMI_store_Not_FD
+P:7C91C:_Post_NMI_store_Not_FD
 P:7C91F:_WaitForNMI_78000_Post_RTS
+P:7C925:PPU_SpriteDMA_Swap_prep
+P:7C94B:_L7C94B_
+P:7C94E:_PPU_SpriteDMA_Swap_prep_RTS
+P:7C94F-7C950:PostNMI_table:[0] ($D0) target offset for 2nd PPU_SpriteDMA_Swap\n[1] ($A0) target offset for 1st PPU_SpriteDMA_Swap
+P:7C952:PPU_SpriteDMA_Swap:swaps #$30 bytes between \nPPU_SpriteDMA_200,X and PPU_SpriteDMA_200,Y
+P:7C957:__PPU_SpriteDMA_Swap_loop_
 P:7C96C:NMI_VBlank_7C000
-P:7C97E:L7C97E
-P:7C986:NMI_RunAPUEngine:set high bank\nthis seems really pointless. This comes directly\nfrom a bank switch which means we NECESSARILY\nare already in a high bank.\nAnd it tries to perform the switch TWICE.
-P:7C98B::again....?
+P:7C97E:_LoadAPUEngineBank_
+P:7C986:NMI_RunAPUEngine
+P:7C988::set high bank\nthis seems really pointless. This comes directly\nfrom a bank switch which means we NECESSARILY\nare already in a high bank.\nAnd it tries to perform the switch TWICE.
 P:7C990::Run APU engine
-P:7C9C3:L7C9C3
+P:7C9C3:L7C9C3:this procedure is a mystery. Seems to grab a byte\nfrom code (i.e. not data!) and checks if bits 0-2 are set.\nThis could be checking if the byte is $07 or $17 which\ncould be indicating there is a BRK right after this one
+P:7C9D8::uuuuhh....wut?
+P:7C9DA::they love redundancies, don't they?
 P:7C9E2:L7C9E2
 P:7C9EA:ResetNMI_SetRegisters_7C000:Clone of ResetNMI_SetRegisters_3C000\n
 P:7C9ED::INC $FFDF - clear shift register
 P:7C9F9:ResetNMI_SetRegisters_7C000_cont:\ncomes directly from ResetNMI_3C000_sub
-P:7CA5C:F7CA5C
-P:7CA6E:L7CA6E
-P:7CA7A:L7CA7A
-P:7CA84:L7CA84
-P:7CA99:L7CA99
-P:7CAA6:L7CAA6
-P:7CB0A:L7CB0A
-P:7CB86-7CB9E:ReadController_7C000
-P:7E7C0-7E7C3:BRK_DynamicSubroutineAddr_Vector:[1]:$C46B BRK_DynamicSub_Destination_1
+P:7C9FE:_L7C9FE_
+P:7C9FF:_L7C9FF_
+P:7CA59:_L7CA59_
+P:7CA5C:PPU_WriteToPPU:if post_NMI_flag_32 == $FD || $FE\nwrite data to PPU (probably)
+P:7CA6E:Post_NMI_flag_FD
+P:7CA7A:_L7CA7A_
+P:7CA84:Post_NMI_flag_FE
+P:7CA86::set SetFirstPaletteColor flag
+P:7CA92:_L7CA92_:if this is anything but 0x02, do OAM or
+P:7CA99:_L7CA99_
+P:7CA9F:_PPU_OAM_From_SpriteDMA_200
+P:7CAA6:_PPU_CheckIfPaletteWriteNeeded_
+P:7CAAC:_PPU_WritePaletteData_
+P:7CAB1:__PPU_WriteFromStagingArea_loop_:\nstarting at X index
+P:7CACC:_L7CACC_
+P:7CAD7:__PPU_WriteFromStagingArea_innerloop_
+P:7CAE6:_SetFirstPaletteColor_
+P:7CB04::clear SetFirstPaletteColor flag
+P:7CB0A:_PPU_WriteToPPU_finish_
+P:7CB53:Controllers_ReadInput_7C000
+P:7CB58::read 2nd controller
+P:7CB5A:_Controller_ReadInput_7C000
+P:7CB5D:__Controller_VerifyInput_loop_
+P:7CB79:_L7CB79_
+P:7CB86:ReadController_7C000
+P:7CB92:__ReadController_7C000_loop
+P:7CB99:_L7CB99_
+P:7E7C0-7E7E5:BRK_DynamicSubroutineAddresses_7E7C0:[0]:$C4A3 GetDynamicSubFromLocalPointers_F7C4A3\n[1]:$C46B BRK_DynamicSub_Destination_1\n\n[$24]:$EC01 BRKInstruction: 2F A6 - Load Lightning SFX
 P:7E7E8:ResetNMI_7C000:\nClone of ResetNMI_3C000
+P:7E803::set to 8x8 sprites
 P:7E819:ResetNMI_7C000_cont:\nAfter ResetNMI_SetRegisters_7C000, due to stored address in stack
 P:7E864:BRK_7C000
 P:7E865::get IRQ status flags
-P:7E89F:L7E89F
-P:7E8DA:DynamicSubRoutine_Setup:DynamicSubRoutine[1]\n      1st value in non-standard  BRKInstructions;\n      index for LocalPointer_List_XX000\n$03  == [$06]: $B904 APU_StartNewSequence
+P:7E88D:_BRK_Instruction_xF_7C000:\nBRK instruction low nybble is F
+P:7E899:_BRK_Instruction_Below_4F_7C000
+P:7E89D::Set C
+P:7E89F:_BRK_GetDynamicSubroutineAddress_7C000:\nwithout changing banks
+P:7E8BA:_BRK_Instruction_Between_4F_and_FF
+P:7E8DA:_BRK_DynamicSubRoutine_Setup:DynamicSubRoutine[1]\n      1st value in non-standard  BRKInstructions;\n      index for LocalPointer_List_XX000\n$03  == [$06]: $B904 APU_StartNewSequence
 P:7E8E8::JMP
-P:7E917-7E95C:LocalPointerBanks_Vector:Bank to switch to get data\ncompressed\n1 byte = 2 values (low nibble & high nibble)\n\n[$45]: (Day/Night Palette) bankId: 06
+P:7E917-7E969:LocalPointerBanks_7E917:Bank to switch to get data\ncompressed\n1 byte = 2 values (low nibble & high nibble)\nhigh nybble is bankId to switch to\n\n[$45]: (Day/Night Palette) bankId: 06\n[$50]:($11) APU_InitiateNewSequence_04067\n[$52]:($21) intro scene
 P:7E997-7E9AE:BankSwitch_BankNumbers:$17 [23]: $0D <- Next bank switch!!\n\natleast 24 bytes long
-P:7E9ED-7EA78:LocalPointerIndices_Vector:indexes for PaletteDataBank_Vector\n[$8B]: Day/Night palettes
+P:7E9ED-7EA92:LocalPointerIndices_7E9ED:indexes for PaletteDataBank_Vector\n[$8B]: Day/Night palettes\n[$A0]: ($03) APU_InitiateNewSequence_04067\n[$A1]: ($04) Initiate new APU_sequence\n[$A5]: intro scene APU_Set SQVolume
 P:7EAED-7EB1C:DynamicSubroutine_Indices:After bank switch, this is index to next DynamicSubRoutine\n\n$2F [47]: $28\n  $28 * 2 == $50\n  DynamicSubroutine_Addressess[$50] -> $95A0\n\natleast 48 bytes long
 P:7EBAC:GetPointerTo_DialogSegment:address to first char of segment stored in\nDialogSegmentPointer[]\n
 P:7EBAF::really needed to kill those cycles, eh?
@@ -3698,6 +4306,8 @@ P:7EBC2::Ω End of Text, wait for input
 P:7EBC6::∩ End of Text, no input wait
 P:7EBCA:_FindEoTChar_Loop_Found
 P:7EBCF:_FindEoTChar_Loop_Break_:return bank ID
+P:7EC01:APU_LoadSequence_7EC01:Y is APU sequence to run\n\nFrom BRKInstruction_2FA6\ncalled at least twice during intro cutscene
+P:7EC02:BRKInstructions_07A0_7EC02:\nAPU_InitiateNewSequence_04067
 P:7EE6A:MysteryByteA
 P:7EE8A:MysteryByteB
 P:7EE9A:MysteryByteC
@@ -3713,19 +4323,52 @@ P:7FFFA-7FFFB:NMIPointer_7C000
 P:7FFFC-7FFFD:ResetPointer_7C000
 P:7FFFE-7FFFF:IRQBRKPointer_7C000
 S:00B6::$B124 after movement before encounter check\nchecks if bit 3 is set
-S:00B7:post_NMI_const:if AND #$20 == 0\n   JSR $C925\n\nBattle_GetMonsterName_X_05\n-------------------------\n$A9EF - LDA
-S:00C5:encounterCheckRequired_B:skip encounter check if this >= $80\n\n$B2DB - LDA when is this set?\n
+S:00B7:post_NMI_const_60B7:when is this not $20?\nduring LoadCharacterSprites it is 0
+S:00B8::LoadCharacterSprites\n--------------------------\n$3B94A 60B8 && #$3F + #$0F -> nextMenuInstructionIndex_6ABF
+S:00C3:currentLocation_60C3:probably current player location,\npossibly a an index to indicate which\nsave location the player last saved?
+S:00C5:encounterCheckRequired_B_C5:skip encounter check if this >= $80\n\n$B2DB - LDA when is this set?\n
 S:00C9::checked after movement before encounter check\nif == #$3F do something\n\nLoadCharacterSprites\n--------------------------\n$B94A if == $3F
-S:00CB:encounterCheckRequired_C:if this AND $90 == $80, skip encounter check
+S:00CB:encounterCheckRequired_C_60CB:if this AND $90 == $80, skip encounter check
+S:00D6-00E1:saveGame1_Character_Levels_60D6
+S:00E2-00E6:saveGame1_Character_Strengths_60E2
+S:00EE-00F2:saveGame1_Character_Agilities_60EE
+S:00FA-00FE:saveGame1_Character_Intelligences_60FA
+S:0106-0111:saveGame1_Character_Lucks_6106
+S:0112-011D:saveGame1_Character_Vitalities_6112
+S:011E-0129:saveGame1_Character_SexClasses_611E
+S:012A-0141:saveGame1_Character_CurrentHP_612A
+S:0142-0159:saveGame1_Character_MaxHP_6142
+S:015A-0171:saveGame1_Character_CurrentMP_615A
+S:0172-0189:saveGame1_Character_MaxMP_6172
+S:018A-01A1:saveGame1_Character_Statuses_618A
+S:01A2-01C5:saveGame1_Character_Experiences_61A2
+S:01C6-01E9:saveGame1_Character_ReturnDestinations_61C6
+S:01EA-0249:saveGame1_Character_Names_61EA
+S:024A-02A9:saveGame1_Character_Inventory
+S:02AA-0309:saveGame1_Character_Spells:Byte 0-2: Wizard Spells (in battle)\nByte 3: Wizard Spells (field)\nByte 4-6: Pilgrim Spells (in battle)\nByte 7: Pilgrim Spells (field)\n\nNote: Hero uses location of Wizard spells.
+S:030A-030D:LoadGame_Read_B_630A
+S:030F-0312:saveGame1_ActiveParty_603F:# is probably index in save game data of character
+S:0313-03C9:LoadGame_Read_A_6313:Writes to 6001,x on LoadGame
+S:03E8:saveGame1_SaveGameSomethingA
+S:03EB-03F6:saveGame2_Character_Levels_63EB
+S:06FD:saveGame2_SaveGameSomethingA
+S:06FE-06FF:saveGame2_RNGValues:I think?
+S:0700-070B:saveGame3_Character_Levels
+S:0814-081B:saveGame3_HeroName_6814
+S:0A12:saveGame3_SaveGameSomethingA
+S:0A15-0A21:CheckSum_6A15:MANABU YAMANA in ASCII
+S:0A22-0A2E:CheckSum_Backup_6A22:what is this for exactly?
 S:0A32:IsDoneReadingFromBank:bit 5 == 1 done\nbit 5 == 0 not done\n\nEoTCharFound\n----------------------\n$ABD1 - Set bit 5\n\nAfter line written to staging area, turn off bit 0
 S:0A33:DialogSegment_Index:if >= #$96, Segment is in High Bank
 S:0A34:Menu_SingularEnding_Variable:Menu_WriteSingularChars\n-------------------------------\n$8EFB - Temp stores the type of plural ending to print\n5:standard "s"\n\n$8F07 - Stores index of last char printed
+S:0A36::set to 0 after Copyright fadeout\nset to 1 after IntroScene\nset to 0 when loading MainMenu
 S:0A3D:APU_enableDMC_6A3D:when not 0, signals APU to turn on the DMC
 S:0A3F-0A41:ExperienceForNextLevel_Character0
 S:0A42-0A44:ExperienceForNextLevel_Character1
 S:0A45-0A47:ExperienceForNextLevel_Character2
 S:0A48-0A4A:ExperienceForNextLevel_Character3
-S:0A58::ResetPPU\n---------------\n$E836 - set to 0\n\nMenu_SetColor\n------------------\n$9614 if == 0 then menu palette color = #$30 (white)
+S:0A4B-0A4E:_6A4B:All Set to #$05
+S:0A58:menuPaletteRelated_6A58:ResetPPU\n---------------\n$E836 - set to 0\n\nMenu_SetColor\n------------------\n$9614 if == 0 then menu palette color = #$30 (white)
 S:0A63::DynamicJumpDestination_10000_A\n----------------------------------\n$805B - init with $00
 S:0A68:RNG_MultiRandomDiscardCounter:Many RNG routines discard this # of random numbers before selecting.\n\nUpdated with a random number in the range [0,15] during each turn of battle, after all characters' commands have been entered. 
 S:0A6B:Run_AutoFail:if != 0\n  run attempt auto-fail
@@ -3736,29 +4379,29 @@ S:0A7B-0A9A:MonsterGroup_Vector:2 Ravens  3 slimes?\n[0]:80         [0]:80\n[1]:
 S:0A9B-0A9D:Character_GetStats_Vector:$952C - Character_FormationIndex used as index
 S:0AAB::$9533 - LDA
 S:0ABE:menu_NumTitlesToWrite:+1 for each character in party
-S:0ABF:nextMenuInstructionIndex:Menu_TitleAndText\n----------------------------\n$8BD1 - init with $04 (title instruction)\n\nAfter Write Title\n$8BE6 - INC
+S:0ABF:nextMenuInstructionIndex_6ABF:Menu_TitleAndText\n----------------------------\n$8BD1 - init with $04 (title instruction)\n\nAfter Write Title\n$8BE6 - INC
 S:0AC0:title_InstructionCode:$83 -> Item command menu\n\nMenu_TitleAndText\n----------------------------\n$8BB3 - stores value of WriteTo_EnemyDisplay ($96A9),Y\n   [03] => $80\n\nAFTER WRITE TITLE\n$8BD7 - LDA
 S:0AC1:menu_TextRowCounter:Menu_EoT\n-------------\nCounts # of text line written\n$8876 - INC - string done writing\n\nMenu_ParseInstruction_05\n-------------------------------------\n$8823 - LDX\n\nMenu_InstructionByte18_GetName\n---------------------------------------\n$8AA6 - LDA
-S:0AC2:menu_WriteNextLine_Variable:Menu_WriteNextLine\n-------------------------------------\n$87F7 - LDA, this is next position to write to
+S:0AC2:menu_WriteNextLine_6AC2:Menu_WriteNextLine\n-------------------------------------\n$87F7 - LDA, this is next position to write to
 S:0AC3:menu_InstructionIndex:Menu_GetDimensions_Parse\n---------------------------------------------------------\n$8D37 - init with $0B\n\nBattle_SetMaxCharWrite\n-----------------------------------\nused as Y in Menu_EnemyDisplay_instructions[Y]\n$8BA1 - LDY then INC\n
-S:0AC4:menuInstructionByte:Menu_GetNextInstructionByte\n-----------------------------------\n$8BA9 - STA next char from Menu_instructions\n\n$FF - finish writing to display
+S:0AC4:menuInstructionByte_6AC4:Menu_GetNextInstructionByte\n-----------------------------------\n$8BA9 - STA next char from Menu_instructions\n\n$FF - finish writing to display
 S:0AC5::the type of name to retrieve\n2 = monster\n3 = end of monster\n5 = character
 S:0AC6:titleCode:Battle_DialogBoxTitle\n-----------------------------\n$8BF6 LDA then added to Menu_Width\n\nMenu_GetDimensions_Parse\n----------------------------\n$8D25 - INC
 S:0AC7::Menu_GetDimensions_Parse\n-------------------------------\n$8CC9 - STA Character_FormationIndex
-S:0AC8:Menu_PositionB:Menu_GetDimensions_Parse\n--------------------------\n$8CD3 - STA menu top left pos ($96: x:12, y:18)
-S:0AC9:menu_TitleHasArrow64:If $80 then current menu has arrow in title\n\nMenu_GetDimensions_Parse\n--------------------------------\n$8D30 - init with #$00\n\nMenu_WriteNextChar\n------------------------------------------\nAfter write char $64 (arrow) to title\n$8DCD - LDA\n$8DD0 - ORA $80\n$8DD2 - STA
+S:0AC8:menu_PositionB_6AC8:Menu_GetDimensions_Parse\n--------------------------\n$8CD3 - STA menu top left pos ($96: x:12, y:18)
+S:0AC9:menu_TitleHasArrow64_6AC9:If $80 then current menu has arrow in title (sub menu)\n\nMenu_GetDimensions_Parse\n--------------------------------\n$8D30 - init with #$00\n\nMenu_WriteNextChar\n------------------------------------------\nAfter write char $64 (arrow) to title\n$8DCD - LDA\n$8DD0 - ORA $80\n$8DD2 - STA
 S:0ACA::Menu_GetDimensions_Parse\n------------------------\n$8D33 - STA unknown instruction byte after some shenanigans\n\nBattle_Finalize_EnemyDisplay\n-------------------------------\n$A0CE - STA y pos enemy display
 S:0ACB:LinesWrittenToStagingArea_Copy:Battle_Finalize_EnemyDisplay\n-------------------------------\n$A0CE - STA modified y pos enemy display
 S:0ACC:DialogWriteNextCharPosition:DialogJumpStop2\n----------------\n$AB56 - init with $00
 S:0ACD:DialogFirstCharTempStorage:Stores first char of dialog after -1 byte shift
 S:0AD0:EndOfLineYStore
-S:0AE9:menuWidth:$8CF5 - stores Map_Pointer_to_NextMapByte[0]
-S:0AEA:menu_WriteTo_Counter:$8DA9 - monster group count\n\nMenu_WriteVerticalBars_2Lines\n---------------------------------------------\n$8E2F - if != #$02, goto Menu_WriteVerticalBars\n\nBattle_WriteTo_EnemyDisplay_Last\n-------------------------------------\n$87F0 - if == #$01, return (done write?)\n\nBattle_WriteTo_EnemyDisplay\n------------------------------------------\n$87EA DEC how many lines left to copy to staging area
-S:0AEB:menu_NextCharPosition
+S:0AE9:menuWidth_6AE9:$8CF5 - stores Map_Pointer_to_NextMapByte[0]
+S:0AEA:menu_WriteTo_Counter_6AEA:$8DA9 - monster group count\n\nMenu_WriteVerticalBars_2Lines\n---------------------------------------------\n$8E2F - if != #$02, goto Menu_WriteVerticalBars\n\nBattle_WriteTo_EnemyDisplay_Last\n-------------------------------------\n$87F0 - if == #$01, return (done write?)\n\nBattle_WriteTo_EnemyDisplay\n------------------------------------------\n$87EA DEC how many lines left to copy to staging area
+S:0AEB:menu_NextCharPosition_6AEB
 S:0AEC-0AF7:Temp_TextStorage:Character and monster names
 S:0B0A:DialogWriteLocation:Where dialog text is stored, char by char, before displaying to screen.
 S:0B1F:DialogNextCharTempStorage
-S:0B2F:LoadDynamicSubroutine_Character_GetCurrentHP
+S:0B2F::was called LoadDynamicSubroutine_Character_GetCurrentHP
 S:0B39:S06B39
 S:0B3E:LoadDynamicSubroutine_Character_TakeDamage
 S:0B6B:LoadDynamicSubroutine_GetCharacterStatus:Results stored in QuickStorage 0 and 1\n2F - get character statuses\n\nCharacter Dead\nStatus[0]:$80\nStatus[1]:$00
@@ -3782,7 +4425,7 @@ S:0BBE:InstructionByte_3F:$3F - $9668 Character_GetEquippedItems
 S:0BED:LoadDynamicSubroutine
 S:0BF0:LoadDynamicSubroutine_Character_GetAllHeldItems:49 - Character_GetAllHeldItems
 S:0BFC:Check_GoldenClaw_IsEquipped:Carry Set if equipped
-S:0C01:LoadDynamicSubroutine_GetCharacterClass:returns A with character class id:\n    0 = Hero\n    1 = Wizard\n    2 = Pilgrim\n    3 = Sage\n    4 = Soldier\n    5 = Merchant\n    6 = Fighter\n    7 = Goof-off
+S:0C01:LoadDynamicSubroutine_GetCharacterClass:returns A with character class id:\n    0 = Hero\n    1 = Wizard\n    2 = Pilgrim\n    3 = Sage\n    4 = Soldier\n    5 = Merchant\n    6 = Fighter\n    7 = Goof-off\nResult also stored in QuickStorage_04
 S:0C04:InstructionByte_GetCharacterClass:$4D - $993A GetCharacterClass
 S:0C10:LoadDynamicSubroutine_GetSex:results stored in 0x04\n(0 = male 1 = female)
 S:0C1A:LoadDynamicSubroutine_GetCharacterCountAndNameIndices:Character count stored in QuickStorage[0]\nIndices stored in QuickStorage[1-4]
@@ -3791,14 +4434,13 @@ S:0C24:GetCharacter_Status1_80Plus_Count
 S:0C27:Monster_GetStat_16bit3_0_InstructionByte:$54 -$998A Character_GetStatus1_80Plus_Count
 S:0C42:Character_LoadDS_GetSpellCount
 S:0C45:SpellCount_Instruction:$5A -> Character_GetSpellCount
-S:0C51:LoadSubroutine_A_Plus23
 S:0C56::$23 -> Character_GetCurrentHP\n$27 -> $932C Character_GetCurrentMP\n$2D -> $93D0 Character_CheckStatus\n$3A -> $9586 TransferXPToQuickStorage \n$3C -> $95ED Character_GetTotalGold\n$49 -> $17BF Character_GetAllHeldItems\n$4E -> $9944 GetCharacterClass_JMP\n$52 -> $9976 Character_GetCountAndNameIndices
 S:0C64:ExecuteSubroutine_66
 S:0C69-0C6A:BRKInstructions_1766:17\n66 - 
-S:0DE0-0DED:PPU_TileBatchInstructions_3rdByte
+S:0DE0-0DED:PPU_TileBatchInstructions_3rdByte_6DE0
 S:0F00:Sprite_Index_Vector
-S:1200-1241:CHR_TileIndex_Vector:Tile Index of tiles written to PPU
-S:1300-130D:PPU_NumTilesInBatch_Vector
+S:1200-1241:CHR_TileIndices_7200:Tile Index of tiles written to PPU
+S:1300-130D:PPU_NumTilesInBatch_7300
 G:2000:PPUControl_2000:7  bit  0\n---- ----\nVPHB SINN\n|||| ||||\n|||| ||++- Base nametable address\n|||| ||    (0 = $2000; 1 = $2400; 2 = $2800; 3 = $2C00)\n|||| |+--- VRAM address increment per CPU read/write of PPUDATA\n|||| |     (0: add 1, going across; 1: add 32, going down)\n|||| +---- Sprite pattern table address for 8x8 sprites\n||||       (0: $0000; 1: $1000; ignored in 8x16 mode)\n|||+------ Background pattern table address (0: $0000; 1: $1000)\n||+------- Sprite size (0: 8x8; 1: 8x16)\n|+-------- PPU master/slave select\n|          (0: read backdrop from EXT pins; 1: output color on EXT pins)\n+--------- Generate an NMI at the start of the\n           vertical blanking interval (0: off; 1: on)
 G:2001:PPUMask_2001:7  bit  0\n---- ----\nBGRs bMmG\n|||| ||||\n|||| |||+- Display type: (0: color, 1: grayscale)\n|||| ||+-- 1: Show background in leftmost 8 pixels of screen, 0: Hide\n|||| |+--- 1: Show sprites in leftmost 8 pixels of screen, 0: Hide\n|||| +---- 1: Show background\n|||+------ 1: Show sprites\n||+------- Emphasize red\n|+-------- Emphasize green\n+--------- Emphasize blue
 G:2002:PpuStatus_2002:-READ-\nClears bit 7 and the address latches PPU_Scroll and PPU_Addr.\n\n-WRITE-\n7  bit  0\n---- ----\nVSO. ....\n|||| ||||\n|||+-++++- Least significant bits previously written into a PPU register\n|||        (due to register not being updated for this address)\n||+------- Sprite overflow. The intent was for this flag to be set\n||         whenever more than eight sprites appear on a scanline, but a\n||         hardware bug causes the actual behavior to be more complicated\n||         and generate false positives as well as false negatives; see\n||         PPU sprite evaluation. This flag is set during sprite\n||         evaluation and cleared at dot 1 (the second dot) of the\n||         pre-render line.\n|+-------- Sprite 0 Hit.  Set when a nonzero pixel of sprite 0 overlaps\n|          a nonzero background pixel; cleared at dot 1 of the pre-render\n|          line.  Used for raster timing.\n+--------- Vertical blank has started (0: not in vblank; 1: in vblank).\n           Set at dot 1 of line 241 (the line *after* the post-render\n           line, false); cleared after reading $2002 and at dot 1 of the\n           pre-render line.
@@ -3811,7 +4453,7 @@ G:4000:Sq0Duty_4000:DDLC VVVV\n(D) Duty,\n(L) envelope loop / length counter hal
 G:4001:Sq0Sweep_4001:EPPP NSSS\n(E) 1: enabled 0:disabled, \n(P) period,\n(N) 0: Increasing 1: decreasing sweep, \n(S) shift amount - 0 no sweep
 G:4002:Sq0Timer_4002:TTTT TTTT\nTimer low (T)
 G:4003:Sq0Length_4003:LLLL LTTT\nLength counter load (L), timer high (T)
-G:4004:Sq1Duty_4004:DDLC VVVV\nDuty (D), envelope loop / length counter halt (L), constant volume (C), volume/envelope (V)
+G:4004:Sq1Duty_4004:DDLC VVVV\n(D) Duty,\n(L) envelope loop / length counter halt, 0:enable 1:disable\n(C) envelope, 0:use internal for volume 1:use V for volume\n(V) volume/envelope
 G:4005:Sq1Sweep_4005:EPPP NSSS\n(E) 1: enabled 0:disabled, \n(P) period,\n(N) 0: Increasing 1: decreasing sweep, \n(S) shift amount - 0 no sweep
 G:4006:Sq1Timer_4006:TTTT TTTT\nTimer low (T)
 G:4007:Sq1Length_4007:LLLL LTTT\nLength counter load (L), timer high (T)

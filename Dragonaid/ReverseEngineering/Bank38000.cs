@@ -13,14 +13,14 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// </summary>
 		public static void ReadControllerInput()
 		{
-			if (zeroPages[ZeroPages.mapScrollCheck + 1] == 0
-				&& zeroPages[ZeroPages.mapScrollCheck + 0] != 0)
+			if (zeroPage[ZeroPage.mapScrollCheck + 1] == 0
+				&& zeroPage[ZeroPage.mapScrollCheck + 0] != 0)
 			{
-				if (zeroPages[0x8F] != 0)
+				if (zeroPage[0x8F] != 0)
 					return;
 				Controller_1_ReadAndSet();
-				nesRam[0x06BD] |= zeroPages[ZeroPages.controller1_ButtonStore];
-				if ((zeroPages[0x90] & 0x0F) == 0)
+				nesRam[0x06BD] |= zeroPage[ZeroPage.controller1_ButtonStore];
+				if ((zeroPage[0x90] & 0x0F) == 0)
 					ReadControllerInput_Sub_A();
 			}
 			else
@@ -75,27 +75,27 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		private static void GetCharacterStatuses_something()
 		{
 			Bank00000.Character_GetCountAndNameIndices();
-			zeroPages[0x65] = zeroPages[0x04]; // character count
-			zeroPages[0x66] = 0;
-			zeroPages[0xCE] = 0;
+			zeroPage[0x65] = zeroPage[0x04]; // character count
+			zeroPage[0x66] = 0;
+			zeroPage[0xCE] = 0;
 
-			while (zeroPages[0xCE] != zeroPages[0x65])
+			while (zeroPage[0xCE] != zeroPage[0x65])
 			{
 				Bank00000.Character_GetStatuses();
-				if (zeroPages[0x05] >= 0x80)
+				if (zeroPage[0x05] >= 0x80)
 				{
-					byte x = zeroPages[0x66];
-					zeroPages[0x68 + x] = zeroPages[0xCE];
-					++zeroPages[0x66];
+					byte x = zeroPage[0x66];
+					zeroPage[0x68 + x] = zeroPage[0xCE];
+					++zeroPage[0x66];
 				}
 
-				++zeroPages[0xCE];
+				++zeroPage[0xCE];
 			}
 
-			zeroPages[0x48] = zeroPages[0x66]; // # characters checked
-			zeroPages[0x67] = 0;
-			zeroPages[0x62] = 0;
-			zeroPages[0xD0] = 0;
+			zeroPage[0x48] = zeroPage[0x66]; // # characters checked
+			zeroPage[0x67] = 0;
+			zeroPage[0x62] = 0;
+			zeroPage[0xD0] = 0;
 		}
 
 		/// <summary>
@@ -104,14 +104,14 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// <param name="v"></param>
 		public static void Menu_CloseAllMenus(byte a)
 		{
-			theStack.Push(zeroPages[0x80]);
-			theStack.Push(zeroPages[0x81]);
+			theStack.Push(zeroPage[0x80]);
+			theStack.Push(zeroPage[0x81]);
 
 			Menu_CloseAllMenus_sub_A(a);
 			Menu_CloseAllMenus_Loop();
 
-			zeroPages[0x81] = theStack.Pop();
-			zeroPages[0x80] = theStack.Pop();
+			zeroPage[0x81] = theStack.Pop();
+			zeroPage[0x80] = theStack.Pop();
 		}
 
 		/// <summary>
@@ -123,14 +123,14 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// as index to ROM.Menu_CloseAllMenus_Vector.offset</param>
 		private static void Menu_CloseAllMenus_sub_A(byte a)
 		{
-			zeroPages[ZeroPages.menu_PointerIndex] = a;
+			zeroPage[ZeroPage.menu_PointerIndex] = a;
 			a >>= 1;
 			byte x = a;
-			a = romData[ROM.Menu_CloseAllMenus_Vector.offset + x];
-			zeroPages[0x7F] = (byte)(a << 4);
-			zeroPages[0x82] = a;
-			nesRam[NESRAM.menu_WriteDimensions] = (byte)((a & 0x0F) | 0x10);
-			nesRam[NESRAM.menu_PositionA] = romData[ROM.Menu_CloseAllMenus_Vector.offset + x + 1];
+			a = romData[ROM.Menu_CloseAllMenus_Vector.iNESAddress + x];
+			zeroPage[0x7F] = (byte)(a << 4);
+			zeroPage[0x82] = a;
+			nesRam[NESRAM.menu_WriteDimensions_471] = (byte)((a & 0x0F) | 0x10);
+			nesRam[NESRAM.menu_PositionA_470] = romData[ROM.Menu_CloseAllMenus_Vector.iNESAddress + x + 1];
 		}
 
 		/// <summary>
@@ -142,10 +142,10 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			{
 				F3A38D();
 				F39D86();
-				if (--zeroPages[0x7F] == 0)
+				if (--zeroPage[0x7F] == 0)
 					break;
 
-				nesRam[NESRAM.menu_PositionA] -= 10;
+				nesRam[NESRAM.menu_PositionA_470] -= 10;
 			}
 			// Menu_CloseAllMenus_Loop_break
 		}
@@ -156,7 +156,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		private static void F3A38D()
 		{
 			F3A5DD();
-			byte a = zeroPages[ZeroPages.menu_PointerIndex];
+			byte a = zeroPage[ZeroPage.menu_PointerIndex];
 			switch (a)
 			{
 				case 0x01:
@@ -181,34 +181,34 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// <summary>
 		/// 0x3A472
 		/// <para>All menu pointers except 0x01, 0x02, 0x08, 0x0E, 0x13.
-		/// <br>Sets 64 bytes of NESRAM.menu_WriteBlock to 0xFF.</br></para>
+		/// Sets 64 bytes of NESRAM.menu_WriteBlock to 0xFF.<br/></para>
 		/// </summary>
 		private static void Menu_PointerIndex_Other()
 		{
 			byte x = 0;
 			while (x != 0x40)
 			{
-				nesRam[NESRAM.menu_WriteBlock + x++] = 0xFF;
+				nesRam[NESRAM.PPU_WriteBlock_400 + x++] = 0xFF;
 			}
 
-			byte a = nesRam[NESRAM.menu_PositionA];
+			byte a = nesRam[NESRAM.menu_PositionA_470];
 			a >>= 4;
-			a += zeroPages[0x75];
-			zeroPages[0x11] = (byte)(a - 0x07);
+			a += zeroPage[0x75];
+			zeroPage[0x11] = (byte)(a - 0x07);
 
-			a = nesRam[NESRAM.menu_PositionA];
+			a = nesRam[NESRAM.menu_PositionA_470];
 			a &= 0x0F;
-			a += zeroPages[0x74];
-			zeroPages[0x10] = (byte)(a - 0x08);
+			a += zeroPage[0x74];
+			zeroPage[0x10] = (byte)(a - 0x08);
 
-			a = nesRam[NESRAM.menu_WriteDimensions];
+			a = nesRam[NESRAM.menu_WriteDimensions_471];
 			a &= 0x0F;
-			zeroPages[0x06] = a;
+			zeroPage[0x06] = a;
 
 			a <<= 1;
-			zeroPages[0x07] = (byte)(a - 0x01);
+			zeroPage[0x07] = (byte)(a - 0x01);
 
-			zeroPages[0x04 + 1] = 0;
+			zeroPage[0x04 + 1] = 0;
 
 			while ()
 			{
@@ -223,12 +223,12 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// </summary>
 		private static void F3A5DD()
 		{
-			zeroPages[0x74] = zeroPages[ZeroPages.map_WorldPosition_X];
-			zeroPages[0x75] = zeroPages[ZeroPages.map_WorldPosition_Y];
-			if ((zeroPages[0x2F] & 0x01) == 0)
+			zeroPage[0x74] = zeroPage[ZeroPage.map_WorldPosition_X];
+			zeroPage[0x75] = zeroPage[ZeroPage.map_WorldPosition_Y];
+			if ((zeroPage[0x2F] & 0x01) == 0)
 				return;
-			zeroPages[0x74] = zeroPages[0x30];
-			zeroPages[0x75] = zeroPages[0x31];
+			zeroPage[0x74] = zeroPage[0x30];
+			zeroPage[0x75] = zeroPage[0x31];
 		}
 	}
 }

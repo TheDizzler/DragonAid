@@ -8,14 +8,12 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 		/// <summary>
 		/// <para>256 bytes from 0x00 to 0xFF of NES RAM.</para>
 		/// </summary>
-		public static class ZeroPages
+		public static class ZeroPage
 		{
 			/// <summary>
 			/// 0x14
-			/// <para>
-			/// <br>$01 A</br><br>$02 B</br><br>$04 Select</br><br>$08 Start</br>
-			/// <br>$10 Up</br><br>$20 Down</br><br>$40 Left</br><br>$80 Right</br>
-			/// </para>
+			/// $01 A<br/>$02 B<br/>$04 Select<br/>$08 Start<br/>
+			/// $10 Up<br/>$20 Down<br/>$40 Left<br/>$80 Right<br/>
 			/// </summary>
 			public static byte controller1_ButtonStore = 0x14;
 			/// <summary>
@@ -23,20 +21,27 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </summary>
 			public static byte controller2_ButtonStore = 0x15;
 			/// <summary>
-			/// <para>zeroPages 0x1B
-			/// <br>NMI_VBlank_3C000 - if == 10, skip PPU_Update</br>
-			/// </para>
+			/// zeroPages 0x1B<br/>
+			/// NMI_VBlank_3C000 - if == 10, skip PPU_Update<br/>
 			/// </summary>
-			public static byte loopTrap_flag = 0x1B;
+			public static byte loopTrap_flag_1B = 0x1B;
 			/// <summary>
 			/// 0x1C
 			/// </summary>
 			public static byte currentRNGSeed = 0x1C;
 			/// <summary>
+			/// Where in the PPU memory the next PPU write saves to.
+			/// </summary>
+			public static byte PPU_WriteAddress_1F = 0x1F;
+			/// <summary>
 			/// DynamicSubroutine address: 0x21 (zeroPages).
 			/// 2 bytes.
 			/// </summary>
-			public static byte dynamicSubroutineAddr = 0x21;
+			public static byte dynamicSubroutine_21 = 0x21;
+			/// <summary>
+			/// Usually where the last bank Id is stored.
+			/// </summary>
+			public static byte bankSwitch_LastBankIndex_24 = 0x24;
 			/// <summary>
 			/// <para>zeroPages 0x28</para>
 			/// </summary>
@@ -63,13 +68,17 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </summary>
 			public static byte lightOrDarkWorld = 0x2F;
 			/// <summary>
+			/// Seems to always be $FD
+			/// </summary>
+			public static byte post_NMI_store_32 = 0x32;
+			/// <summary>
 			/// 0x7E
 			/// </summary>
 			public static byte menu_PointerIndex = 0x7E;
 			/// <summary>
 			/// <para>2 bytes starting at 0x86.
-			/// <br>[1] if bit 3 || 4 == 1, scroll horizontal</br>
-			/// <br>[1] if bit 0-3 == 1, scroll vertical</br></para>
+			/// [1] if bit 3 || 4 == 1, scroll horizontal<br/>
+			/// [1] if bit 0-3 == 1, scroll vertical<br/></para>
 			/// </summary>
 			public static byte mapScrollCheck = 0x86;
 			/// <summary>
@@ -77,10 +86,19 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </summary>
 			public static byte currentTileType = 0x92;
 			/// <summary>
-			/// 0xB0
-			/// <para>investigation needed</para>
+			/// 0xB0<br/>
+			/// investigation needed
 			/// </summary>
 			public static byte characterStatusRelated_Vector = 0xB0;
+			/// <summary>
+			/// 0xBE<br/>
+			/// the index that the next tile will be in the PPU	($00 to $FF)
+			/// </summary>
+			public static byte PPU_NextTileIndex_BE = 0xBE;
+			/// <summary>
+			/// monster sprite count
+			/// </summary>
+			public static byte MonsterSpriteCount_C0 = 0xC0;
 			/// <summary>
 			/// 0xCA
 			/// </summary>
@@ -94,11 +112,10 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </summary>
 			public static byte Item_Check_IsEquipped = 0xCF;
 			/// <summary>
-			/// 0xD6
-			/// <para>
-			/// Array of addresses (2 bytes) to next byte data of a track.
-			/// <br>8 bytes total</br>
-			/// </para>
+			/// 0xD6<br/>
+			/// 
+			/// Array of addresses (2 bytes) to next byte data of a track.<br/>
+			/// 8 bytes total
 			/// </summary>
 			public static byte APU_TrackPosition = 0xD6;
 			/// <summary>
@@ -108,61 +125,77 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// <summary>
 			/// 0xE0
 			/// <para>An array of instructions per track.
-			/// <br>+0 and +1 are probably temp variables for current track.</br>
-			/// <br>0x10 is probably for DMC.</br>
-			/// <br>if (x + 2 != 0) APU_UpdateTrack()</br>
-			/// <br>+0 set SqxTimer(4002/4006), +1 sets SqxLength(4003/4007)</br>
-			/// <br>x + 2, x + 3, x + 12, x + 13 may be duty cycle related</br>
-			/// <br>when (x == 2 || x == 4): {x + 3 = x + 1; x + 13 = x + 11;}</br>
+			/// +0 and +1 are probably temp variables for current track.<br/>
+			/// 0x10 is probably for DMC.<br/>
+			/// if (x + 2 != 0) APU_UpdateTrack()<br/>
+			/// +0 set SqxTimer(4002/4006), +1 sets SqxLength(4003/4007)<br/>
+			/// x + 2, x + 3, x + 12, x + 13 may be duty cycle related<br/>
+			/// when (x == 2 || x == 4): {x + 3 = x + 1; x + 13 = x + 11;}<br/>
 			/// </para>
 			/// </summary>
 			public static byte APU_TrackInstructions = 0xE0;
 			/// <summary>
 			/// 0xF6 2 bytes
 			/// <para>
-			/// <br>[0]: offset to APU_DutySetup_Addresses where duty settings (?) are stored.</br></para>
+			/// [0]: offset to APU_DutySetup_Addresses where duty settings (?) are stored.<br/></para>
 			/// </summary>
 			public static byte APU_TempDutySettings = 0xF6;
 		}
 
 		/// <summary>
 		/// <para>
-		/// <br>2048 bytes from 0x00 to 0x07FF. (mirrors from 0x800 to 0x1FFF)</br>
-		/// <br>Technically includes zeroPages but for simplicity we are keeping these seperate.</br></para>
+		/// 2048 bytes from 0x00 to 0x07FF. (mirrors from 0x800 to 0x1FFF)<br/>
+		/// Technically includes zeroPages but for simplicity we are keeping these seperate.<br/></para>
 		/// </summary>
 		public static class NESRAM
 		{
 			/// <summary>
-			/// <para>NES RAM 0x0200
-			/// <br>This is where sprites are pre-loaded. During NMI, these get copied to the PPU OAM through RegisterPointers.SpriteDMA_4014</br></para>
+			/// 0x200 <br/>
+			/// This is where sprites are pre-loaded. During NMI, these get copied to the PPU OAM through RegisterPointers.SpriteDMA_4014
 			/// </summary>
-			public static int PPU_SpriteDMA = 0x0200;
+			public static int PPU_SpriteDMA_200 = 0x200;
 			/// <summary>
-			/// <para>NES RAM 0x300</para>
+			/// 0x300
 			/// </summary>
-			public static int PPU_StagingArea = 0x0300;
+			public static int PPU_StagingArea_300 = 0x300;
 			/// <summary>
 			/// 0x03E7
 			/// </summary>
-			public static int PPU_BGPaletteColor_Store = 0x03E7;
+			public static int PPU_BGPaletteColor_Store_3E7 = 0x3E7;
 			/// <summary>
-			/// 0x0400
-			/// <para>96 byte length array</para>
+			/// 0x3F4<br/>
+			/// 12 bytes
 			/// </summary>
-			public static int menu_WriteBlock = 0x0400;
+			public static int PPU_SpritePalette_Store_3F4 = 0x3F4;
 			/// <summary>
-			/// 0x0470
+			/// 0x400<br/>
+			/// 96 byte length array<br/>
+			/// This holds the sprite data that will get pushed into the PPU.
 			/// </summary>
-			public static int menu_PositionA = 0x0470;
+			public static int PPU_WriteBlock_400 = 0x400;
 			/// <summary>
-			/// 0x0471
+			/// 0x470
 			/// </summary>
-			public static int menu_WriteDimensions = 0x0471;
+			public static int menu_PositionA_470 = 0x470;
+			/// <summary>
+			/// 0x471
+			/// </summary>
+			public static int menu_WriteDimensions_471 = 0x471;
 			/// <summary>
 			/// 0x047C
 			/// <para>it this is  >= 6A, run track updates</para>
 			/// </summary>
 			public static int updateTracks = 0x047C;
+			/// <summary>
+			/// For monster sprites<br/>
+			/// [00 + X]: the nametable that the sprites for this monster are in($00 or $01)<br/>
+			/// [01 + x]: the index that the sprites for this monster starts at ($00 to $FF)<br/>
+			/// </summary>
+			public static int SpriteStart_PPUAddress_Table_4D0 = 0x04D0;
+			/// <summary>
+			/// 
+			/// </summary>
+			public static int NextMonsterStart_PPUAddress_4F3 = 0x04F3;
 			/// <summary>
 			/// <para>NES RAM 0x0644</para>
 			/// 0 - Up
@@ -171,8 +204,8 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// 3 - Left
 			/// </summary>
 			public static int walkDirection = 0x0644;
-			public static int PPUScroll_X = 0x06D0;
-			public static int PPUScroll_Y = 0x06D1;
+			public static int PPUScroll_X_6D0 = 0x06D0;
+			public static int PPUScroll_Y_6D1 = 0x06D1;
 			/// <summary>
 			/// <para>NES RAM 0x06D2</para>
 			/// INC in NMI to signify NMI completed.
@@ -181,11 +214,11 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// <summary>
 			/// <para>NES RAM 0x06D3</para>
 			/// </summary>
-			public static int PPUControl_2000_Settings = 0x06D3;
+			public static int PPUControl_2000_Settings_6D3 = 0x06D3;
 			/// <summary>
 			/// <para>NES RAM 0x06D4</para>
 			/// </summary>
-			public static int PPUMask_2001_Settings = 0x06D4;
+			public static int PPUMask_2001_Settings_6D4 = 0x06D4;
 			/// <summary>
 			/// Either the current bank or bank to switch back to.
 			/// </summary>
@@ -196,16 +229,16 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			public static int caretUpdate_flag = 0x06D6;
 			/// <summary>
 			/// <para>NES RAM 0x06D9
-			/// <br>amount of lines to write to PPU from staging area</br></para>
+			/// amount of lines to write to PPU from staging area<br/></para>
 			/// </summary>
-			public static int PPU_DrawBackgrounLineCount = 0x06D9;
+			public static int PPU_DrawBackgrounLineCount_6D9 = 0x06D9;
 			/// <summary>
 			/// 0x06DE
 			/// </summary>
 			public static int timeSubValue = 0x06DE;
 			/// <summary>
 			/// <para>0x06DF
-			/// <br>In-game day/night counter</br></para>
+			/// In-game day/night counter<br/></para>
 			/// </summary>
 			public static int timeOfDay = 0x06DF;
 			/// <summary>
@@ -216,65 +249,65 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// <summary>
 			/// 0x06F0
 			/// <para>
-			/// <br>The current sequence playing.</br>
-			/// <br>if bit 0 == 1, skip APU updates.</br>
+			/// The current sequence playing.<br/>
+			/// if bit 0 == 1, skip APU updates.<br/>
 			/// </para>
 			/// </summary>
 			public static int APU_SequenceID = 0x6F0;
 			/// <summary>
 			/// <para>NesRam 0x073C.
-			/// <br></br>2 bytes per character:
-			/// <br></br>$8080 is normal, anything else is dead?</para>
+			/// <br/>2 bytes per character:
+			/// <br/>$8080 is normal, anything else is dead?</para>
 			/// </summary>
 			public static int Character_Statuses = 0x073C;
 		}
 
 		/// <summary>
 		/// <para>
-		/// <br>0x2000 - 0x2007 PPU registers (mirrors from 0x2008 to 0x3FFF)</br>
-		/// <br>0x4000 - 0x4017 APU and I/O registers</br>
-		/// <br>0x4018 - 0x401F APU and I/O functionality that is normally disabled.</br>
+		/// 0x2000 - 0x2007 PPU registers (mirrors from 0x2008 to 0x3FFF)<br/>
+		/// 0x4000 - 0x4017 APU and I/O registers<br/>
+		/// 0x4018 - 0x401F APU and I/O functionality that is normally disabled.<br/>
 		/// </para>
 		/// </summary>
 		public static class Registers
 		{
 			/// <summary>
 			/// <para>0x2000
-			/// <br>Access: write</br>
-			/// <br>VPHB SINN</br>
-			/// <br>NMI enable (V), PPU master/slave (P), sprite height (H), background tile select (B), sprite tile select (S), increment mode (I), nametable select (NN) </br>
+			/// Access: write<br/>
+			/// VPHB SINN<br/>
+			/// NMI enable (V), PPU master/slave (P), sprite height (H), background tile select (B), sprite tile select (S), increment mode (I), nametable select (NN) <br/>
 			/// </para>
 			/// </summary>
 			public static int PPU_Control = 0x2000;
 			/// <summary>
 			/// <para> 0x2001
-			/// <br>Access: write</br>
-			/// <br>BGRs bMmG</br>
-			/// <br>color emphasis (BGR), sprite enable (s), background enable (b), sprite left column enable (M), background left column enable (m), greyscale (G) </br>
+			/// Access: write<br/>
+			/// BGRs bMmG<br/>
+			/// color emphasis (BGR), sprite enable (s), background enable (b), sprite left column enable (M), background left column enable (m), greyscale (G) <br/>
 			/// </para>
 			/// </summary>
 			public static int PPU_Mask = 0x2001;
 			/// <summary>
-			/// <para><br>0x2002</br>
-			/// <br>Reading this register will clear bit 7 and the address latches PPU_Scroll and PPU_Addr.</br>
-			/// <br>Race Condition Warning: Reading PPU_Status within two cycles of the start of vertical
-			/// blank will return 0 in bit 7 but clear the latch anyway, causing NMI to not occur that frame.</br>
+			/// <para>0x2002<br/>
+			/// Reading this register will clear bit 7 and the address latches PPU_Scroll and PPU_Addr.<br/>
+			/// Race Condition Warning: Reading PPU_Status within two cycles of the start of vertical
+			/// blank will return 0 in bit 7 but clear the latch anyway, causing NMI to not occur that frame.<br/>
 			/// </para>
 			/// </summary>
 			public static int PPU_Status = 0x2002;
 			/// <summary>
 			/// <para>0x2005
-			/// <br>Access: write twice (x, then y)</br>
-			/// <br>fine scroll position (two writes: X scroll, Y scroll)</br>
-			/// <br></br>
+			/// Access: write twice (x, then y)<br/>
+			/// fine scroll position (two writes: X scroll, Y scroll)<br/>
+			/// <br/>
 			/// </para>
 			/// </summary>
 			public static int PPU_Scroll = 0x2005;
 			/// <summary>
 			/// 0x2006
 			/// <para>
-			/// <br>Set PPU address, write twice - Write only</br>
-			/// <br>Where in PPU memory the sprite gets written</br>
+			/// Set PPU address, write twice - Write only<br/>
+			/// Where in PPU memory the sprite gets written<br/>
 			/// </para>
 			/// </summary>
 			public static int PPU_Addr = 0x2006;
@@ -286,71 +319,71 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 
 			/// <summary>
 			/// <para> 0x4000
-			/// <br>DDLC VVVV</br>
-			/// <br>Duty (D), envelope loop / length counter halt (L), constant volume (C), volume/envelope (V)</br>
-			/// <br>Duty Cycles - 0: 12.5%; 1: 25%; 2: 50%; 3: 25% negated</br>
+			/// DDLC VVVV<br/>
+			/// Duty (D), envelope loop / length counter halt (L), constant volume (C), volume/envelope (V)<br/>
+			/// Duty Cycles - 0: 12.5%; 1: 25%; 2: 50%; 3: 25% negated<br/>
 			/// </para>
 			/// </summary>
 			public static int SQ0Duty = 0x4000;
 			/// <summary>
 			/// <para>0x4001
-			/// <br>EPPP NSSS</br>
-			/// <br>Sweep unit: enabled (E), period (P), negate (N), shift (S)</br>
-			/// <br>E--- ---- (bit 7) Enabled flag </br>
-			/// <br>-PPP ---- (bits 6-4) The divider's period is P + 1 half-frames </br>
-			/// <br>---- N--- (bit 3) 0: sweeping down 1: sweeping up</br>
-			/// <br>---- -SSS (bits 2-0) Shift count (number of bits) </br>
+			/// EPPP NSSS<br/>
+			/// Sweep unit: enabled (E), period (P), negate (N), shift (S)<br/>
+			/// E--- ---- (bit 7) Enabled flag <br/>
+			/// -PPP ---- (bits 6-4) The divider's period is P + 1 half-frames <br/>
+			/// ---- N--- (bit 3) 0: sweeping down 1: sweeping up<br/>
+			/// ---- -SSS (bits 2-0) Shift count (number of bits) <br/>
 			/// </para>
 			/// </summary>
 			public static int SQ0Sweep = 0x4001;
 			/// <summary>
 			/// <para> 0x4002
-			/// <br>TTTT TTTT</br>
-			/// <br>Timer low bytes(T)</br>
-			/// <br>High 3 bytes are in 0x4003</br>
+			/// TTTT TTTT<br/>
+			/// Timer low bytes(T)<br/>
+			/// High 3 bytes are in 0x4003<br/>
 			/// </para>
 			/// </summary>
 			public static int SQ0Timer = 0x4002;
 			/// <summary>
 			/// <para>0x4003
-			/// <br>LLLL LTTT</br>
-			/// <br>Length counter load (L), timer high bytes(T)</br>
-			/// <br>Low 8 bytes of timer are in 0x4002</br>
+			/// LLLL LTTT<br/>
+			/// Length counter load (L), timer high bytes(T)<br/>
+			/// Low 8 bytes of timer are in 0x4002<br/>
 			/// </para>
 			/// </summary>
 			public static int SQ0Length = 0x4003;
 
 			/// <summary>
 			/// <para> 0x4004
-			/// <br>DDLC VVVV</br>
-			/// <br>Duty (D), envelope loop / length counter halt (L), constant volume (C), volume/envelope (V)</br>
+			/// DDLC VVVV<br/>
+			/// Duty (D), envelope loop / length counter halt (L), constant volume (C), volume/envelope (V)<br/>
 			/// </para>
 			/// </summary>
 			public static int SQ1Duty = 0x4004;
 			/// <summary>
 			/// <para>0x4005
-			/// <br>EPPP NSSS</br>
-			/// <br>Sweep unit: enabled (E), period (P), negate (N), shift (S)</br>
-			/// <br>E--- ---- (bit 7) Enabled flag </br>
-			/// <br>-PPP ---- (bits 6-4) The divider's period is P + 1 half-frames </br>
-			/// <br>---- N--- (bit 3) 0: sweeping down 1: sweeping up</br>
-			/// <br>---- -SSS (bits 2-0) Shift count (number of bits) </br>
+			/// EPPP NSSS<br/>
+			/// Sweep unit: enabled (E), period (P), negate (N), shift (S)<br/>
+			/// E--- ---- (bit 7) Enabled flag <br/>
+			/// -PPP ---- (bits 6-4) The divider's period is P + 1 half-frames <br/>
+			/// ---- N--- (bit 3) 0: sweeping down 1: sweeping up<br/>
+			/// ---- -SSS (bits 2-0) Shift count (number of bits) <br/>
 			/// </para>
 			/// </summary>
 			public static int SQ1Sweep = 0x4005;
 			/// <summary>
 			/// <para> 0x4006
-			/// <br>TTTT TTTT</br>
-			/// <br>Timer low bytes(T)</br>
-			/// <br>High 3 bytes are in 0x4007</br>
+			/// TTTT TTTT<br/>
+			/// Timer low bytes(T)<br/>
+			/// High 3 bytes are in 0x4007<br/>
 			/// </para>
 			/// </summary>
 			public static int SQ1Timer = 0x4006;
 			/// <summary>
 			/// <para>0x4007
-			/// <br>LLLL LTTT</br>
-			/// <br>Length counter load (L), timer high bytes(T)</br>
-			/// <br>Low 8 bytes of timer are in 0x4006</br>
+			/// LLLL LTTT<br/>
+			/// Length counter load (L), timer high bytes(T)<br/>
+			/// Low 8 bytes of timer are in 0x4006<br/>
 			/// </para>
 			/// </summary>
 			public static int SQ1Length = 0x4007;
@@ -365,17 +398,17 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			public static int TriangleUnused = 0x4009;
 			/// <summary>
 			/// <para>0x400A
-			/// <br>TTTT TTTT</br>
-			/// <br>Timer low bytes(T)</br>
-			/// <br>High 3 bytes are in 0x4007</br>
+			/// TTTT TTTT<br/>
+			/// Timer low bytes(T)<br/>
+			/// High 3 bytes are in 0x4007<br/>
 			/// </para>
 			/// </summary>
 			public static int TriangleTimer = 0x400A;
 			/// <summary>
 			/// <para>0x400B
-			/// <br>LLLL LTTT</br>
-			/// <br>Length counter load (L), timer high bytes(T)</br>
-			/// <br>Low 8 bytes of timer are in 0x400A</br>
+			/// LLLL LTTT<br/>
+			/// Length counter load (L), timer high bytes(T)<br/>
+			/// Low 8 bytes of timer are in 0x400A<br/>
 			/// </para>
 			/// </summary>
 			public static int TriangleLength = 0x400B;
@@ -383,19 +416,19 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// <summary>
 			/// 0x4010
 			/// <para>
-			/// <br>IL-- RRRR</br>
-			/// <br> IRQ enable (I), loop (L), frequency (R)</br></para>
+			/// IL-- RRRR<br/>
+			///  IRQ enable (I), loop (L), frequency (R)<br/></para>
 			/// </summary>
 			public static int DMCFreq = 0x4010;
 			/// <summary>
 			/// <para>0x4011
-			/// <br>-DDD DDDD</br>
-			/// <br>Load counter (D)</br></para>
+			/// -DDD DDDD<br/>
+			/// Load counter (D)<br/></para>
 			/// </summary>
 			public static int DmcCounter = 0x4011;
 			/// <summary>
-			/// <para><br>0x4014</br>
-			/// <br>Writing $XX will upload 256 bytes of data from CPU page $XX00-$XXFF to the internal PPU OAM.</br>
+			/// <para>0x4014<br/>
+			/// Writing $XX will upload 256 bytes of data from CPU page $XX00-$XXFF to the internal PPU OAM.<br/>
 			/// </para>
 			/// </summary>
 			/// 
@@ -403,33 +436,33 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			public static int SpriteDMA = 0x4014;
 			/// <summary>
 			/// <para>0x4015
-			/// <br>Used to enable and disable individual channels, control the DMC, and can read the status of length counters and APU interrupts. </br>
+			/// Used to enable and disable individual channels, control the DMC, and can read the status of length counters and APU interrupts. <br/>
 			/// </para>
 			/// <para>
-			/// <br>WRITE</br>
-			/// <br>---D NT21</br>
-			/// <br>Enable DMC (D), noise (N), triangle (T), and pulse channels (2/1) </br>
+			/// WRITE<br/>
+			/// ---D NT21<br/>
+			/// Enable DMC (D), noise (N), triangle (T), and pulse channels (2/1) <br/>
 			/// </para>
 			/// <para>
-			/// <br>READ</br>
-			/// <br>IF-D NT21</br>
-			/// <br>DMC interrupt (I), frame interrupt (F), DMC active (D), length counter > 0 (N/T/2/1) </br>
+			/// READ<br/>
+			/// IF-D NT21<br/>
+			/// DMC interrupt (I), frame interrupt (F), DMC active (D), length counter > 0 (N/T/2/1) <br/>
 			/// </para>
 			/// </summary>
 			public static int APUStatus = 0x4015;
 			/// <summary>
 			/// 0x4016
 			/// <para>
-			/// <br>WRITE</br>
-			/// <br>---- ---A</br>
-			/// <br>Output data (strobe) to both controllers.</br>
+			/// WRITE<br/>
+			/// ---- ---A<br/>
+			/// Output data (strobe) to both controllers.<br/>
 			/// </para>
 			/// </summary>
 			public static int Ctrl1 = 0x4016;
 			/// <summary>
 			/// 0x4017
 			/// <para>
-			/// <br></br>
+			/// <br/>
 			/// </para>
 			/// </summary>
 			public static int Ctrl2_FrameCounter = 0x4017;
@@ -449,9 +482,79 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </summary>
 			public static int encounterCheckRequired_c = 0x60CB;
 			/// <summary>
+			/// 0x60D6<br/>
+			/// UniversalConsts.SaveGameLength = 0x315
+			/// </summary>
+			public static int saveGame1 = 0x60D6;
+			/// <summary>
+			/// 0x60D6
+			/// </summary>
+			public static int saveGame1_Character_Levels = 0x60D6;
+			public static int saveGame1_Character_Strengths = 0x60E2;
+			public static int saveGame1_Character_Agilities = 0x60EE;
+			public static int saveGame1_Character_Intelligences = 0x60FA;
+			public static int saveGame1_Character_Lucks = 0x6106;
+			public static int saveGame1_Character_SexClasses = 0x611E;
+			/// <summary>
+			/// 0x612A <br/>
+			/// 2 bytes each.
+			/// </summary>
+			public static int saveGame1_Character_CurrentHP = 0x612A;
+			/// <summary>
+			/// 0x6142 <br/>
+			/// 2 bytes each.
+			/// </summary>
+			public static int saveGame1_Character_MaxHP = 0x6142;
+			/// <summary>
+			/// 0x615A <br/>
+			/// 2 bytes each.
+			/// </summary>
+			public static int saveGame1_Character_CurrentMP = 0x615A;
+			/// <summary>
+			/// 0x6172 <br/>
+			/// 2 bytes each.
+			/// </summary>
+			public static int saveGame1_Character_MaxMP = 0x6172;
+			/// <summary>
+			/// 0x618A <br/>
+			/// 2 bytes each.
+			/// </summary>
+			public static int saveGame1_Character_Statuses = 0x618A;
+			/// <summary>
+			/// 0x61A2<br/>
+			/// 3 bytes each.
+			/// </summary>
+			public static int saveGame1_Character_Experiences = 0x61A2;
+			/// <summary>
+			/// 0x61C6<br/>
+			/// 3 bytes each.
+			/// </summary>
+			public static int saveGame1_Character_ReturnDestinations = 0x61C6;
+			/// <summary>
+			/// 0x61EA<br/>
+			/// his is followed by each created character name, 8 bytes per character, up to 96 bytes (?) total.
+			/// </summary>
+			public static int saveGame1_Character_Names = 0x61EA;
+			/// <summary>
+			/// 0x60D6<br/>
+			/// UniversalConsts.SaveGameLength = 0x315
+			/// </summary>
+			public static int saveGame2 = 0x63EB;
+			/// <summary>
+			/// 0x60D6<br/>
+			/// UniversalConsts.SaveGameLength = 0x315
+			/// </summary>
+			public static int saveGame3 = 0x6700;
+			/// <summary>
 			/// 0x67C1
 			/// </summary>
-			public static int Character_NameIndices = 0x67C1;
+			public static int saveGame3_Character_NameIndices = 0x67C1;
+
+			/// <summary>
+			/// 0x6814<br/>
+			/// This is followed by each created character name, 8 bytes per character, up to 96 bytes (?) total.
+			/// </summary>
+			public static int saveGame3_HeroName = 0x6814;
 			/// <summary>
 			/// 0x6A3D
 			/// <para>when not 0, signals APU to turn on the DMC</para>
@@ -467,8 +570,8 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 
 		/// <summary>
 		/// <para>Pointers in raw ROM. 
-		/// <br></br>Use .offset for address to make edits to ROM (includes iNES header).
-		/// <br></br>Use .pointer for referencing address while games is RUNNING (no iNES header)</para>
+		/// <br/>Use .offset for address to make edits to ROM (includes iNES header).
+		/// <br/>Use .pointer for referencing address while games is RUNNING (no iNES header)</para>
 		/// </summary>
 		public static class ROM
 		{
@@ -479,13 +582,13 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </summary>
 			public static Address[] NightTimeCheckAddresses = new Address[]
 			{
-			new Address("GetEncounterRate", 0x003BD, 1),
-			new Address("SetMenuColor", 0x35067, 1),
+				new Address("GetEncounterRate", 0x003BD, 1),
+				new Address("SetMenuColor", 0x35067, 1),
 			};
 
 
 
-			/* Bank 0 $00000 */
+			#region Bank 0 $00000	/* Bank 0 $00000 */
 			/// <summary>
 			/// Index derived from EncounterMonsterLists ( >>= 5)
 			/// </summary>
@@ -540,27 +643,58 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// </summary>
 			public static Address CharacterLevelUpPointers = new Address("This requires a better name three", 0x02802);
 			public static Address MonsterStatBlockAddress = new Address("Monster Data 1", 0x0032D3, UniversalConsts.MonsterStatLength);
-
+			#endregion
 
 			/* Bank 1 $04000 */
 			public static Address MonsterRegeneration = new Address("Monster Regeneration", 0x047EF);
 
 
-			/* Bank 2 $08000 */
+			#region Bank 2 $08000	/* Bank 2 $08000 */
+
 			/// <summary>
-			/// [0,1] 1st part of item name
-			/// [2,3] 2nd part of item name
-			/// [4,5] = $B3BC monster name list 1
-			/// [6,7] = $B8BF End of MonsterName_List
+			/// 0x097AB<br/>
+			/// Address (NESRAM $0400) where data to be copied to PPU is written to.
+			/// </summary>
+			public static Address PPU_WriteBlockAddress = new Address("PPU data staging area", 0x097AB, 2);
+
+			/// <summary>
+			/// 0x0AA0E<br/>
+			/// [0,1] 1st part of item name<br/>
+			/// [2,3] 2nd part of item name<br/>
+			/// [4,5] = $B3BC monster name list 1<br/>
+			/// [6,7] = $B8BF End of MonsterName_List<br/>
 			/// [$0A] = $AA28 Class name list
 			/// </summary>
 			public static Address NamePointers = new Address("Item, Monster, Class name pointers", 0x0AA0E);
+			#endregion
 
-			/* Bank 4 $10000 */
+			#region Bank 3	$0C000			/* Bank 3 $0C000 */
+			/// <summary>
+			/// 0x0C000
+			/// </summary>
+			public static Address EncryptedSprite_Slime = new Address("Encrypted slime data", 0x0C000)
+			{
+				notes = "bytes 0 & 1 are probably some sort of instruction bytes\n"
+					+ "byte 2 is the base byte\n"
+					+ "byte 3,4 are bit flags: 0 use base byte, 1 use next byte\n"
+					+ "16 bytes (?) are read in this way and copied to the PPU_WriteBlock+0 "
+					+ "where the bits are reversed and reorder into PPU_WriteBlock+16 (presumably for mirroring?) ",
+			};
+
+			#endregion
+
+			#region	Bank 4	$10000			/* Bank 4 $10000 */
+			/// <summary>
+			/// 0x1342A
+			/// </summary>
 			public static Address MonsterActionChancesType1 = new Address("ActionChancesType1", 0x1342A);
+			/// <summary>
+			/// 0x13432
+			/// </summary>
 			public static Address MonsterActionChancesType2 = new Address("ActionChancesType2", 0x13432);
+			#endregion
 
-			/* Bank 5 $14000 */
+			#region 5 $14000			/* Bank 5 $14000 */
 			/// <summary>
 			/// 0x14018
 			/// </summary>
@@ -620,6 +754,12 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 					+ "Standard order: 00 02 04 06\n"
 					+ "Other orders not observed yet",
 			};
+			public static Address MainMenu_CHR_Sprites = new Address("MainMenu_CHR_Sprites", 0x17601, 1120)
+			{
+				notes = "Each sprite is 8 bytes\r\n"
+				+ "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e\r\n"
+				+ "f, g, ..... until the \"equipped\" |e symbol",
+			};
 			public static Address MapScrollVector = new Address("", 0x17A72, 4)
 			{
 				notes = "[$00]: (moving up) $BB13\n"
@@ -627,8 +767,9 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 					+ "[$04]: (moving down) $BAF8\n"
 					+ "[$06]: (moving left) $BAE5",
 			};
+			#endregion
 
-			/* Bank 6 $18000 */
+			#region 6 $18000			/* Bank 6 $18000 */
 			/// <summary>
 			/// 0x18000
 			/// </summary>
@@ -637,6 +778,10 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 				notes = "[$0A]: $B387 \n"
 					+ "[$16]: $B755 (Day/Night Palettes)\n",
 			};
+			/// <summary>
+			/// 0x1852D
+			/// </summary>
+			public static Address Maps_TownData = new Address("Start of compressed town map data", 0x1852D);
 			/// <summary>
 			/// 0x1B755
 			/// </summary>
@@ -652,6 +797,40 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			{
 				notes = "0x00, 0x1E, 0x3C, 0x5A, 0x78, 0x96, 0xB4",
 			};
+			/// <summary>
+			/// 0x1ED35
+			/// </summary>
+			public static Address SaveGameLength = new Address("SaveGameLength", 0x1ED35, 2);
+			/// <summary>
+			/// 0x1ED37
+			/// </summary>
+			public static Address FirstSaveGameAddress = new Address("FirstSaveGameAddress", 0x1ED37, 2);
+			/// <summary>
+			/// 0x1ED42
+			/// </summary>
+			public static Address PreGenNames = new Address("PreGenNames", 0x1ED42, 94);
+			public static Address LoadGame_SaveGameCharacterDataPointers = new Address("Pointers to character save data", 0x1F285, 10)
+			{
+				notes = "[$01]: $60D6 levels "
+				+ "[$02]: $612A current HP"
+				+ "[$04]: $612A "
+				+ "[$06]: $61EA names"
+				+ "[$08]: $62AA spells",
+			};
+			public static Address LoadGame_RAMCharacterDataPointers = new Address("Pointers to character data in RAM", 0x1F28F, 10)
+			{
+				notes = "[$00]: 700 Levels "
+				+ "[$02]: 71C Current HP (2 bytes each) "
+				+ "[$04]: 744 Exp (3 bytes each) "
+				+ "[$05]: 75C (3 bytes each) "
+				+ "[$06]: 79C Spells (8 bytes each)",
+			};
+			/// <summary>
+			/// 0x1F2A7<br/>
+			/// </summary>
+			public static Address SaveGame_CharacterNameOffset = new Address("SaveGame_CharacterNameOffset", 0x1F2A7, 2);
+			#endregion
+
 
 			/* Bank 9 $24000 */
 			public static Address WeaponPowers = new Address("Weapon Powers", 0x027990, UniversalConsts.WeaponCount);
@@ -726,20 +905,31 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// [$18]:$9CFE -> (#69)				[$26]:$93C7 ->
 			/// [$28]:$93F1 -> Menu_MainCommand		[$2A]:$9420 -> (#15) [$34]:$94BB -> 
 			/// [$2C]: Item character select
-			/// [$36]:$94DB -> FIGHT.PARRY.ITEM.	[$69]: Item window	[$72]:$96A9 -> Enemy Display, Interactive
+			/// [$36]:$94DB -> FIGHT.PARRY.ITEM.	[$57]:$9A2B -> Change Message Speed
+			/// [$69]: Item window	[$72]:$96A9 -> Enemy Display, Interactive
 			/// [$7A]:$96DD -> Dialog Text			[$7C]:$96E9 -> (Someone died) Redirects to $96DD
 			/// [$7E]:$96ED -> Enemy Display, Non-Interactive
 			/// </summary>
 			public static Address MenuPointers = new Address("Menu Adresses", 0x38F84)
 			{
 				notes = "There are at least 2 type of pointer in this list: "
-				+ "1) normal instructions and 2) redirect to normal instructions.\n"
-				+ "If byte 0 is >= $80, then it is case 2). Bytes 2 and 3 is the new menu pointer, "
-				+ "and byte 1 is menuPositionA & B.\n"
-				+ "How to read normal instructions:\n"
-				+ "[$00]: "
-				+ "[$01]: if >= 10, the height is dynamic. Otherwise, this number *2 == height of menu in 8 pixel lines.",
+					+ "1) normal instructions and 2) redirect to normal instructions.\n"
+				+ "[$00]: menu width (stored in 6AE9); unless >= $80, then it is case 2). Bytes 2 and 3 is the new menu pointer, "
+					+ "and byte 1 is menuPositionA & B.\n"
+					+ "How to read normal instructions:\n"
+				+ "[$01]: menu height (stored in 6AEA and 7D): if >= 10, the height is dynamic. Otherwise, this number *2 == height of menu in 8 pixel lines.\n"
+				+ "[$02]: menu coordinates (stored in 0x470)\n"
+				+ "[$0]:"
+				+ "[$04]: Title code; ROL x3 & 0x03 (stored in 6AEB and 6AC6)\n"
+				+ "[$07]: if >= 0x80, then menu waits for player input, otherwise, autoclose.\n"
+				+ "[$0]:"
+				,
 			};
+			public static Address Menu_SaveGameSelect = new Address("Menu_SaveGameSelect", 0x39B63);
+			/// <summary>
+			/// 0x39BC5
+			/// </summary>
+			public static Address Menu_ChangeMessageSpeed = new Address("Menu_ChangeMessageSpeed", 0x39BC5);
 			/// <summary>
 			/// 0x39D2B
 			/// </summary>
@@ -755,7 +945,7 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			public static Address LoadSpritesVector = new Address("Unknown", 0x3BA34);
 
 
-			/* Bank F $3C000 (low default) */
+			#region $0F				/* Bank F $3C000 (low default) */
 			/// <summary>
 			/// 0x3C000
 			/// </summary>
@@ -796,13 +986,13 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// 0x3FFFE
 			/// </summary>
 			public static Address IRQBRKPointer_3C000 = new Address("IRQ/BRK address", 0x3FFFE, 2);
+			#endregion
 
 
 
 
-
-			/* Bank 16 $58000 */
-			public static Address PaletterStoreOffsets = new Address(
+			#region Bank 16		/* Bank 16 $58000 */
+			public static Address PaletteStoreOffsets = new Address(
 				"Order in which palettes are written to $03E7 (PPU_BGPaletteColor_Store)", 0x58152);
 			/// <summary>
 			/// offsets to palettes for different times of day in DayNightPalettes vector (0x1B755)
@@ -812,6 +1002,30 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			{
 				notes = "Clock Value: 00, 1E, 3C, 5A, 78 (night start), 96, B4",
 			};
+			#endregion
+
+			#region Bank 17 $5C000
+			public static Address TitleScreen_DragonFadeIn_Palette = new Address("TitleScreen_DragonFadeIn_Palette", 0x5D8EF, 12);
+			public static Address TitleScreen_III_FadeStageWaitCount = new Address("TitleScreen_III_FadeStageWaitCount", 0x5D9E2, 5);
+			public static Address TitleScreen_FadeIn_Palettes = new Address("TitleScreen_FadeIn_Palettes", 0x5DA59, 24);
+			public static Address TitleScreen_FadingLetterMask = new Address("Cycling sprites that slowly reveal the W on the background", 0x5DC18, 18);
+			public static Address TitleScreen_DRAGON_Sprites = new Address("Slowly reveals from right to left \"DRAGON\" on title screen", 0x5DCAA, 48);
+			public static Address TitleScreen_WARRIOR = new Address("Slowly reveals from left to right \"WARRIOR\" on title screen", 0x5DCDA, 48);
+			public static Address TitleScreen_SpriteIndices = new Address("Tile Indices for torch sprites", 0x5DD0A, 32);
+			public static Address TitleScreen_NametableData = new Address("TitleScreen name table data", 0x5DD2A, 1024);
+			public static Address TitleScreen_Nametable_address = new Address("Pointer to TitleScreen_NametableData", 0x5E12A, 2);
+			public static Address TitleScreen_CopyTMSprites = new Address("Instructions to copy TM sprites from CHR to Sprite RAM, probably", 0x5E236, 8);
+			public static Address TitleScreen_CHRData = new Address("Sprites for title screen BG", 0x5E260, 7360);
+			public static Address TitleScreen_CHRData_Address_part1 = new Address("Pointer to CHRData_TitleScreen for first table", 0x5FF1F, 2);
+			public static Address TitleScreen_CHRData_Address_part2 = new Address("Pointer to CHRData_TitleScreen for 2nd table. Starts near end of 1st table.", 0x5FF21, 2);
+			public static Address TitleScreen_III_Sprites = new Address("CHR indices for most III sprites, from faded to least faded", 0x5FF23, 36 * 5)
+			{
+				notes = "36 sprites per stage, from most faded (stage 1) to 100% tangible (stage 5). "
+					+ "These are the CHR sprite indices but they get copied to the sprite RAM and displayed as such.",
+			};
+
+
+			#endregion
 
 			/* Bank 1E $78000 */
 			/// <summary>

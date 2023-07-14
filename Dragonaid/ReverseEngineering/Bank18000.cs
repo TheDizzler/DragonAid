@@ -16,7 +16,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		/// </summary>
 		public static void CheckDayNightTransitionTimes()
 		{
-			byte a = zeroPages[0xAA];
+			byte a = zeroPage[0xAA];
 			if ((a & 0x10) != 0)
 			{
 				L1B6E3();
@@ -33,7 +33,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			byte x = 0;
 			while (x < 0x07)
 			{ // _DynamicSubroutine_18000_A_Loop_
-				a = romData[ROM.DayNightTransitionTimes.offset + x];
+				a = romData[ROM.DayNightTransitionTimes.iNESAddress + x];
 				if (a == nesRam[NESRAM.timeOfDay])
 				{
 					L1B6D6();

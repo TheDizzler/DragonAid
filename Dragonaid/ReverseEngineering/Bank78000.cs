@@ -19,7 +19,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			registers[Registers.SQ1Sweep] = 0x08;
 			nesRam[NESRAM.updateTracks] = 0xFF;
 
-			zeroPages[0xFA] = 0;
+			zeroPage[0xFA] = 0;
 			APU_StartNewSequence(0);
 			APU_StartNewSequence(0x80); // this is an SFX
 		}
@@ -58,16 +58,16 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 				y = 0x1F;
 			a = y;
 			registers[Registers.APUStatus] = a;
-			zeroPages[0xFA] = (byte)(zeroPages[0xFA] & 0xDF);
-			a = romData[ROM.SFX_Pointers.offset + x + 1];
+			zeroPage[0xFA] = (byte)(zeroPage[0xFA] & 0xDF);
+			a = romData[ROM.SFX_Pointers.iNESAddress + x + 1];
 			if (a >= 0x80)
-				zeroPages[0xFA] = (byte)(zeroPages[0xFA] | 0x20);
+				zeroPage[0xFA] = (byte)(zeroPage[0xFA] | 0x20);
 			// _L7B99B_
 			a |= 0x80;
-			zeroPages[ZeroPages.SFXPointer + 1] = a;
-			zeroPages[ZeroPages.SFXPointer + 0] = romData[ROM.SFX_Pointers.offset + x + 0];
-			zeroPages[ZeroPages.APU_TrackInstructions + 10] = 0x01;
-			zeroPages[0xF5] = 0x00;
+			zeroPage[ZeroPage.SFXPointer + 1] = a;
+			zeroPage[ZeroPage.SFXPointer + 0] = romData[ROM.SFX_Pointers.iNESAddress + x + 0];
+			zeroPage[ZeroPage.APU_TrackInstructions + 10] = 0x01;
+			zeroPage[0xF5] = 0x00;
 			nesRam[NESRAM.APU_Track_Vector + 8] = 0;
 			APU_DisableUpdate();
 		}
