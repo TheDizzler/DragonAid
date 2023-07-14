@@ -49,11 +49,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASMCompiler.cs" />
-    <Compile Include="CPU2A03\ControlUnit6502.cs" />
-    <Compile Include="CPU.cs" />
-    <Compile Include="CPU2A03\Mappers.cs" />
-    <Compile Include="CPU2A03\Memory6502.cs" />
-    <Compile Include="CPU2A03\Registers.cs" />
+    <Compile Include="MiNes\CPU2A03\APURegisters.cs" />
+    <Compile Include="MiNes\CPU2A03\ControlUnit6502.cs" />
+    <Compile Include="MiNes\CPU.cs" />
+    <Compile Include="MiNes\CPU2A03\Mappers.cs" />
+    <Compile Include="MiNes\CPU2A03\Memory6502.cs" />
+    <Compile Include="MiNes\CPU2A03\Registers.cs" />
+    <Compile Include="MiNes\MiNes.cs" />
     <Compile Include="NoScrollJumpPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -72,6 +74,8 @@
     <Compile Include="MiNesForm.Designer.cs">
       <DependentUpon>MiNesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MiNes\PPU.cs" />
+    <Compile Include="MiNes\PPURegisters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MemoryScrollView.cs">
@@ -80,7 +84,8 @@
     <Compile Include="MemoryScrollView.Designer.cs">
       <DependentUpon>MemoryScrollView.cs</DependentUpon>
     </Compile>
-    <Compile Include="VirtualCPU.cs" />
+    <Compile Include="Register.cs" />
+    <Compile Include="MiNes\VirtualCPU.cs" />
     <EmbeddedResource Include="NoScrollJumpPanel.resx">
       <DependentUpon>NoScrollJumpPanel.cs</DependentUpon>
     </EmbeddedResource>

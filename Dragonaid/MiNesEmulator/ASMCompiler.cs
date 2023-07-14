@@ -108,9 +108,9 @@ namespace AtomosZ.MiNesEmulator.Compiler
 			machineCode[3] = 0x1A;
 
 			machineCode[4] = nesprg; /* @TODO: error checking on prg vs mapper chip */
-			machineCode[5] = 0; // neschr;
-			machineCode[6] = 0; // MAPPER;
-			machineCode[7] = 0; // MAPPER;
+			machineCode[5] = 0x00; // neschr;
+			machineCode[6] = 0x10; // MAPPER;
+			machineCode[7] = 0x00; // MAPPER;
 
 			for (int i = 8; i < 16; ++i)
 				machineCode[i] = 0; // pad rest with zeros

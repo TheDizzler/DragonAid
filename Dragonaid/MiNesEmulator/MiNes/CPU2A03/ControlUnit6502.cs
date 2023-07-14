@@ -94,6 +94,9 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 			/// 0x800 bytes of CPU RAM.
 			/// </summary>
 			public byte[] memory;
+			/// <summary>
+			/// 0x6000 to 0x7FFF.
+			/// </summary>
 			public byte[] sRAM;
 
 			public byte[] registerStates;
@@ -266,10 +269,11 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		}
 
 		/// <summary>
+		/// Forces control unit into state to prevent branch. 
 		/// Instruction MUST be a Relative mode opcode.
 		/// </summary>
 		/// <param name="instruction"></param>
-		/// <exception cref="Exception"></exception>
+		/// <exception cref="Exception">Exception on not Mode.Relative</exception>
 		public void RunInstructionForceNonBranched(Instruction instruction)
 		{
 			if (instruction.opcode.mode != Opcode.Mode.Relative)

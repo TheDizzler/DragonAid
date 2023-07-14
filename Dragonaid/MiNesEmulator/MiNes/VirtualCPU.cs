@@ -7,6 +7,7 @@ using AtomosZ.DragonAid.Libraries.ASM;
 using System.Windows.Forms;
 
 using static AtomosZ.MiNesEmulator.CPU2A03.ControlUnit6502;
+using AtomosZ.MiNesEmulator.PPU2C02;
 
 namespace AtomosZ.MiNesEmulator.CPU2A03
 {
@@ -16,6 +17,7 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 	public class VirtualCPU : CPU
 	{
 		public HashSet<int> visitedAddrHash;
+
 
 		/// <summary>
 		/// A debug friendly CPU.
@@ -71,11 +73,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 			}
 		}
 
+
+		public VirtualCPU(PPU ppu) : base(ppu) { }
+
 		public override void Initialize()
 		{
 			base.Initialize();
 			visitedAddrHash = new HashSet<int>();
 		}
+
 		public ControlUnitState GetCurrentState()
 		{
 			return controlUnit.GetState();
@@ -160,12 +166,16 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 					else
 						virtualInstr.linkedAddress = -1;
 
-					// force controlUnit down non-branched path
-					//controlUnit.RunInstructionForceNonBranched(instr);
 					/* no, we should let the loop play out IF it's a backwards branch.
 					 * As long as this isn't making a comparison
 					 * with a register, this shoud be fine. */
-
+					if (MessageBox.Show("Force non-branched control flow?\n"
+						+ $"{instr.address}: {instr.ToString()} => {branchedInstr.address}: {branchedInstr.ToString()}"
+						, "Branch Detected", MessageBoxButtons.YesNo) == DialogResult.Yes)
+					{// force controlUnit down non-branched path
+						controlUnit.RunInstructionForceNonBranched(instr);
+						continue;
+					}
 				}
 				//else
 				controlUnit.RunInstruction(instr);

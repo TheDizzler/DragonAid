@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AtomosZ.DragonAid.Libraries;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+using AtomosZ.MiNesEmulator.PPU2C02;
+using static AtomosZ.MiNesEmulator.PPU2C02.PPU;
 
 namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 {
@@ -19,22 +20,22 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 	{
 		/// <summary>
 		/// <para>
-		/// <br>Writing a value with bit 7 set ($80 through $FF) to any address
-		/// in $8000-$FFFF clears the shift register to its initial state.</br>
-		/// <br>To change a register's value, the CPU writes five times with bit
+		/// Writing a value with bit 7 set ($80 through $FF) to any address
+		/// in $8000-$FFFF clears the shift register to its initial state.<br/>
+		/// To change a register's value, the CPU writes five times with bit
 		/// 7 clear and a bit of the desired value in bit 0. On the first four
 		/// writes, the MMC1 shifts bit 0 into a shift register. On the fifth
 		/// write, the MMC1 copies bit 0 and the shift register contents into an
 		/// internal register selected by bits 14 and 13 of the address, and
-		/// then it clears the shift register.</br>
-		/// <br>Only on the fifth write does the address matter, and even then,
+		/// then it clears the shift register.<br/>
+		/// Only on the fifth write does the address matter, and even then,
 		/// only bits 14 and 13 of the address matter because the mapper registers
 		/// are incompletely decoded like the PPU registers. After the fifth write,
 		/// the shift register is cleared automatically, so a write to the shift
-		/// register with bit 7 on to reset it is not needed. </br>
+		/// register with bit 7 on to reset it is not needed. <br/>
 		/// </para>
 		/// </summary>
-		private ShiftRegister shiftRegister;
+		private ShiftRegister5 shiftRegister;
 
 		/* It is known that reg1 and reg2 are commonly used to switch CHRROM pages and
 		 * that reg3 is used to switch PRGROM pages.  reg0 is used to switch between
@@ -42,7 +43,7 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 		 * specific state of operation of the MMC.  Some of these states work in
 		 * combination, and in some cases, a state will "override" another state.  Some
 		 * of these states are affected by the MMC "reset" signal, and others are not. */
-		private Register[] registers = new Register[]
+		private IRegister[] registers = new IRegister[]
 		{
 			new Reg0(),
 			new Reg1(),
@@ -62,19 +63,14 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 		/// Last cycle count when shift register was written to.
 		/// </summary>
 		private int lastCycle = -1;
+		private ControlUnit6502 cu;
+		private PPU ppu;
 
-		public MMC1(ControlUnit6502 cpu, byte[] romData, byte prgRomSize, bool hasBattery)
+		public MMC1(ControlUnit6502 controlUnit, PPU ppu, 
+			byte[] romData, byte prgRomSize, bool hasBattery)
+				: base(controlUnit, ppu, romData, prgRomSize)
 		{
-			this.cpu = cpu;
-			this.romData = romData;
-			this.prgRomSize = prgRomSize;
-
-			//if (hasBattery) // DWIII ROM claims there is no battery
-			{
-				wRAM = new byte[0x2000];
-			}
-
-			shiftRegister = new ShiftRegister();
+			shiftRegister = new ShiftRegister5();
 
 			/* @TODO: confirm these initial values */
 			registers[0].Write(0x0C); // 0 1100
@@ -84,6 +80,7 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 
 			UpdateBankIds();
 		}
+
 
 		internal override byte this[int address]
 		{
@@ -106,13 +103,13 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 				}
 				/* There must be at least 2 cycles between shift register writes.
 				 * If there isn't, the write gets ignored. */
-				if (lastCycle >= cpu.cycleCount - 2)
+				if (lastCycle >= controlUnit.cycleCount - 2)
 				{
 					throw new Exception("There must be at least 2 cycles between writes to the shift register.");
 					return; // ignore this write
 				}
 
-				lastCycle = cpu.cycleCount;
+				lastCycle = controlUnit.cycleCount;
 				if (shiftRegister.Write(value))
 				{
 					byte reg = (byte)((address & 0x6000) >> 13);
@@ -184,16 +181,16 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 		/// <summary>
 		/// $8000-$9FFF
 		/// <para>
-		/// <br>C PPMM</br>
-		/// <br>M: Mirroring (0: one-screen, lower bank; 1: one-screen, upper bank;
-		///			2: vertical; 3: horizontal)</br>
-		/// <br>P: PRG ROM bank mode (0, 1: switch 32 KB at $8000, ignoring low bit of bank number;
+		/// C PPMM<br/>
+		/// M: Mirroring (0: one-screen, lower bank; 1: one-screen, upper bank;
+		///			2: vertical; 3: horizontal)<br/>
+		/// P: PRG ROM bank mode (0, 1: switch 32 KB at $8000, ignoring low bit of bank number;
 		///			2: fix first bank at $8000 and switch 16 KB bank at $C000;
-		///			3: fix last bank at $C000 and switch 16 KB bank at $8000)</br>
-		/// <br>C: CHR ROM bank mode (0: switch 8 KB at a time; 1: switch two separate 4 KB banks)</br>
+		///			3: fix last bank at $C000 and switch 16 KB bank at $8000)<br/>
+		/// C: CHR ROM bank mode (0: switch 8 KB at a time; 1: switch two separate 4 KB banks)<br/>
 		/// </para>
 		/// </summary>
-		private class Reg0 : Register
+		private class Reg0 : IRegister
 		{
 			private byte value;
 			public byte Read()
@@ -204,6 +201,11 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 			public void Write(byte value)
 			{
 				this.value = value;
+			}
+
+			public void Reset()
+			{
+				value = 0;
 			}
 		}
 
@@ -211,14 +213,14 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 		/// $A000-$BFFF
 		/// <para>
 		/// Sets bank id (high bit, first 4 bits are in Reg3)
-		/// <br>P SSxC</br>
-		/// <br>C: Select 4K CHR RAM bank at PPU $0000 (ignored in 8K mode)</br>
-		/// <br>S: Select 8K PRG RAM bank (must be set to same values as Reg2 S value)</br>
-		/// <br>P: 0 Low Banks $00 to $0F ($00000-$3FFFF), 1 High Banks $10 to $1F
-		///		($40000-$7FFFF) (in 4K mode must be set to same values as Reg2 P value)</br>
+		/// P SSxC<br/>
+		/// C: Select 4K CHR RAM bank at PPU $0000 (ignored in 8K mode)<br/>
+		/// S: Select 8K PRG RAM bank (must be set to same values as Reg2 S value)<br/>
+		/// P: 0 Low Banks $00 to $0F ($00000-$3FFFF), 1 High Banks $10 to $1F
+		///		($40000-$7FFFF) (in 4K mode must be set to same values as Reg2 P value)<br/>
 		/// </para>
 		/// </summary>
-		private class Reg1 : Register
+		private class Reg1 : IRegister
 		{
 			private byte value;
 			public byte Read()
@@ -229,27 +231,32 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 			public void Write(byte value)
 			{
 				this.value = value;
+			}
+
+			public void Reset()
+			{
+				value = 0;
 			}
 		}
 
 		/// <summary>
 		/// $C000-$D000
 		/// <para>
-		/// <br>P SSxC</br>
-		/// <br>C: Select 4K CHR RAM bank at PPU $1000 (ignored in 8K mode)	(not implemented on SUROM?)</br>
-		/// <br>S: Select 8K PRG RAM bank	(ignored in 8K mode)
-		///		(in 4K mode must be set to same values as Reg1 S value) (not implemented on SUROM?)</br>
-		/// <br>P: Select 256K PRG ROM bank (ignored in 8K mode)
-		///		(in 4K mode must be set to same values as Reg1 P value)</br>
-		/// <br>In 4KB CHR bank mode, SNROM's E bit and SO/U/XROM's P and S bits in both
+		/// P SSxC<br/>
+		/// C: Select 4K CHR RAM bank at PPU $1000 (ignored in 8K mode)	(not implemented on SUROM?)<br/>
+		/// S: Select 8K PRG RAM bank	(ignored in 8K mode)
+		///		(in 4K mode must be set to same values as Reg1 S value) (not implemented on SUROM?)<br/>
+		/// P: Select 256K PRG ROM bank (ignored in 8K mode)
+		///		(in 4K mode must be set to same values as Reg1 P value)<br/>
+		/// In 4KB CHR bank mode, SNROM's E bit and SO/U/XROM's P and S bits in both
 		///		CHR bank registers must be set to the same values, or the PRG ROM and/or
 		///		RAM will be bankswitched/enabled as the PPU renders, in a similar fashion
 		///		as MMC3's scanline counter. As there is not much of a reason to use 4KB
 		///		bankswitching with CHR RAM, it is wise for programs to just set 8KB
-		///		bankswitching mode</br>
+		///		bankswitching mode<br/>
 		/// </para>
 		/// </summary>
-		private class Reg2 : Register
+		private class Reg2 : IRegister
 		{
 			private byte value;
 			public byte Read()
@@ -260,17 +267,22 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 			public void Write(byte value)
 			{
 				this.value = value;
+			}
+
+			public void Reset()
+			{
+				value = 0;
 			}
 		}
 
 		/// <summary>
 		/// $E000-$FFFF
 		/// <para>Sets bank id (first 4 low bits, high bit is in Reg1)
-		/// <br>? PPPP</br>
-		/// <br>P: 4 bit id of bank (low bit ignored in 32 KB mode)</br>
+		/// ? PPPP<br/>
+		/// P: 4 bit id of bank (low bit ignored in 32 KB mode)<br/>
 		/// </para>
 		/// </summary>
-		private class Reg3 : Register
+		private class Reg3 : IRegister
 		{
 			private byte value;
 			public byte Read()
@@ -281,6 +293,11 @@ namespace AtomosZ.MiNesEmulator.CPU2A03.Mappers
 			public void Write(byte value)
 			{
 				this.value = value;
+			}
+
+			public void Reset()
+			{
+				value = 0;
 			}
 		}
 	}

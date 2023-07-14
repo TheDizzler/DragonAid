@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using AtomosZ.DragonAid.Libraries;
 using AtomosZ.DragonAid.Libraries.ASM;
+using AtomosZ.MiNesEmulator.PPU2C02;
+using static AtomosZ.DragonAid.Libraries.PointerList.Pointers;
 using static AtomosZ.MiNesEmulator.CPU2A03.ControlUnit6502;
 
 namespace AtomosZ.MiNesEmulator.CPU2A03
@@ -12,20 +15,33 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 	/// @TODO: (after syncing to git) move to CPU2a03 directory.
 	/// <para>
 	/// Representational class to encapsulate all relevant components of a computing unit
-	/// (Ex: NES => 2A03 (6502CPU + APU), PPU, and cartridge).
-	/// <br>In this way, this class acts as a sort of memory buss (but I don't know if I want to keep it this way)</br>
-	/// <br>Includes methods for running, reseting, and running virtually.</br>
+	/// (Ex: NES => 2A03 (6502CPU + APU), PPU, and cartridge).<br/>
+	/// In this way, this class acts as a sort of memory buss (but I don't know if I want to keep it this way)<br/>
+	/// Includes methods for running, reseting, and running virtually.<br/>
 	/// </para>
 	/// </summary>
 	public class CPU
 	{
+		/// <summary>
+		/// Runs at  1 / 12 of master CLK. <br/>
+		/// CPU = CLK / 12 = 1.789773 MHz
+		/// </summary>
+		public const double CLK = MiNes.CLK * 12;
+
 		internal ControlUnit6502 controlUnit;
 		internal Memory6502 memory;
+
 		protected byte[] romData;
 
-		public CPU()
+		private PPU.PPULatch ppuLatch;
+		private PPU ppu;
+		public int cycle;
+
+		public CPU(PPU ppu)
 		{
 			controlUnit = new ControlUnit6502(this);
+			this.ppuLatch = ppu.ppuLatch;
+			this.ppu = ppu;
 		}
 
 		public void LoadRom(byte[] romData)
@@ -45,7 +61,7 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		/// </summary>
 		public virtual void Initialize()
 		{
-			memory = Memory6502.Initialize(controlUnit, romData);
+			memory = Memory6502.Initialize(controlUnit, ppu/*Latch*/, romData);
 			controlUnit.pc = GetPointerAt(UniversalConsts.RESET_Pointer);
 		}
 
@@ -76,6 +92,11 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		}
 
 
+		public void Update()
+		{
+			throw new Exception("Update not implemented");
+		}
+
 		public void ParseAndRunNextInstruction()
 		{
 			var instr = GetInstruction(controlUnit.pc);
@@ -102,11 +123,16 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 			return instr;
 		}
 
-
 		internal int GetBRKPointer()
 		{
 			var BRKPointer = UniversalConsts.IRQBRK_Pointer;
 			return memory[BRKPointer] + (memory[BRKPointer + 1] << 8);
+		}
+
+
+		public class OAMPort
+		{
+
 		}
 	}
 }

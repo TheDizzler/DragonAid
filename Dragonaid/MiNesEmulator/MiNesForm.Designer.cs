@@ -64,23 +64,29 @@
 			this.stack_textBox = new System.Windows.Forms.TextBox();
 			this.nextLine_button = new System.Windows.Forms.Button();
 			this.nextLine_textBox = new System.Windows.Forms.TextBox();
-			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.currentInstruction_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.pc_label = new System.Windows.Forms.Label();
 			this.run_button = new System.Windows.Forms.Button();
 			this.reset_button = new System.Windows.Forms.Button();
 			this.memViewer_tabControl = new System.Windows.Forms.TabControl();
 			this.ramData_tabPage = new System.Windows.Forms.TabPage();
 			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.ram_panel = new AtomosZ.MiNesEmulator.NoScrollJumpPanel();
-			this.ram_memoryScrollView = new AtomosZ.MiNesEmulator.MemoryScrollView();
 			this.romData_tabPage = new System.Windows.Forms.TabPage();
-			this.rom_panel = new AtomosZ.MiNesEmulator.NoScrollJumpPanel();
-			this.rom_memoryScrollView = new AtomosZ.MiNesEmulator.MemoryScrollView();
 			this.colHeader_textBox = new System.Windows.Forms.TextBox();
 			this.code_listView = new System.Windows.Forms.ListView();
 			this.addr_columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.byteCode_columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.asm_columnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.ram_panel = new AtomosZ.MiNesEmulator.NoScrollJumpPanel();
+			this.ram_memoryScrollView = new AtomosZ.MiNesEmulator.MemoryScrollView();
+			this.rom_panel = new AtomosZ.MiNesEmulator.NoScrollJumpPanel();
+			this.rom_memoryScrollView = new AtomosZ.MiNesEmulator.MemoryScrollView();
+			this.ppu_groupBox = new System.Windows.Forms.GroupBox();
+			this.ppu_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+			this.label8 = new System.Windows.Forms.Label();
+			this.numberBox1 = new AtomosZ.DragonAid.Libraries.NumberBox();
+			this.label9 = new System.Windows.Forms.Label();
+			this.numberBox2 = new AtomosZ.DragonAid.Libraries.NumberBox();
 			this.cpu_groupBox.SuspendLayout();
 			this.cpuStatus_flowLayoutPanel.SuspendLayout();
 			this.cpu_flowLayoutPanel.SuspendLayout();
@@ -92,12 +98,14 @@
 			this.stack_groupBox.SuspendLayout();
 			this.stack_flowLayoutPanel.SuspendLayout();
 			this.sp_flowLayoutPanel.SuspendLayout();
-			this.flowLayoutPanel1.SuspendLayout();
+			this.currentInstruction_flowLayoutPanel.SuspendLayout();
 			this.memViewer_tabControl.SuspendLayout();
 			this.ramData_tabPage.SuspendLayout();
-			this.ram_panel.SuspendLayout();
 			this.romData_tabPage.SuspendLayout();
+			this.ram_panel.SuspendLayout();
 			this.rom_panel.SuspendLayout();
+			this.ppu_groupBox.SuspendLayout();
+			this.ppu_flowLayoutPanel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// cpu_groupBox
@@ -105,21 +113,20 @@
 			this.cpu_groupBox.Controls.Add(this.cpuStatus_flowLayoutPanel);
 			this.cpu_groupBox.Location = new System.Drawing.Point(3, 3);
 			this.cpu_groupBox.Name = "cpu_groupBox";
-			this.cpu_groupBox.Size = new System.Drawing.Size(750, 241);
+			this.cpu_groupBox.Size = new System.Drawing.Size(750, 208);
 			this.cpu_groupBox.TabIndex = 0;
 			this.cpu_groupBox.TabStop = false;
 			this.cpu_groupBox.Text = "CPU Status";
 			// 
 			// cpuStatus_flowLayoutPanel
 			// 
-			this.cpuStatus_flowLayoutPanel.AutoSize = true;
 			this.cpuStatus_flowLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.cpuStatus_flowLayoutPanel.Controls.Add(this.cpu_flowLayoutPanel);
 			this.cpuStatus_flowLayoutPanel.Controls.Add(this.stack_groupBox);
 			this.cpuStatus_flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cpuStatus_flowLayoutPanel.Location = new System.Drawing.Point(3, 22);
 			this.cpuStatus_flowLayoutPanel.Name = "cpuStatus_flowLayoutPanel";
-			this.cpuStatus_flowLayoutPanel.Size = new System.Drawing.Size(744, 216);
+			this.cpuStatus_flowLayoutPanel.Size = new System.Drawing.Size(744, 183);
 			this.cpuStatus_flowLayoutPanel.TabIndex = 4;
 			this.cpuStatus_flowLayoutPanel.WrapContents = false;
 			// 
@@ -662,7 +669,7 @@
 			// 
 			this.nextLine_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.nextLine_button.AutoSize = true;
-			this.nextLine_button.Location = new System.Drawing.Point(7, 593);
+			this.nextLine_button.Location = new System.Drawing.Point(7, 892);
 			this.nextLine_button.Name = "nextLine_button";
 			this.nextLine_button.Size = new System.Drawing.Size(132, 30);
 			this.nextLine_button.TabIndex = 2;
@@ -678,17 +685,17 @@
 			this.nextLine_textBox.Size = new System.Drawing.Size(681, 26);
 			this.nextLine_textBox.TabIndex = 5;
 			// 
-			// flowLayoutPanel1
+			// currentInstruction_flowLayoutPanel
 			// 
-			this.flowLayoutPanel1.AutoSize = true;
-			this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.flowLayoutPanel1.Controls.Add(this.pc_label);
-			this.flowLayoutPanel1.Controls.Add(this.nextLine_textBox);
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 247);
-			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(747, 32);
-			this.flowLayoutPanel1.TabIndex = 6;
-			this.flowLayoutPanel1.WrapContents = false;
+			this.currentInstruction_flowLayoutPanel.AutoSize = true;
+			this.currentInstruction_flowLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.currentInstruction_flowLayoutPanel.Controls.Add(this.pc_label);
+			this.currentInstruction_flowLayoutPanel.Controls.Add(this.nextLine_textBox);
+			this.currentInstruction_flowLayoutPanel.Location = new System.Drawing.Point(6, 595);
+			this.currentInstruction_flowLayoutPanel.Name = "currentInstruction_flowLayoutPanel";
+			this.currentInstruction_flowLayoutPanel.Size = new System.Drawing.Size(747, 32);
+			this.currentInstruction_flowLayoutPanel.TabIndex = 6;
+			this.currentInstruction_flowLayoutPanel.WrapContents = false;
 			// 
 			// pc_label
 			// 
@@ -705,7 +712,7 @@
 			// 
 			this.run_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.run_button.AutoSize = true;
-			this.run_button.Location = new System.Drawing.Point(158, 593);
+			this.run_button.Location = new System.Drawing.Point(158, 892);
 			this.run_button.Name = "run_button";
 			this.run_button.Size = new System.Drawing.Size(142, 30);
 			this.run_button.TabIndex = 7;
@@ -717,7 +724,7 @@
 			// 
 			this.reset_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.reset_button.AutoSize = true;
-			this.reset_button.Location = new System.Drawing.Point(653, 593);
+			this.reset_button.Location = new System.Drawing.Point(653, 892);
 			this.reset_button.Name = "reset_button";
 			this.reset_button.Size = new System.Drawing.Size(97, 30);
 			this.reset_button.TabIndex = 9;
@@ -764,27 +771,6 @@
 			this.textBox1.Text = "00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F";
 			this.textBox1.WordWrap = false;
 			// 
-			// ram_panel
-			// 
-			this.ram_panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.ram_panel.AutoScroll = true;
-			this.ram_panel.Controls.Add(this.ram_memoryScrollView);
-			this.ram_panel.Location = new System.Drawing.Point(0, 18);
-			this.ram_panel.Name = "ram_panel";
-			this.ram_panel.Size = new System.Drawing.Size(614, 525);
-			this.ram_panel.TabIndex = 1;
-			// 
-			// ram_memoryScrollView
-			// 
-			this.ram_memoryScrollView.AutoSize = true;
-			this.ram_memoryScrollView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ram_memoryScrollView.Location = new System.Drawing.Point(0, 0);
-			this.ram_memoryScrollView.Name = "ram_memoryScrollView";
-			this.ram_memoryScrollView.Size = new System.Drawing.Size(477, 417);
-			this.ram_memoryScrollView.TabIndex = 0;
-			// 
 			// romData_tabPage
 			// 
 			this.romData_tabPage.Controls.Add(this.rom_panel);
@@ -796,27 +782,6 @@
 			this.romData_tabPage.TabIndex = 1;
 			this.romData_tabPage.Text = "ROM data";
 			this.romData_tabPage.UseVisualStyleBackColor = true;
-			// 
-			// rom_panel
-			// 
-			this.rom_panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.rom_panel.AutoScroll = true;
-			this.rom_panel.Controls.Add(this.rom_memoryScrollView);
-			this.rom_panel.Location = new System.Drawing.Point(0, 18);
-			this.rom_panel.Name = "rom_panel";
-			this.rom_panel.Size = new System.Drawing.Size(615, 525);
-			this.rom_panel.TabIndex = 32;
-			// 
-			// rom_memoryScrollView
-			// 
-			this.rom_memoryScrollView.AutoSize = true;
-			this.rom_memoryScrollView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.rom_memoryScrollView.Location = new System.Drawing.Point(0, 0);
-			this.rom_memoryScrollView.Name = "rom_memoryScrollView";
-			this.rom_memoryScrollView.Size = new System.Drawing.Size(477, 417);
-			this.rom_memoryScrollView.TabIndex = 0;
 			// 
 			// colHeader_textBox
 			// 
@@ -851,10 +816,10 @@
 			this.code_listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.code_listView.HideSelection = false;
 			this.code_listView.LabelWrap = false;
-			this.code_listView.Location = new System.Drawing.Point(3, 285);
+			this.code_listView.Location = new System.Drawing.Point(3, 671);
 			this.code_listView.MultiSelect = false;
 			this.code_listView.Name = "code_listView";
-			this.code_listView.Size = new System.Drawing.Size(747, 300);
+			this.code_listView.Size = new System.Drawing.Size(747, 213);
 			this.code_listView.TabIndex = 12;
 			this.code_listView.TabStop = false;
 			this.code_listView.UseCompatibleStateImageBehavior = false;
@@ -871,24 +836,179 @@
 			this.asm_columnHeader.Text = "ASM";
 			this.asm_columnHeader.Width = 400;
 			// 
+			// ram_panel
+			// 
+			this.ram_panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ram_panel.AutoScroll = true;
+			this.ram_panel.Controls.Add(this.ram_memoryScrollView);
+			this.ram_panel.Location = new System.Drawing.Point(0, 18);
+			this.ram_panel.Name = "ram_panel";
+			this.ram_panel.Size = new System.Drawing.Size(614, 525);
+			this.ram_panel.TabIndex = 1;
+			// 
+			// ram_memoryScrollView
+			// 
+			this.ram_memoryScrollView.AutoSize = true;
+			this.ram_memoryScrollView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.ram_memoryScrollView.Location = new System.Drawing.Point(0, 0);
+			this.ram_memoryScrollView.Name = "ram_memoryScrollView";
+			this.ram_memoryScrollView.Size = new System.Drawing.Size(477, 417);
+			this.ram_memoryScrollView.TabIndex = 0;
+			// 
+			// rom_panel
+			// 
+			this.rom_panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.rom_panel.AutoScroll = true;
+			this.rom_panel.Controls.Add(this.rom_memoryScrollView);
+			this.rom_panel.Location = new System.Drawing.Point(0, 18);
+			this.rom_panel.Name = "rom_panel";
+			this.rom_panel.Size = new System.Drawing.Size(615, 525);
+			this.rom_panel.TabIndex = 32;
+			// 
+			// rom_memoryScrollView
+			// 
+			this.rom_memoryScrollView.AutoSize = true;
+			this.rom_memoryScrollView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.rom_memoryScrollView.Location = new System.Drawing.Point(0, 0);
+			this.rom_memoryScrollView.Name = "rom_memoryScrollView";
+			this.rom_memoryScrollView.Size = new System.Drawing.Size(477, 417);
+			this.rom_memoryScrollView.TabIndex = 0;
+			// 
+			// ppu_groupBox
+			// 
+			this.ppu_groupBox.Controls.Add(this.ppu_flowLayoutPanel);
+			this.ppu_groupBox.Location = new System.Drawing.Point(3, 213);
+			this.ppu_groupBox.Name = "ppu_groupBox";
+			this.ppu_groupBox.Size = new System.Drawing.Size(746, 279);
+			this.ppu_groupBox.TabIndex = 4;
+			this.ppu_groupBox.TabStop = false;
+			this.ppu_groupBox.Text = "PPU Status";
+			// 
+			// ppu_flowLayoutPanel
+			// 
+			this.ppu_flowLayoutPanel.Controls.Add(this.label8);
+			this.ppu_flowLayoutPanel.Controls.Add(this.numberBox1);
+			this.ppu_flowLayoutPanel.Controls.Add(this.label9);
+			this.ppu_flowLayoutPanel.Controls.Add(this.numberBox2);
+			this.ppu_flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.ppu_flowLayoutPanel.Location = new System.Drawing.Point(3, 22);
+			this.ppu_flowLayoutPanel.Name = "ppu_flowLayoutPanel";
+			this.ppu_flowLayoutPanel.Size = new System.Drawing.Size(740, 254);
+			this.ppu_flowLayoutPanel.TabIndex = 13;
+			// 
+			// label8
+			// 
+			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(3, 7);
+			this.label8.Margin = new System.Windows.Forms.Padding(3);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(51, 20);
+			this.label8.TabIndex = 2;
+			this.label8.Text = "Cycle:";
+			// 
+			// numberBox1
+			// 
+			this.numberBox1.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.numberBox1.Hexadecimal = false;
+			this.numberBox1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numberBox1.Location = new System.Drawing.Point(60, 3);
+			this.numberBox1.Maximum = new decimal(new int[] {
+            340,
+            0,
+            0,
+            0});
+			this.numberBox1.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.numberBox1.Name = "numberBox1";
+			this.numberBox1.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.numberBox1.Postfix = "";
+			this.numberBox1.Prefix = "";
+			this.numberBox1.ReadOnly = false;
+			this.numberBox1.Size = new System.Drawing.Size(42, 29);
+			this.numberBox1.TabIndex = 3;
+			this.numberBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.numberBox1.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
+			// label9
+			// 
+			this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.label9.AutoSize = true;
+			this.label9.Location = new System.Drawing.Point(108, 7);
+			this.label9.Margin = new System.Windows.Forms.Padding(3);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(74, 20);
+			this.label9.TabIndex = 4;
+			this.label9.Text = "Scanline:";
+			// 
+			// numberBox2
+			// 
+			this.numberBox2.Font = new System.Drawing.Font("Consolas", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.numberBox2.Hexadecimal = false;
+			this.numberBox2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numberBox2.Location = new System.Drawing.Point(188, 3);
+			this.numberBox2.Maximum = new decimal(new int[] {
+            261,
+            0,
+            0,
+            0});
+			this.numberBox2.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.numberBox2.Name = "numberBox2";
+			this.numberBox2.NumberBoxBackColor = System.Drawing.SystemColors.Window;
+			this.numberBox2.Postfix = "";
+			this.numberBox2.Prefix = "";
+			this.numberBox2.ReadOnly = false;
+			this.numberBox2.Size = new System.Drawing.Size(42, 29);
+			this.numberBox2.TabIndex = 5;
+			this.numberBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+			this.numberBox2.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			// 
 			// MiNesForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1593, 632);
+			this.ClientSize = new System.Drawing.Size(1399, 931);
 			this.Controls.Add(this.code_listView);
+			this.Controls.Add(this.ppu_groupBox);
 			this.Controls.Add(this.memViewer_tabControl);
 			this.Controls.Add(this.reset_button);
 			this.Controls.Add(this.run_button);
-			this.Controls.Add(this.flowLayoutPanel1);
+			this.Controls.Add(this.currentInstruction_flowLayoutPanel);
 			this.Controls.Add(this.nextLine_button);
 			this.Controls.Add(this.cpu_groupBox);
 			this.Name = "MiNesForm";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "MiNes Emulator";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MiNesForm_FormClosing);
 			this.cpu_groupBox.ResumeLayout(false);
-			this.cpu_groupBox.PerformLayout();
 			this.cpuStatus_flowLayoutPanel.ResumeLayout(false);
 			this.cpuStatus_flowLayoutPanel.PerformLayout();
 			this.cpu_flowLayoutPanel.ResumeLayout(false);
@@ -906,17 +1026,20 @@
 			this.stack_flowLayoutPanel.PerformLayout();
 			this.sp_flowLayoutPanel.ResumeLayout(false);
 			this.sp_flowLayoutPanel.PerformLayout();
-			this.flowLayoutPanel1.ResumeLayout(false);
-			this.flowLayoutPanel1.PerformLayout();
+			this.currentInstruction_flowLayoutPanel.ResumeLayout(false);
+			this.currentInstruction_flowLayoutPanel.PerformLayout();
 			this.memViewer_tabControl.ResumeLayout(false);
 			this.ramData_tabPage.ResumeLayout(false);
 			this.ramData_tabPage.PerformLayout();
-			this.ram_panel.ResumeLayout(false);
-			this.ram_panel.PerformLayout();
 			this.romData_tabPage.ResumeLayout(false);
 			this.romData_tabPage.PerformLayout();
+			this.ram_panel.ResumeLayout(false);
+			this.ram_panel.PerformLayout();
 			this.rom_panel.ResumeLayout(false);
 			this.rom_panel.PerformLayout();
+			this.ppu_groupBox.ResumeLayout(false);
+			this.ppu_flowLayoutPanel.ResumeLayout(false);
+			this.ppu_flowLayoutPanel.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -960,7 +1083,7 @@
 		private System.Windows.Forms.FlowLayoutPanel cpuStatus_flowLayoutPanel;
 		private System.Windows.Forms.Button nextLine_button;
 		private System.Windows.Forms.TextBox nextLine_textBox;
-		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+		private System.Windows.Forms.FlowLayoutPanel currentInstruction_flowLayoutPanel;
 		private System.Windows.Forms.Label pc_label;
 		private System.Windows.Forms.Button run_button;
 		private System.Windows.Forms.Button reset_button;
@@ -977,6 +1100,12 @@
 		private System.Windows.Forms.ColumnHeader addr_columnHeader;
 		private System.Windows.Forms.ColumnHeader byteCode_columnHeader;
 		private System.Windows.Forms.ColumnHeader asm_columnHeader;
-	}
+        private System.Windows.Forms.GroupBox ppu_groupBox;
+        private System.Windows.Forms.FlowLayoutPanel ppu_flowLayoutPanel;
+        private System.Windows.Forms.Label label8;
+        private DragonAid.Libraries.NumberBox numberBox1;
+        private System.Windows.Forms.Label label9;
+        private DragonAid.Libraries.NumberBox numberBox2;
+    }
 }
 

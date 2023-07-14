@@ -4,41 +4,44 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using AtomosZ.DragonAid.Libraries;
-using AtomosZ.DragonAid.Libraries.ASM;
 using AtomosZ.MiNesEmulator.Compiler;
 using AtomosZ.MiNesEmulator.CPU2A03;
+using AtomosZ.MiNesEmulator.PPU2C02;
 using static AtomosZ.MiNesEmulator.CPU2A03.VirtualCPU;
 
 namespace AtomosZ.MiNesEmulator
 {
 	public partial class MiNesForm : Form, UserControlParent
 	{
-		private VirtualCPU cpu;
-		private ControlUnit6502 cu;
-		private byte[] byteStream;
+
+		
+		//private byte[] byteStream;
 
 		private string asmFilepath = @"D:\github\RomHacking\Working ROMs\ROM writing\unit test code.asm";
 		private List<VirtualCPU.VirtualInstruction> allInstructions;
-
+		
+		private MiNes miNes;
+		private VirtualCPU cpu;
 
 		public MiNesForm()
 		{
 			InitializeComponent();
 
-			cpu = new VirtualCPU();
-			cu = cpu.controlUnit;
+			miNes = new MiNes();
 
+			//AssembleAndLoadRom();
+			miNes.LoadRom(@"D:\github\RomHacking\Working ROMs\Dragon Warrior 3 (U).nes");
+			cpu = miNes.cpu;
 			ram_memoryScrollView.Initialize(0x8000);
 			rom_memoryScrollView.Initialize(0x8000, 0x8000);
 
 
 
-			AssembleAndLoadRom();
 
-			// start from RESET_IRQ
-			
+
 			var first = cpu.PeekNextInstruction();
 			var vInstr = new VirtualInstruction();
 			vInstr.instruction = first;
@@ -61,58 +64,72 @@ namespace AtomosZ.MiNesEmulator
 
 
 			Defocus(null, null);
+
+			miNes.Start();
 		}
+
 
 		private void Code_listView_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
 		{
+			//if (instructionCache != null && e.ItemIndex >= firstItem && e.ItemIndex < firstItem + instructionCache.Count)
 			//{
+			//	//A cache hit, so get the ListViewItem from the cache instead of making a new one.
+			//	e.Item = instructionCache[e.ItemIndex - firstItem];
 			//}
-				e.Item = new ListViewItem();
-				var instr = allInstructions[e.ItemIndex];
-				e.Item.SubItems.Add(instr.address.ToString("X4"));
-				e.Item.SubItems.Add(allInstructions[e.ItemIndex].byteCode);
-				e.Item.SubItems.Add(acc.PeekNextInstruction(instr));
+			//else
+			{
+				//A cache miss, so create a new ListViewItem and pass it back.
+				var vInstr = allInstructions[e.ItemIndex];
+				e.Item = new ListViewItem(vInstr.instruction.address.ToString("X4"));
+				e.Item.SubItems.Add(allInstructions[e.ItemIndex].instruction.byteCode);
+				e.Item.SubItems.Add(cpu.ViewNextInstruction(vInstr.instruction));
 				e.Item.SubItems[1].BackColor = SystemColors.ControlLight;
 				e.Item.SubItems[2].BackColor = SystemColors.Menu;
 				e.Item.UseItemStyleForSubItems = false;
+				e.Item.StateImageIndex = 0;
+
+				//instructionCache.Add(e.Item);
+			}
 		}
 
 
 		private void AssembleAndLoadRom()
 		{
 			var byteCode = ASMCompiler.Compile(asmFilepath);
-			File.WriteAllBytes(asmFilepath.Replace(".asm", ".nes"), byteCode);
-			cpu.LoadRom(byteCode);
+			string newFile = asmFilepath.Replace(".asm", ".nes");
+			File.WriteAllBytes(newFile, byteCode);
+			miNes.LoadRom(newFile);
 		}
 
 		private void UpdateDisplay()
 		{
-			a_numberBox.Value = cu.a;
-			x_numberBox.Value = cu.x;
-			y_numberBox.Value = cu.y;
-			pc_numberBox.Value = cu.pc;
-			cycles_numberBox.Value = cu.cycleCount;
-			sp_numberBox.Value = cu.sp;
-			ps_numberBox.Value = cu.ps;
+			ControlUnit6502 controlUnit = miNes.controlUnit;
+			a_numberBox.Value = controlUnit.a;
+			x_numberBox.Value = controlUnit.x;
+			y_numberBox.Value = controlUnit.y;
+			pc_numberBox.Value = controlUnit.pc;
+			cycles_numberBox.Value = controlUnit.cycleCount;
+			sp_numberBox.Value = controlUnit.sp;
+			ps_numberBox.Value = controlUnit.ps;
 
 			stack_textBox.Text = "";
-			for (int i = cu.sp + 1; i <= 0xFF; ++i)
+			for (int i = controlUnit.sp + 1; i <= 0xFF; ++i)
 			{
-				var b = cpu.memory[0x100 + i];
+				var b = miNes.Memory(0x100 + i);
 				stack_textBox.Text += b.ToString("X2") + ", ";
 			}
 
-			carry_checkBox.Checked = cu.carry;
-			zero_checkBox.Checked = cu.zero;
-			interrupt_checkBox.Checked = cu.interrupt;
-			overflow_checkBox.Checked = cu.overflow;
-			negative_checkBox.Checked = cu.negative;
+			carry_checkBox.Checked = controlUnit.carry;
+			zero_checkBox.Checked = controlUnit.zero;
+			interrupt_checkBox.Checked = controlUnit.interrupt;
+			overflow_checkBox.Checked = controlUnit.overflow;
+			negative_checkBox.Checked = controlUnit.negative;
 
-			ram_memoryScrollView.SetMemory(cpu.memory[0, 0x8000]);
-			rom_memoryScrollView.SetMemory(cpu.memory[0x8000, 0x8000]);
+			ram_memoryScrollView.SetMemory(miNes.Memory(0, 0x2000));
+			rom_memoryScrollView.SetMemory(miNes.Memory(0x8000, 0x8000));
 
 
-			pc_label.Text = "$" + cu.pc.ToString("X4");
+			pc_label.Text = "$" + controlUnit.pc.ToString("X4");
 			nextLine_textBox.Text = cpu.ViewNextInstruction();
 		}
 
@@ -129,7 +146,7 @@ namespace AtomosZ.MiNesEmulator
 
 		private void Reset_button_Click(object sender, EventArgs e)
 		{
-			cpu.Reset();
+			miNes.Reset();
 			AssembleAndLoadRom();
 			UpdateDisplay();
 		}
@@ -149,6 +166,11 @@ namespace AtomosZ.MiNesEmulator
 		public void UpdateView()
 		{
 			throw new NotImplementedException();
+		}
+
+		private void MiNesForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			miNes.Stop();
 		}
 	}
 }

@@ -4,206 +4,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AtomosZ.DragonAid.Libraries;
 
 namespace AtomosZ.MiNesEmulator.CPU2A03
 {
-	internal interface Register
-	{
-		byte Read();
-		void Write(byte value);
-	}
-
-	/// <summary>
-	/// A 5 bit register.
-	/// Reads one bit at a time.
-	/// </summary>
-	internal class ShiftRegister
-	{
-		private byte value = 0x10;
-
-		/// <summary>
-		/// <para>If bit 7 is set, clears register and returns false.
-		///  <br>If bit 7 clear, only the first bit is written and pushed on to the 5th bit of the
-		///  register. When 5 bits have been pushed into the shift register,
-		///  returns true to denote it is full.</br>
-		///  </para>
-		/// </summary>
-		/// <param name="bit"></param>
-		/// <returns>Returns true when shift register is full.</returns>
-		public bool Write(byte bit)
-		{
-			if (value >= 0x80)
-			{
-				Clear();
-				return false;
-			}
-			ASMHelper.ASL(value, 1, out bool hasCarry);
-			value |= (byte)((bit & 0x01) << 4);
-			return hasCarry;
-		}
-
-		public void Clear()
-		{
-			value = 0x10;
-		}
-
-		public byte Read()
-		{
-			return value;
-		}
-	}
-
-	/// <summary>
-	/// $2000
-	/// </summary>
-	internal class PPUCTRL : Register
-	{
-		public byte Read()
-		{
-			throw new Exception("Cannot read from PPUCTRL?");
-		}
-
-		public void Write(byte value)
-		{
-			Debug.WriteLine("PPUCTRL Write ($2000) not yet implemented");
-		}
-	}
-	/// <summary>
-	/// $2001
-	/// </summary>
-	internal class PPUMASK : Register
-	{
-		public byte Read()
-		{
-			Debug.WriteLine("PPUMASK Read ($2001) not yet implemented");
-			return 0xFF;
-		}
-
-		public void Write(byte value)
-		{
-			Debug.WriteLine("PPUMASK Write ($2001) not yet implemented");
-		}
-	}
-	/// <summary>
-	/// $2002
-	/// </summary>
-	internal class PPUSTATUS : Register
-	{
-		public byte Read()
-		{
-			Debug.WriteLine("PPUSTATUS Read ($2002) not yet implemented");
-			return 0xFF;
-		}
-
-		public void Write(byte value)
-		{
-			Debug.WriteLine("PPUSTATUS Write ($2002) not yet implemented");
-		}
-	}
-	/// <summary>
-	/// $2003
-	/// </summary>
-	internal class OAMADDR : Register
-	{
-		public byte Read()
-		{
-			Debug.WriteLine("OAMADDR ($2003) Read not yet implemented");
-			return 0xFF;
-		}
-
-		public void Write(byte value)
-		{
-			Debug.WriteLine("OAMADDR ($2003) Write not yet implemented");
-		}
-	}
-	/// <summary>
-	/// $2004
-	/// </summary>
-	internal class OAMDATA : Register
-	{
-		public byte Read()
-		{
-			Debug.WriteLine("OAMDATA ($2004) Read not yet implemented");
-			return 0xFF;
-		}
-
-		public void Write(byte value)
-		{
-			Debug.WriteLine("OAMDATA ($2004) Write not yet implemented");
-		}
-	}
-	/// <summary>
-	/// $2005
-	/// </summary>
-	internal class PPUSCROLL : Register
-	{
-		public byte Read()
-		{
-			Debug.WriteLine("PPUSCROLL ($2005) Read not yet implemented");
-			return 0xFF;
-		}
-
-		public void Write(byte value)
-		{
-			Debug.WriteLine("PPUSCROLL ($2005) Write not yet implemented");
-		}
-	}
-	/// <summary>
-	/// $2006
-	/// </summary>
-	internal class PPUADDR : Register
-	{
-		public byte Read()
-		{
-			Debug.WriteLine("PPUADDR ($2006) Read not yet implemented");
-			return 0xFF;
-		}
-
-		public void Write(byte value)
-		{
-			Debug.WriteLine("PPUADDR ($2006) Write not yet implemented");
-		}
-	}
-	/// <summary>
-	/// $2007
-	/// </summary>
-	internal class PPUDATA : Register
-	{
-		public byte Read()
-		{
-			Debug.WriteLine("PPUDATA ($2007) Read not yet implemented");
-			return 0xFF;
-		}
-
-		public void Write(byte value)
-		{
-			Debug.WriteLine("PPUDATA ($2007) Write not yet implemented");
-		}
-	}
-
-	/// <summary>
-	/// $4014 aka SpriteDMA
-	/// </summary>
-	internal class OAMDMA : Register
-	{
-		public byte Read()
-		{
-			Debug.WriteLine("OAMDMA ($4014) Read not yet implemented");
-			return 0xFF;
-		}
-
-		public void Write(byte value)
-		{
-			Debug.WriteLine("OAMDMA ($4014) Write not yet implemented");
-		}
-	}
-
-
 	/// <summary>
 	/// $4000 & $4004
 	/// </summary>
-	internal class SQDUTY : Register
+	internal class SQDUTY : IRegister
 	{
 		public byte Read()
 		{
@@ -214,11 +21,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("SQDUTY Write ($4000 & $4004) not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $4001 & $4005
 	/// </summary>
-	internal class SQSWEEP : Register
+	internal class SQSWEEP : IRegister
 	{
 		public byte Read()
 		{
@@ -229,11 +40,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("SQSWEEP Write ($4001 & $4005) not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $4002 & $4006
 	/// </summary>
-	internal class SQTIMER : Register
+	internal class SQTIMER : IRegister
 	{
 		public byte Read()
 		{
@@ -244,11 +59,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("SQTIMER Write ( $4002 & $4006) not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $4003 & $4007
 	/// </summary>
-	internal class SQLENGTH : Register
+	internal class SQLENGTH : IRegister
 	{
 		public byte Read()
 		{
@@ -259,11 +78,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("SQLENGTH Write ( $4003 & $4007) not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $4008
 	/// </summary>
-	internal class TRILINEAR : Register
+	internal class TRILINEAR : IRegister
 	{
 		public byte Read()
 		{
@@ -274,11 +97,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("TRILINEAR Write ($4008) not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $400A
 	/// </summary>
-	internal class TRITIMER : Register
+	internal class TRITIMER : IRegister
 	{
 		public byte Read()
 		{
@@ -290,11 +117,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("TRITIMER Write ($400A) not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $400B
 	/// </summary>
-	internal class TRILENGTH : Register
+	internal class TRILENGTH : IRegister
 	{
 		public byte Read()
 		{
@@ -306,11 +137,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("TRILENGTH ($400B) Write not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $400C
 	/// </summary>
-	internal class NOISEVOLUME : Register
+	internal class NOISEVOLUME : IRegister
 	{
 		public byte Read()
 		{
@@ -322,11 +157,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("NOISEVOLUME ($400C) Write not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $400E
 	/// </summary>
-	internal class NOISEPERIOD : Register
+	internal class NOISEPERIOD : IRegister
 	{
 		public byte Read()
 		{
@@ -338,11 +177,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("NOISEPERIOD ($400E) Write not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $400F
 	/// </summary>
-	internal class NOISELENGTH : Register
+	internal class NOISELENGTH : IRegister
 	{
 		public byte Read()
 		{
@@ -354,11 +197,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("NOISELENGTH ($400F) Write not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $4010
 	/// </summary>
-	internal class DMCFREQ : Register
+	internal class DMCFREQ : IRegister
 	{
 		public byte Read()
 		{
@@ -370,11 +217,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("DMCFREQ ($4010) Write not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $4011
 	/// </summary>
-	internal class DMCCOUNTER : Register
+	internal class DMCCOUNTER : IRegister
 	{
 		public byte Read()
 		{
@@ -386,11 +237,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("DMCCOUNTER ($4011) Write not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $4012
 	/// </summary>
-	internal class DMCADDR : Register
+	internal class DMCADDR : IRegister
 	{
 		public byte Read()
 		{
@@ -402,11 +257,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("DMCADDR ($4012) Write not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $4013
 	/// </summary>
-	internal class DMCLENGTH : Register
+	internal class DMCLENGTH : IRegister
 	{
 		public byte Read()
 		{
@@ -418,12 +277,16 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("DMCLENGTH ($4013) Write not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 
 	/// <summary>
 	/// $4015
 	/// </summary>
-	internal class APUSTATUS : Register
+	internal class APUSTATUS : IRegister
 	{
 		public byte Read()
 		{
@@ -435,12 +298,16 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("APUSTATUS ($4015) Write not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 
 	/// <summary>
 	/// $4016
 	/// </summary>
-	internal class CTRL1 : Register
+	internal class CTRL1 : IRegister
 	{
 		public byte Read()
 		{
@@ -452,11 +319,15 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("CTRL1 ($4016) Write not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 	/// <summary>
 	/// $4017
 	/// </summary>
-	internal class CTRL2_FRAMECOUNTER : Register
+	internal class CTRL2_FRAMECOUNTER : IRegister
 	{
 		public byte Read()
 		{
@@ -468,12 +339,16 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		{
 			Debug.WriteLine("CTRL2_FRAMECOUNTER ($4017) Write not yet implemented");
 		}
+
+		public void Reset()
+		{
+		}
 	}
 
 	/// <summary>
 	/// $4009 & $400D
 	/// </summary>
-	internal class DUMMYREGISTER : Register
+	internal class DUMMYREGISTER : IRegister
 	{
 		public byte Read()
 		{
@@ -484,6 +359,10 @@ namespace AtomosZ.MiNesEmulator.CPU2A03
 		public void Write(byte value)
 		{
 			Debug.WriteLine("This is an empty register");
+		}
+
+		public void Reset()
+		{
 		}
 	}
 }
