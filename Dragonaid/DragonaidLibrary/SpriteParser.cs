@@ -119,13 +119,28 @@ namespace AtomosZ.DragonAid.Libraries
 			public SpriteAnimation[] animations;
 		}
 
+
+		public static Brush[] CreatePaletteBrushes(byte[] palette)
+		{
+			var results = new Brush[palette.Length];
+			for (int i = 0; i < palette.Length; ++i)
+				results[i] = paletteBrushes[palette[i]];
+			return results;
+		}
+
 		/// <summary>
 		/// Un-encrypted tiles only.
 		/// </summary>
 		/// <param name="romData"></param>
 		/// <param name="tileStart"></param>
-		public static Bitmap GetTile(byte[] romData, int tileStart)
+		public static Bitmap GetTile(byte[] romData, int tileStart, byte[] paletteCodes = null)
 		{
+			Brush[] palette;
+			if (paletteCodes == null)
+				palette = grayscaleBrushes;
+			else
+				palette = CreatePaletteBrushes(paletteCodes);
+
 			Bitmap bmp = new Bitmap(64, 64, PixelFormat.Format24bppRgb);
 			using (Graphics gfx = Graphics.FromImage(bmp))
 			{
@@ -139,8 +154,8 @@ namespace AtomosZ.DragonAid.Libraries
 					{
 						var bit0 = (b0 >> 7 - i) & 1;
 						var bit1 = (b1 >> 7 - i) & 1;
-						var pallete = bit0 + bit1 * 2;
-						gfx.FillRectangle(grayscaleBrushes[pallete], i * scale, y * scale, scale, scale);
+						var palleteIndex = bit0 + bit1 * 2;
+						gfx.FillRectangle(palette[palleteIndex], i * scale, y * scale, scale, scale);
 					}
 					++y;
 				}
@@ -148,6 +163,7 @@ namespace AtomosZ.DragonAid.Libraries
 
 			return bmp;
 		}
+
 
 		public static Bitmap GetSolidColor(byte colorCode, Size bmpSize)
 		{
