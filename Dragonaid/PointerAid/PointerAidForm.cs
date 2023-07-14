@@ -141,8 +141,8 @@ namespace AtomosZ.DragonAid.PointerAid
 				var subroutines07 = new List<DynamicSubroutine>();
 				for (int i = 0; i < ROM.Load07PointerIndices_3C000.length; ++i)
 				{
-					byte index = data[ROM.Load07PointerIndices_3C000.offset + i];
-					byte bankId = data[ROM.Load07BankIds_3C000.offset + (i / 2)];
+					byte index = data[ROM.Load07PointerIndices_3C000.iNESAddress + i];
+					byte bankId = data[ROM.Load07BankIds_3C000.iNESAddress + (i / 2)];
 					int bank;
 					if (i % 2 == 0)
 						bank = bankId >> 4;
@@ -156,8 +156,8 @@ namespace AtomosZ.DragonAid.PointerAid
 						continue;
 					}
 
-					int subroutine = data[bankPointer.offset + index * 2]
-						+ (data[bankPointer.offset + (index * 2) + 1] << 8);
+					int subroutine = data[bankPointer.iNESAddress + index * 2]
+						+ (data[bankPointer.iNESAddress + (index * 2) + 1] << 8);
 					//Debug.WriteLine($"ID: {i.ToString("X2")} BankId: {bank.ToString("X2")} Bank: {bankPointer.name} Index: {index.ToString("X2")} DS: ${subroutine.ToString("X2")}");
 
 					DynamicSubroutine ds = new DynamicSubroutine()
@@ -181,8 +181,8 @@ namespace AtomosZ.DragonAid.PointerAid
 				var subroutines17 = new List<DynamicSubroutine>();
 				for (int i = 0; i < ROM.Load17PointerIndices_3C000.length; ++i)
 				{
-					byte index = data[ROM.Load17PointerIndices_3C000.offset + i];
-					byte bankId = data[ROM.Load17BankIds_3C000.offset + (i / 2)];
+					byte index = data[ROM.Load17PointerIndices_3C000.iNESAddress + i];
+					byte bankId = data[ROM.Load17BankIds_3C000.iNESAddress + (i / 2)];
 					int bank;
 					if (i % 2 == 0)
 						bank = bankId >> 4;

@@ -9,10 +9,10 @@ namespace AtomosZ.DragonAid.Libraries
 	{
 		public static string GetMonsterName(byte[] romData, byte monsterIndex)
 		{
-			int monsterList1Address = romData[ROM.NamePointers.offset + 4]
-				+ (romData[ROM.NamePointers.offset + 5] << 8) + Address.iNESHeaderLength;
-			int monsterList2Address = romData[ROM.NamePointers.offset + 6]
-				+ (romData[ROM.NamePointers.offset + 7] << 8) + Address.iNESHeaderLength;
+			int monsterList1Address = romData[ROM.NamePointers.iNESAddress + 4]
+				+ (romData[ROM.NamePointers.iNESAddress + 5] << 8) + Address.iNESHeaderLength;
+			int monsterList2Address = romData[ROM.NamePointers.iNESAddress + 6]
+				+ (romData[ROM.NamePointers.iNESAddress + 7] << 8) + Address.iNESHeaderLength;
 
 
 			string name = "";
@@ -25,10 +25,10 @@ namespace AtomosZ.DragonAid.Libraries
 
 		public static List<string> GetItemNames(byte[] romData)
 		{
-			int itemList1Address = romData[ROM.NamePointers.offset + 0]
-				+ (romData[ROM.NamePointers.offset + 1] << 8) + Address.iNESHeaderLength;
-			int itemList2Address = romData[ROM.NamePointers.offset + 2]
-				+ (romData[ROM.NamePointers.offset + 3] << 8) + Address.iNESHeaderLength;
+			int itemList1Address = romData[ROM.NamePointers.iNESAddress + 0]
+				+ (romData[ROM.NamePointers.iNESAddress + 1] << 8) + Address.iNESHeaderLength;
+			int itemList2Address = romData[ROM.NamePointers.iNESAddress + 2]
+				+ (romData[ROM.NamePointers.iNESAddress + 3] << 8) + Address.iNESHeaderLength;
 
 			List<string> items = new List<string>();
 			for (byte i = 0; i <= 0x7F; ++i)

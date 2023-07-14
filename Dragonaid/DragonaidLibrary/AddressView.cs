@@ -41,7 +41,7 @@ namespace AtomosZ.DragonAid.Libraries
 			{
 				name_textBox.Text = selectedItem.name;
 				address_textBox.Text = "0x" + selectedItem.prgAddress.pointer.ToString("X5");
-				offset_textBox.Text = "0x" + selectedItem.prgAddress.offset.ToString("X5");
+				offset_textBox.Text = "0x" + selectedItem.prgAddress.iNESAddress.ToString("X5");
 				//length_spinner.Value = selectedItem.prgAddress.length;
 				notes_richTextBox.Text = selectedItem.prgAddress.notes;
 
@@ -109,7 +109,7 @@ namespace AtomosZ.DragonAid.Libraries
 						break;
 
 					case "offset_textBox":
-						offset_textBox.Text = "0x" + selected.prgAddress.offset.ToString("X5");
+						offset_textBox.Text = "0x" + selected.prgAddress.iNESAddress.ToString("X5");
 						break;
 
 					default:

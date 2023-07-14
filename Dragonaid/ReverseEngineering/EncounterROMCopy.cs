@@ -75,7 +75,7 @@ namespace AtomosZ.DragonAid.EncounterAid
 
 			a >>= 5;
 			byte x = a;
-			var encounterRateMultiplier = romData[ROM.EncounterRateMultipliers.offset + x];
+			var encounterRateMultiplier = romData[ROM.EncounterRateMultipliers.iNESAddress + x];
 			if (x >= 0x03)
 			{
 				Map_GetEncounterRate(encounterRateMultiplier);
@@ -93,11 +93,11 @@ namespace AtomosZ.DragonAid.EncounterAid
 			zeroPages[0x4E] = 0;
 			if (zeroPages[0x2F] == 0 /*&& _06DF >= UniversalConsts.NightBattleStartTime*/)
 			{ // day time rates
-				a = romData[ROM.EncounterRates.offset + 0 + encounterRateTileIndex];
+				a = romData[ROM.EncounterRates.iNESAddress + 0 + encounterRateTileIndex];
 			}
 			else
 			{ // night time rates			
-				a = romData[ROM.EncounterRates.offset + 9 + encounterRateTileIndex];
+				a = romData[ROM.EncounterRates.iNESAddress + 9 + encounterRateTileIndex];
 			}
 			// 83C9
 			ASMHelper.MultiplyValueAtXByA(zeroPages, a, 0x4D);

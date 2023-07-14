@@ -155,8 +155,8 @@ namespace AtomosZ.DragonAid.Menu
 			this.romData = romData;
 			this.menuPointerIndex = menuPointerIndex;
 			menuPointer = new Address("Pointer to menu instructions to create",
-				romData[ROM.MenuPointers.offset + menuPointerIndex]
-				+ (romData[ROM.MenuPointers.offset + menuPointerIndex + 1] << 8));
+				romData[ROM.MenuPointers.iNESAddress + menuPointerIndex]
+				+ (romData[ROM.MenuPointers.iNESAddress + menuPointerIndex + 1] << 8));
 
 			Menu_Initialization();
 			F385BE();
@@ -192,20 +192,20 @@ namespace AtomosZ.DragonAid.Menu
 				return;
 
 			ParseInstruction05(_6AC2);
-			if (_6AEA != 2 && (romData[menuPointer.offset + 5] & 0x40) != 0)
+			if (_6AEA != 2 && (romData[menuPointer.iNESAddress + 5] & 0x40) != 0)
 				L3880D();
 		}
 
 		private void ParseInstruction05(byte nextCharPos)
 		{
 			this._6AEB = nextCharPos;
-			if (romData[menuPointer.offset + 5] < 0x80)
+			if (romData[menuPointer.iNESAddress + 5] < 0x80)
 			{
 				ParseNextInstruction();
 			}
 			else
 			{
-				if (_6AC1 != 0 || (romData[menuPointer.offset + 5] & 0x40) == 0)
+				if (_6AC1 != 0 || (romData[menuPointer.iNESAddress + 5] & 0x40) == 0)
 				{
 					ParseInstructionIndex0B();
 				}
@@ -343,7 +343,7 @@ namespace AtomosZ.DragonAid.Menu
 		{ // 8C89
 			characterFormationIndex = a;
 			// PHA <- Y; // oh boy, what's this now? Last\next menu instruction parsed, I believe?
-			if ((byte)(romData[menuPointer.offset + 8] & 0x40) != 0)
+			if ((byte)(romData[menuPointer.iNESAddress + 8] & 0x40) != 0)
 			{
 				characterFormationIndex = _6AC7;
 			}
@@ -352,7 +352,7 @@ namespace AtomosZ.DragonAid.Menu
 
 		private byte GetNextInstruction()
 		{
-			menuInstructionByte = romData[menuPointer.offset + _6AC3++];
+			menuInstructionByte = romData[menuPointer.iNESAddress + _6AC3++];
 			return menuInstructionByte;
 		}
 
@@ -389,7 +389,7 @@ namespace AtomosZ.DragonAid.Menu
 
 		private void TitleAndText()
 		{
-			byte a = romData[menuPointer.offset + 3];
+			byte a = romData[menuPointer.iNESAddress + 3];
 			if (a < 0x80)
 			{ // 8C01
 				if (menuPointerIndex == 0x34)
@@ -425,13 +425,13 @@ namespace AtomosZ.DragonAid.Menu
 
 		private void ReadInstruction05()
 		{
-			if ((romData[menuPointer.offset + 5] & 0x40) != 0)
+			if ((romData[menuPointer.iNESAddress + 5] & 0x40) != 0)
 				ParseInstruction05((byte)(_6AC6 + _6AE9));
 		}
 
 		private void CheckForTitleAndWrite()
 		{
-			var a = romData[menuPointer.offset + nextMenuInstructionIndex];
+			var a = romData[menuPointer.iNESAddress + nextMenuInstructionIndex];
 			a &= 0x3F;
 			if (a < 0x20)
 				FindTitleAndWrite(a);
@@ -448,14 +448,14 @@ namespace AtomosZ.DragonAid.Menu
 			var y = 0;
 			while (x != 0)
 			{ // find correct title index
-				if (romData[ROM.MenuTitles.offset + y++] == 0xFF)
+				if (romData[ROM.MenuTitles.iNESAddress + y++] == 0xFF)
 					--x;
 			}
 
 			WriteNextChar(0x79);// top vertical bar with space for title
 
 			byte a;
-			while ((a = romData[ROM.MenuTitles.offset + y++]) != 0xFF)
+			while ((a = romData[ROM.MenuTitles.iNESAddress + y++]) != 0xFF)
 				WriteNextChar(a);
 		}
 
@@ -683,29 +683,29 @@ namespace AtomosZ.DragonAid.Menu
 		private void ParseDimensions()
 		{
 			_6AC7 = selectedCharacterFormationIndex;
-			if (romData[menuPointer.offset] >= 0x80)
+			if (romData[menuPointer.iNESAddress] >= 0x80)
 			{ // GetNewMenuAddress
-				menuPositionA = romData[menuPointer.offset + 1];
+				menuPositionA = romData[menuPointer.iNESAddress + 1];
 				menuPositionB = menuPositionA;
 
-				var newLowByte = romData[menuPointer.offset + 2];
-				var newHighByte = romData[menuPointer.offset + 3];
+				var newLowByte = romData[menuPointer.iNESAddress + 2];
+				var newHighByte = romData[menuPointer.iNESAddress + 3];
 
 				menuPointer = new Address("Redirected menu pointer",
 					(newHighByte << 8) + newLowByte);
 			}
 			else
 			{
-				menuPositionA = romData[menuPointer.offset + 2];
+				menuPositionA = romData[menuPointer.iNESAddress + 2];
 				menuPositionB = menuPositionA;
 			}
 
-			_6AE9 = romData[menuPointer.offset + 0];
+			_6AE9 = romData[menuPointer.iNESAddress + 0];
 			writeDimensions = (_6AE9 >> 1) | 0x10;
 
 			// Menu_GetHeight();
 			// 8D3C
-			var height = romData[menuPointer.offset + 1];
+			var height = romData[menuPointer.iNESAddress + 1];
 			if (height >= 0x10)
 			{
 				GetAdjustableHeight(height);
@@ -718,7 +718,7 @@ namespace AtomosZ.DragonAid.Menu
 			zeroPages[0x7F] = 0xFF;
 
 			bool carry = false;
-			byte a = ASMHelper.ROL(romData[menuPointer.offset + 4], 3, ref carry); // take top two bits and ROL to lowest two bits
+			byte a = ASMHelper.ROL(romData[menuPointer.iNESAddress + 4], 3, ref carry); // take top two bits and ROL to lowest two bits
 			a &= 0x03;
 			_6AC6 = a;
 			_6AEB = a;
@@ -812,7 +812,7 @@ namespace AtomosZ.DragonAid.Menu
 		/// <param name="heightCode"> 0 to 6, and possibly >= B</param>
 		private void AdjustHeightFromDynamicSubroutine(byte[] romData, byte heightCode)
 		{
-			var adjHeightInstruction = romData[ROM.AdjustableHeightInstructions.offset + heightCode];
+			var adjHeightInstruction = romData[ROM.AdjustableHeightInstructions.iNESAddress + heightCode];
 			if (adjHeightInstruction == 0x66) // this is probably not relevant here
 			{
 				// Execute Subroutine 0x66

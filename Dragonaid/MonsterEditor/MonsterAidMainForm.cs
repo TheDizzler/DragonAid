@@ -185,7 +185,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 			{
 				byte[] monsterStats = monsterAidView.GetMonsterStats();
 				for (int i = 0; i < monsterStats.Length; ++i)
-					romData[ROM.MonsterStatBlockAddress.offset + i] = monsterStats[i];
+					romData[ROM.MonsterStatBlockAddress.iNESAddress + i] = monsterStats[i];
 				File.WriteAllBytes(saveDialog.FileName, romData);
 			}
 		}

@@ -75,8 +75,8 @@ namespace ClassAid
 		/// <param name="classIndex"></param>
 		public static void GetStatBaseLine(byte[] romData, byte classIndex)
 		{ //A725
-			zeroPage[0x3C] = romData[ROM.CharacterStatPointers.offset + statIndex * 2];
-			zeroPage[0x3D] = romData[ROM.CharacterStatPointers.offset + 1 + statIndex * 2];
+			zeroPage[0x3C] = romData[ROM.CharacterStatPointers.iNESAddress + statIndex * 2];
+			zeroPage[0x3D] = romData[ROM.CharacterStatPointers.iNESAddress + 1 + statIndex * 2];
 
 			//GetCharacterClass(0);
 			while (--classIndex < 0x80)
@@ -89,13 +89,13 @@ namespace ClassAid
 				var index = 0;
 				if (romData[(statPointer - 8000)] >= 0x80)
 					index += 2;
-				zeroPage[0x3E] = romData[ROM.CharacterLevelUpPointers.offset + index];
-				zeroPage[0x3F] = romData[ROM.CharacterLevelUpPointers.offset + index + 1];
+				zeroPage[0x3E] = romData[ROM.CharacterLevelUpPointers.iNESAddress + index];
+				zeroPage[0x3F] = romData[ROM.CharacterLevelUpPointers.iNESAddress + index + 1];
 			}
 			else
 			{ // A747
-				zeroPage[0x3E] = romData[ROM.CharacterStatsPointer.offset];
-				zeroPage[0x3F] = romData[ROM.CharacterStatsPointer.offset + 1];
+				zeroPage[0x3E] = romData[ROM.CharacterStatsPointer.iNESAddress];
+				zeroPage[0x3F] = romData[ROM.CharacterStatsPointer.iNESAddress + 1];
 			}
 
 			zeroPage[0x12] = 0;

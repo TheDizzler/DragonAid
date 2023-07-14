@@ -139,7 +139,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 		public MonsterStatBlock(byte[] romData, byte monsterIndex)
 		{
 			index = monsterIndex;
-			int monsterStart = ROM.MonsterStatBlockAddress.offset + index * ROM.MonsterStatBlockAddress.length;
+			int monsterStart = ROM.MonsterStatBlockAddress.iNESAddress + index * ROM.MonsterStatBlockAddress.length;
 
 			name = Names.GetMonsterName(romData, monsterIndex);
 			level = romData[monsterStart + Level] & 0x3F;

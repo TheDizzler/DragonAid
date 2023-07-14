@@ -18,7 +18,7 @@ namespace AtomosZ.DragonAid.Libraries
 		/// <summary>
 		/// iNES offset address.
 		/// </summary>
-		public int offset
+		public int iNESAddress
 		{
 			get
 			{

@@ -195,8 +195,8 @@ namespace AtomosZ.DragonAid.MonsterAid
 				default:
 					int i = statBlock.regeneration - 1;
 					i = i << 1;
-					int baseHP = romData[ROM.MonsterRegeneration.offset + i];
-					int range = romData[ROM.MonsterRegeneration.offset + i + 1] - 1;
+					int baseHP = romData[ROM.MonsterRegeneration.iNESAddress + i];
+					int range = romData[ROM.MonsterRegeneration.iNESAddress + i + 1] - 1;
 					regen_label.Text = $"{baseHP}-{baseHP + range} HP/turn";
 					break;
 			}
@@ -233,13 +233,13 @@ namespace AtomosZ.DragonAid.MonsterAid
 				case 1:
 					actionChanceDesc_label.Text = "Type 1";
 					for (int i = 0; i < actionChanceLabels.Count; ++i)
-						actionChanceLabels[i].Text = (romData[ROM.MonsterActionChancesType1.offset + i] / 2.56f).ToString("0.00") + "%";
+						actionChanceLabels[i].Text = (romData[ROM.MonsterActionChancesType1.iNESAddress + i] / 2.56f).ToString("0.00") + "%";
 					break;
 
 				case 2:
 					actionChanceDesc_label.Text = "Type 2";
 					for (int i = 0; i < actionChanceLabels.Count; ++i)
-						actionChanceLabels[i].Text = (romData[ROM.MonsterActionChancesType2.offset + i] / 2.56f).ToString("0.00") + "%";
+						actionChanceLabels[i].Text = (romData[ROM.MonsterActionChancesType2.iNESAddress + i] / 2.56f).ToString("0.00") + "%";
 					break;
 
 				case 3:
@@ -290,7 +290,7 @@ namespace AtomosZ.DragonAid.MonsterAid
 		/// <param name="missCount"></param>
 		private void ValidateMonsterData(byte monsterIndex, int[] monsterStatBlock, ref int missCount)
 		{
-			int monsterStart = ROM.MonsterStatBlockAddress.offset + monsterIndex * UniversalConsts.MonsterStatLength;
+			int monsterStart = ROM.MonsterStatBlockAddress.iNESAddress + monsterIndex * UniversalConsts.MonsterStatLength;
 
 			for (int i = 0; i < UniversalConsts.MonsterStatLength; ++i)
 			{

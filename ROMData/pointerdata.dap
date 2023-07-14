@@ -4,14 +4,14 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 0,
-      "name": "CreateMenu_Subroutine",
+      "name": "Menu_CreateNew_387B9",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
         "notes": "",
         "name": "Full address",
         "pointer": 231353,
-        "offset": 231369
+        "iNESAddress": 231369
       },
       "address": 34745,
       "code": 0
@@ -27,7 +27,7 @@
         "notes": "Map Screen\n\nLDA $87 != 0\nLDA $86 == 0\nLDA $8F != 0 (RTS)",
         "name": "Full address",
         "pointer": 229490,
-        "offset": 229506
+        "iNESAddress": 229506
       },
       "address": 32882,
       "code": 1
@@ -43,7 +43,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 240603,
-        "offset": 240619
+        "iNESAddress": 240619
       },
       "address": 43995,
       "code": 2
@@ -59,7 +59,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 240612,
-        "offset": 240628
+        "iNESAddress": 240628
       },
       "address": 44004,
       "code": 3
@@ -75,7 +75,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 239227,
-        "offset": 239243
+        "iNESAddress": 239243
       },
       "address": 42619,
       "code": 4
@@ -91,7 +91,7 @@
         "notes": "Clears memory 0x0580 to 0x062F",
         "name": "Full address",
         "pointer": 240633,
-        "offset": 240649
+        "iNESAddress": 240649
       },
       "address": 44025,
       "code": 5
@@ -107,7 +107,7 @@
         "notes": "A: index of segment in Dialog Block",
         "name": "Full address",
         "pointer": 239245,
-        "offset": 239261
+        "iNESAddress": 239261
       },
       "address": 42637,
       "code": 6
@@ -123,7 +123,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 239245,
-        "offset": 239261
+        "iNESAddress": 239261
       },
       "address": 42637,
       "code": 7
@@ -139,7 +139,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 239227,
-        "offset": 239243
+        "iNESAddress": 239243
       },
       "address": 42619,
       "code": 8
@@ -155,7 +155,7 @@
         "notes": "Map Screen occasionally\n\nLDA $05 *2 -> X\nINC $04 == #$09?",
         "name": "Full address",
         "pointer": 237292,
-        "offset": 237308
+        "iNESAddress": 237308
       },
       "address": 40684,
       "code": 9
@@ -171,7 +171,7 @@
         "notes": "early in game loop\nafter controller input\n\nChecks $2F if Light or Dark world\nif Light world\n    if ($90 & $3F != 0\n        || $2F & $02) != 0\n        || $8F != 0)\n    RTS",
         "name": "Full address",
         "pointer": 218716,
-        "offset": 218732
+        "iNESAddress": 218732
       },
       "address": 38492,
       "code": 10
@@ -180,14 +180,14 @@
       "loader": 0,
       "bankId": 13,
       "dsIndex": 3,
-      "name": null,
+      "name": "DynamicSubroutine_3587C",
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "status box just closed",
         "name": "Full address",
         "pointer": 219260,
-        "offset": 219276
+        "iNESAddress": 219276
       },
       "address": 39036,
       "code": 11
@@ -203,7 +203,7 @@
         "notes": "On map, after input before movement",
         "name": "Full address",
         "pointer": 220805,
-        "offset": 220821
+        "iNESAddress": 220821
       },
       "address": 40581,
       "code": 12
@@ -219,7 +219,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 220809,
-        "offset": 220825
+        "iNESAddress": 220825
       },
       "address": 40585,
       "code": 13
@@ -235,7 +235,7 @@
         "notes": "late in game loop\n\nnever seems to get very far.\nchecks bit 1 of 0x2F (lightOrDarkWorld)\nand bit 3 of 0x9D",
         "name": "Full address",
         "pointer": 219923,
-        "offset": 219939
+        "iNESAddress": 219939
       },
       "address": 39699,
       "code": 14
@@ -251,7 +251,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 220627,
-        "offset": 220643
+        "iNESAddress": 220643
       },
       "address": 40403,
       "code": 15
@@ -267,7 +267,7 @@
         "notes": "Base game loop, every frame.\n\nChecks 0th  bit of 0x2F, so could be a Dark World only thing",
         "name": "Full address",
         "pointer": 164194,
-        "offset": 164210
+        "iNESAddress": 164210
       },
       "address": 33122,
       "code": 16
@@ -283,7 +283,7 @@
         "notes": "Map Screen, after encounter roll\n\nChecks status of character and makes adjustments to PPU_SpriteDMA depending on direction of movement.\nCould this be something for character sprite movement/direction?",
         "name": "Full address",
         "pointer": 220608,
-        "offset": 220624
+        "iNESAddress": 220624
       },
       "address": 40384,
       "code": 17
@@ -299,7 +299,7 @@
         "notes": "Map Screen\nprobably map scroll",
         "name": "Full address",
         "pointer": 96873,
-        "offset": 96889
+        "iNESAddress": 96889
       },
       "address": 47721,
       "code": 18
@@ -308,14 +308,14 @@
       "loader": 0,
       "bankId": 5,
       "dsIndex": 4,
-      "name": null,
+      "name": "DynamicSubroutine_17C92",
       "notes": "DynamicSubroutine_Addresses_14000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "entering Aliahan, has sprites but still not palettes",
         "name": "Full address",
         "pointer": 97426,
-        "offset": 97442
+        "iNESAddress": 97442
       },
       "address": 48274,
       "code": 19
@@ -331,7 +331,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 81944,
-        "offset": 81960
+        "iNESAddress": 81960
       },
       "address": 32792,
       "code": 20
@@ -347,7 +347,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 82200,
-        "offset": 82216
+        "iNESAddress": 82216
       },
       "address": 33048,
       "code": 21
@@ -363,7 +363,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 202268,
-        "offset": 202284
+        "iNESAddress": 202284
       },
       "address": 38428,
       "code": 22
@@ -372,14 +372,14 @@
       "loader": 0,
       "bankId": 12,
       "dsIndex": 31,
-      "name": null,
+      "name": "DynamicSubroutine_319E8",
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "going down stairs, no palettes yet",
         "name": "Full address",
         "pointer": 203240,
-        "offset": 203256
+        "iNESAddress": 203256
       },
       "address": 39400,
       "code": 23
@@ -395,7 +395,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 131072,
-        "offset": 131088
+        "iNESAddress": 131088
       },
       "address": 9998,
       "code": 24
@@ -404,14 +404,14 @@
       "loader": 0,
       "bankId": 7,
       "dsIndex": 8,
-      "name": null,
+      "name": "DynamicSubroutine_1F2AB",
       "notes": "DynamicSubroutine_Addresses_1C000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Loading MainMenu?\nClears Palettes\nCalls SetPalette_DayNight",
         "name": "Full address",
         "pointer": 127659,
-        "offset": 127675
+        "iNESAddress": 127675
       },
       "address": 45739,
       "code": 25
@@ -427,7 +427,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 163840,
-        "offset": 163856
+        "iNESAddress": 163856
       },
       "address": 0,
       "code": 26
@@ -443,7 +443,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 164194,
-        "offset": 164210
+        "iNESAddress": 164210
       },
       "address": 33122,
       "code": 27
@@ -459,7 +459,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 260391,
-        "offset": 260407
+        "iNESAddress": 260407
       },
       "address": 63783,
       "code": 28
@@ -475,7 +475,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 111168,
-        "offset": 111184
+        "iNESAddress": 111184
       },
       "address": 45632,
       "code": 29
@@ -484,14 +484,14 @@
       "loader": 0,
       "bankId": 7,
       "dsIndex": 0,
-      "name": null,
+      "name": "",
       "notes": "DynamicSubroutine_Addresses_1C000",
       "prgAddress": {
         "length": 2,
         "notes": null,
         "name": "Full address",
         "pointer": 114750,
-        "offset": 114766
+        "iNESAddress": 114766
       },
       "address": 32830,
       "code": 30
@@ -507,7 +507,7 @@
         "notes": "This refreshes BG (map) layer after menu close",
         "name": "Full address",
         "pointer": 238277,
-        "offset": 238293
+        "iNESAddress": 238293
       },
       "address": 41669,
       "code": 31
@@ -523,7 +523,7 @@
         "notes": "[Menu_PointerIndex]:  Menu_Pointers[] ($38F84)\n[$01]:$9074 -> Menu_Status_2Characters\n[$05]:$910E -> Status 2 Characters (points to $9074)\n[$13]:$93C7 ->\n[$14]:$93F1 -> Menu_MainCommand\n[$1B]:$94DB -> FIGHT.PARRY.ITEM\n[$2C]:$9612 -> Menu_ItemCommand\n[$39]:$96A9 -> EnemyDisplay\n[$3D]:$96DD -> Combat Text\n[$3F]:$96ED -> Enemy Display, Non-Interactive\n\n",
         "name": "Full address",
         "pointer": 231342,
-        "offset": 231358
+        "iNESAddress": 231358
       },
       "address": 34734,
       "code": 32
@@ -539,7 +539,7 @@
         "notes": "why did this need a break routine?",
         "name": "Full address",
         "pointer": 237281,
-        "offset": 237297
+        "iNESAddress": 237297
       },
       "address": 40673,
       "code": 33
@@ -555,7 +555,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 88725,
-        "offset": 88741
+        "iNESAddress": 88741
       },
       "address": 39573,
       "code": 34
@@ -571,7 +571,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 4776,
-        "offset": 4792
+        "iNESAddress": 4792
       },
       "address": 37544,
       "code": 35
@@ -587,7 +587,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4791,
-        "offset": 4807
+        "iNESAddress": 4807
       },
       "address": 37559,
       "code": 36
@@ -603,7 +603,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4806,
-        "offset": 4822
+        "iNESAddress": 4822
       },
       "address": 37574,
       "code": 37
@@ -619,7 +619,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 4866,
-        "offset": 4882
+        "iNESAddress": 4882
       },
       "address": 37634,
       "code": 38
@@ -635,7 +635,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4908,
-        "offset": 4924
+        "iNESAddress": 4924
       },
       "address": 37676,
       "code": 39
@@ -651,7 +651,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4925,
-        "offset": 4941
+        "iNESAddress": 4941
       },
       "address": 37693,
       "code": 40
@@ -667,7 +667,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4940,
-        "offset": 4956
+        "iNESAddress": 4956
       },
       "address": 37708,
       "code": 41
@@ -683,7 +683,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5000,
-        "offset": 5016
+        "iNESAddress": 5016
       },
       "address": 37768,
       "code": 42
@@ -699,7 +699,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5045,
-        "offset": 5061
+        "iNESAddress": 5061
       },
       "address": 37813,
       "code": 43
@@ -715,7 +715,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5062,
-        "offset": 5078
+        "iNESAddress": 5078
       },
       "address": 37830,
       "code": 44
@@ -731,7 +731,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 5072,
-        "offset": 5088
+        "iNESAddress": 5088
       },
       "address": 37840,
       "code": 45
@@ -747,7 +747,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5143,
-        "offset": 5159
+        "iNESAddress": 5159
       },
       "address": 37911,
       "code": 46
@@ -763,7 +763,7 @@
         "notes": "Results stored in QuickStorage 0 and 1\n\nNormal\nStatus[0]:$80 Status[1]:$80\n\nDead\nStatus[0]:$80 Status[1]:$00",
         "name": "Full address",
         "pointer": 5174,
-        "offset": 5190
+        "iNESAddress": 5190
       },
       "address": 37942,
       "code": 47
@@ -779,7 +779,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 5189,
-        "offset": 5205
+        "iNESAddress": 5205
       },
       "address": 37957,
       "code": 48
@@ -795,7 +795,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5212,
-        "offset": 5228
+        "iNESAddress": 5228
       },
       "address": 37980,
       "code": 49
@@ -811,7 +811,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5246,
-        "offset": 5262
+        "iNESAddress": 5262
       },
       "address": 38014,
       "code": 50
@@ -827,7 +827,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5254,
-        "offset": 5270
+        "iNESAddress": 5270
       },
       "address": 38022,
       "code": 51
@@ -843,7 +843,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5284,
-        "offset": 5300
+        "iNESAddress": 5300
       },
       "address": 38052,
       "code": 52
@@ -859,7 +859,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5292,
-        "offset": 5308
+        "iNESAddress": 5308
       },
       "address": 38060,
       "code": 53
@@ -875,7 +875,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5300,
-        "offset": 5316
+        "iNESAddress": 5316
       },
       "address": 38068,
       "code": 54
@@ -891,7 +891,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5327,
-        "offset": 5343
+        "iNESAddress": 5343
       },
       "address": 38095,
       "code": 55
@@ -907,7 +907,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5415,
-        "offset": 5431
+        "iNESAddress": 5431
       },
       "address": 38183,
       "code": 56
@@ -923,7 +923,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 5440,
-        "offset": 5456
+        "iNESAddress": 5456
       },
       "address": 38208,
       "code": 57
@@ -939,7 +939,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5510,
-        "offset": 5526
+        "iNESAddress": 5526
       },
       "address": 38278,
       "code": 58
@@ -955,7 +955,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5530,
-        "offset": 5546
+        "iNESAddress": 5546
       },
       "address": 38298,
       "code": 59
@@ -971,7 +971,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5613,
-        "offset": 5629
+        "iNESAddress": 5629
       },
       "address": 38381,
       "code": 60
@@ -987,7 +987,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5629,
-        "offset": 5645
+        "iNESAddress": 5645
       },
       "address": 38397,
       "code": 61
@@ -1003,7 +1003,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5693,
-        "offset": 5709
+        "iNESAddress": 5709
       },
       "address": 38461,
       "code": 62
@@ -1016,10 +1016,10 @@
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Stores equipped items in $04[]\nordered by type:\n$00 weapon\n$01 armor\n$02 shield\n$03 helmet\n.....",
         "name": "Full address",
         "pointer": 5736,
-        "offset": 5752
+        "iNESAddress": 5752
       },
       "address": 38504,
       "code": 63
@@ -1035,7 +1035,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5794,
-        "offset": 5810
+        "iNESAddress": 5810
       },
       "address": 38562,
       "code": 64
@@ -1051,7 +1051,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5806,
-        "offset": 5822
+        "iNESAddress": 5822
       },
       "address": 38574,
       "code": 65
@@ -1067,7 +1067,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5800,
-        "offset": 5816
+        "iNESAddress": 5816
       },
       "address": 38568,
       "code": 66
@@ -1083,7 +1083,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5812,
-        "offset": 5828
+        "iNESAddress": 5828
       },
       "address": 38580,
       "code": 67
@@ -1099,7 +1099,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5876,
-        "offset": 5892
+        "iNESAddress": 5892
       },
       "address": 38644,
       "code": 68
@@ -1115,7 +1115,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5890,
-        "offset": 5906
+        "iNESAddress": 5906
       },
       "address": 38658,
       "code": 69
@@ -1131,7 +1131,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5883,
-        "offset": 5899
+        "iNESAddress": 5899
       },
       "address": 38651,
       "code": 70
@@ -1147,7 +1147,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5897,
-        "offset": 5913
+        "iNESAddress": 5913
       },
       "address": 38665,
       "code": 71
@@ -1163,7 +1163,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5901,
-        "offset": 5917
+        "iNESAddress": 5917
       },
       "address": 38669,
       "code": 72
@@ -1179,7 +1179,7 @@
         "notes": "Saves held items in\nQuickStorage[0] to [7]",
         "name": "Full address",
         "pointer": 6079,
-        "offset": 6095
+        "iNESAddress": 6095
       },
       "address": 38847,
       "code": 73
@@ -1195,7 +1195,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6128,
-        "offset": 6144
+        "iNESAddress": 6144
       },
       "address": 38896,
       "code": 74
@@ -1211,7 +1211,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6153,
-        "offset": 6169
+        "iNESAddress": 6169
       },
       "address": 38921,
       "code": 75
@@ -1227,7 +1227,7 @@
         "notes": "Checks if item save at $CE is equipped\n\nResults:\nif equipped\n    QuickStorage04[0]: character index?\n    QuickStorage04[1]: item slot index",
         "name": "Full address",
         "pointer": 6202,
-        "offset": 6218
+        "iNESAddress": 6218
       },
       "address": 38970,
       "code": 76
@@ -1243,7 +1243,7 @@
         "notes": "results returned in quickStorage[04]?",
         "name": "Full address",
         "pointer": 6458,
-        "offset": 6474
+        "iNESAddress": 6474
       },
       "address": 39226,
       "code": 77
@@ -1259,7 +1259,7 @@
         "notes": "Same 4D but with an extra JMP",
         "name": "Full address",
         "pointer": 6468,
-        "offset": 6484
+        "iNESAddress": 6484
       },
       "address": 39236,
       "code": 78
@@ -1275,7 +1275,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6471,
-        "offset": 6487
+        "iNESAddress": 6487
       },
       "address": 39239,
       "code": 79
@@ -1291,7 +1291,7 @@
         "notes": "results stored in 0x04\n(0 = male 1 = female)\n",
         "name": "Full address",
         "pointer": 6487,
-        "offset": 6503
+        "iNESAddress": 6503
       },
       "address": 39255,
       "code": 80
@@ -1307,7 +1307,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 6500,
-        "offset": 6516
+        "iNESAddress": 6516
       },
       "address": 39268,
       "code": 81
@@ -1323,7 +1323,7 @@
         "notes": "Character count stored in QuickStorage[0]\nIndices stored in QuickStorage[1-4]",
         "name": "Full address",
         "pointer": 6518,
-        "offset": 6534
+        "iNESAddress": 6534
       },
       "address": 39286,
       "code": 82
@@ -1339,7 +1339,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6400,
-        "offset": 6416
+        "iNESAddress": 6416
       },
       "address": 39168,
       "code": 83
@@ -1355,7 +1355,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 6538,
-        "offset": 6554
+        "iNESAddress": 6554
       },
       "address": 39306,
       "code": 84
@@ -1371,7 +1371,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6597,
-        "offset": 6613
+        "iNESAddress": 6613
       },
       "address": 39365,
       "code": 85
@@ -1387,7 +1387,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6775,
-        "offset": 6791
+        "iNESAddress": 6791
       },
       "address": 39543,
       "code": 86
@@ -1403,7 +1403,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6787,
-        "offset": 6803
+        "iNESAddress": 6803
       },
       "address": 39555,
       "code": 87
@@ -1419,7 +1419,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6797,
-        "offset": 6813
+        "iNESAddress": 6813
       },
       "address": 39565,
       "code": 88
@@ -1435,7 +1435,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6808,
-        "offset": 6824
+        "iNESAddress": 6824
       },
       "address": 39576,
       "code": 89
@@ -1451,7 +1451,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 6819,
-        "offset": 6835
+        "iNESAddress": 6835
       },
       "address": 39587,
       "code": 90
@@ -1467,7 +1467,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6911,
-        "offset": 6927
+        "iNESAddress": 6927
       },
       "address": 39679,
       "code": 91
@@ -1483,7 +1483,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 7085,
-        "offset": 7101
+        "iNESAddress": 7101
       },
       "address": 39853,
       "code": 92
@@ -1499,7 +1499,7 @@
         "notes": "called from BankSwitch_GetDynamicJD_3C000 (not a true DynamicSub)\n\nEvery 6th value is checked until value matches $74 or #$FF",
         "name": "Full address",
         "pointer": 111495,
-        "offset": 111511
+        "iNESAddress": 111511
       },
       "address": 45959,
       "code": 93
@@ -1508,14 +1508,14 @@
       "loader": 0,
       "bankId": 12,
       "dsIndex": 2,
-      "name": null,
+      "name": "ChangeViewArea_30776",
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "when walking into or out of a covered area",
         "name": "Full address",
         "pointer": 198518,
-        "offset": 198534
+        "iNESAddress": 198534
       },
       "address": 34678,
       "code": 94
@@ -1524,14 +1524,14 @@
       "loader": 0,
       "bankId": 2,
       "dsIndex": 0,
-      "name": "DynamicSubroutine_00000_D",
+      "name": "BattleInit_0A13A",
       "notes": "DynamicSubroutine_Addresses_08000",
       "prgAddress": {
         "length": 2,
         "notes": "Right after screen wipe\nLoad monster sprites in here somewhere",
         "name": "Full address",
         "pointer": 41274,
-        "offset": 41290
+        "iNESAddress": 41290
       },
       "address": 41274,
       "code": 95
@@ -1547,7 +1547,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 39332,
-        "offset": 39348
+        "iNESAddress": 39348
       },
       "address": 39332,
       "code": 96
@@ -1556,14 +1556,14 @@
       "loader": 0,
       "bankId": 2,
       "dsIndex": 2,
-      "name": "DynamicSubroutine_08000_D",
+      "name": "DynamicSubroutine_09989",
       "notes": "DynamicSubroutine_Addresses_08000",
       "prgAddress": {
         "length": 2,
         "notes": "loading monster palettes quite likely",
         "name": "Full address",
         "pointer": 39305,
-        "offset": 39321
+        "iNESAddress": 39321
       },
       "address": 39305,
       "code": 97
@@ -1579,7 +1579,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 39282,
-        "offset": 39298
+        "iNESAddress": 39298
       },
       "address": 39282,
       "code": 98
@@ -1595,7 +1595,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 39254,
-        "offset": 39270
+        "iNESAddress": 39270
       },
       "address": 39254,
       "code": 99
@@ -1611,7 +1611,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 39225,
-        "offset": 39241
+        "iNESAddress": 39241
       },
       "address": 39225,
       "code": 100
@@ -1627,7 +1627,7 @@
         "notes": "camera shake when taking damage",
         "name": "Full address",
         "pointer": 38960,
-        "offset": 38976
+        "iNESAddress": 38976
       },
       "address": 38960,
       "code": 101
@@ -1643,7 +1643,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 38904,
-        "offset": 38920
+        "iNESAddress": 38920
       },
       "address": 38904,
       "code": 102
@@ -1659,7 +1659,7 @@
         "notes": "After map scroll",
         "name": "Full address",
         "pointer": 546,
-        "offset": 562
+        "iNESAddress": 562
       },
       "address": 33314,
       "code": 103
@@ -1675,7 +1675,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6276,
-        "offset": 6292
+        "iNESAddress": 6292
       },
       "address": 39044,
       "code": 104
@@ -1691,7 +1691,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 41721,
-        "offset": 41737
+        "iNESAddress": 41737
       },
       "address": 41721,
       "code": 105
@@ -1707,7 +1707,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 13011,
-        "offset": 13027
+        "iNESAddress": 13027
       },
       "address": 45779,
       "code": 106
@@ -1723,7 +1723,7 @@
         "notes": "Pre-battle, after monster initial stats setup\ncalls Menu_SetColor (172F)",
         "name": "Full address",
         "pointer": 65625,
-        "offset": 65641
+        "iNESAddress": 65641
       },
       "address": 32857,
       "code": 107
@@ -1739,7 +1739,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 79103,
-        "offset": 79119
+        "iNESAddress": 79119
       },
       "address": 46335,
       "code": 108
@@ -1755,7 +1755,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 79154,
-        "offset": 79170
+        "iNESAddress": 79170
       },
       "address": 46386,
       "code": 109
@@ -1771,7 +1771,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 80191,
-        "offset": 80207
+        "iNESAddress": 80207
       },
       "address": 47423,
       "code": 110
@@ -1787,7 +1787,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 79564,
-        "offset": 79580
+        "iNESAddress": 79580
       },
       "address": 46796,
       "code": 111
@@ -1803,7 +1803,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 80441,
-        "offset": 80457
+        "iNESAddress": 80457
       },
       "address": 47673,
       "code": 112
@@ -1819,7 +1819,7 @@
         "notes": "character count + 3 == menuPointerIndex",
         "name": "Full address",
         "pointer": 76038,
-        "offset": 76054
+        "iNESAddress": 76054
       },
       "address": 43270,
       "code": 113
@@ -1835,7 +1835,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 76226,
-        "offset": 76242
+        "iNESAddress": 76242
       },
       "address": 43458,
       "code": 114
@@ -1851,7 +1851,7 @@
         "notes": "while trying to run $13 = 8\nafter failing to run $13 = 17",
         "name": "Full address",
         "pointer": 76077,
-        "offset": 76093
+        "iNESAddress": 76093
       },
       "address": 43309,
       "code": 115
@@ -1867,7 +1867,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 76177,
-        "offset": 76193
+        "iNESAddress": 76193
       },
       "address": 43409,
       "code": 116
@@ -1883,7 +1883,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 76200,
-        "offset": 76216
+        "iNESAddress": 76216
       },
       "address": 43432,
       "code": 117
@@ -1899,7 +1899,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 76183,
-        "offset": 76199
+        "iNESAddress": 76199
       },
       "address": 43415,
       "code": 118
@@ -1915,7 +1915,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 76410,
-        "offset": 76426
+        "iNESAddress": 76426
       },
       "address": 43642,
       "code": 119
@@ -1931,7 +1931,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 78930,
-        "offset": 78946
+        "iNESAddress": 78946
       },
       "address": 46162,
       "code": 120
@@ -1947,7 +1947,7 @@
         "notes": "if $6A63 == 0\n   BRK 0771",
         "name": "Full address",
         "pointer": 41807,
-        "offset": 41823
+        "iNESAddress": 41823
       },
       "address": 41807,
       "code": 121
@@ -1963,7 +1963,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 7227,
-        "offset": 7243
+        "iNESAddress": 7243
       },
       "address": 39995,
       "code": 122
@@ -1979,7 +1979,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 7240,
-        "offset": 7256
+        "iNESAddress": 7256
       },
       "address": 40008,
       "code": 123
@@ -1995,7 +1995,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 76963,
-        "offset": 76979
+        "iNESAddress": 76979
       },
       "address": 44195,
       "code": 124
@@ -2011,7 +2011,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 98370,
-        "offset": 98386
+        "iNESAddress": 98386
       },
       "address": 32834,
       "code": 125
@@ -2027,7 +2027,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 98372,
-        "offset": 98388
+        "iNESAddress": 98388
       },
       "address": 32836,
       "code": 126
@@ -2043,7 +2043,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 98374,
-        "offset": 98390
+        "iNESAddress": 98390
       },
       "address": 32838,
       "code": 127
@@ -2059,7 +2059,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 98376,
-        "offset": 98392
+        "iNESAddress": 98392
       },
       "address": 32840,
       "code": 128
@@ -2075,7 +2075,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 164380,
-        "offset": 164396
+        "iNESAddress": 164396
       },
       "address": 33308,
       "code": 129
@@ -2084,14 +2084,14 @@
       "loader": 0,
       "bankId": 12,
       "dsIndex": 3,
-      "name": null,
+      "name": "DynamicSubroutine_30CB4",
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "switch to world map, no palettes yet",
         "name": "Full address",
         "pointer": 199860,
-        "offset": 199876
+        "iNESAddress": 199876
       },
       "address": 36020,
       "code": 130
@@ -2100,14 +2100,14 @@
       "loader": 0,
       "bankId": 12,
       "dsIndex": 4,
-      "name": null,
+      "name": "DynamicSubroutine_30DA7",
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "entering aliahan, has sprites but still no palettes",
         "name": "Full address",
         "pointer": 200103,
-        "offset": 200119
+        "iNESAddress": 200119
       },
       "address": 36263,
       "code": 131
@@ -2116,14 +2116,14 @@
       "loader": 0,
       "bankId": 12,
       "dsIndex": 5,
-      "name": null,
+      "name": "DynamicSubroutine_30C5F",
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "\ngoing up stairs, after loaded sprites (?) but no palette data",
         "name": "Full address",
         "pointer": 199775,
-        "offset": 199791
+        "iNESAddress": 199791
       },
       "address": 35935,
       "code": 132
@@ -2139,7 +2139,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 199782,
-        "offset": 199798
+        "iNESAddress": 199798
       },
       "address": 35942,
       "code": 133
@@ -2155,7 +2155,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 164552,
-        "offset": 164568
+        "iNESAddress": 164568
       },
       "address": 33480,
       "code": 134
@@ -2171,7 +2171,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 229376,
-        "offset": 229392
+        "iNESAddress": 229392
       },
       "address": 0,
       "code": 135
@@ -2187,7 +2187,7 @@
         "notes": "does something before the check too...",
         "name": "Full address",
         "pointer": 112315,
-        "offset": 112331
+        "iNESAddress": 112331
       },
       "address": 46779,
       "code": 136
@@ -2203,7 +2203,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 112560,
-        "offset": 112576
+        "iNESAddress": 112576
       },
       "address": 47024,
       "code": 137
@@ -2219,7 +2219,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 112553,
-        "offset": 112569
+        "iNESAddress": 112569
       },
       "address": 47017,
       "code": 138
@@ -2235,7 +2235,7 @@
         "notes": "[$12] - [$17]: day time (1E) palette",
         "name": "Full address",
         "pointer": 112469,
-        "offset": 112485
+        "iNESAddress": 112485
       },
       "address": 46933,
       "code": 139
@@ -2251,7 +2251,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 165011,
-        "offset": 165027
+        "iNESAddress": 165027
       },
       "address": 33939,
       "code": 140
@@ -2267,7 +2267,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 165033,
-        "offset": 165049
+        "iNESAddress": 165049
       },
       "address": 33961,
       "code": 141
@@ -2283,7 +2283,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4407,
-        "offset": 4423
+        "iNESAddress": 4423
       },
       "address": 37175,
       "code": 142
@@ -2299,7 +2299,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4486,
-        "offset": 4502
+        "iNESAddress": 4502
       },
       "address": 37254,
       "code": 143
@@ -2315,7 +2315,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4526,
-        "offset": 4542
+        "iNESAddress": 4542
       },
       "address": 37294,
       "code": 144
@@ -2331,7 +2331,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 16384,
-        "offset": 16400
+        "iNESAddress": 16400
       },
       "address": 0,
       "code": 145
@@ -2347,7 +2347,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4651,
-        "offset": 4667
+        "iNESAddress": 4667
       },
       "address": 37419,
       "code": 146
@@ -2363,7 +2363,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 124193,
-        "offset": 124209
+        "iNESAddress": 124209
       },
       "address": 42273,
       "code": 147
@@ -2379,7 +2379,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 124467,
-        "offset": 124483
+        "iNESAddress": 124483
       },
       "address": 42547,
       "code": 148
@@ -2395,7 +2395,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 124557,
-        "offset": 124573
+        "iNESAddress": 124573
       },
       "address": 42637,
       "code": 149
@@ -2411,7 +2411,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 124191,
-        "offset": 124207
+        "iNESAddress": 124207
       },
       "address": 42271,
       "code": 150
@@ -2427,7 +2427,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 197690,
-        "offset": 197706
+        "iNESAddress": 197706
       },
       "address": 33850,
       "code": 151
@@ -2443,7 +2443,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 167040,
-        "offset": 167056
+        "iNESAddress": 167056
       },
       "address": 35968,
       "code": 152
@@ -2452,14 +2452,14 @@
       "loader": 0,
       "bankId": 5,
       "dsIndex": 3,
-      "name": null,
+      "name": "DynamicSubroutine_17C73",
       "notes": "DynamicSubroutine_Addresses_14000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 97395,
-        "offset": 97411
+        "iNESAddress": 97411
       },
       "address": 48243,
       "code": 153
@@ -2475,7 +2475,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 124666,
-        "offset": 124682
+        "iNESAddress": 124682
       },
       "address": 42746,
       "code": 154
@@ -2491,7 +2491,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 197511,
-        "offset": 197527
+        "iNESAddress": 197527
       },
       "address": 33671,
       "code": 155
@@ -2507,7 +2507,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 6242,
-        "offset": 6258
+        "iNESAddress": 6258
       },
       "address": 39010,
       "code": 156
@@ -2523,7 +2523,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 198415,
-        "offset": 198431
+        "iNESAddress": 198431
       },
       "address": 34575,
       "code": 157
@@ -2539,7 +2539,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 16384,
-        "offset": 16400
+        "iNESAddress": 16400
       },
       "address": 0,
       "code": 158
@@ -2555,7 +2555,7 @@
         "notes": "Runs in ResetNMI\ncalls rare BRK (02EF) -> LocalPointers_78000[$04] => $B8C5 ResetAPU",
         "name": "Full address",
         "pointer": 16432,
-        "offset": 16448
+        "iNESAddress": 16448
       },
       "address": 32816,
       "code": 159
@@ -2564,14 +2564,14 @@
       "loader": 0,
       "bankId": 1,
       "dsIndex": 3,
-      "name": "APU_InitiateNewSequence",
+      "name": "APU_InitiateNewSequence_04067",
       "notes": "DynamicSubroutine_Addresses_04000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 16487,
-        "offset": 16503
+        "iNESAddress": 16503
       },
       "address": 32871,
       "code": 160
@@ -2580,14 +2580,14 @@
       "loader": 0,
       "bankId": 1,
       "dsIndex": 4,
-      "name": null,
+      "name": "Set_CurrentBankId_to_01",
       "notes": "DynamicSubroutine_Addresses_04000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "After checking location is somewhere can enter\n\nSets bankSwitch_CurrentBankId_06D5 to #$01\nthen Set_APU_NewSeq_20or00_FA_7B866 (BRKInstructions_EF04)",
         "name": "Full address",
         "pointer": 16454,
-        "offset": 16470
+        "iNESAddress": 16470
       },
       "address": 32838,
       "code": 161
@@ -2603,7 +2603,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 16443,
-        "offset": 16459
+        "iNESAddress": 16459
       },
       "address": 32827,
       "code": 162
@@ -2619,7 +2619,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 225550,
-        "offset": 225566
+        "iNESAddress": 225566
       },
       "address": 45326,
       "code": 163
@@ -2635,7 +2635,7 @@
         "notes": "X == 0\n   get 1st part of item name\nX == 1\n   get 2nd part of item name\nX == 2\n  get monster name\nX == 3\n  End of MonsterName_List\nX == 5, \n  Get class name\n  A: index of name in classname_list",
         "name": "Full address",
         "pointer": 43405,
-        "offset": 43421
+        "iNESAddress": 43421
       },
       "address": 43405,
       "code": 164
@@ -2644,14 +2644,14 @@
       "loader": 0,
       "bankId": 1,
       "dsIndex": 7,
-      "name": null,
+      "name": "APU_SetSqChannelVolume_04051",
       "notes": "DynamicSubroutine_Addresses_04000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "or something like that\nduring intro cutscene",
         "name": "Full address",
         "pointer": 16465,
-        "offset": 16481
+        "iNESAddress": 16481
       },
       "address": 32849,
       "code": 165
@@ -2667,7 +2667,7 @@
         "notes": "dupe (same as 1724)",
         "name": "Full address",
         "pointer": 243998,
-        "offset": 244014
+        "iNESAddress": 244014
       },
       "address": 47390,
       "code": 166
@@ -2683,7 +2683,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 80476,
-        "offset": 80492
+        "iNESAddress": 80492
       },
       "address": 47708,
       "code": 167
@@ -2699,7 +2699,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 243459,
-        "offset": 243475
+        "iNESAddress": 243475
       },
       "address": 46851,
       "code": 168
@@ -2715,7 +2715,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 9101,
-        "offset": 9117
+        "iNESAddress": 9117
       },
       "address": 41869,
       "code": 169
@@ -2724,14 +2724,14 @@
       "loader": 0,
       "bankId": 0,
       "dsIndex": 71,
-      "name": "Character_GetXPForLevelUp",
+      "name": "Character_GetXPForLevelUp_0235B",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
         "notes": "",
         "name": "Full address",
         "pointer": 9051,
-        "offset": 9067
+        "iNESAddress": 9067
       },
       "address": 41819,
       "code": 170
@@ -2740,14 +2740,14 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 29,
-      "name": null,
+      "name": "DynamicSubroutine_3AF24",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "multiplies value at dynamicPointerSpace_6C by value at $89\n\njust stepped on totile to leave Aliahan",
         "name": "Full address",
         "pointer": 241444,
-        "offset": 241460
+        "iNESAddress": 241460
       },
       "address": 44836,
       "code": 171
@@ -2756,14 +2756,14 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 25,
-      "name": null,
+      "name": "DynamicSubroutine_3BA40",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "just walked onto some stairs\ncalled DOZENS of times in a row\nsomething to do with SFX?",
         "name": "Full address",
         "pointer": 244288,
-        "offset": 244304
+        "iNESAddress": 244304
       },
       "address": 47680,
       "code": 172
@@ -2772,14 +2772,14 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 26,
-      "name": null,
+      "name": "DynamicSubRoutine_3BA60",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "right after moving right in Aliahan",
         "name": "Full address",
         "pointer": 244320,
-        "offset": 244336
+        "iNESAddress": 244336
       },
       "address": 47712,
       "code": 173
@@ -2788,14 +2788,14 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 32,
-      "name": null,
+      "name": "DynamicSubroutine_3AF43",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "after going upstairs in to Louisa's, before any palette data loaded\nand as soon as standing on stairs when going back down",
         "name": "Full address",
         "pointer": 241475,
-        "offset": 241491
+        "iNESAddress": 241491
       },
       "address": 44867,
       "code": 174
@@ -2811,7 +2811,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 241506,
-        "offset": 241522
+        "iNESAddress": 241522
       },
       "address": 44898,
       "code": 175
@@ -2827,7 +2827,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 81068,
-        "offset": 81084
+        "iNESAddress": 81084
       },
       "address": 48300,
       "code": 176
@@ -2843,7 +2843,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 79293,
-        "offset": 79309
+        "iNESAddress": 79309
       },
       "address": 46525,
       "code": 177
@@ -2859,7 +2859,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 9015,
-        "offset": 9031
+        "iNESAddress": 9031
       },
       "address": 41783,
       "code": 178
@@ -2875,7 +2875,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 67640,
-        "offset": 67656
+        "iNESAddress": 67656
       },
       "address": 34872,
       "code": 179
@@ -2891,7 +2891,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 67664,
-        "offset": 67680
+        "iNESAddress": 67680
       },
       "address": 34896,
       "code": 180
@@ -2907,7 +2907,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 79081,
-        "offset": 79097
+        "iNESAddress": 79097
       },
       "address": 46313,
       "code": 181
@@ -2923,7 +2923,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 168343,
-        "offset": 168359
+        "iNESAddress": 168359
       },
       "address": 37271,
       "code": 182
@@ -2939,7 +2939,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 168471,
-        "offset": 168487
+        "iNESAddress": 168487
       },
       "address": 37399,
       "code": 183
@@ -2955,7 +2955,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 201794,
-        "offset": 201810
+        "iNESAddress": 201810
       },
       "address": 37954,
       "code": 184
@@ -2971,7 +2971,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 201790,
-        "offset": 201806
+        "iNESAddress": 201806
       },
       "address": 37950,
       "code": 185
@@ -2987,7 +2987,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 201786,
-        "offset": 201802
+        "iNESAddress": 201802
       },
       "address": 37946,
       "code": 186
@@ -3003,7 +3003,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 201186,
-        "offset": 201202
+        "iNESAddress": 201202
       },
       "address": 37346,
       "code": 187
@@ -3019,7 +3019,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 201230,
-        "offset": 201246
+        "iNESAddress": 201246
       },
       "address": 37390,
       "code": 188
@@ -3035,7 +3035,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 114519,
-        "offset": 114535
+        "iNESAddress": 114535
       },
       "address": 48983,
       "code": 189
@@ -3051,7 +3051,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 204674,
-        "offset": 204690
+        "iNESAddress": 204690
       },
       "address": 40834,
       "code": 190
@@ -3067,7 +3067,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 241673,
-        "offset": 241689
+        "iNESAddress": 241689
       },
       "address": 45065,
       "code": 191
@@ -3083,7 +3083,7 @@
         "notes": "PostIncrementClock",
         "name": "Full address",
         "pointer": 241944,
-        "offset": 241960
+        "iNESAddress": 241960
       },
       "address": 45336,
       "code": 192
@@ -3092,14 +3092,14 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 36,
-      "name": null,
+      "name": "AnyCharacterStatus1_Bit6_Set_3B16A",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "",
         "name": "Full address",
         "pointer": 242026,
-        "offset": 242042
+        "iNESAddress": 242042
       },
       "address": 45418,
       "code": 193
@@ -3115,7 +3115,7 @@
         "notes": "PostIncrementClock",
         "name": "Full address",
         "pointer": 241916,
-        "offset": 241932
+        "iNESAddress": 241932
       },
       "address": 45308,
       "code": 194
@@ -3131,7 +3131,7 @@
         "notes": "called in F3CE1A (early in game loop, after controller input) when 0x8F >= $02",
         "name": "Full address",
         "pointer": 241799,
-        "offset": 241815
+        "iNESAddress": 241815
       },
       "address": 45191,
       "code": 195
@@ -3147,7 +3147,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 111592,
-        "offset": 111608
+        "iNESAddress": 111608
       },
       "address": 46056,
       "code": 196
@@ -3163,7 +3163,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 111625,
-        "offset": 111641
+        "iNESAddress": 111641
       },
       "address": 46089,
       "code": 197
@@ -3179,7 +3179,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 111636,
-        "offset": 111652
+        "iNESAddress": 111652
       },
       "address": 46100,
       "code": 198
@@ -3195,7 +3195,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 111704,
-        "offset": 111720
+        "iNESAddress": 111720
       },
       "address": 46168,
       "code": 199
@@ -3211,7 +3211,7 @@
         "notes": "End of map scroll",
         "name": "Full address",
         "pointer": 208789,
-        "offset": 208805
+        "iNESAddress": 208805
       },
       "address": 44949,
       "code": 200
@@ -3227,7 +3227,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205657,
-        "offset": 205673
+        "iNESAddress": 205673
       },
       "address": 41817,
       "code": 201
@@ -3243,7 +3243,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205690,
-        "offset": 205706
+        "iNESAddress": 205706
       },
       "address": 41850,
       "code": 202
@@ -3259,7 +3259,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 41766,
-        "offset": 41782
+        "iNESAddress": 41782
       },
       "address": 41766,
       "code": 203
@@ -3275,7 +3275,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 0,
       "code": 204
@@ -3291,7 +3291,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 7498,
-        "offset": 7514
+        "iNESAddress": 7514
       },
       "address": 40266,
       "code": 205
@@ -3307,7 +3307,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205790,
-        "offset": 205806
+        "iNESAddress": 205806
       },
       "address": 41950,
       "code": 206
@@ -3323,7 +3323,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205652,
-        "offset": 205668
+        "iNESAddress": 205668
       },
       "address": 41812,
       "code": 207
@@ -3339,7 +3339,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 80428,
-        "offset": 80444
+        "iNESAddress": 80444
       },
       "address": 47660,
       "code": 208
@@ -3355,7 +3355,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 79933,
-        "offset": 79949
+        "iNESAddress": 79949
       },
       "address": 47165,
       "code": 209
@@ -3371,7 +3371,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 80239,
-        "offset": 80255
+        "iNESAddress": 80255
       },
       "address": 47471,
       "code": 210
@@ -3387,7 +3387,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 79444,
-        "offset": 79460
+        "iNESAddress": 79460
       },
       "address": 46676,
       "code": 211
@@ -3403,7 +3403,7 @@
         "notes": "BRK to Menu_SetStatusColor (172F)\nCopies BG palette to PPU\nWaits for NMI and refreshes screen",
         "name": "Full address",
         "pointer": 78488,
-        "offset": 78504
+        "iNESAddress": 78504
       },
       "address": 45720,
       "code": 212
@@ -3419,7 +3419,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 78652,
-        "offset": 78668
+        "iNESAddress": 78668
       },
       "address": 45884,
       "code": 213
@@ -3435,7 +3435,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 78858,
-        "offset": 78874
+        "iNESAddress": 78874
       },
       "address": 46090,
       "code": 214
@@ -3451,7 +3451,7 @@
         "notes": "something to do with trying to run",
         "name": "Full address",
         "pointer": 78868,
-        "offset": 78884
+        "iNESAddress": 78884
       },
       "address": 46100,
       "code": 215
@@ -3467,7 +3467,7 @@
         "notes": "called early in battle, after fade in, before message box appears\ncalls LoadSubroutine_CreateMenu (0772)",
         "name": "Full address",
         "pointer": 18519,
-        "offset": 18535
+        "iNESAddress": 18535
       },
       "address": 34903,
       "code": 216
@@ -3483,7 +3483,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 18312,
-        "offset": 18328
+        "iNESAddress": 18328
       },
       "address": 34696,
       "code": 217
@@ -3499,7 +3499,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 18421,
-        "offset": 18437
+        "iNESAddress": 18437
       },
       "address": 34805,
       "code": 218
@@ -3515,7 +3515,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 18883,
-        "offset": 18899
+        "iNESAddress": 18899
       },
       "address": 35267,
       "code": 219
@@ -3531,7 +3531,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 18986,
-        "offset": 19002
+        "iNESAddress": 19002
       },
       "address": 35370,
       "code": 220
@@ -3540,14 +3540,14 @@
       "loader": 0,
       "bankId": 13,
       "dsIndex": 13,
-      "name": null,
+      "name": "DynamicSubroutine_35D4F",
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "after going stairs, no palette data yet",
         "name": "Full address",
         "pointer": 220495,
-        "offset": 220511
+        "iNESAddress": 220511
       },
       "address": 40271,
       "code": 221
@@ -3563,7 +3563,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 111739,
-        "offset": 111755
+        "iNESAddress": 111755
       },
       "address": 46203,
       "code": 222
@@ -3579,7 +3579,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 8919,
-        "offset": 8935
+        "iNESAddress": 8935
       },
       "address": 41687,
       "code": 223
@@ -3595,7 +3595,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 8951,
-        "offset": 8967
+        "iNESAddress": 8967
       },
       "address": 41719,
       "code": 224
@@ -3611,7 +3611,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 8983,
-        "offset": 8999
+        "iNESAddress": 8999
       },
       "address": 41751,
       "code": 225
@@ -3627,7 +3627,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205957,
-        "offset": 205973
+        "iNESAddress": 205973
       },
       "address": 42117,
       "code": 226
@@ -3643,7 +3643,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 111865,
-        "offset": 111881
+        "iNESAddress": 111881
       },
       "address": 46329,
       "code": 227
@@ -3659,7 +3659,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 7792,
-        "offset": 7808
+        "iNESAddress": 7808
       },
       "address": 40560,
       "code": 228
@@ -3675,7 +3675,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 164866,
-        "offset": 164882
+        "iNESAddress": 164882
       },
       "address": 33794,
       "code": 229
@@ -3684,14 +3684,14 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 46,
-      "name": null,
+      "name": "DynamicSubroutine_3B3A1",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "After sprites for town are loaded\n\nlooking for an address to JMP to\naddress key is stored in DynamicSubroutine_3B3A1_8B",
         "name": "Full address",
         "pointer": 242593,
-        "offset": 242609
+        "iNESAddress": 242609
       },
       "address": 45985,
       "code": 230
@@ -3700,14 +3700,14 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 47,
-      "name": null,
+      "name": "DynamicSubroutine_3B482",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "After E6\n\nSearches PPU_TileBatchInstructions_3rdByte to find last index of a tile with bits 5&6, 4&6, or 4&5&6 on\nthen LDA from address at dynamicPointerSpace ($7400) (was this set in E6??)",
         "name": "Full address",
         "pointer": 242818,
-        "offset": 242834
+        "iNESAddress": 242834
       },
       "address": 46210,
       "code": 231
@@ -3716,14 +3716,14 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 48,
-      "name": null,
+      "name": "BRK_3B53E",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "BRK only",
         "name": "Full address",
         "pointer": 243006,
-        "offset": 243022
+        "iNESAddress": 243022
       },
       "address": 46398,
       "code": 232
@@ -3736,10 +3736,10 @@
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": "if $60C5 < $80\n    check map coordinates",
+        "notes": "if $60C5 < $80\n    check map coordinates\n\ngoing up/downstairs, no palettes yet\nstepped on to tile to leave Aliahan",
         "name": "Full address",
         "pointer": 242395,
-        "offset": 242411
+        "iNESAddress": 242411
       },
       "address": 45787,
       "code": 233
@@ -3755,7 +3755,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 38896,
-        "offset": 38912
+        "iNESAddress": 38912
       },
       "address": 38896,
       "code": 234
@@ -3771,7 +3771,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 241746,
-        "offset": 241762
+        "iNESAddress": 241762
       },
       "address": 45138,
       "code": 235
@@ -3787,7 +3787,7 @@
         "notes": "MainMenu Item Command selected\n\nLaunches BRKInstruction_D7_Destination\nwhich launches 20 Menu_Subroutine_Extended",
         "name": "Full address",
         "pointer": 10994,
-        "offset": 11010
+        "iNESAddress": 11010
       },
       "address": 43762,
       "code": 236
@@ -3803,7 +3803,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 81665,
-        "offset": 81681
+        "iNESAddress": 81681
       },
       "address": 48897,
       "code": 237
@@ -3819,7 +3819,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 77949,
-        "offset": 77965
+        "iNESAddress": 77965
       },
       "address": 45181,
       "code": 238
@@ -3835,7 +3835,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 77985,
-        "offset": 78001
+        "iNESAddress": 78001
       },
       "address": 45217,
       "code": 239
@@ -3851,7 +3851,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 16476,
-        "offset": 16492
+        "iNESAddress": 16492
       },
       "address": 32860,
       "code": 240
@@ -3860,14 +3860,14 @@
       "loader": 0,
       "bankId": 5,
       "dsIndex": 9,
-      "name": "WriteMapTilesToPPU",
+      "name": "WaitForVBlank_17CB0",
       "notes": "DynamicSubroutine_Addresses_14000",
       "prgAddress": {
         "length": 2,
-        "notes": "Writes map tiles to PPU\nand some other stuff?\ncalls DynamicSubroutine_34000_H (1735) at very end",
+        "notes": "",
         "name": "Full address",
         "pointer": 97456,
-        "offset": 97472
+        "iNESAddress": 97472
       },
       "address": 48304,
       "code": 241
@@ -3883,7 +3883,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 97772,
-        "offset": 97788
+        "iNESAddress": 97788
       },
       "address": 48620,
       "code": 242
@@ -3899,7 +3899,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205685,
-        "offset": 205701
+        "iNESAddress": 205701
       },
       "address": 41845,
       "code": 243
@@ -3915,7 +3915,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 230399,
-        "offset": 230415
+        "iNESAddress": 230415
       },
       "address": 33791,
       "code": 244
@@ -3931,7 +3931,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 203499,
-        "offset": 203515
+        "iNESAddress": 203515
       },
       "address": 39659,
       "code": 245
@@ -3947,7 +3947,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 124913,
-        "offset": 124929
+        "iNESAddress": 124929
       },
       "address": 42993,
       "code": 246
@@ -3963,7 +3963,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 206656,
-        "offset": 206672
+        "iNESAddress": 206672
       },
       "address": 42816,
       "code": 247
@@ -3979,7 +3979,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 203748,
-        "offset": 203764
+        "iNESAddress": 203764
       },
       "address": 39908,
       "code": 248
@@ -3988,14 +3988,14 @@
       "loader": 0,
       "bankId": 14,
       "dsIndex": 27,
-      "name": null,
+      "name": "DynamicSubroutine_3B6E3",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "going up/down stairs, after fade to black",
         "name": "Full address",
         "pointer": 243427,
-        "offset": 243443
+        "iNESAddress": 243443
       },
       "address": 46819,
       "code": 249
@@ -4011,7 +4011,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205777,
-        "offset": 205793
+        "iNESAddress": 205793
       },
       "address": 41937,
       "code": 250
@@ -4027,7 +4027,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 204611,
-        "offset": 204627
+        "iNESAddress": 204627
       },
       "address": 40771,
       "code": 251
@@ -4043,7 +4043,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 164626,
-        "offset": 164642
+        "iNESAddress": 164642
       },
       "address": 33554,
       "code": 252
@@ -4059,7 +4059,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 213076,
-        "offset": 213092
+        "iNESAddress": 213092
       },
       "address": 32852,
       "code": 253
@@ -4075,7 +4075,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205951,
-        "offset": 205967
+        "iNESAddress": 205967
       },
       "address": 42111,
       "code": 254
@@ -4091,7 +4091,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 213400,
-        "offset": 213416
+        "iNESAddress": 213416
       },
       "address": 33176,
       "code": 255
@@ -4102,14 +4102,14 @@
       "loader": 1,
       "bankId": 12,
       "dsIndex": 42,
-      "name": null,
+      "name": "DynamicSubroutine_33164",
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
         "notes": null,
         "name": "Full address",
         "pointer": 209252,
-        "offset": 209268
+        "iNESAddress": 209268
       },
       "address": 45412,
       "code": 0
@@ -4125,7 +4125,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 211167,
-        "offset": 211183
+        "iNESAddress": 211183
       },
       "address": 47327,
       "code": 1
@@ -4141,7 +4141,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 220964,
-        "offset": 220980
+        "iNESAddress": 220980
       },
       "address": 40740,
       "code": 2
@@ -4157,7 +4157,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 221046,
-        "offset": 221062
+        "iNESAddress": 221062
       },
       "address": 40822,
       "code": 3
@@ -4173,7 +4173,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 209188,
-        "offset": 209204
+        "iNESAddress": 209204
       },
       "address": 45348,
       "code": 4
@@ -4189,7 +4189,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 113768,
-        "offset": 113784
+        "iNESAddress": 113784
       },
       "address": 48232,
       "code": 5
@@ -4205,7 +4205,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 218844,
-        "offset": 218860
+        "iNESAddress": 218860
       },
       "address": 38620,
       "code": 6
@@ -4221,7 +4221,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 242581,
-        "offset": 242597
+        "iNESAddress": 242597
       },
       "address": 45973,
       "code": 7
@@ -4237,7 +4237,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6000,
-        "offset": 6016
+        "iNESAddress": 6016
       },
       "address": 38768,
       "code": 8
@@ -4253,7 +4253,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6053,
-        "offset": 6069
+        "iNESAddress": 6069
       },
       "address": 38821,
       "code": 9
@@ -4269,7 +4269,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 7264,
-        "offset": 7280
+        "iNESAddress": 7280
       },
       "address": 40032,
       "code": 10
@@ -4285,7 +4285,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 168282,
-        "offset": 168298
+        "iNESAddress": 168298
       },
       "address": 37210,
       "code": 11
@@ -4301,7 +4301,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 127811,
-        "offset": 127827
+        "iNESAddress": 127827
       },
       "address": 45891,
       "code": 12
@@ -4317,7 +4317,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 221326,
-        "offset": 221342
+        "iNESAddress": 221342
       },
       "address": 41102,
       "code": 13
@@ -4333,7 +4333,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 221316,
-        "offset": 221332
+        "iNESAddress": 221332
       },
       "address": 41092,
       "code": 14
@@ -4349,7 +4349,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205415,
-        "offset": 205431
+        "iNESAddress": 205431
       },
       "address": 41575,
       "code": 15
@@ -4365,7 +4365,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 7347,
-        "offset": 7363
+        "iNESAddress": 7363
       },
       "address": 40115,
       "code": 16
@@ -4374,14 +4374,14 @@
       "loader": 1,
       "bankId": 0,
       "dsIndex": 73,
-      "name": null,
+      "name": "AddLocationToReturnList_01CF5",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "this adds return destinations!",
         "name": "Full address",
         "pointer": 7413,
-        "offset": 7429
+        "iNESAddress": 7429
       },
       "address": 40181,
       "code": 17
@@ -4397,7 +4397,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 111890,
-        "offset": 111906
+        "iNESAddress": 111906
       },
       "address": 46354,
       "code": 18
@@ -4413,7 +4413,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 111890,
-        "offset": 111906
+        "iNESAddress": 111906
       },
       "address": 46354,
       "code": 19
@@ -4429,7 +4429,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 16498,
-        "offset": 16514
+        "iNESAddress": 16514
       },
       "address": 32882,
       "code": 20
@@ -4445,7 +4445,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 16579,
-        "offset": 16595
+        "iNESAddress": 16595
       },
       "address": 32963,
       "code": 21
@@ -4461,7 +4461,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 16573,
-        "offset": 16589
+        "iNESAddress": 16589
       },
       "address": 32957,
       "code": 22
@@ -4477,7 +4477,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 16688,
-        "offset": 16704
+        "iNESAddress": 16704
       },
       "address": 33072,
       "code": 23
@@ -4493,7 +4493,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 16724,
-        "offset": 16740
+        "iNESAddress": 16740
       },
       "address": 33108,
       "code": 24
@@ -4509,7 +4509,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 237183,
-        "offset": 237199
+        "iNESAddress": 237199
       },
       "address": 40575,
       "code": 25
@@ -4525,7 +4525,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 230846,
-        "offset": 230862
+        "iNESAddress": 230862
       },
       "address": 34238,
       "code": 26
@@ -4541,7 +4541,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 233148,
-        "offset": 233164
+        "iNESAddress": 233164
       },
       "address": 36540,
       "code": 27
@@ -4557,7 +4557,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 229376,
-        "offset": 229392
+        "iNESAddress": 229392
       },
       "address": 0,
       "code": 28
@@ -4573,7 +4573,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 199821,
-        "offset": 199837
+        "iNESAddress": 199837
       },
       "address": 35981,
       "code": 29
@@ -4582,14 +4582,14 @@
       "loader": 1,
       "bankId": 14,
       "dsIndex": 22,
-      "name": null,
+      "name": "BRK_3B5B1",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Calls BRK",
         "name": "Full address",
         "pointer": 243121,
-        "offset": 243137
+        "iNESAddress": 243137
       },
       "address": 46513,
       "code": 30
@@ -4605,7 +4605,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 231305,
-        "offset": 231321
+        "iNESAddress": 231321
       },
       "address": 34697,
       "code": 31
@@ -4621,7 +4621,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 231305,
-        "offset": 231321
+        "iNESAddress": 231321
       },
       "address": 34697,
       "code": 32
@@ -4630,14 +4630,14 @@
       "loader": 1,
       "bankId": 14,
       "dsIndex": 15,
-      "name": null,
+      "name": "DynamicSubroutine_3B911",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Leaving Aliahan, just after fade to black\n\nLoads world map (?) sprites",
         "name": "Full address",
         "pointer": 243985,
-        "offset": 244001
+        "iNESAddress": 244001
       },
       "address": 47377,
       "code": 33
@@ -4646,14 +4646,14 @@
       "loader": 1,
       "bankId": 0,
       "dsIndex": 97,
-      "name": null,
+      "name": "DynamicSubroutine_02206",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Main menu after letters into CHR\n\nloads 290 bytes of SaveRam from 6B2F with a 5-byte pattern:\n$20 $A0 $C4 $23 $60\n$20 $A0 $C4 $24 $60\n$20 $A0 $C4 $25 $60\n...\n$20 $A0 $C4 $5C $60\n\nthe $A0 $C4 comes from MainMenuSomething_0226C\n\nthen fills the next 31 Bytes from MainMenuSomething_0226E",
         "name": "Full address",
         "pointer": 8710,
-        "offset": 8726
+        "iNESAddress": 8726
       },
       "address": 41478,
       "code": 34
@@ -4669,7 +4669,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 199792,
-        "offset": 199808
+        "iNESAddress": 199808
       },
       "address": 35952,
       "code": 35
@@ -4685,7 +4685,7 @@
         "notes": "(same as 07A6)\n*dupe",
         "name": "Full address",
         "pointer": 243998,
-        "offset": 244014
+        "iNESAddress": 244014
       },
       "address": 47390,
       "code": 36
@@ -4701,7 +4701,7 @@
         "notes": "after some world map coordinate stuff\ncalls DynamicSubroutine_38000_B directly (no BRK)\n\n",
         "name": "Full address",
         "pointer": 231148,
-        "offset": 231164
+        "iNESAddress": 231164
       },
       "address": 34540,
       "code": 37
@@ -4717,7 +4717,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 206111,
-        "offset": 206127
+        "iNESAddress": 206127
       },
       "address": 42271,
       "code": 38
@@ -4733,7 +4733,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 225650,
-        "offset": 225666
+        "iNESAddress": 225666
       },
       "address": 45426,
       "code": 39
@@ -4749,7 +4749,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 221368,
-        "offset": 221384
+        "iNESAddress": 221384
       },
       "address": 41144,
       "code": 40
@@ -4765,7 +4765,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6312,
-        "offset": 6328
+        "iNESAddress": 6328
       },
       "address": 39080,
       "code": 41
@@ -4781,7 +4781,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 6884,
-        "offset": 6900
+        "iNESAddress": 6900
       },
       "address": 39652,
       "code": 42
@@ -4797,7 +4797,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 202196,
-        "offset": 202212
+        "iNESAddress": 202212
       },
       "address": 38356,
       "code": 43
@@ -4813,7 +4813,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 7498,
-        "offset": 7514
+        "iNESAddress": 7514
       },
       "address": 40266,
       "code": 44
@@ -4829,7 +4829,7 @@
         "notes": "Trying to run\nchecks character status",
         "name": "Full address",
         "pointer": 220878,
-        "offset": 220894
+        "iNESAddress": 220894
       },
       "address": 40654,
       "code": 45
@@ -4845,7 +4845,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 8845,
-        "offset": 8861
+        "iNESAddress": 8861
       },
       "address": 41613,
       "code": 46
@@ -4861,7 +4861,7 @@
         "notes": "called from DynamicSubroutine_10000_A (076B) and (07D4)\n\nchecks character statuses and updates the palette data PPU_BGPaletteColor_Store[1]) to match.\nAlso stores palette color in $06E0 for unknow reason,",
         "name": "Full address",
         "pointer": 218528,
-        "offset": 218544
+        "iNESAddress": 218544
       },
       "address": 38304,
       "code": 47
@@ -4877,7 +4877,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5955,
-        "offset": 5971
+        "iNESAddress": 5971
       },
       "address": 38723,
       "code": 48
@@ -4893,7 +4893,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 76246,
-        "offset": 76262
+        "iNESAddress": 76262
       },
       "address": 43478,
       "code": 49
@@ -4909,7 +4909,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 213277,
-        "offset": 213293
+        "iNESAddress": 213293
       },
       "address": 33053,
       "code": 50
@@ -4925,7 +4925,7 @@
         "notes": "Map screen closing status menu\n\nreads address off stack and saves to $80",
         "name": "Full address",
         "pointer": 213076,
-        "offset": 213092
+        "iNESAddress": 213092
       },
       "address": 32852,
       "code": 51
@@ -4941,7 +4941,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 213091,
-        "offset": 213107
+        "iNESAddress": 213107
       },
       "address": 32867,
       "code": 52
@@ -4954,10 +4954,10 @@
       "notes": "DynamicSubroutine_Addresses_34000",
       "prgAddress": {
         "length": 2,
-        "notes": "called at the end of WriteMapTilesToPPU (07F1)",
+        "notes": "called at the end of WriteMapTilesToPPU (07F1)\n\nsomething world (?) map related most likely",
         "name": "Full address",
         "pointer": 213140,
-        "offset": 213156
+        "iNESAddress": 213156
       },
       "address": 32916,
       "code": 53
@@ -4973,7 +4973,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 213229,
-        "offset": 213245
+        "iNESAddress": 213245
       },
       "address": 33005,
       "code": 54
@@ -4989,7 +4989,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 213235,
-        "offset": 213251
+        "iNESAddress": 213251
       },
       "address": 33011,
       "code": 55
@@ -5005,7 +5005,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 213149,
-        "offset": 213165
+        "iNESAddress": 213165
       },
       "address": 32925,
       "code": 56
@@ -5021,7 +5021,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 207488,
-        "offset": 207504
+        "iNESAddress": 207504
       },
       "address": 43648,
       "code": 57
@@ -5037,7 +5037,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205823,
-        "offset": 205839
+        "iNESAddress": 205839
       },
       "address": 41983,
       "code": 58
@@ -5053,7 +5053,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205877,
-        "offset": 205893
+        "iNESAddress": 205893
       },
       "address": 42037,
       "code": 59
@@ -5069,7 +5069,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 221339,
-        "offset": 221355
+        "iNESAddress": 221355
       },
       "address": 41115,
       "code": 60
@@ -5085,7 +5085,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 97760,
-        "offset": 97776
+        "iNESAddress": 97776
       },
       "address": 48608,
       "code": 61
@@ -5101,7 +5101,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 229227,
-        "offset": 229243
+        "iNESAddress": 229243
       },
       "address": 49003,
       "code": 62
@@ -5117,7 +5117,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 19785,
-        "offset": 19801
+        "iNESAddress": 19801
       },
       "address": 36169,
       "code": 63
@@ -5133,7 +5133,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 66069,
-        "offset": 66085
+        "iNESAddress": 66085
       },
       "address": 33301,
       "code": 64
@@ -5149,7 +5149,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205838,
-        "offset": 205854
+        "iNESAddress": 205854
       },
       "address": 41998,
       "code": 65
@@ -5165,7 +5165,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 112220,
-        "offset": 112236
+        "iNESAddress": 112236
       },
       "address": 46684,
       "code": 66
@@ -5181,7 +5181,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 206386,
-        "offset": 206402
+        "iNESAddress": 206402
       },
       "address": 42546,
       "code": 67
@@ -5197,7 +5197,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 221412,
-        "offset": 221428
+        "iNESAddress": 221428
       },
       "address": 41188,
       "code": 68
@@ -5213,7 +5213,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 7579,
-        "offset": 7595
+        "iNESAddress": 7595
       },
       "address": 40347,
       "code": 69
@@ -5229,7 +5229,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 7640,
-        "offset": 7656
+        "iNESAddress": 7656
       },
       "address": 40408,
       "code": 70
@@ -5238,14 +5238,14 @@
       "loader": 1,
       "bankId": 12,
       "dsIndex": 39,
-      "name": null,
+      "name": "DynamicSubroutine_339A5",
       "notes": "DynamicSubroutine_Addresses_30000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "looks up location data of some sort\nprobably map data",
         "name": "Full address",
         "pointer": 211365,
-        "offset": 211381
+        "iNESAddress": 211381
       },
       "address": 47525,
       "code": 71
@@ -5261,7 +5261,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 206510,
-        "offset": 206526
+        "iNESAddress": 206526
       },
       "address": 42670,
       "code": 72
@@ -5277,7 +5277,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 7689,
-        "offset": 7705
+        "iNESAddress": 7705
       },
       "address": 40457,
       "code": 73
@@ -5293,7 +5293,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 206605,
-        "offset": 206621
+        "iNESAddress": 206621
       },
       "address": 42765,
       "code": 74
@@ -5309,7 +5309,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 206643,
-        "offset": 206659
+        "iNESAddress": 206659
       },
       "address": 42803,
       "code": 75
@@ -5325,7 +5325,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 208,
-        "offset": 224
+        "iNESAddress": 224
       },
       "address": 32976,
       "code": 76
@@ -5341,7 +5341,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 433,
-        "offset": 449
+        "iNESAddress": 449
       },
       "address": 33201,
       "code": 77
@@ -5357,7 +5357,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 1520,
-        "offset": 1536
+        "iNESAddress": 1536
       },
       "address": 34288,
       "code": 78
@@ -5373,7 +5373,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 600,
-        "offset": 616
+        "iNESAddress": 616
       },
       "address": 33368,
       "code": 79
@@ -5382,14 +5382,14 @@
       "loader": 1,
       "bankId": 14,
       "dsIndex": 54,
-      "name": null,
+      "name": "DynamicSubroutine_3B5FE",
       "notes": "DynamicSubroutine_Addresses_38000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "Reads:\n$60C3 (AND $07, ASL x2)\njumps to DynamicSubroutine_1B59D",
         "name": "Full address",
         "pointer": 243198,
-        "offset": 243214
+        "iNESAddress": 243214
       },
       "address": 46590,
       "code": 80
@@ -5405,7 +5405,7 @@
         "notes": "After map tiles loaded",
         "name": "Full address",
         "pointer": 244246,
-        "offset": 244262
+        "iNESAddress": 244262
       },
       "address": 47638,
       "code": 81
@@ -5421,7 +5421,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 237324,
-        "offset": 237340
+        "iNESAddress": 237340
       },
       "address": 40716,
       "code": 82
@@ -5430,14 +5430,14 @@
       "loader": 1,
       "bankId": 6,
       "dsIndex": 19,
-      "name": null,
+      "name": "DynamicSubroutine_1B59D",
       "notes": "DynamicSubroutine_Addresses_18000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "called from DynamicSubroutine_3B5FE during game load\n\nI highly suspect this is setting map position\nreads:\n$60B8 (AND #$C0 CMP #$80)\n$60B9 (BIT)\n$60CB (BIT)",
         "name": "Full address",
         "pointer": 112029,
-        "offset": 112045
+        "iNESAddress": 112045
       },
       "address": 46493,
       "code": 83
@@ -5453,7 +5453,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 80699,
-        "offset": 80715
+        "iNESAddress": 80715
       },
       "address": 47931,
       "code": 84
@@ -5469,7 +5469,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 8170,
-        "offset": 8186
+        "iNESAddress": 8186
       },
       "address": 40938,
       "code": 85
@@ -5485,7 +5485,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 98011,
-        "offset": 98027
+        "iNESAddress": 98027
       },
       "address": 48859,
       "code": 86
@@ -5501,7 +5501,7 @@
         "notes": "Map screen every frame it seems\n",
         "name": "Full address",
         "pointer": 196728,
-        "offset": 196744
+        "iNESAddress": 196744
       },
       "address": 32888,
       "code": 87
@@ -5517,7 +5517,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 213103,
-        "offset": 213119
+        "iNESAddress": 213119
       },
       "address": 32879,
       "code": 88
@@ -5533,7 +5533,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 200353,
-        "offset": 200369
+        "iNESAddress": 200369
       },
       "address": 36513,
       "code": 89
@@ -5549,7 +5549,7 @@
         "notes": "Calls 1733 up to x4",
         "name": "Full address",
         "pointer": 200024,
-        "offset": 200040
+        "iNESAddress": 200040
       },
       "address": 36184,
       "code": 90
@@ -5565,7 +5565,7 @@
         "notes": "fills 0x0200 to 0x02FF with F8",
         "name": "Full address",
         "pointer": 206993,
-        "offset": 207009
+        "iNESAddress": 207009
       },
       "address": 43153,
       "code": 91
@@ -5581,7 +5581,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 65775,
-        "offset": 65791
+        "iNESAddress": 65791
       },
       "address": 33007,
       "code": 92
@@ -5597,7 +5597,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 65786,
-        "offset": 65802
+        "iNESAddress": 65802
       },
       "address": 33018,
       "code": 93
@@ -5613,7 +5613,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 200675,
-        "offset": 200691
+        "iNESAddress": 200691
       },
       "address": 36835,
       "code": 94
@@ -5622,14 +5622,14 @@
       "loader": 1,
       "bankId": 5,
       "dsIndex": 11,
-      "name": null,
+      "name": "LoadTextIntoCHR_17E96",
       "notes": "DynamicSubroutine_Addresses_14000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "loading letter sprites into CHR",
         "name": "Full address",
         "pointer": 97942,
-        "offset": 97958
+        "iNESAddress": 97958
       },
       "address": 48790,
       "code": 95
@@ -5645,7 +5645,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 168093,
-        "offset": 168109
+        "iNESAddress": 168109
       },
       "address": 37021,
       "code": 96
@@ -5661,7 +5661,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 112567,
-        "offset": 112583
+        "iNESAddress": 112583
       },
       "address": 47031,
       "code": 97
@@ -5670,14 +5670,14 @@
       "loader": 1,
       "bankId": 7,
       "dsIndex": 10,
-      "name": null,
+      "name": "DynamicSubroutine_1E865",
       "notes": "DynamicSubroutine_Addresses_1C000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "\nDoes something with the checksum",
         "name": "Full address",
         "pointer": 125029,
-        "offset": 125045
+        "iNESAddress": 125045
       },
       "address": 43109,
       "code": 98
@@ -5693,7 +5693,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 16208,
-        "offset": 16224
+        "iNESAddress": 16224
       },
       "address": 48976,
       "code": 99
@@ -5702,14 +5702,14 @@
       "loader": 1,
       "bankId": 0,
       "dsIndex": 102,
-      "name": null,
+      "name": "ClearSaveRam_03FA5",
       "notes": "DynamicSubroutine_Addresses_00000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "$6D40 to $6DE0\nWorld map just appeared",
         "name": "Full address",
         "pointer": 16293,
-        "offset": 16309
+        "iNESAddress": 16309
       },
       "address": 49061,
       "code": 100
@@ -5725,7 +5725,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 126942,
-        "offset": 126958
+        "iNESAddress": 126958
       },
       "address": 45022,
       "code": 101
@@ -5734,14 +5734,14 @@
       "loader": 1,
       "bankId": 7,
       "dsIndex": 14,
-      "name": null,
+      "name": "GetSaveGameHeroName_1F19F",
       "notes": "DynamicSubroutine_Addresses_1C000",
       "prgAddress": {
         "length": 2,
-        "notes": null,
+        "notes": "save game index (0 - 2) stored in character_FormationIndex_CE\nReturns Hero name is $04",
         "name": "Full address",
         "pointer": 127391,
-        "offset": 127407
+        "iNESAddress": 127407
       },
       "address": 45471,
       "code": 102
@@ -5757,7 +5757,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 127421,
-        "offset": 127437
+        "iNESAddress": 127437
       },
       "address": 45501,
       "code": 103
@@ -5773,7 +5773,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 126386,
-        "offset": 126402
+        "iNESAddress": 126402
       },
       "address": 44466,
       "code": 104
@@ -5789,7 +5789,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 127213,
-        "offset": 127229
+        "iNESAddress": 127229
       },
       "address": 45293,
       "code": 105
@@ -5805,7 +5805,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 127244,
-        "offset": 127260
+        "iNESAddress": 127260
       },
       "address": 45324,
       "code": 106
@@ -5821,7 +5821,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 127296,
-        "offset": 127312
+        "iNESAddress": 127312
       },
       "address": 45376,
       "code": 107
@@ -5837,7 +5837,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 126858,
-        "offset": 126874
+        "iNESAddress": 126874
       },
       "address": 44938,
       "code": 108
@@ -5853,7 +5853,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205336,
-        "offset": 205352
+        "iNESAddress": 205352
       },
       "address": 41496,
       "code": 109
@@ -5869,7 +5869,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 112252,
-        "offset": 112268
+        "iNESAddress": 112268
       },
       "address": 46716,
       "code": 110
@@ -5885,7 +5885,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 127340,
-        "offset": 127356
+        "iNESAddress": 127356
       },
       "address": 45420,
       "code": 111
@@ -5901,7 +5901,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 211143,
-        "offset": 211159
+        "iNESAddress": 211159
       },
       "address": 47303,
       "code": 112
@@ -5917,7 +5917,7 @@
         "notes": "BRK to 071F (DynamicSubroutine_38000_C)\nThis seems redundant.\nDynamicSubroutine_38000_C -> This refreshes BG (map) layer after menu close\n",
         "name": "Full address",
         "pointer": 209306,
-        "offset": 209322
+        "iNESAddress": 209322
       },
       "address": 45466,
       "code": 113
@@ -5933,7 +5933,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205924,
-        "offset": 205940
+        "iNESAddress": 205940
       },
       "address": 42084,
       "code": 114
@@ -5949,7 +5949,7 @@
         "notes": "if $2F AND #$01 == 0\n  SEC\nelse if $8B == #$38 \n   CLC\nelse if $8B < #$C3\n  SEC\nelse if $8B < #C6 (#$C3 <= $8B < #$C6)\n  CLC\nelse if $8B == #$CF\n  CLC\nelse if $8B != #$D0\n  SEC\nelse\n  CLC",
         "name": "Full address",
         "pointer": 8521,
-        "offset": 8537
+        "iNESAddress": 8537
       },
       "address": 41289,
       "code": 115
@@ -5965,7 +5965,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 97998,
-        "offset": 98014
+        "iNESAddress": 98014
       },
       "address": 48846,
       "code": 116
@@ -5981,7 +5981,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 168173,
-        "offset": 168189
+        "iNESAddress": 168189
       },
       "address": 37101,
       "code": 117
@@ -5997,7 +5997,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 168209,
-        "offset": 168225
+        "iNESAddress": 168225
       },
       "address": 37137,
       "code": 118
@@ -6013,7 +6013,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 202189,
-        "offset": 202205
+        "iNESAddress": 202205
       },
       "address": 38349,
       "code": 119
@@ -6029,7 +6029,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 164643,
-        "offset": 164659
+        "iNESAddress": 164659
       },
       "address": 33571,
       "code": 120
@@ -6045,7 +6045,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 97760,
-        "offset": 97776
+        "iNESAddress": 97776
       },
       "address": 48608,
       "code": 121
@@ -6061,7 +6061,7 @@
         "notes": "called very early in battle, multiple times\nafter enemy fade in, before dialog boxes appear",
         "name": "Full address",
         "pointer": 218658,
-        "offset": 218674
+        "iNESAddress": 218674
       },
       "address": 38434,
       "code": 122
@@ -6077,7 +6077,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 7554,
-        "offset": 7570
+        "iNESAddress": 7570
       },
       "address": 40322,
       "code": 123
@@ -6093,7 +6093,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 124682,
-        "offset": 124698
+        "iNESAddress": 124698
       },
       "address": 42762,
       "code": 124
@@ -6109,7 +6109,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 225482,
-        "offset": 225498
+        "iNESAddress": 225498
       },
       "address": 45258,
       "code": 125
@@ -6125,7 +6125,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 124845,
-        "offset": 124861
+        "iNESAddress": 124861
       },
       "address": 42925,
       "code": 126
@@ -6141,7 +6141,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 113905,
-        "offset": 113921
+        "iNESAddress": 113921
       },
       "address": 48369,
       "code": 127
@@ -6157,7 +6157,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 66219,
-        "offset": 66235
+        "iNESAddress": 66235
       },
       "address": 33451,
       "code": 128
@@ -6173,7 +6173,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 113942,
-        "offset": 113958
+        "iNESAddress": 113958
       },
       "address": 48406,
       "code": 129
@@ -6189,7 +6189,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 224991,
-        "offset": 225007
+        "iNESAddress": 225007
       },
       "address": 44767,
       "code": 130
@@ -6205,7 +6205,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 225110,
-        "offset": 225126
+        "iNESAddress": 225126
       },
       "address": 44886,
       "code": 131
@@ -6221,7 +6221,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 223086,
-        "offset": 223102
+        "iNESAddress": 223102
       },
       "address": 42862,
       "code": 132
@@ -6237,7 +6237,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 113243,
-        "offset": 113259
+        "iNESAddress": 113259
       },
       "address": 47707,
       "code": 133
@@ -6253,7 +6253,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 42818,
-        "offset": 42834
+        "iNESAddress": 42834
       },
       "address": 42818,
       "code": 134
@@ -6269,7 +6269,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 114208,
-        "offset": 114224
+        "iNESAddress": 114224
       },
       "address": 48672,
       "code": 135
@@ -6285,7 +6285,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 114155,
-        "offset": 114171
+        "iNESAddress": 114171
       },
       "address": 48619,
       "code": 136
@@ -6301,7 +6301,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 114022,
-        "offset": 114038
+        "iNESAddress": 114038
       },
       "address": 48486,
       "code": 137
@@ -6317,7 +6317,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205415,
-        "offset": 205431
+        "iNESAddress": 205431
       },
       "address": 41575,
       "code": 138
@@ -6333,7 +6333,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 223120,
-        "offset": 223136
+        "iNESAddress": 223136
       },
       "address": 42896,
       "code": 139
@@ -6349,7 +6349,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 228890,
-        "offset": 228906
+        "iNESAddress": 228906
       },
       "address": 48666,
       "code": 140
@@ -6365,7 +6365,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 228862,
-        "offset": 228878
+        "iNESAddress": 228878
       },
       "address": 48638,
       "code": 141
@@ -6381,7 +6381,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 205527,
-        "offset": 205543
+        "iNESAddress": 205543
       },
       "address": 41687,
       "code": 142
@@ -6397,7 +6397,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 164642,
-        "offset": 164658
+        "iNESAddress": 164658
       },
       "address": 33570,
       "code": 143
@@ -6413,7 +6413,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 227922,
-        "offset": 227938
+        "iNESAddress": 227938
       },
       "address": 47698,
       "code": 144
@@ -6429,7 +6429,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 113243,
-        "offset": 113259
+        "iNESAddress": 113259
       },
       "address": 47707,
       "code": 145
@@ -6445,7 +6445,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 203164,
-        "offset": 203180
+        "iNESAddress": 203180
       },
       "address": 39324,
       "code": 146
@@ -6461,7 +6461,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 243994,
-        "offset": 244010
+        "iNESAddress": 244010
       },
       "address": 47386,
       "code": 147
@@ -6477,7 +6477,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 113974,
-        "offset": 113990
+        "iNESAddress": 113990
       },
       "address": 48438,
       "code": 148
@@ -6493,7 +6493,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 126038,
-        "offset": 126054
+        "iNESAddress": 126054
       },
       "address": 44118,
       "code": 149
@@ -6509,7 +6509,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 114252,
-        "offset": 114268
+        "iNESAddress": 114268
       },
       "address": 48716,
       "code": 150
@@ -6525,7 +6525,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 164767,
-        "offset": 164783
+        "iNESAddress": 164783
       },
       "address": 33695,
       "code": 151
@@ -6541,7 +6541,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 43304,
-        "offset": 43320
+        "iNESAddress": 43320
       },
       "address": 43304,
       "code": 152
@@ -6557,7 +6557,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 8615,
-        "offset": 8631
+        "iNESAddress": 8631
       },
       "address": 41383,
       "code": 153
@@ -6573,7 +6573,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 113659,
-        "offset": 113675
+        "iNESAddress": 113675
       },
       "address": 48123,
       "code": 154
@@ -6589,7 +6589,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 164380,
-        "offset": 164396
+        "iNESAddress": 164396
       },
       "address": 33308,
       "code": 155
@@ -6605,7 +6605,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 164552,
-        "offset": 164568
+        "iNESAddress": 164568
       },
       "address": 33480,
       "code": 156
@@ -6621,7 +6621,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 66402,
-        "offset": 66418
+        "iNESAddress": 66418
       },
       "address": 33634,
       "code": 157
@@ -6637,7 +6637,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 66675,
-        "offset": 66691
+        "iNESAddress": 66691
       },
       "address": 33907,
       "code": 158
@@ -6653,7 +6653,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 80229,
-        "offset": 80245
+        "iNESAddress": 80245
       },
       "address": 47461,
       "code": 159
@@ -6669,7 +6669,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 80234,
-        "offset": 80250
+        "iNESAddress": 80250
       },
       "address": 47466,
       "code": 160
@@ -6685,7 +6685,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 66839,
-        "offset": 66855
+        "iNESAddress": 66855
       },
       "address": 34071,
       "code": 161
@@ -6701,7 +6701,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 164584,
-        "offset": 164600
+        "iNESAddress": 164600
       },
       "address": 33512,
       "code": 162
@@ -6717,7 +6717,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 164626,
-        "offset": 164642
+        "iNESAddress": 164642
       },
       "address": 33554,
       "code": 163
@@ -6733,7 +6733,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 167040,
-        "offset": 167056
+        "iNESAddress": 167056
       },
       "address": 35968,
       "code": 164
@@ -6749,7 +6749,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 167056,
-        "offset": 167072
+        "iNESAddress": 167072
       },
       "address": 35984,
       "code": 165
@@ -6765,7 +6765,7 @@
         "notes": "",
         "name": "Full address",
         "pointer": 167057,
-        "offset": 167073
+        "iNESAddress": 167073
       },
       "address": 35985,
       "code": 166
@@ -6781,7 +6781,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 128130,
-        "offset": 128146
+        "iNESAddress": 128146
       },
       "address": 46210,
       "code": 167
@@ -6797,7 +6797,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 168664,
-        "offset": 168680
+        "iNESAddress": 168680
       },
       "address": 37592,
       "code": 168
@@ -6813,7 +6813,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 168927,
-        "offset": 168943
+        "iNESAddress": 168943
       },
       "address": 37855,
       "code": 169
@@ -6829,7 +6829,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 247295,
-        "offset": 247311
+        "iNESAddress": 247311
       },
       "address": 34303,
       "code": 170
@@ -6845,7 +6845,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 245760,
-        "offset": 245776
+        "iNESAddress": 245776
       },
       "address": 4390,
       "code": 171
@@ -6861,7 +6861,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 19110,
       "code": 172
@@ -6877,7 +6877,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 24599,
       "code": 173
@@ -6893,7 +6893,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4908,
-        "offset": 4924
+        "iNESAddress": 4924
       },
       "address": 37676,
       "code": 174
@@ -6909,7 +6909,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 16384,
-        "offset": 16400
+        "iNESAddress": 16400
       },
       "address": 6154,
       "code": 175
@@ -6925,7 +6925,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 26904,
       "code": 176
@@ -6941,7 +6941,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 41721,
-        "offset": 41737
+        "iNESAddress": 41737
       },
       "address": 41721,
       "code": 177
@@ -6957,7 +6957,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5806,
-        "offset": 5822
+        "iNESAddress": 5822
       },
       "address": 38574,
       "code": 178
@@ -6973,7 +6973,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 49152,
-        "offset": 49168
+        "iNESAddress": 49168
       },
       "address": 4592,
       "code": 179
@@ -6989,7 +6989,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 169,
       "code": 180
@@ -7005,7 +7005,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 65536,
-        "offset": 65552
+        "iNESAddress": 65552
       },
       "address": 6019,
       "code": 181
@@ -7021,7 +7021,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5806,
-        "offset": 5822
+        "iNESAddress": 5822
       },
       "address": 38574,
       "code": 182
@@ -7037,7 +7037,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 82961,
-        "offset": 82977
+        "iNESAddress": 82977
       },
       "address": 33809,
       "code": 183
@@ -7053,7 +7053,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 425,
       "code": 184
@@ -7069,7 +7069,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 98304,
-        "offset": 98320
+        "iNESAddress": 98320
       },
       "address": 153,
       "code": 185
@@ -7085,7 +7085,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 169,
       "code": 186
@@ -7101,7 +7101,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 114688,
-        "offset": 114704
+        "iNESAddress": 114704
       },
       "address": 6556,
       "code": 187
@@ -7117,7 +7117,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5806,
-        "offset": 5822
+        "iNESAddress": 5822
       },
       "address": 38574,
       "code": 188
@@ -7133,7 +7133,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 131072,
-        "offset": 131088
+        "iNESAddress": 131088
       },
       "address": 6435,
       "code": 189
@@ -7149,7 +7149,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 169,
       "code": 190
@@ -7165,7 +7165,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 165764,
-        "offset": 165780
+        "iNESAddress": 165780
       },
       "address": 51076,
       "code": 191
@@ -7181,7 +7181,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 656,
       "code": 192
@@ -7197,7 +7197,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 32768,
-        "offset": 32784
+        "iNESAddress": 32784
       },
       "address": 12063,
       "code": 193
@@ -7213,7 +7213,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 656,
       "code": 194
@@ -7229,7 +7229,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 71634,
-        "offset": 71650
+        "iNESAddress": 71650
       },
       "address": 55250,
       "code": 195
@@ -7245,7 +7245,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 8705,
-        "offset": 8721
+        "iNESAddress": 8721
       },
       "address": 41473,
       "code": 196
@@ -7261,7 +7261,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 65536,
-        "offset": 65552
+        "iNESAddress": 65552
       },
       "address": 1168,
       "code": 197
@@ -7277,7 +7277,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5613,
-        "offset": 5629
+        "iNESAddress": 5629
       },
       "address": 38381,
       "code": 198
@@ -7293,7 +7293,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 86546,
-        "offset": 86562
+        "iNESAddress": 86562
       },
       "address": 37394,
       "code": 199
@@ -7309,7 +7309,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 546,
-        "offset": 562
+        "iNESAddress": 562
       },
       "address": 33314,
       "code": 200
@@ -7325,7 +7325,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 130816,
-        "offset": 130832
+        "iNESAddress": 130832
       },
       "address": 65280,
       "code": 201
@@ -7341,7 +7341,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 8779,
-        "offset": 8795
+        "iNESAddress": 8795
       },
       "address": 41547,
       "code": 202
@@ -7357,7 +7357,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 123722,
-        "offset": 123738
+        "iNESAddress": 123738
       },
       "address": 41802,
       "code": 203
@@ -7373,7 +7373,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 8779,
-        "offset": 8795
+        "iNESAddress": 8795
       },
       "address": 41547,
       "code": 204
@@ -7389,7 +7389,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 16384,
-        "offset": 16400
+        "iNESAddress": 16400
       },
       "address": 30150,
       "code": 205
@@ -7405,7 +7405,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4776,
-        "offset": 4792
+        "iNESAddress": 4792
       },
       "address": 37544,
       "code": 206
@@ -7421,7 +7421,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 180223,
-        "offset": 180239
+        "iNESAddress": 180239
       },
       "address": 65535,
       "code": 207
@@ -7437,7 +7437,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 1539,
-        "offset": 1555
+        "iNESAddress": 1555
       },
       "address": 34307,
       "code": 208
@@ -7453,7 +7453,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 114688,
-        "offset": 114704
+        "iNESAddress": 114704
       },
       "address": 15875,
       "code": 209
@@ -7469,7 +7469,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 169,
       "code": 210
@@ -7485,7 +7485,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 65536,
-        "offset": 65552
+        "iNESAddress": 65552
       },
       "address": 1168,
       "code": 211
@@ -7501,7 +7501,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4940,
-        "offset": 4956
+        "iNESAddress": 4956
       },
       "address": 37708,
       "code": 212
@@ -7517,7 +7517,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 9713,
-        "offset": 9729
+        "iNESAddress": 9729
       },
       "address": 42481,
       "code": 213
@@ -7533,7 +7533,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 19110,
       "code": 214
@@ -7549,7 +7549,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 16384,
-        "offset": 16400
+        "iNESAddress": 16400
       },
       "address": 8399,
       "code": 215
@@ -7565,7 +7565,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 16454,
-        "offset": 16470
+        "iNESAddress": 16470
       },
       "address": 32838,
       "code": 216
@@ -7581,7 +7581,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 226592,
-        "offset": 226608
+        "iNESAddress": 226608
       },
       "address": 46368,
       "code": 217
@@ -7597,7 +7597,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 43178,
-        "offset": 43194
+        "iNESAddress": 43194
       },
       "address": 59562,
       "code": 218
@@ -7613,7 +7613,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 245760,
-        "offset": 245776
+        "iNESAddress": 245776
       },
       "address": 3881,
       "code": 219
@@ -7629,7 +7629,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 19397,
       "code": 220
@@ -7645,7 +7645,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 8268,
       "code": 221
@@ -7661,7 +7661,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 19861,
       "code": 222
@@ -7677,7 +7677,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 131072,
-        "offset": 131088
+        "iNESAddress": 131088
       },
       "address": 1823,
       "code": 223
@@ -7693,7 +7693,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 28061,
       "code": 224
@@ -7709,7 +7709,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 24753,
       "code": 225
@@ -7725,7 +7725,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 0,
       "code": 226
@@ -7741,7 +7741,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 25964,
-        "offset": 25980
+        "iNESAddress": 25980
       },
       "address": 42348,
       "code": 227
@@ -7757,7 +7757,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 8833,
-        "offset": 8849
+        "iNESAddress": 8849
       },
       "address": 41601,
       "code": 228
@@ -7773,7 +7773,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 163840,
-        "offset": 163856
+        "iNESAddress": 163856
       },
       "address": 8196,
       "code": 229
@@ -7789,7 +7789,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 1193,
       "code": 230
@@ -7805,7 +7805,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 65625,
-        "offset": 65641
+        "iNESAddress": 65641
       },
       "address": 32857,
       "code": 231
@@ -7821,7 +7821,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 5806,
-        "offset": 5822
+        "iNESAddress": 5822
       },
       "address": 38574,
       "code": 232
@@ -7837,7 +7837,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4925,
-        "offset": 4941
+        "iNESAddress": 4941
       },
       "address": 37693,
       "code": 233
@@ -7853,7 +7853,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 7264,
-        "offset": 7280
+        "iNESAddress": 7280
       },
       "address": 40032,
       "code": 234
@@ -7869,7 +7869,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 212991,
-        "offset": 213007
+        "iNESAddress": 213007
       },
       "address": 65535,
       "code": 235
@@ -7885,7 +7885,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 546,
-        "offset": 562
+        "iNESAddress": 562
       },
       "address": 33314,
       "code": 236
@@ -7901,7 +7901,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 197690,
-        "offset": 197706
+        "iNESAddress": 197706
       },
       "address": 33850,
       "code": 237
@@ -7917,7 +7917,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 4925,
-        "offset": 4941
+        "iNESAddress": 4941
       },
       "address": 37693,
       "code": 238
@@ -7933,7 +7933,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 222592,
-        "offset": 222608
+        "iNESAddress": 222608
       },
       "address": 42368,
       "code": 239
@@ -7949,7 +7949,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 19078,
       "code": 240
@@ -7965,7 +7965,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 41274,
-        "offset": 41290
+        "iNESAddress": 41290
       },
       "address": 41274,
       "code": 241
@@ -7981,7 +7981,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 19861,
       "code": 242
@@ -7997,7 +7997,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 32768,
-        "offset": 32784
+        "iNESAddress": 32784
       },
       "address": 16384,
       "code": 243
@@ -8013,7 +8013,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 19078,
       "code": 244
@@ -8029,7 +8029,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 49152,
-        "offset": 49168
+        "iNESAddress": 49168
       },
       "address": 3841,
       "code": 245
@@ -8045,7 +8045,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 28061,
       "code": 246
@@ -8061,7 +8061,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 76246,
-        "offset": 76262
+        "iNESAddress": 76262
       },
       "address": 43478,
       "code": 247
@@ -8077,7 +8077,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 19078,
       "code": 248
@@ -8093,7 +8093,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 88725,
-        "offset": 88741
+        "iNESAddress": 88741
       },
       "address": 39573,
       "code": 249
@@ -8109,7 +8109,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 28061,
       "code": 250
@@ -8125,7 +8125,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 114208,
-        "offset": 114224
+        "iNESAddress": 114224
       },
       "address": 48672,
       "code": 251
@@ -8141,7 +8141,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 19078,
       "code": 252
@@ -8157,7 +8157,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 114688,
-        "offset": 114704
+        "iNESAddress": 114704
       },
       "address": 0,
       "code": 253
@@ -8173,7 +8173,7 @@
         "notes": null,
         "name": "Full address",
         "pointer": 0,
-        "offset": 16
+        "iNESAddress": 16
       },
       "address": 28061,
       "code": 254
@@ -8189,10 +8189,11 @@
         "notes": null,
         "name": "Full address",
         "pointer": 156665,
-        "offset": 156681
+        "iNESAddress": 156681
       },
       "address": 58361,
       "code": 255
     }
-  ]
+  ],
+  "localPointers": null
 }
