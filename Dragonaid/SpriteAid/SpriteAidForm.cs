@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using AtomosZ.DragonAid.Libraries;
-using AtomosZ.DragonAid.Libraries.PointerList;
+using static AtomosZ.DragonAid.Libraries.PointerList.Pointers;
+using System.Diagnostics;
 
 namespace AtomosZ.DragonAid.SpriteAid
 {
@@ -25,23 +25,17 @@ namespace AtomosZ.DragonAid.SpriteAid
 				evening_spinner, dusk_spinner, night_spinner, lateNight_spinner,
 			};
 
-			var pictureBoxes = new List<PictureBox>()
-			{
-				palette00_pictureBox, palette01_pictureBox, palette02_pictureBox, palette03_pictureBox,
-				palette04_pictureBox, palette05_pictureBox, palette06_pictureBox, palette07_pictureBox,
-				palette08_pictureBox, palette09_pictureBox, palette0A_pictureBox, palette0B_pictureBox,
-				palette0C_pictureBox, palette0D_pictureBox, palette0E_pictureBox, palette0F_pictureBox,
-			};
 
 			paletteBoxes = new List<CaptionedPictureBox>();
-			for (int i = 0; i < pictureBoxes.Count; ++i)
+			for (int i = 0; i < 4; ++i)
 			{
-				var captionPic = new CaptionedPictureBox();
-				var cell = bgPalettes_tableLayoutPanel.GetCellPosition(pictureBoxes[i]);
-				bgPalettes_tableLayoutPanel.Controls.Remove(pictureBoxes[i]);
-				bgPalettes_tableLayoutPanel.Controls.Add(captionPic, cell.Column, cell.Row);
-				//bgPalettes_tableLayoutPanel.SetCellPosition(captionPic, cell);
-				paletteBoxes.Add(captionPic);
+				for (int j = 0; j < 4; ++j)
+				{
+					var captionPic = new CaptionedPictureBox();
+					captionPic.OnMouseClick += Palette_pictureBox_MouseClick;
+					bgPalettes_tableLayoutPanel.Controls.Add(captionPic, j, i);
+					paletteBoxes.Add(captionPic);
+				}
 			}
 
 			romData = File.ReadAllBytes(@"D:\github\RomHacking\Working ROMs\Dragon Warrior 3 (U).nes");
@@ -49,7 +43,12 @@ namespace AtomosZ.DragonAid.SpriteAid
 
 			SetupDayCycleTimers(romData);
 			PaletteTime_spinner_ValueChanged(null, null);
+
+			palette_comboBox.DataSource = new BindingSource(new List<int> { 0, 1, 2, 3 }, null);
+			palette_comboBox.SelectedValueChanged += PaletteChanged;
+
 		}
+
 
 		private void DisplayDayNightPalette(byte[] romData)
 		{
@@ -117,6 +116,42 @@ namespace AtomosZ.DragonAid.SpriteAid
 			DisplayDayNightPalette(romData);
 			int timeIndex = (int)paletteTime_spinner.Value;
 			time_label.Text = ((int)timeSpinners[timeIndex - 1].Value).ToString("X2");
+		}
+
+
+		private void PaletteChanged(object sender, EventArgs e)
+		{
+			var paletteIndex = palette_comboBox.SelectedIndex;
+			var selectedPalette = new byte[4];
+
+			for (int i = 0; i < 4; ++i)
+			{
+				var colorText = paletteBoxes[i + paletteIndex * 4].Text.Replace("0x", "");
+				selectedPalette[i] = Convert.ToByte(colorText, 16);
+			}
+
+			sprite_pictureBox.Image = SpriteParser.GetTile(romData, (int)address_Spinner.Value, selectedPalette);
+		}
+
+		private void Palette_pictureBox_MouseClick(object sender, MouseEventArgs e)
+		{
+			var colorPicker = new ColorPicker();
+			if (colorPicker.ShowDialog() == DialogResult.OK)
+			{
+				var a = sender as PictureBox;
+				if (a != null)
+					Console.WriteLine(a.GetHashCode());
+
+				var capPicBox = (CaptionedPictureBox)sender;
+				var newColor = colorPicker.result;
+				capPicBox.Image = SpriteParser.GetSolidColor(newColor, paletteBoxes[0].Size);
+				capPicBox.Text = "0x" + newColor.ToString("X2");
+			}
+		}
+
+		private void palette00_pictureBox_MouseDown(object sender, MouseEventArgs e)
+		{
+			Debug.WriteLine("Hey");
 		}
 	}
 }

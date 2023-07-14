@@ -31,22 +31,6 @@
 			this.sprite_pictureBox = new System.Windows.Forms.PictureBox();
 			this.address_Spinner = new System.Windows.Forms.NumericUpDown();
 			this.bgPalettes_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-			this.palette0F_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette0E_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette0D_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette0C_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette0B_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette0A_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette09_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette08_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette07_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette06_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette05_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette04_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette03_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette02_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette01_pictureBox = new System.Windows.Forms.PictureBox();
-			this.palette00_pictureBox = new System.Windows.Forms.PictureBox();
 			this.paletteTime_spinner = new System.Windows.Forms.NumericUpDown();
 			this.timeControl_flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
@@ -76,25 +60,9 @@
 			this.flowLayoutPanel7 = new System.Windows.Forms.FlowLayoutPanel();
 			this.label9 = new System.Windows.Forms.Label();
 			this.dayCycleLength_spinner = new System.Windows.Forms.NumericUpDown();
+			this.palette_comboBox = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.sprite_pictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.address_Spinner)).BeginInit();
-			this.bgPalettes_tableLayoutPanel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.palette0F_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0E_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0D_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0C_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0B_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0A_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette09_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette08_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette07_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette06_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette05_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette04_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette03_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette02_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette01_pictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette00_pictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paletteTime_spinner)).BeginInit();
 			this.timeControl_flowLayoutPanel.SuspendLayout();
 			this.paletteChangeTimes_flowLayoutPanel.SuspendLayout();
@@ -127,6 +95,11 @@
 			// address_Spinner
 			// 
 			this.address_Spinner.Hexadecimal = true;
+			this.address_Spinner.Increment = new decimal(new int[] {
+            16,
+            0,
+            0,
+            0});
 			this.address_Spinner.Location = new System.Drawing.Point(13, 13);
 			this.address_Spinner.Maximum = new decimal(new int[] {
             524287,
@@ -152,22 +125,6 @@
 			this.bgPalettes_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
 			this.bgPalettes_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
 			this.bgPalettes_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette0F_pictureBox, 3, 3);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette0E_pictureBox, 2, 3);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette0D_pictureBox, 1, 3);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette0C_pictureBox, 0, 3);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette0B_pictureBox, 3, 2);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette0A_pictureBox, 2, 2);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette09_pictureBox, 1, 2);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette08_pictureBox, 0, 2);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette07_pictureBox, 3, 1);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette06_pictureBox, 2, 1);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette05_pictureBox, 1, 1);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette04_pictureBox, 0, 1);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette03_pictureBox, 3, 0);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette02_pictureBox, 2, 0);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette01_pictureBox, 1, 0);
-			this.bgPalettes_tableLayoutPanel.Controls.Add(this.palette00_pictureBox, 0, 0);
 			this.bgPalettes_tableLayoutPanel.Location = new System.Drawing.Point(373, 45);
 			this.bgPalettes_tableLayoutPanel.Name = "bgPalettes_tableLayoutPanel";
 			this.bgPalettes_tableLayoutPanel.RowCount = 4;
@@ -177,150 +134,6 @@
 			this.bgPalettes_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
 			this.bgPalettes_tableLayoutPanel.Size = new System.Drawing.Size(256, 256);
 			this.bgPalettes_tableLayoutPanel.TabIndex = 2;
-			// 
-			// palette0F_pictureBox
-			// 
-			this.palette0F_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette0F_pictureBox.Location = new System.Drawing.Point(195, 195);
-			this.palette0F_pictureBox.Name = "palette0F_pictureBox";
-			this.palette0F_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette0F_pictureBox.TabIndex = 15;
-			this.palette0F_pictureBox.TabStop = false;
-			// 
-			// palette0E_pictureBox
-			// 
-			this.palette0E_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette0E_pictureBox.Location = new System.Drawing.Point(131, 195);
-			this.palette0E_pictureBox.Name = "palette0E_pictureBox";
-			this.palette0E_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette0E_pictureBox.TabIndex = 14;
-			this.palette0E_pictureBox.TabStop = false;
-			// 
-			// palette0D_pictureBox
-			// 
-			this.palette0D_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette0D_pictureBox.Location = new System.Drawing.Point(67, 195);
-			this.palette0D_pictureBox.Name = "palette0D_pictureBox";
-			this.palette0D_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette0D_pictureBox.TabIndex = 13;
-			this.palette0D_pictureBox.TabStop = false;
-			// 
-			// palette0C_pictureBox
-			// 
-			this.palette0C_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette0C_pictureBox.Location = new System.Drawing.Point(3, 195);
-			this.palette0C_pictureBox.Name = "palette0C_pictureBox";
-			this.palette0C_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette0C_pictureBox.TabIndex = 12;
-			this.palette0C_pictureBox.TabStop = false;
-			// 
-			// palette0B_pictureBox
-			// 
-			this.palette0B_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette0B_pictureBox.Location = new System.Drawing.Point(195, 131);
-			this.palette0B_pictureBox.Name = "palette0B_pictureBox";
-			this.palette0B_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette0B_pictureBox.TabIndex = 11;
-			this.palette0B_pictureBox.TabStop = false;
-			// 
-			// palette0A_pictureBox
-			// 
-			this.palette0A_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette0A_pictureBox.Location = new System.Drawing.Point(131, 131);
-			this.palette0A_pictureBox.Name = "palette0A_pictureBox";
-			this.palette0A_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette0A_pictureBox.TabIndex = 10;
-			this.palette0A_pictureBox.TabStop = false;
-			// 
-			// palette09_pictureBox
-			// 
-			this.palette09_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette09_pictureBox.Location = new System.Drawing.Point(67, 131);
-			this.palette09_pictureBox.Name = "palette09_pictureBox";
-			this.palette09_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette09_pictureBox.TabIndex = 9;
-			this.palette09_pictureBox.TabStop = false;
-			// 
-			// palette08_pictureBox
-			// 
-			this.palette08_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette08_pictureBox.Location = new System.Drawing.Point(3, 131);
-			this.palette08_pictureBox.Name = "palette08_pictureBox";
-			this.palette08_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette08_pictureBox.TabIndex = 8;
-			this.palette08_pictureBox.TabStop = false;
-			// 
-			// palette07_pictureBox
-			// 
-			this.palette07_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette07_pictureBox.Location = new System.Drawing.Point(195, 67);
-			this.palette07_pictureBox.Name = "palette07_pictureBox";
-			this.palette07_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette07_pictureBox.TabIndex = 7;
-			this.palette07_pictureBox.TabStop = false;
-			// 
-			// palette06_pictureBox
-			// 
-			this.palette06_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette06_pictureBox.Location = new System.Drawing.Point(131, 67);
-			this.palette06_pictureBox.Name = "palette06_pictureBox";
-			this.palette06_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette06_pictureBox.TabIndex = 6;
-			this.palette06_pictureBox.TabStop = false;
-			// 
-			// palette05_pictureBox
-			// 
-			this.palette05_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette05_pictureBox.Location = new System.Drawing.Point(67, 67);
-			this.palette05_pictureBox.Name = "palette05_pictureBox";
-			this.palette05_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette05_pictureBox.TabIndex = 5;
-			this.palette05_pictureBox.TabStop = false;
-			// 
-			// palette04_pictureBox
-			// 
-			this.palette04_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette04_pictureBox.Location = new System.Drawing.Point(3, 67);
-			this.palette04_pictureBox.Name = "palette04_pictureBox";
-			this.palette04_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette04_pictureBox.TabIndex = 4;
-			this.palette04_pictureBox.TabStop = false;
-			// 
-			// palette03_pictureBox
-			// 
-			this.palette03_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette03_pictureBox.Location = new System.Drawing.Point(195, 3);
-			this.palette03_pictureBox.Name = "palette03_pictureBox";
-			this.palette03_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette03_pictureBox.TabIndex = 3;
-			this.palette03_pictureBox.TabStop = false;
-			// 
-			// palette02_pictureBox
-			// 
-			this.palette02_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette02_pictureBox.Location = new System.Drawing.Point(131, 3);
-			this.palette02_pictureBox.Name = "palette02_pictureBox";
-			this.palette02_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette02_pictureBox.TabIndex = 2;
-			this.palette02_pictureBox.TabStop = false;
-			// 
-			// palette01_pictureBox
-			// 
-			this.palette01_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette01_pictureBox.Location = new System.Drawing.Point(67, 3);
-			this.palette01_pictureBox.Name = "palette01_pictureBox";
-			this.palette01_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette01_pictureBox.TabIndex = 1;
-			this.palette01_pictureBox.TabStop = false;
-			// 
-			// palette00_pictureBox
-			// 
-			this.palette00_pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.palette00_pictureBox.Location = new System.Drawing.Point(3, 3);
-			this.palette00_pictureBox.Name = "palette00_pictureBox";
-			this.palette00_pictureBox.Size = new System.Drawing.Size(58, 58);
-			this.palette00_pictureBox.TabIndex = 0;
-			this.palette00_pictureBox.TabStop = false;
 			// 
 			// paletteTime_spinner
 			// 
@@ -694,11 +507,20 @@
             0});
 			this.dayCycleLength_spinner.ValueChanged += new System.EventHandler(this.DayCycleLength_spinner_ValueChanged);
 			// 
+			// palette_comboBox
+			// 
+			this.palette_comboBox.FormattingEnabled = true;
+			this.palette_comboBox.Location = new System.Drawing.Point(178, 10);
+			this.palette_comboBox.Name = "palette_comboBox";
+			this.palette_comboBox.Size = new System.Drawing.Size(121, 28);
+			this.palette_comboBox.TabIndex = 12;
+			// 
 			// SpriteAidForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 653);
+			this.Controls.Add(this.palette_comboBox);
 			this.Controls.Add(this.flowLayoutPanel7);
 			this.Controls.Add(this.timeControl_flowLayoutPanel);
 			this.Controls.Add(this.bgPalettes_tableLayoutPanel);
@@ -709,23 +531,6 @@
 			this.Text = "DraongAid - SpriteAid";
 			((System.ComponentModel.ISupportInitialize)(this.sprite_pictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.address_Spinner)).EndInit();
-			this.bgPalettes_tableLayoutPanel.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.palette0F_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0E_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0D_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0C_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0B_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette0A_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette09_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette08_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette07_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette06_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette05_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette04_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette03_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette02_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette01_pictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.palette00_pictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paletteTime_spinner)).EndInit();
 			this.timeControl_flowLayoutPanel.ResumeLayout(false);
 			this.timeControl_flowLayoutPanel.PerformLayout();
@@ -765,22 +570,6 @@
 		private System.Windows.Forms.PictureBox sprite_pictureBox;
 		private System.Windows.Forms.NumericUpDown address_Spinner;
 		private System.Windows.Forms.TableLayoutPanel bgPalettes_tableLayoutPanel;
-		private System.Windows.Forms.PictureBox palette0F_pictureBox;
-		private System.Windows.Forms.PictureBox palette0E_pictureBox;
-		private System.Windows.Forms.PictureBox palette0D_pictureBox;
-		private System.Windows.Forms.PictureBox palette0C_pictureBox;
-		private System.Windows.Forms.PictureBox palette0B_pictureBox;
-		private System.Windows.Forms.PictureBox palette0A_pictureBox;
-		private System.Windows.Forms.PictureBox palette09_pictureBox;
-		private System.Windows.Forms.PictureBox palette08_pictureBox;
-		private System.Windows.Forms.PictureBox palette07_pictureBox;
-		private System.Windows.Forms.PictureBox palette06_pictureBox;
-		private System.Windows.Forms.PictureBox palette05_pictureBox;
-		private System.Windows.Forms.PictureBox palette04_pictureBox;
-		private System.Windows.Forms.PictureBox palette03_pictureBox;
-		private System.Windows.Forms.PictureBox palette02_pictureBox;
-		private System.Windows.Forms.PictureBox palette01_pictureBox;
-		private System.Windows.Forms.PictureBox palette00_pictureBox;
 		private System.Windows.Forms.NumericUpDown paletteTime_spinner;
 		private System.Windows.Forms.FlowLayoutPanel timeControl_flowLayoutPanel;
 		private System.Windows.Forms.Label label1;
@@ -810,6 +599,7 @@
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.NumericUpDown dayCycleLength_spinner;
 		private System.Windows.Forms.Label time_label;
+		private System.Windows.Forms.ComboBox palette_comboBox;
 	}
 }
 
