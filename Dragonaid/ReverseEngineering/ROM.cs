@@ -9,7 +9,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		public static byte[] romData;
 		public static CPUMemory cpuMemory = new CPUMemory();
 
-		public static byte[] zeroPages = new byte[0x100];
+		public static byte[] zeroPage = new byte[0x100];
 		/// <summary>
 		/// 0x100 to 0x1FF of CPU Memory.
 		/// </summary>
@@ -24,9 +24,9 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 		public static byte[] saveRam = new byte[0x2000 + (0x6000)];
 		/// <summary>
 		/// <para>
-		/// <br>0x2000 - 0x2007 PPU registers (mirrors from 0x2008 to 0x3FFF)</br>
-		/// <br>0x4000 - 0x4017 APU and I/O registers</br>
-		/// <br>0x4018 - 0x401F APU and I/O functionality that is normally disabled.</br>
+		/// 0x2000 - 0x2007 PPU registers (mirrors from 0x2008 to 0x3FFF)<br/>
+		/// 0x4000 - 0x4017 APU and I/O registers<br/>
+		/// 0x4018 - 0x401F APU and I/O functionality that is normally disabled.<br/>
 		/// </para>
 		/// </summary>
 		public static Dictionary<int, byte> registers = new Dictionary<int, byte>()
@@ -34,6 +34,7 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 			// 0x2000
 			[Registers.PPU_Control] = 0x0,
 			[Registers.PPU_Status] = 0x0,
+			[Registers.PPU_Addr] = 0x0,
 
 			// 0x4000
 			[Registers.SpriteDMA] = 0x0,
@@ -90,9 +91,12 @@ namespace AtomosZ.DragonAid.ReverseEngineering
 				--stackPointer;
 			}
 
-			public byte Pop()
+			public byte Pop(out bool z, out bool n)
 			{
-				return stack[++stackPointer];
+				var a = stack[++stackPointer];
+				z = a == 0;
+				n = a >= 0x80;
+				return a;
 			}
 		}
 	}

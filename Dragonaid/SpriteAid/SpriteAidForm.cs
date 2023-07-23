@@ -39,7 +39,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 			}
 
 			romData = File.ReadAllBytes(@"D:\github\RomHacking\Working ROMs\Dragon Warrior 3 (U).nes");
-			sprite_pictureBox.Image = SpriteParser.GetTile(romData, (int)address_Spinner.Value);
+			sprite_pictureBox.Image = SpriteParser.GetSprite(romData, (int)address_Spinner.Value);
 
 			SetupDayCycleTimers(romData);
 			PaletteTime_spinner_ValueChanged(null, null);
@@ -99,7 +99,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 
 		private void Address_Spinner_ValueChanged(object sender, EventArgs e)
 		{
-			sprite_pictureBox.Image = SpriteParser.GetTile(romData, (int)address_Spinner.Value);
+			sprite_pictureBox.Image = SpriteParser.GetSprite(romData, (int)address_Spinner.Value);
 		}
 
 		private void DayCycleLength_spinner_ValueChanged(object sender, EventArgs e)
@@ -130,7 +130,7 @@ namespace AtomosZ.DragonAid.SpriteAid
 				selectedPalette[i] = Convert.ToByte(colorText, 16);
 			}
 
-			sprite_pictureBox.Image = SpriteParser.GetTile(romData, (int)address_Spinner.Value, selectedPalette);
+			sprite_pictureBox.Image = SpriteParser.GetSprite(romData, (int)address_Spinner.Value, selectedPalette);
 		}
 
 		private void Palette_pictureBox_MouseClick(object sender, MouseEventArgs e)

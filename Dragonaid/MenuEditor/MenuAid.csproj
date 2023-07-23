@@ -4,14 +4,29 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A80750C9-B3D0-48F6-81F4-CFFFC31052FF}</ProjectGuid>
+    <ProjectGuid>{5D48FED3-261F-4CE7-8E75-35B7EC1AB77E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>AtomosZ.DragonAid.ReverseEngineering</RootNamespace>
-    <AssemblyName>ReverseEngineering</AssemblyName>
+    <RootNamespace>AtomosZ.DragonAid.MenuAid</RootNamespace>
+    <AssemblyName>MenuAid</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,32 +61,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bank00000.cs" />
-    <Compile Include="Bank04000.cs" />
-    <Compile Include="Bank08000.cs" />
-    <Compile Include="Bank14000.cs" />
-    <Compile Include="Bank18000.cs" />
-    <Compile Include="Bank28000.cs" />
-    <Compile Include="Bank30000.cs" />
-    <Compile Include="Bank34000.cs" />
-    <Compile Include="Bank38000.cs" />
-    <Compile Include="Bank3C000.cs" />
-    <Compile Include="Bank5C000.cs" />
-    <Compile Include="Bank78000.cs" />
-    <Compile Include="Bank7C000.cs" />
-    <Compile Include="EncounterROMCopy.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="MenuAidForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MenuAidForm.Designer.cs">
+      <DependentUpon>MenuAidForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuInstructions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ROM.cs" />
-    <Compile Include="SpriteReader.cs" />
-    <Compile Include="Stats.cs" />
+    <EmbeddedResource Include="MenuAidForm.resx">
+      <DependentUpon>MenuAidForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -100,6 +100,18 @@
       <Project>{7435BED1-2E2B-4997-AD36-AE8EE1CE7F36}</Project>
       <Name>DragonaidLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

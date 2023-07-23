@@ -21,9 +21,12 @@ namespace AtomosZ.DragonAid.Libraries
 			foreach (var addr in subroutines17)
 				if (addr.prgAddress.pointer == address)
 					finds.Add(addr);
-			foreach (var addr in localPointers)
-				if (addr.prgAddress.pointer == address)
-					finds.Add(addr);
+			if (localPointers != null)
+			{
+				foreach (var addr in localPointers)
+					if (addr.prgAddress.pointer == address)
+						finds.Add(addr);
+			}
 			return finds;
 		}
 	}

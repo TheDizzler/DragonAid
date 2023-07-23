@@ -95,11 +95,6 @@
 			// address_Spinner
 			// 
 			this.address_Spinner.Hexadecimal = true;
-			this.address_Spinner.Increment = new decimal(new int[] {
-            16,
-            0,
-            0,
-            0});
 			this.address_Spinner.Location = new System.Drawing.Point(13, 13);
 			this.address_Spinner.Maximum = new decimal(new int[] {
             524287,

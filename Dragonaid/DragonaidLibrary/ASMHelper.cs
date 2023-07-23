@@ -86,10 +86,42 @@ namespace AtomosZ.DragonAid.Libraries
 			return (byte)total;
 		}
 
+		public static byte ADC(byte a, byte mem, ref bool hasCarry, out bool z, out bool n)
+		{
+			int result = a + mem + (hasCarry ? 1 : 0);
+			hasCarry = result > byte.MaxValue;
+			z = result == 0;
+			n = result >= 0x80;
+			return (byte)result;
+		}
+
 		public static byte SBC(byte a, byte mem, ref bool hasCarry)
 		{
-			byte memInv = (byte)(-mem);
-			return ADC(a, memInv, ref hasCarry);
+			//byte memInv = (byte)(-mem);
+			//if (hasCarry)
+			//	--memInv;
+			//byte result = ADC(a, memInv, ref hasCarry); // this way causes issues because we are using int math, not byte
+
+			//byte result = (byte)(a - mem - (hasCarry ? 0 : 1));
+			int intResult = a - mem - (hasCarry ? 0 : 1);
+			byte result = (byte)(intResult);
+			hasCarry = intResult >= 0;
+			return result;
+		}
+
+		public static byte SBC(byte a, byte mem, ref bool hasCarry, out bool z, out bool n)
+		{
+			//byte memInv = (byte)(-mem);
+			//if (hasCarry)
+			//	--memInv;
+			//byte result = ADC(a, memInv, ref hasCarry); // this way causes issues because we are using int math, not byte
+
+			int intResult = a - mem - (hasCarry ? 0 : 1);
+			byte result = (byte)(intResult);
+			hasCarry = intResult >= 0;
+			z = result == 0;
+			n = result >= 0x80;
+			return result;
 		}
 
 		public static byte INC(byte operand, out bool z, out bool n)
@@ -134,7 +166,7 @@ namespace AtomosZ.DragonAid.Libraries
 
 		public static void CMP(byte a, byte operand, out bool hasCarry, out bool z, out bool n)
 		{
-			hasCarry = false;
+			hasCarry = true;
 			var result = SBC(a, operand, ref hasCarry);
 			z = result == 0;
 			n = result >= 0x80;

@@ -11,10 +11,10 @@ namespace AtomosZ.DragonAid.Libraries
 
 		public static Brush[] grayscaleBrushes = new Brush[4]
 		{
+			Brushes.Black,
 			Brushes.White,
 			Brushes.LightGray,
 			Brushes.Gray,
-			Brushes.Black,
 		};
 
 		/// <summary>
@@ -133,7 +133,7 @@ namespace AtomosZ.DragonAid.Libraries
 		/// </summary>
 		/// <param name="romData"></param>
 		/// <param name="tileStart"></param>
-		public static Bitmap GetTile(byte[] romData, int tileStart, byte[] paletteCodes = null)
+		public static Bitmap GetSprite(byte[] romData, int tileStart, byte[] paletteCodes = null)
 		{
 			Brush[] palette;
 			if (paletteCodes == null)
@@ -141,7 +141,7 @@ namespace AtomosZ.DragonAid.Libraries
 			else
 				palette = CreatePaletteBrushes(paletteCodes);
 
-			Bitmap bmp = new Bitmap(64, 64, PixelFormat.Format24bppRgb);
+			Bitmap bmp = new Bitmap(8 * scale, 8 * scale, PixelFormat.Format24bppRgb);
 			using (Graphics gfx = Graphics.FromImage(bmp))
 			{
 				int y = 0;
@@ -165,16 +165,87 @@ namespace AtomosZ.DragonAid.Libraries
 		}
 
 
-		public static Bitmap GetSolidColor(byte colorCode, Size bmpSize)
+		public static Bitmap GetCHR(byte[] romData, byte tileIndex, byte[] paletteCodes = null, int scale = 2)
 		{
-			Bitmap bmp = new Bitmap(bmpSize.Width, bmpSize.Height, PixelFormat.Format24bppRgb);
+			Brush[] palette;
+			if (paletteCodes == null)
+				palette = grayscaleBrushes;
+			else
+				palette = CreatePaletteBrushes(paletteCodes);
+
+			Bitmap bmp = new Bitmap(8 * scale, 8 * scale, PixelFormat.Format24bppRgb);
 			using (Graphics gfx = Graphics.FromImage(bmp))
 			{
+				if (tileIndex == 0)
+				{
+					gfx.FillRectangle(palette[0], 0, 0, 8 * scale, 8 * scale);
+
+					return bmp;
+				}
+
+				int tileStart = PointerList.Pointers.ROM.CHR_Alphanumeric_Sprites.iNESAddress + ((tileIndex - 1) * 8);
+
 				int y = 0;
-				gfx.FillRectangle(paletteBrushes[colorCode], 0, 0, bmpSize.Width, bmpSize.Height);
+				for (int tileByte = 0; tileByte < 8; ++tileByte)
+				{
+					byte b0 = romData[tileStart + tileByte];
+
+					for (int i = 0; i < 8; ++i)
+					{
+						var bit0 = (b0 >> 7 - i) & 1;
+						gfx.FillRectangle(palette[bit0], i * scale, y * scale, scale, scale);
+					}
+					++y;
+				}
 			}
 
 			return bmp;
+		}
+
+
+		public static Bitmap CreateAlphanumericTileSheet(byte[] romData, byte[] paletteCodes = null, byte scale = 2)
+		{
+			byte horzSpriteCount = 16;
+			byte vertSpriteCount = 9;
+			byte spriteWidth = (byte)(scale * 8);
+
+			Bitmap bmp = new Bitmap(horzSpriteCount * spriteWidth, 9 * spriteWidth, PixelFormat.Format24bppRgb);
+			using (Graphics gfx = Graphics.FromImage(bmp))
+			{
+				for (byte i = 0; i < horzSpriteCount; ++i)
+				{
+					for (byte y = 0; y < vertSpriteCount; ++y)
+					{
+						var tile = GetCHR(romData, (byte)(i + y * horzSpriteCount), paletteCodes, scale);
+						gfx.DrawImage(tile, i * spriteWidth, y * spriteWidth);
+					}
+				}
+			}
+
+			return bmp;
+		}
+
+
+		public static Bitmap GetSolidColor(byte colorCode, Size bmpSize, byte scale = 2)
+		{
+			Bitmap bmp = new Bitmap(bmpSize.Width * scale, bmpSize.Height * scale, PixelFormat.Format24bppRgb);
+			using (Graphics gfx = Graphics.FromImage(bmp))
+			{
+				int y = 0;
+				gfx.FillRectangle(paletteBrushes[colorCode], 0, 0, bmpSize.Width * scale, bmpSize.Height * scale);
+			}
+
+			return bmp;
+		}
+
+
+		public static void AddToImage(Image image, Bitmap topLeftCornerSprite, int xPos, int yPos, byte scale = 2)
+		{
+			byte spriteWidth = (byte)(scale * 8);
+			using (Graphics gfx = Graphics.FromImage(image))
+			{
+				gfx.DrawImage(topLeftCornerSprite, xPos * spriteWidth, yPos * spriteWidth);
+			}
 		}
 	}
 }

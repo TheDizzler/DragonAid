@@ -16,7 +16,10 @@ namespace AtomosZ.DragonAid.Libraries
 		/// </summary>
 		public int pointer { get; private set; }
 		/// <summary>
+		/// @TODO(Tristan): ok, I'm sick of this. I'm going to remove all traces of this and 
+		/// impose the constraint that loaded romData has the iNesHeader stripped away.
 		/// iNES offset address.
+		/// 
 		/// </summary>
 		public int iNESAddress
 		{

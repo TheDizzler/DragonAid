@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using AtomosZ.DragonAid.TextToHex;
 
 namespace AtomosZ.DragonAid.TextToHex
 {

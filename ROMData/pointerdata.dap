@@ -5738,7 +5738,7 @@
       "notes": "DynamicSubroutine_Addresses_1C000",
       "prgAddress": {
         "length": 2,
-        "notes": "save game index (0 - 2) stored in character_FormationIndex_CE\nReturns Hero name is $04",
+        "notes": "save game index (0 - 2) stored in character_FormationIndex_CE\nReturns Hero name in $04",
         "name": "Full address",
         "pointer": 127391,
         "iNESAddress": 127407

@@ -754,7 +754,12 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 					+ "Standard order: 00 02 04 06\n"
 					+ "Other orders not observed yet",
 			};
-			public static Address MainMenu_CHR_Sprites = new Address("MainMenu_CHR_Sprites", 0x17601, 1120)
+			/// <summary>
+			/// 0x17601<br/>
+			/// 8 bytes each. 78 in total.<br/>
+			/// Alphanumeric characters, plus menu box borders, arrows, etc.
+			/// </summary>
+			public static Address CHR_Alphanumeric_Sprites = new Address("MainMenu_CHR_Sprites", 0x17601, 1120)
 			{
 				notes = "Each sprite is 8 bytes\r\n"
 				+ "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e\r\n"
@@ -832,15 +837,18 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			#endregion
 
 
-			/* Bank 9 $24000 */
+			#region 9 $24000			/* Bank 9 $24000 */
 			public static Address WeaponPowers = new Address("Weapon Powers", 0x027990, UniversalConsts.WeaponCount);
 			public static Address ArmorPowers = new Address("Armor Powers", 0x0279B0, UniversalConsts.ArmorCount);
 			public static Address ShieldPowers = new Address("Shield Powers", 0x0279C8, UniversalConsts.ShieldCount);
 			public static Address HelmetPowers = new Address("Helmet Powers", 0x0279CF, UniversalConsts.HelmetCount);
+			#endregion
 
 			/* Bank A $28000 */
 			/* Bank B $2C000 */
-			/* Bank C $30000 */
+
+
+			#region C $30000			/* Bank C $30000 */
 			/// <summary>
 			/// 0x32FC7
 			/// </summary>
@@ -870,6 +878,7 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			{
 				notes = "#$30 (white) by default",
 			};
+			#endregion
 
 			/* Bank E $38000 */
 			/// <summary>
@@ -905,7 +914,8 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// [$18]:$9CFE -> (#69)				[$26]:$93C7 ->
 			/// [$28]:$93F1 -> Menu_MainCommand		[$2A]:$9420 -> (#15) [$34]:$94BB -> 
 			/// [$2C]: Item character select
-			/// [$36]:$94DB -> FIGHT.PARRY.ITEM.	[$57]:$9A2B -> Change Message Speed
+			/// [$36]:$94DB -> FIGHT.PARRY.ITEM.	[$57]:$9A2B -> Select Message Speed
+			/// [$60]:$9BC5 Change Message Speed	[$62]: $9C67 Main Menu
 			/// [$69]: Item window	[$72]:$96A9 -> Enemy Display, Interactive
 			/// [$7A]:$96DD -> Dialog Text			[$7C]:$96E9 -> (Someone died) Redirects to $96DD
 			/// [$7E]:$96ED -> Enemy Display, Non-Interactive
@@ -914,20 +924,27 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			{
 				notes = "There are at least 2 type of pointer in this list: "
 					+ "1) normal instructions and 2) redirect to normal instructions.\n"
-				+ "[$00]: menu width (stored in 6AE9); unless >= $80, then it is case 2). Bytes 2 and 3 is the new menu pointer, "
-					+ "and byte 1 is menuPositionA & B.\n"
-					+ "How to read normal instructions:\n"
-				+ "[$01]: menu height (stored in 6AEA and 7D): if >= 10, the height is dynamic. Otherwise, this number *2 == height of menu in 8 pixel lines.\n"
-				+ "[$02]: menu coordinates (stored in 0x470)\n"
-				+ "[$0]:"
-				+ "[$04]: Title code; ROL x3 & 0x03 (stored in 6AEB and 6AC6)\n"
-				+ "[$07]: if >= 0x80, then menu waits for player input, otherwise, autoclose.\n"
-				+ "[$0]:"
+				+ "How to read normal instructions:\n"
+					+ "[$00]: menu width (stored in 6AE9 and [*2 + 6AEB] in 6AC2); unless >= $80, then it is type 2). Bytes 2 and 3 is the new menu pointer, "
+						+ "and byte 1 is menuPositionA & B.\n"
+					+ "[$01]: menu height (stored in 6AEA and 7D): if >= 10, the height is dynamic. Otherwise, this number *2 == height of menu in 8 pixel lines.\n"
+					+ "[$02]: menu coordinates (stored in 0x470)\n"
+					+ "[$03]: \n"
+					+ "[$04]: Title code; ROL x3 & 0x03 (stored in 6AEB and 6AC6)\n"
+					+ "[$05]: If bit 4 is set, each line of text should have an extra space between."
+						+" If bit 7 set, ?????\n"
+					+ "[$06]: \n"
+					+ "[$07]: if >= 0x80, then menu waits for player input, otherwise, autoclose.\n"
+					+ "[$08]: Menu_GetIndex-> set _CE to current A value UNLESS bit 6 is set, then store _6AC7 in _CE.\n"
+					+ "[$0]: \n"
+					+ "[$0A]: This is read after a button is pressed (A for sure, but maybe B as well?) and added to value at 0x04 (selected index?)"
+					+ "[$0]: \n"
 				,
 			};
 			public static Address Menu_SaveGameSelect = new Address("Menu_SaveGameSelect", 0x39B63);
 			/// <summary>
-			/// 0x39BC5
+			/// 0x39BC5<br/>
+			/// Save game select to change message speed.
 			/// </summary>
 			public static Address Menu_ChangeMessageSpeed = new Address("Menu_ChangeMessageSpeed", 0x39BC5);
 			/// <summary>
@@ -1125,7 +1142,7 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <param name="pointer">ROM-relative pointer (with iNES header)</param>
+			/// <param name="pointer">PRG-relative pointer (with iNES header)</param>
 			/// <returns></returns>
 			public static byte GetBankIdFromPointer(int pointer)
 			{
@@ -1151,12 +1168,12 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 			}
 
 			/// <summary>
-			/// 
+			/// @NOTE(Tristan): I don't know what this is trying to do any more. AVOID.
 			/// </summary>
 			/// <param name="romData"></param>
 			/// <param name="bankId"></param>
 			/// <param name="pointerAddress">address of low byte of pointer</param>
-			/// <returns>ROM-relative address, or -1 if invalid ROM address (ie. below 0x8000 or over 0xFFFF)
+			/// <returns>CPU address, or -1 if invalid ROM address (ie. below 0x8000 or over 0xFFFF)
 			/// or invalid bankId (ie. above 0x1F) or combination of both 
 			/// (ie. bankId 0xXF and address below 0xC000).</returns>
 			public static int GetPointerAt(byte[] romData, byte bankId, int pointerAddress)
@@ -1167,7 +1184,7 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 				int highByte = romData[pointerAddress + 1] << 8;
 				int cpuAddr = highByte + lowByte;
 				int cpuRelativeAddr;
-				if (cpuAddr < 0x8000) // in RAM and not rom-relative address.
+				if (cpuAddr < 0x8000) // in RAM and not PRG address.
 					return -1;
 				else if (cpuAddr > 0xFFFF)
 					return -1;
@@ -1177,12 +1194,41 @@ namespace AtomosZ.DragonAid.Libraries.PointerList
 					cpuRelativeAddr = (cpuAddr & 0x3FFF) + GetBankPointer((byte)(bankId | 0x0F));
 				else
 					cpuRelativeAddr = (cpuAddr & 0x3FFF) + GetBankPointer(bankId);
-				return cpuRelativeAddr + Address.iNESHeaderLength;
+				return cpuRelativeAddr + Address.iNESHeaderLength; // does this make any sense???
 			}
 
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="romData"></param>
+			/// <param name="pointerAddress">PRG address (including iNesHeader) to pointer.</param>
+			/// <returns></returns>
 			public static int GetPointerAt(byte[] romData, int pointerAddress)
 			{
-				return (romData[pointerAddress + 1] << 8) + romData[pointerAddress];
+				int highByte = (romData[pointerAddress + 1] << 8);
+				int lowByte = romData[pointerAddress];
+				int result = highByte + lowByte;
+				return result;
+			}
+
+			/// <summary>
+			/// Converts CPU-based pointer to address in PRG, with iNesHeader.
+			/// </summary>
+			/// <param name="cpuPointer"></param>
+			/// <param name="bankId"></param>
+			/// <returns></returns>
+			public static int ConvertCPUPointerToPRGAddress(int cpuPointer, byte bankId)
+			{
+				if (cpuPointer < 0x8000)
+					throw new Exception("CPU pointers below 0x8000 are not in PRG!");
+				if (cpuPointer > 0xFFFE)
+					throw new Exception("CPU pointer has a max address of 0xFFFE");
+
+				int bankAddress = GetBankPointer(bankId);
+				int prgAddress = cpuPointer & 0x3FFF;
+				prgAddress += bankAddress;
+
+				return prgAddress + Address.iNESHeaderLength;
 			}
 		}
 	}

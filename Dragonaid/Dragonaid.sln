@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonaidLibrary", "Dragona
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointerAid", "PointerAid\PointerAid.csproj", "{CCCA2D16-7F44-4163-A94A-937E47A53311}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuAid", "MenuEditor\MenuAid.csproj", "{5D48FED3-261F-4CE7-8E75-35B7EC1AB77E}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriteAid", "SpriteAid\SpriteAid.csproj", "{6C4A14D7-53DC-4663-9650-A12EF4F0EF34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReverseEngineering", "ReverseEngineering\ReverseEngineering.csproj", "{A80750C9-B3D0-48F6-81F4-CFFFC31052FF}"
